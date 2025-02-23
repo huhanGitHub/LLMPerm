@@ -1,0 +1,44 @@
+Sure, here's a simple example of how you could create a test method within an Android Unit testing class to test the `sendDtmf(int code)` method of `SipAudioCall`. 
+
+Please be aware that this example assumes that you understand the SIP protocol, have a properly set up SIP server, and have permissions in your application to use Internet, microphone and `READ_PHONE_STATE`.
+
+```java
+@Test
+public void test_SipAudioCall_sendDtmf() {
+    try {
+        // Initialize SIP Manager
+        SipManager manager = SipManager.newInstance(InstrumentationRegistry.getInstrumentation().getTargetContext());
+
+        // Initialize SipProfile
+        SipProfile.Builder builder = new SipProfile.Builder("USERNAME", "DOMAIN");
+        builder.setPassword("PASSWORD");
+
+        // Register SipProfile
+        SipProfile profile = builder.build();
+        manager.open(profile);
+
+        // Make a call
+        SipAudioCall call = manager.makeAudioCall(profile.getUriString(), "sip:destination@domain.com", null, 30);
+
+        // Send DTMF
+        int code = 1; //Replace with your DTMF code
+        call.sendDtmf(code);
+
+        // End call
+        call.endCall();
+
+    } catch (SipException e) {
+        fail();
+    } catch (IllegalArgumentException e) {
+        fail();
+    } catch (InterruptedException e) {
+        fail();
+    }
+}
+```
+
+This example uses `SipManager` and `SipProfile` to establish a SIP audio call and send a DTMF tone through that call. `SipManager` is used to establish a SIP protocol, and `SipProfile` is used to register particular SIP accounts. The `makeAudioCall` method is used to make a SIP audio call, and `sendDtmf` is used to send a DTMF tone.
+
+The exceptions are for the purpose of the test, to ensure that if anything goes wrong, the test fails.
+
+Note: For simplicity, hardcoded strings were used to set up the `SipProfile`. Please use string resources or get that information safely from your server in a real-world scenario. You would also normally move SIP communication to its own class to better handle errors and other events.

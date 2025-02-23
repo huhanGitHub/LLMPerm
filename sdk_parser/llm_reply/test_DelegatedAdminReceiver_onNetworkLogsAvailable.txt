@@ -1,0 +1,46 @@
+Here is a self-contained method `test_DelegatedAdminReceiver_onNetworkLogsAvailable` which is the usage example of an android API `android/app/admin/DelegatedAdminReceiver.java`. Please adapt the method signature according to your needs.
+
+```java
+public void test_DelegatedAdminReceiver_onNetworkLogsAvailable() {
+    class TestDelegatedAdminReceiver extends DeviceAdminReceiver {
+        @Override
+        public void onNetworkLogsAvailable(Context context, Intent intent, long batchToken, int networkLogsCount) {
+            DevicePolicyManager manager = 
+                    (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+            List<NetworkEvent> events = 
+                    Objects.requireNonNull(manager).retrieveNetworkLogs(getWho(context), batchToken);
+            if (events == null) {
+                return;
+            }
+            for (NetworkEvent event : events) {
+                if (event instanceof DnsEvent) {
+                    DnsEvent dnsEvent = (DnsEvent) event;
+                    Log.i("TestDelegatedAdminReceiver", "Dns query: " + dnsEvent.getHostname());
+                } else if (event instanceof ConnectEvent) {
+                    ConnectEvent connectEvent = (ConnectEvent) event;
+                    Log.i("TestDelegatedAdminReceiver", 
+                          "Connection to IP: " + connectEvent.getInetAddress());
+                }
+            }
+        }
+        private String getWho(Context context){
+            ComponentName componentName = new ComponentName(context, getClass());
+            return componentName.flattenToString();
+        }
+    }
+
+    // Usage
+    TestDelegatedAdminReceiver receiver = new TestDelegatedAdminReceiver();
+    Intent intent = new Intent();
+    long batchToken = 1234L;
+    int networkLogsCount = 10;
+    receiver.onNetworkLogsAvailable(this, intent, batchToken, networkLogsCount);
+}
+```
+
+Notes:
+
+- This test method creates a `TestDelegatedAdminReceiver` class that extends `DeviceAdminReceiver` and overrides `onNetworkLogsAvailable` method to log the DNS queries and connections to IPs.
+- It then creates an instance of `TestDelegatedAdminReceiver`, a dummy `Intent`, a `batchToken`, a `networkLogsCount`, and calls `onNetworkLogsAvailable`.
+- You may need to handle the required permissions and administration rights in order to successfully retrieve the network logs in a real scenario. In addition, please handle the logs properly according to your needs; the example just logs them for demonstration purposes.
+- This example uses a hardcoded batchToken and networkLogsCount for illustration, you might need to provide real data in a real scenario.

@@ -1,0 +1,37 @@
+For Android, java.nio.file is not fully supported before Android 8.0 (Oreo). But for the purpose of this task, here would be a method to illustrate an example in a classic Java environment:
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class TestActivity extends AppCompatActivity {
+    
+    public void test_Files_createFile() {
+        Path pathToFile = Paths.get("/tmp/my-file.txt"); // Replace the path string with your real path
+
+        try {
+            // Creates a new and empty file, if it doesn't exist at the given location
+            Files.createFile(pathToFile);
+
+            // Let's try to write a simple message into it
+            String message = "Hello, World!";
+            Files.write(pathToFile, message.getBytes());
+
+            Toast.makeText(this, "File successfully created at " + pathToFile.toString(), Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to create a file due to " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+}
+```
+
+Please remember that Android has a specific method of handling files and directories. You need to use Android's specific classes like File, FileOutputStream, FileInputStream, etc. Also, it requires permissions to be set in AndroidManifest.xml file for reading and writing files.
+
+Modern Android versions has Scoped Storage mechanism that restricts access to the device's external storage, folders and files and provides specific methods to request user permissions for accessing and modifying them. 
+
+Depending on the app's use-case for file access, you might also consider using other options for storing app data. For example, for low volume, structured data, Shared Preferences or SQLite might be more appropriate than file based storage.
+
+The method above simply focuses on usage of createFile and write methods in java.nio.file.Files and does not take in account Android's Storage Access Framework or Scoped Storage etc. For Android related file operations please consider looking up Android Documentation on File Access.

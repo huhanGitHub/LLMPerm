@@ -1,0 +1,55 @@
+Sure. You can use the filterSms method in the CarrierMessagingService class. It tests whether SMS messages received are allowed by the carrier. 
+
+Here's a unit test simulating sending and receiving SMS:
+
+```java
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.service.carrier.CarrierMessagingService;
+import android.service.carrier.CarrierMessagingService.ResultCallback;
+import android.telephony.SmsMessage;
+
+public void test_CarrierMessagingService_filterSms(Context context) {
+    // Dummy data for testing
+    byte[] pdu = "".getBytes();
+    String format = "3gpp";
+    int destPort = 0;
+    int subId = 0;
+
+    // Create SmsMessage
+    SmsMessage smsMessage = SmsMessage.createFromPdu(pdu, format);
+
+    // Create Bundle 
+    Bundle data = new Bundle();
+    data.putParcelable("pdu", (Parcelable) pdu);
+
+    // Create ResultCallback for filterSms()
+    ResultCallback resultCallback = new ResultCallback() {
+        @Override
+        public void onReceiveResult(Bundle resultData) {
+            // Here you can handle the result of filterSms()
+            // For example, you can check if the function succeeded or if it failed, etc.
+        }
+    };
+
+    // Initialize CarrierMessagingService
+    CarrierMessagingService carrierMessagingService = new CarrierMessagingService();
+
+    // Check if the application has the necessary permissions
+    if (context.checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+        // Invoke filterSms()
+        carrierMessagingService.filterSms(new CarrierMessagingService.MessagePdu(pdu), format, destPort, subId, resultCallback);
+    } else {
+        // PERMISSION IS NOT GRANTED,YOU CAN REQUEST FOR THE PERMISSION HERE
+        // SHOW DIALOG TO USER TO ALLOW THE PERMISSION OR HANDLE ACCORDINGLY
+    }
+}
+```
+
+This will create an SMS message, call filterSms() and handle the result in onReceiveResult(). This example assumes that permission to RECEIVE_SMS is already granted. If not, a permission request should be made. 
+
+Please note that you should run this on a real device with an active carrier since it involves telecommunications API. 
+
+Also please note that `CarrierMessagingService` was deprecated in API level 28. The operations that this class provided are no longer supported due to changes in the Radio Interface Layer (RIL) which do not allow third-party apps to perform them. Please consider another way to achieve the functionality you need.

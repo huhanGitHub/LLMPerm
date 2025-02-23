@@ -1,0 +1,58 @@
+This method sample usage demonstrates how to use the java.nio.file.Files.newByteChannel method in an Android app or a Java application to read and write a file using a SeekableByteChannel. This method throws IOException so you need to handle this exception. 
+
+```java
+import android.util.Log;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.*;
+
+public void test_Files_newByteChannel() {
+    // Define the file path
+    Path path = Paths.get("/path/to/your/file.txt");
+
+    try {
+        // Create a new byte channel
+        SeekableByteChannel byteChannel = Files.newByteChannel(path, StandardOpenOption.READ, StandardOpenOption.WRITE);
+
+        // Create a byte buffer
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+        // Write data to the buffer
+        String data = "This is a test.";
+        buffer.put(data.getBytes());
+        buffer.flip();
+
+        while(buffer.hasRemaining()) {
+            byteChannel.write(buffer);
+        }
+
+        // Clear the buffer
+        buffer.clear();
+
+        // Read data from the file
+        byteChannel.position(0);
+        while(byteChannel.read(buffer) > 0) {
+            buffer.flip();
+            while(buffer.hasRemaining()) {
+                System.out.print((char) buffer.get());
+            }
+            buffer.clear();
+        }
+
+        // Close the byte channel
+        byteChannel.close();
+    } catch(IOException e) {
+        Log.e("IOException", "Could not read or write file.", e);
+    }
+}
+```
+
+Please replace "/path/to/your/file.txt" with your actual file path. After calling this method, it will write the string "This is a test." to the file and then read the data from the file, printing it to the console. Note that this method could potentially change the file data so you may want to back up your data before running this code, or run it using a testing file.
+
+Also, remember to add the required permissions in the Android manifest file if you want to read/write files.
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```

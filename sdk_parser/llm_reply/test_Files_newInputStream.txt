@@ -1,0 +1,43 @@
+
+
+Here is a self-contained method demonstrating how to use java/nio/file/Files.newInputStream method. Please note the method isn't specific for an Android Activity and there might be Android specific file access methods available which should generally be preferred. Furthermore, accessing the File system might need certain permissions to be set in your application manifest.
+
+Remember that this code snippet could throw `IOException` because of the file handling, ensure to catch it or declare to throw it in your method.
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.IOException;
+
+public void test_Files_newInputStream() {
+    Path path = Paths.get("/path/to/your/file.txt");
+    
+    try 
+    {
+      InputStream inputStream = Files.newInputStream(path);
+      //use the InputStream in here.
+  
+      System.out.println("Data from the file: ");
+
+      int data = inputStream.read();
+      while(data != -1) 
+      {
+        System.out.print((char) data);
+        data = inputStream.read();
+      }  
+      inputStream.close();
+   
+    } 
+    catch (IOException ex) 
+    {
+     ex.printStackTrace();
+    } 
+}
+```
+
+This method reads a file byte by byte using newInputStream() method and converts bytes into characters to print them out on the console. You might print the file content to android log instead of System.out in the Android environment.
+
+Replace "/path/to/your/file.txt" with the actual path to the file you want to read.
+
+Please note that you might need to add appropriate error handling according to your needs.

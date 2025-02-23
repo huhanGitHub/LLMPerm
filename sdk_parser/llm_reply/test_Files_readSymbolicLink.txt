@@ -1,0 +1,33 @@
+Sure, please find a complete Android method sample usage of the API java.nio.file.Files.readSymbolicLink:
+
+```Java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public void test_Files_readSymbolicLink() {
+    try {
+        // Convert the normal string path to a symbolic link
+        Path symbolicLinkPath = Paths.get("/path/to/your/symbolic/link");
+
+        // Read the symbolic link
+        Path realPath = Files.readSymbolicLink(symbolicLinkPath);
+
+        // Displaying the actual path that the symbolic link refers to
+        System.out.println(realPath.toString());
+    } catch (IOException e) {
+        // Exception handling code
+        System.out.println("An error occurred while reading the symbolic link: " + e.getMessage());
+    }
+}
+```
+
+Please note this code should be used in a Java or Android project, and "/path/to/your/symbolic/link" should be the actual symbolic link path in your file directories.
+
+Also, you should declare the "READ_EXTERNAL_STORAGE" permission in your AndroidManifest.xml file and request it in runtime before executing this block, as I/O operations typically require this permission for safety:
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+For Android 10+, you'll have to use `Storage Access Framework` or `MediaStore` as scoped storage is mandatory and the traditional methods will not work. The above code will only work till Android 9 (API level 28).

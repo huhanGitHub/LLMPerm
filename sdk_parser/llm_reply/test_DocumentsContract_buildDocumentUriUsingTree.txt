@@ -1,0 +1,32 @@
+Below is an example of a method, test_DocumentsContract_buildDocumentUriUsingTree, which uses the buildDocumentUriUsingTree method from the android.provider.DocumentsContract.java API:
+
+```java
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.util.Log;
+
+public void test_DocumentsContract_buildDocumentUriUsingTree() {
+    // Let's assume we have a tree URI which points to a directory on a document provider
+    Uri treeUri = Uri.parse("content://com.android.externalstorage.documents/tree/primary");
+
+    // Let's assume we have a document URI which points to a document under the above directory
+    Uri documentUri = Uri.parse("content://com.android.externalstorage.documents/document/primary%3AAndroid%2Fdata");
+
+    try {
+        // This is how you get a single tree-diven document URI
+        Uri treeDocumentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, DocumentsContract.getDocumentId(documentUri));
+
+        Log.d("TestContract", "Tree Document URI: " + treeDocumentUri.toString());
+
+    } catch (Exception e) {
+        Log.e("TestContract", "Error building document URI using tree", e);
+    }
+}
+```
+
+In this method:
+
+- First, we create a dummy tree URI. Typically tree URIs are obtained from an ACTION_OPEN_DOCUMENT_TREE intent. The tree URI represents a directory in a document provider (for example the primary external storage directory).
+- Next, we create a dummy document URI. Typically a document URI is obtained by selecting a document under a directory represented by a tree URI.
+- Then, we use the buildDocumentUriUsingTree method from the android.provider.DocumentsContract API to get a single document URI which is derived from the tree and document URIs provided.
+- If the method executes successfully, it will log the document URI on the logcat console. If any exception occurs, it's caught and the error message is shown on the logcat console.

@@ -1,0 +1,62 @@
+Here's an example of how you might construct a `test_NetworkScan_stopScan` method. This example presupposes the existence of a previously made `NetworkScan` object stored in a variable named `networkScan`.
+
+```java
+import android.telephony.NetworkScan;
+import android.telephony.TelephonyManager;
+import android.telephony.TelephonyScanManager;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public void test_NetworkScan_stopScan() {
+    //Check if the Application has the necessary permissions
+    if (Build.VERSION.SDK_INT >= 23) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE}, 123);
+            return;
+        }
+    }
+    
+    //Get the TelephonyManager from the system service
+    TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+    TelephonyScanManager telephonyScanManager = telephonyManager.createScanManager();
+
+    //Define the Scan Callback
+    TelephonyScanManager.NetworkScanCallback callback = new TelephonyScanManager.NetworkScanCallback() {
+        @Override
+        public void onResults(List<CellInfo> results) {
+            super.onResults(results);
+        }
+
+        @Override
+        public void onError(int error) {
+            super.onError(error);
+        }
+
+        @Override
+        public void onUnavailable() {
+            super.onUnavailable();
+        }
+    };
+
+    //Trigger Scan
+    NetworkScan networkScan = telephonyScanManager.requestNetworkScan(
+                    new NetworkScanRequest(NETWORK_SCAN_TYPE_ONE_TIME_SCAN, getRadioAccessSpecifierList(), MAX_SEARCH_TIME, INCREMENTAL_RESULTS_PERIODICITY, true, true), 
+                    getMainExecutor(), 
+                    callback);
+
+    //Stop the network scan
+    if (networkScan != null) {
+        networkScan.stopScan();
+    }
+}
+```
+
+This method firstly checks if the app has the necessary permissions to access the network states. Then it calls the system's telephony service to create a `TelephonyManager` object. Next, it initializes a `TelephonyScanManager` and sets up a network scan callback.
+
+Then it starts a network scan by calling `requestNetworkScan` method on the `TelephonyScanManager`, which returns a `NetworkScan` object.
+
+Finally, it calls the `stopScan` method on the `NetworkScan` object to stop the network scan. Please note that you will need to handle various exceptions and errors which might occur during the execution of this method.

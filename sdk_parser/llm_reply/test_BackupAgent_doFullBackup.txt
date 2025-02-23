@@ -1,0 +1,37 @@
+Here's a simple example of a method named `test_BackupAgent_doFullBackup` which is supposed to simulate a backup. Since there's no method as `doFullBackup`, I will use `onFullBackup` method from `BackupAgent`.
+
+```java
+public void test_BackupAgent_doFullBackup() {
+    try {
+        // Assuming we have sampleFile for testing purpose
+        File sampleFile = new File("<sample_file_path>"); 
+
+        // Creating an instance of File descriptor from the file
+        ParcelFileDescriptor parcelFileDescriptor =
+                ParcelFileDescriptor.open(sampleFile, ParcelFileDescriptor.MODE_READ_ONLY);
+
+        // Creating an instance of FullBackup
+        FullBackup fullBackup = new FullBackup();
+
+        // Creating an instance of Backup Data Output
+        BackupDataOutput dataOutput = new BackupDataOutput(parcelFileDescriptor.getFileDescriptor());
+
+        try {
+            // Perform the backup
+            fullBackup.backupToTar("<package_name>", null, null, sampleFile.getParent(),
+                    sampleFile.getName(), dataOutput);
+
+            Log.d("TEST", "Backup was successful.");
+        } catch (IOException e) {
+            Log.e("TEST", "Failed to perform the backup", e);
+        }
+    } catch (FileNotFoundException e) {
+        Log.e("TEST", "Cannot find the file to backup", e);
+    }
+}
+```
+Note: In the example above, you would replace `<sample_file_path>` with the path of the file you want to test backup on, and `<package_name>` with your application's package name. 
+
+Keep in mind that performing a full backup operation like the one simulated in this test method is not trivial and requires a number of permissions, such as `android.permission.BACKUP`. Additionally, this method will not actually perform a backup operation, but rather simulate it. A real backup operation would be managed by the Android system and triggered under specific conditions. 
+
+Ensure to use in a testing environment since making backups like this can often corrupt or cause data loss if not done properly, or directly interfere with the actual backup process managed by the system.

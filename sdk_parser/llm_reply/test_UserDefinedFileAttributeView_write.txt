@@ -1,0 +1,35 @@
+In Android, the Java NIO file attribute view classes like `UserDefinedFileAttributeView` are not supported due to system level restrictions. Even though you can import `java.nio.file` package in your Android code, using classes from this package can result in unpredictable behaviors or runtime errors because Android's version of Java does not support all features of Java NIO.
+
+However, for educational purposes, here is an example of how to use `UserDefinedFileAttributeView` in a pure Java environment.
+
+```java
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.file.*;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+
+public class MyActivity extends AppCompatActivity {
+  
+    public void test_UserDefinedFileAttributeView_write() {
+        try {
+            Path path = Paths.get("/your/file/path");
+            
+            // retrieve UserDefinedFileAttributeView
+            UserDefinedFileAttributeView view = Files.getFileAttributeView(path, UserDefinedFileAttributeView.class);
+
+            // Set custom attribute
+            String name = "user.mimeType";
+            String value = "text/html";
+            view.write(name, Charset.defaultCharset().encode(value));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+Replace `"/your/file/path"` with path to file you want to modify.
+
+In the real world Android applications, we usually use `SharedPreferences`, `SQLite databases`, `Realm databases`, or even `File storage` (either internal or external) for persisting information, not file attributes due to the mentioned reasons. Each of those methods has different use cases, and what to use mostly depends on the specific requirements of your app. 
+
+NOTE: Android does not support setting UserDefinedFileAttributeView, this code will not run as expected on android. Use it on a pure Java environment.

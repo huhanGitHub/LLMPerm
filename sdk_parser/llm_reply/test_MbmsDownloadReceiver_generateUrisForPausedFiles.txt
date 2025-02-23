@@ -1,0 +1,38 @@
+Here is a basic example of a self-contained method test_MbmsDownloadReceiver_generateUrisForPausedFiles for the android/telephony/mbms/MbmsDownloadReceiver class. Please note to use this API you have to target minimum SDK version 28 or higher and also handle its exception for devices that don't support it.
+
+```java
+/**
+ * This is an example usage of android.telephony.mbms.MbmsDownloadReceiver API.
+ * The example does not actually perform any actions to existing paused files.
+ */
+void test_MbmsDownloadReceiver_generateUrisForPausedFiles() {
+    final Context context = this;
+    MbmsDownloadReceiver downloadReceiver = new MbmsDownloadReceiver() {
+        @NonNull
+        @Override
+        public IntentFilter getIntentFilter() {
+            IntentFilter filter = new IntentFilter();
+            // Add necessary intents
+            return filter;
+        }
+    };
+  
+    // Define the service class to be used
+    Class<MyDownloadService> myServiceClass = MyDownloadService.class;
+
+    try {
+        List<Uri> uris = downloadReceiver.generateUrisForPausedDownloads(context, myServiceClass);
+
+        // Now you could use these URIs for your needs (e.g., resume downloads)
+        for (Uri uri : uris) {
+            // perform some actions for each uri
+            System.out.println("Paused download URI: " + uri.toString());
+        }
+      
+    } catch (MbmsException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In this example, MyDownloadService.class is a placeholder and should be replaced by your actual implementation of the android.telephony.mbms.DownloadService. Be sure to implement all the necessary methods in your DownloadService class, otherwise, an exception may be thrown.

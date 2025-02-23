@@ -1,0 +1,65 @@
+Sure, here is an example of a method using the Account class in Android:
+
+```Java
+    public void test_Account_onAccountAccessed() {
+        int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            //Permission is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                //Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request
+            }
+        } else {
+            // Permission has already been granted
+            AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+            Account[] accounts = accountManager.getAccounts();
+
+            for (Account account : accounts) {
+                System.out.println("Account: " + account.name + ", " + account.type);
+            }
+        }
+    }
+
+@Override
+public void onRequestPermissionsResult(int requestCode,
+                                       String permissions[], int[] grantResults) {
+    switch (requestCode) {
+        case PERMISSIONS_REQUEST_READ_CONTACTS: {
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted
+                test_Account_onAccountAccessed();
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied to read your Contacts", 
+                               Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+    }
+}
+```
+Remember to add the required permission in your manifest file:
+
+```XML
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+```
+
+In this code, we first check if we have the necessary permissions to read the contacts. If we don't have the permissions, we request them. If we do, we can retrieve the account data by accessing the AccountManager method `getAccounts()`. After the accounts are retrieved, the code will print each account name and type in console. If the permission is not granted, an else clause will show a toast message.
+
+This is an effective way to handle permissions in the context of the Account usage.

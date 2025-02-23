@@ -1,0 +1,42 @@
+Here is a simple self-contained method `test_ResponseCache_getDefault()` showcasing the usage of the `ResponseCache.getDefault()` API in Java. In this example, we just call `ResponseCache.getDefault()` and print the result to the console.
+
+However, it's important to note that Android doesn't support the default `ResponseCache` implementation; this method will always return 'null' on Android. You need to implement your own subclass of `ResponseCache` and use `ResponseCache.setDefault()` to install it.
+
+```java
+import java.net.ResponseCache;
+import android.util.Log;
+
+public void test_ResponseCache_getDefault() {
+    // Get the system-wide response cache
+    ResponseCache responseCache = ResponseCache.getDefault();
+    
+    if (responseCache != null) {
+        // Print the class name of the response cache
+        Log.d("ResponseCache getDefault Example", "Default ResponseCache implementation is: " + responseCache.getClass().getName());
+    } else {
+        // If 'responseCache' is null, Android doesn't support the default implementation.
+        Log.d("ResponseCache getDefault Example", "No default ResponseCache implementation is found.");
+    }
+}
+```
+
+To test this method from your activity, just call it from anywhere you want in the activity's code. Here is how you would do it:
+
+```java
+public class MainActivity extends AppCompatActivity {
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_ResponseCache_getDefault();
+    }
+    
+    // Now, include the test_ResponseCache_getDefault() method here
+
+    ...
+}
+``` 
+
+This code should run without any changes, as long as it's run in the context of an existing Android activity. It basically retrieves the default system-wide `ResponseCache` and logs the class name of the `ResponseCache` instance or logs "No default ResponseCache implementation is found." if it is 'null'.

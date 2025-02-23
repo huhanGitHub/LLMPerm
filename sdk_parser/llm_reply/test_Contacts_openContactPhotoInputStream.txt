@@ -1,0 +1,47 @@
+In order to use android/provider/Contacts.java API specifically `openContactPhotoInputStream` method, you will first need to get the Uri of the contact photo. `openContactPhotoInputStream` will return an InputStream of desired contact's photo.
+
+Here is an example to illustrate it:
+
+Please note: In order to access contacts and their photos, you will need `READ_CONTACTS` permission in your `AndroidManifest.xml` file.
+
+```
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+```  
+
+```
+import android.content.ContentUris;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.util.Log;
+
+import java.io.InputStream;
+
+public void test_Contacts_openContactPhotoInputStream(Context context, long contactId) {
+    try {
+        Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
+        InputStream photoDataStream = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri);
+        
+        if(photoDataStream != null) {
+            Bitmap photo = BitmapFactory.decodeStream(photoDataStream);
+            if(photo != null) {
+                // use photo here
+            } else {
+                Log.d("PhotoTest", "Failure decoding photo");
+            }
+        } else {
+            Log.d("PhotoTest", "Failure fetching photo data");
+        }
+    } catch (Exception e) {
+        Log.e("PhotoTest", "Error fetching contact photo", e);
+    }
+}
+```
+
+Here, `getContactUri()` method returns the Uri of a contact with the given id. The `openContactPhotoInputStream()` method is then used to retrieve an InputStream of the contact's photo. Bitmap photo is received by converting the InputStream. At this point, you can use the bitmap photo as you wish.
+
+Please replace `photo here usage` based on your requirement.
+
+Note: Replace the `contactId` placeholder with the actual contact ID you want to retrieve the photo for.

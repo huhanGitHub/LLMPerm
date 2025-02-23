@@ -1,0 +1,54 @@
+Sure, below is an example of using the startDelete() method in AsyncQueryHandler. This method initiates an asynchronous delete operation.
+
+```java
+import android.content.AsyncQueryHandler;
+import android.content.ContentResolver;
+import android.net.Uri;
+import android.provider.ContactsContract;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    private static final int DELETE_TOKEN = 1001;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ContentResolver contentResolver = getContentResolver();
+
+        MyAsyncQueryHandler myAsyncQueryHandler = new MyAsyncQueryHandler(contentResolver);
+        test_AsyncQueryHandler_startDelete(myAsyncQueryHandler);
+    }
+
+    private void test_AsyncQueryHandler_startDelete(MyAsyncQueryHandler myAsyncQueryHandler) {
+        // Let's try to delete a contact with ID = 1
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, "1");
+        String selection = null;
+        String[] selectionArgs = null;
+
+        myAsyncQueryHandler.startDelete(DELETE_TOKEN, null, uri, selection, selectionArgs);
+    }
+
+    private static class MyAsyncQueryHandler extends AsyncQueryHandler {
+
+        public MyAsyncQueryHandler(ContentResolver cr) {
+            super(cr);
+        }
+
+        @Override
+        protected void onDeleteComplete(int token, Object cookie, int result) {
+            // This method is called when the delete operation is completed
+            if (token == DELETE_TOKEN) {
+                Log.d(TAG, "Delete operation completed. " + result + " rows deleted.");
+            }
+        }
+    }
+}
+```
+
+This example tries to delete a contact with id "1". The deletion is performed asynchronously by the `test_AsyncQueryHandler_startDelete()` method. When the deletion is complete, `onDeleteComplete` method will be called. It logs the deletion result.
+
+Please note that the deletion operation requires `WRITE_CONTACTS` permission. If your app target SDK is 23 or higher, you have to request the permissions at runtime.
+
+This is just an example to give you an idea about how to use `AsyncQueryHandler`. In a real app, you should use proper URIs, selection and selectionArgs that suit your needs.

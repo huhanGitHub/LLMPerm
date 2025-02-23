@@ -1,0 +1,31 @@
+Here is an example of a method that uses OnReceiveContentListener in an Android activity:
+
+```java
+public void test_OnReceiveContentListener_onReceiveContent() {
+    View view = findViewById(R.id.my_view);
+        
+    view.setOnReceiveContentListener(new View.OnReceiveContentListener() {
+        @Override
+        public ContentCaptureSession newSession(ContentCaptureContext contentCaptureContext) {
+            return null;
+        }
+
+        @Override
+        public void onContentReceived(@NonNull View view, @NonNull ContentInfo contentInfo) {
+
+            int operation = contentInfo.getFlags();
+            
+            if (operation == ContentInfo.FLAG_CONVERT_TO_PLAIN_TEXT) {
+                CharSequence text = contentInfo.getClip().getItemAt(0).getText();
+                Log.d("ContentListener", "Received text: " + text);
+            }    
+            
+            contentInfo.releasePermission();
+        }
+    });
+}
+```
+
+This method will set a view with given ID (in this case, `R.id.my_view`) to listen to content receiving events. When the view receives content with a type of `FLAG_CONVERT_TO_PLAIN_TEXT`, it will log the content. Like any other listener, don't forget to remove it when it's not needed anymore to avoid memory leaks.
+
+Please note that the APIs I used are actually hypothetical. To my knowledge, there's no such method like `view.setOnReceiveContentListener(new View.OnReceiveContentListener() {...});` This demonstration is for illustrative purposes considering that the `OnReceiveContentListener()` is part of your application.

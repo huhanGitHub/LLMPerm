@@ -1,0 +1,29 @@
+Here is a simple example of how you can use the `UiccCardInfo.getIccId()` method. 
+
+Please note that the `UiccCardInfo` class is used to collect information about a UICC card provisioned in a device, so obtaining an instance will usually involve using a `TelephonyManager` instance and calling `getUiccCardsInfo()`. The `UiccCardInfo.getIccId()` method is used to get a UICC card's ICCID number in a string format.
+
+Assuming that the calling process has been granted the `READ_PHONE_STATE` permission, an example method `test_UiccCardInfo_getIccId` could look as follows:
+
+```java
+public String test_UiccCardInfo_getIccId(Context context) {
+    if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        // The app doesn't have permission to read phone state
+        return null;
+    }
+    TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    if (telephonyManager != null) {
+        List<UiccCardInfo> uiccCardInfos = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            uiccCardInfos = telephonyManager.getUiccCardsInfo();
+        }
+        if (uiccCardInfos != null && !uiccCardInfos.isEmpty()) {
+            return uiccCardInfos.get(0).getIccId();
+        }
+    }
+    return null;
+}
+```
+
+This method initializes the `TelephonyManager`, checks if `getUiccCardsInfo()` method is available (since it was added in Android 11 - API level 30), then retrieves ICCID from the first UICC card in the list retrieved by `telephonyManager.getUiccCardsInfo()`. Please note that this assumes that phone has at least one UICC card. 
+
+Please replace Context with the context of your application and make sure, your application has `READ_PHONE_STATE` permission.

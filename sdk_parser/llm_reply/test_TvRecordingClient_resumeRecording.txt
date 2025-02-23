@@ -1,0 +1,54 @@
+Here is the example of usage of android/media/tv/TvRecordingClient.java using `resumeRecording` method:
+
+```java
+import android.content.Context;
+import android.media.tv.TvRecordingClient;
+import android.os.Looper;
+
+public class MainActivity extends AppCompatActivity {
+    private TvRecordingClient tvRecordingClient;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Create instance of TvRecordingClient
+        Context context = getApplicationContext();
+        Looper looper = context.getMainLooper();
+        TvRecordingClient.RecordingCallback callback = new TvRecordingClient.RecordingCallback() {
+            @Override
+            public void onConnectionFailed() {
+                super.onConnectionFailed();
+            }
+            
+            @Override
+            public void onRecordingStopped(Uri recordedProgramUri) {
+                super.onRecordingStopped(recordedProgramUri);
+            }
+
+            @Override
+            public void onError(int error) {
+                super.onError(error);
+            }
+        };
+        tvRecordingClient = new TvRecordingClient(context, looper, callback);
+
+        test_TvRecordingClient_resumeRecording();
+    }
+
+    public void test_TvRecordingClient_resumeRecording() {
+        if(tvRecordingClient != null){
+            tvRecordingClient.resumeRecording();
+        }
+    }
+}
+```
+
+Please, note that the Android TvRecordingClient API is deprecated. It's better to use TvInputService.RecordingSession for this. Also don't forget to add necessary permissions to your Manifest file. For example:
+
+```xml
+<uses-permission android:name="android.permission.RECORD_TV"/>
+```
+
+And you should hanlde all the necessary callbacks for error handling and other events related to the recording session.

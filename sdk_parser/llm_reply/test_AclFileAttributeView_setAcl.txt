@@ -1,0 +1,54 @@
+Here is an example of a method, 'test_AclFileAttributeView_setAcl', that demonstrates usage of the 'AclFileAttributeView' class which is part of the 'java.nio.file.attribute' package:
+
+```java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.util.*;
+
+public class TestActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            test_AclFileAttributeView_setAcl();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_AclFileAttributeView_setAcl() throws IOException {
+        // Specify the file path
+        Path filePath = Paths.get("/path/to/file");
+
+        // Get the view of the file
+        AclFileAttributeView view = Files.getFileAttributeView(filePath, AclFileAttributeView.class);
+
+        // Check if view is null
+        if(view != null) {
+            // Create an empty ACL to clear existing ones
+            List<AclEntry> acl = new ArrayList<>();
+            view.setAcl(acl); // Clear the ACLs
+
+            // Create a new ACL entry for owner of the file
+            UserPrincipal owner = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName("owner");
+            AclEntry entryOwner = AclEntry.newBuilder().setType(AclEntryType.ALLOW)
+                    .setPrincipal(owner)
+                    .setPermissions(AclEntryPermission.READ_DATA, AclEntryPermission.WRITE_DATA)
+                    .build();
+
+                    
+            // Set the new ACL entries in the file view
+            acl.add(entryOwner);
+            view.setAcl(acl);
+        }
+
+    }
+}
+```
+In the above code, a test activity is created that writes the new access control list (ACL) entry to 'owner'.  The file path should be replaced with the actual file path to which you want to apply the access control list (ACL).
+
+Please note that `java.nio.file.attribute.AclFileAttributeView` is part of Java NIO and not Android. The Android API does not properly support Java's `java.nio.file.*` package until Android API 26 (Android Oreo 8.0), so depending on the Android version targeted by your app, this example may not be relevant to Android. 
+
+For controlling permissions for reading/writing files in Android filesystem, typically Android's permission model is used such as `Manifest.permission.READ_EXTERNAL_STORAGE` or `Manifest.permission.WRITE_EXTERNAL_STORAGE` delegated by user on runtime.

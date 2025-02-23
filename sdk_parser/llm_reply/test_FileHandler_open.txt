@@ -1,0 +1,33 @@
+Here's a simple usage example of the FileHandler feature in Java Logging API.
+
+```java
+public void test_FileHandler_open() {
+    // The path to the file
+    String filePath = ContextCompat.getExternalFilesDirs(this, null)[0]
+                        + File.separator + "myApplication.log";
+
+    FileHandler fileHandler;
+
+    try {
+        // Create a new file handler which appends logs to the specified file
+        fileHandler = new FileHandler(filePath, true);
+
+        // Obtain the global logger
+        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+        // Set the handler for the global logger
+        logger.addHandler(fileHandler);
+
+        // Log a simple INFO message
+        logger.info("This is an info log message.");
+
+    } catch (IOException e) {
+        // Handle exception
+        e.printStackTrace();
+    }
+}
+```
+
+Before using this, you will need to ensure proper permissions to access and write to the external directory. Also note that best practice is to instantiate the FileHandler on a separate thread, as it blocks the thread until the filesystem operation is complete.
+
+Please note also this example uses android API `ContextCompat.getExternalFilesDirs()` to get a path valid in Android system. Simple `FileHandler(filePath, true);` can run on your local machine but can have issues on Android due to its complex file system.

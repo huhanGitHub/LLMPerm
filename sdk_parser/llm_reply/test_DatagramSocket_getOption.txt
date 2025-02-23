@@ -1,0 +1,48 @@
+In Android or Java, you can create a test method to demonstrate the usage of getting an option associated with a `DatagramSocket` through the `getSoTimeout()` method. This method returns the timeout value for the specified option. Such options might differ from one socket implementation to another.
+
+Here's an example of how you might incorporate such a method in an Android activity:
+
+```java
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            test_DatagramSocket_getOption();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * test_DatagramSocket_getOption method is an example of usage DatagramSocket API
+     * @throws SocketException if there is an error in the underlying protocol, such as an UDP error.
+     */
+    public void test_DatagramSocket_getOption() throws SocketException {
+        // Create a DatagramSocket
+        DatagramSocket datagramSocket = new DatagramSocket();
+
+        // Set the SO_TIMEOUT value
+        datagramSocket.setSoTimeout(5000);
+
+        // Get the SO_TIMEOUT option
+        int timeout = datagramSocket.getSoTimeout();
+
+        // Print the SO_TIMEOUT option
+        System.out.println("The current SO_TIMEOUT value is: " + timeout);
+
+        // Close the DatagramSocket
+        datagramSocket.close();
+    }
+}
+```
+
+In this example, the `test_DatagramSocket_getOption()` function initializes a new `DatagramSocket`, sets the timeout for receiving packets to 5000 milliseconds (or 5 seconds), retrieves this value, and then prints the value to the console. It also handles any potential `SocketException` that could occur while setting or getting the option.
+
+Please, note that network operations can't be performed on the main thread in Android because it may freeze your UI. Normally, you should create a separate thread or use coroutines (if you're using Kotlin) for such tasks.
+This example is for illustrative purposes only and should not be used as is.

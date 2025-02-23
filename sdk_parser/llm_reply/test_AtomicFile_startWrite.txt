@@ -1,0 +1,45 @@
+Here is an example of a self-contained method for `test_AtomicFile_startWrite`.
+
+```Java
+import android.content.Context;
+import android.util.AtomicFile;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public void test_AtomicFile_startWrite(Context context){
+    // permission check
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        // Request permission
+        ActivityCompat.requestPermissions(thisActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+    } else {
+        // Use AtomicFile
+        AtomicFile atomicFile = new AtomicFile(new File(context.getFilesDir(), "test.txt"));
+        FileOutputStream outputStream = null;
+        try {
+            // start write
+            outputStream = atomicFile.startWrite();
+            outputStream.write("Test content".getBytes());
+
+            // Finish and close the stream
+            atomicFile.finishWrite(outputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            if (outputStream != null) {
+                atomicFile.failWrite(outputStream);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (outputStream != null) {
+                atomicFile.failWrite(outputStream);
+            }
+        }
+    }
+}
+```
+The key point of this code is that you are using `AtomicFile.startWrite()` to start a writing session in your file. The method `AtomicFile.startWrite()` returns a `FileOutputStream` that can be used to write to the file. When you're done with your changes, you can call `AtomicFile.finishWrite(FileOutputStream stream)`. If something goes wrong and you cannot write to the OutputStream, you should call `AtomicFile.failWrite(FileOutputStream stream)` to cancel the write. 
+
+Please make sure to request the `WRITE_EXTERNAL_STORAGE` permission in your app manifest, and also check and request runtime permissions in your application code.
+
+Remember to replace `thisActivity` and `MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE` with your activity object and your defined request code respectively.

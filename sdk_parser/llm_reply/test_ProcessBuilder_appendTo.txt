@@ -1,0 +1,32 @@
+Here is an example of how to use the ProcessBuilder class in Android or Java. This method will show how to use the ProcessBuilder class to run a command in the system shell and append the output to a file.
+
+```java
+public void test_ProcessBuilder_appendTo() {
+    // Defined the command to run
+    List<String> command = new ArrayList<>();
+    command.add("ls"); // Change the command as per your needs
+    command.add("-l");
+
+    // Define the output file
+    File outputFile = new File("output.txt");
+
+    try {
+        // Create ProcessBuilder
+        ProcessBuilder pb = new ProcessBuilder(command);
+        pb.directory(new File("/")); // Set the working directory
+
+        // Redirect output and error stream to a file
+        pb.redirectOutput(outputFile);
+        pb.redirectErrorStream(true);
+
+        // Run the command
+        Process process = pb.start();
+        process.waitFor(); // Wait for the process to finish
+
+    } catch (IOException | InterruptedException e) {
+        System.out.println("Something went wrong: " + e.getMessage());
+    }
+}
+``` 
+
+Note: This code assumes that we are executing "ls -l" command and storing its output in "output.txt" file. But please be careful while using these commands, especially if you are working in production or in an environment where security and stability are important. This command often requires a high level of system access, and it can potentially be dangerous if misused, it could expose sensitive information or disrupt your system's stability.

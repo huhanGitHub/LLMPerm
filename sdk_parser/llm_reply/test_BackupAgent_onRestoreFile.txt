@@ -1,0 +1,50 @@
+
+Here is the usage code for BackupAgent onRestoreFile method.
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataInput;
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+import android.app.backup.FullBackupDataOutput;
+
+public void test_BackupAgent_onRestoreFile() {
+    
+    try {
+        ParcelFileDescriptor oldState = null;
+        int token = 0;
+        String packageName = "com.example.myapp";
+        FullBackupDataOutput newState = null;
+
+        BackupAgent backupAgent = new BackupAgent() {
+            @Override
+            public void onCreate() {
+
+            }
+
+            @Override
+            public void onDestroy() {
+
+            }
+ 
+            @Override
+            public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+
+            }
+
+            @Override
+            public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
+            
+            }
+        };
+
+        backupAgent.onRestoreFile(null, 0, null, 0, 0, null);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+Please note that you should override the necessary methods when you create an instance of BackupAgent, otherwise, Android system will throw a RuntimeException: Stub!. Also, consider that you can't test this function directly on the main UI thread in an Android activity, as it throws a NetworkOnMainThreadException. You should run it in an AsyncTask or a new thread. 
+
+Remember this methods are often called by the Android system, not your code directly. BackupAgent is the base class that applications subclass to create a backup agent in their application. The system instantiates the backup agent on the device, not on Android emulator, and calls its methods based on the backup or restore operation to be performed. Your code should handle exceptions properly.

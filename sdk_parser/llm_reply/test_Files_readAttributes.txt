@@ -1,0 +1,29 @@
+Below is a method `test_Files_readAttributes`. This method reads all available basic file attributes from the given file path. Note that it's an example of JAVA API usage, not specifically for android.
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+
+public void test_Files_readAttributes() {
+    Path filePath = Paths.get("/path/to/your/file");
+    try {
+        BasicFileAttributes attr = Files.readAttributes(filePath, BasicFileAttributes.class);
+
+        System.out.println("File creation time: " + attr.creationTime());
+        System.out.println("File was last accessed at: " + attr.lastAccessTime());
+        System.out.println("File was last modified at: " + attr.lastModifiedTime());
+        System.out.println("Is directory: " + attr.isDirectory());
+        System.out.println("Is regular file: " + attr.isRegularFile());
+        System.out.println("File size: " + attr.size());
+    } catch (IOException e) {
+        System.out.println("Error reading attributes: " + e.getMessage());
+    }
+}
+```
+
+Remember to replace "/path/to/your/file" with the actual file path. The `readAttributes` method throws an `IOException`, so it's wrapped in a try-catch. This function prints out the creation time, last access time, last modified time, whether it's a directory, whether it's a regular file, and the size of the file.
+
+Please note if you're planning to use this in an Android application you would need to consider the file access permissions. Android restricts access to certain file paths on the device and may require permissions to be set in the application's manifest.

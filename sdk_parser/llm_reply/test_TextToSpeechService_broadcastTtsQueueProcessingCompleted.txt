@@ -1,0 +1,61 @@
+Below is an example of a method which uses Android's TextToSpeechService API. Note that this API is mostly used by the system to bind to the service, thus it's not typically used in accompanying Android apps. But, suppose that you must invoke the method broadcastTtsQueueProcessingCompleted, you'd need to make a service connection, bind to the service, then make the call. In this example I keep it simple by sending a "text to speech" request:
+
+```java
+public class MainActivity extends AppCompatActivity {
+    private TextToSpeechService mService;
+    private boolean mBound = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, TextToSpeechService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    /** Called when a button is clicked (the button in the layout file attaches to
+      * this method with the android:onClick attribute) */
+    public void test_TextToSpeechService_broadcastTtsQueueProcessingCompleted(View v) {
+        if (mBound) {
+            // Call a method from the TextToSpeechService.
+            // Assume we want to get TextToSpeech Engine and speak "Hello World"
+            TextToSpeech tts = mService.getTts();
+            tts.speak("Hello, World!", TextToSpeech.QUEUE_FLUSH, null,"id1");
+            mService.broadcastTtsQueueProcessingCompleted();
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to TextToSpeechService, cast the IBinder and get TextToSpeechService instance
+            TextToSpeechService.LocalBinder binder = (TextToSpeechService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+}
+``` 
+
+You need to replace `mService.getTts()` with the actual way to get TTS engine in your service. Also, the `android:onClick` attribute in the XML layout file should be set to `test_TextToSpeechService_broadcastTtsQueueProcessingCompleted`, so that this function will work when the button is clicked.

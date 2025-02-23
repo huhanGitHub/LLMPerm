@@ -1,0 +1,40 @@
+The "UserDefinedFileAttributeView" API is part of Java's NIO file API, which is not supported on Android because of Android's limited support for Java NIO. However, if you're using Java on a different platform such as a PC or a server, you can use the following example:
+
+For this example, you'll need the NIO packages and IOException. The method will get a file's UserDefinedFileAttributeView and calculate the size of a user defined attribute.
+
+```java
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.io.IOException;
+
+public void test_UserDefinedFileAttributeView_size() {
+    //Define path to the file
+    Path path = Paths.get("/path/to/your/file");
+
+    try {
+        //Get UserDefinedFileAttributeView of the file
+        UserDefinedFileAttributeView view = Files.getFileAttributeView(path, UserDefinedFileAttributeView.class);
+
+        //Define attribute name
+        String name = "userAttribute";
+
+        //Check if attribute exists
+        if (view.list().contains(name)) {
+            //Calculate and print attribute size
+            int size = view.size(name);
+            System.out.println("The size of attribute '" + name + "' is: " + size + " bytes");
+        } else {
+            System.out.println("The attribute '" + name + "' does not exist for this file");
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Remember to replace "/path/to/your/file" and "userAttribute" with the real path to your file and the name of the user-defined attribute you're interested in respectively.
+
+Keep in mind that this attribute is something you or others need to have previously defined and set for the file. It's not something like file's size, creation date, etc., Windows users can do that through the file's properties, on 'Details' tab.
+
+Note : This method will not work on Android as the UserDefinedFileAttributeView is not available in Android. It should run fine on a standard Java environment such as a PC or Server.

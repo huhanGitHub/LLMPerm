@@ -1,0 +1,49 @@
+Here is a simple example of a method which tests the "setFilter" functionality of the "Handler" class in java.util.logging package.
+
+```java
+import java.util.logging.Filter;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Handler handler;
+    private Logger logger;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_Handler_setFilter();
+    }
+
+    void test_Handler_setFilter() {
+        try {
+            // Create a Logger
+            logger = Logger.getLogger(MainActivity.class.getName());
+
+            // Get the Handler from Logger
+            handler = logger.getHandlers()[0];
+
+            // Define a simple filter which only logs INFO
+            handler.setFilter(new Filter() {
+                @Override
+                public boolean isLoggable(LogRecord record) {
+                    return record.getLevel().getName().equalsIgnoreCase("INFO");
+                }
+            });
+
+            logger.info("This is an INFO message.");
+            logger.warning("This is a WARNING message.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Now, only the INFO message will be logged
+    }
+}
+```
+In the above example, we have first created a logger instance for the MainActivity class. The logger has an in-built handler which is required to publish the logging information. We set a filter on the handler, which allows only INFO level messages to be logged. We then create two log messages, one INFO and one WARNING. Only the INFO message will be printed as evident by the filter.

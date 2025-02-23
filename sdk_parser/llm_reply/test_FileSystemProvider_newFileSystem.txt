@@ -1,0 +1,42 @@
+Here is a basic method to demonstrate the usage of FileSystemProvider's newFileSystem method:
+
+```java
+import android.util.Log;
+
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystemAlreadyExistsException;
+import java.nio.file.FileSystems;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.HashMap;
+import java.util.Map;
+
+public void test_FileSystemProvider_newFileSystem(){
+
+    try{
+        // Create a URI that represents the file path
+        URI uri = URI.create("file:///storage/emulated/0/Download/samplefile.txt");
+
+        // Create a map with necessary environment configuration
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+        
+        // Get the FileSystemProvider
+        FileSystemProvider provider = FileSystems.getDefault().provider();
+
+        // Create a new FileSystem using the Provider
+        FileSystem newFileSystem = provider.newFileSystem(uri, env);
+
+    } catch(FileSystemAlreadyExistsException e) {
+        Log.e("TEST", "File system already exists: ", e);
+    } catch (Exception e) {
+        Log.e("TEST", "Exception: ", e);
+    }
+}
+```
+
+Please note that this code snippet only creates a FileSystem object and does not actually perform anything with it. To make use of it, you may need to open a Path in the FileSystem or perform some other operation.
+
+Also, the code example is theoretical, as Android does not support the full implementation of java.nio.file, only parts of it are supported. Using java.io.File or android.os.File API would be safer in terms of compatibility. 
+
+Additionally, accessing the file system in Android requires the READ_EXTERNAL_STORAGE and/or WRITE_EXTERNAL_STORAGE permissions. It is also highly recommended to use Scoped Storage for Android versions 10 and above.

@@ -1,0 +1,31 @@
+To generate an example for this, first, you need to create an instance of `AdvertisingSetParameters`. This class has a builder style API which you can use to set the parameters. You can set the address type by using the `setOwnAddressType` method.
+
+Here is an example of a function that can create an `AdvertisingSetParameters` instance and set the address type. This function uses the `AdvertisingSetParameters.Builder` to set the address type to `AdvertisingSetParameters.INTERVAL_HIGH`, but the type can be anything you want.
+
+```java
+import android.bluetooth.le.AdvertisingSetParameters;
+import android.util.Log;
+
+public void test_AdvertisingSetParameters_setOwnAddressType() {
+    try {
+        AdvertisingSetParameters params = new AdvertisingSetParameters.Builder()
+                .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
+                .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
+                .setPrimaryPhy(AdvertisingSetParameters.PHY_LE_1M)
+                .setSecondaryPhy(AdvertisingSetParameters.PHY_LE_1M)
+                .setIncludeTxPower(false)
+                .setOwnAddressType(AdvertisingSetParameters.BLE_ADDRESS_SCANNABLE_CONNECTABLE)
+                .build();
+
+        Log.d("Test", "AdvertisingSetParameters own address type: " + params.getOwnAddressType());
+    } catch (Exception e) {
+        Log.e("Test", "Failed to set AdvertisingSetParameters.", e);
+    }
+}
+```
+
+Please note the `AdvertisingSetParameters` is available for applications targeting API 26 and above. Please ensure to add required Bluetooth permissions in Manifest file, and also check/request the permissions at runtime.
+
+The `AdvertisingSetParameters.Builder` class is used to create an `AdvertisingSetParameters` object. For creating instance of `Builder`, you can just use its default constructor: `new Builder()`. And then you can call `setOwnAddressType` on the builder object. 
+
+Once you are done setting all your parameters (in this case, we're only setting the own address type), you can call `.build()` on the Builder to create your finalized `AdvertisingSetParameters` object.

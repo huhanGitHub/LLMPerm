@@ -1,0 +1,49 @@
+The DriverManager class from java.sql package comes with a setLogStream() method. However, this method is deprecated since JDK 1.6 because setLogWriter method is preferred as the new way to write to the application's logs.
+
+Here is how you can have a method for showcasing the usage of the old deprecated method:
+
+```java
+import java.sql.DriverManager;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import android.util.Log;
+
+public void test_DriverManager_setLogStream() {
+try {
+  // Uses the deprecated setLogStream method 
+  PrintStream logStream = new PrintStream(new FileOutputStream("/sdcard/log.txt"));
+  DriverManager.setLogStream(logStream);
+  
+  // Do some actions that will trigger logs
+  // For instance: DriverManager.getConnection(/* your JDBC URL here */);
+
+} catch(Exception e) {
+  Log.e("TestApp", "Failed to set Log Stream", e);
+}
+}
+```
+
+The method saves SQL logs into a file on the Android device storage. Note that the code uses "/sdcard/log.txt" as a path, this might not work on all Android devices due to different storage paths.
+
+Remember, this method is deprecated and might not work as expected, or at all. The preferred way is using setLogWriter(PrintWriter out), for example:
+
+```java
+import java.sql.DriverManager;
+import java.io.PrintWriter;
+
+public void test_DriverManager_setLogWriter() {
+    try {
+        PrintWriter logWriter = new PrintWriter("logFile.txt");
+        DriverManager.setLogWriter(logWriter);
+        
+        // Perform some database operations that will trigger log
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Permission to write/read storage might be required depending on the version of android your app is targeting. In that case, permissions android.permission.WRITE_EXTERNAL_STORAGE and android.permission.READ_EXTERNAL_STORAGE should be included in AndroidManifest.xml. 
+
+Testing example might not work as is. Adjust it as required.

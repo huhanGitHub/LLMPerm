@@ -1,0 +1,50 @@
+Here is the code for the method test_CellIdentityLte_getMobileNetworkOperator in an Android Activity:
+
+```java
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.telephony.CellInfoLte;
+
+public class TestActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+        } else {
+            test_CellIdentityLte_getMobileNetworkOperator();
+        }
+    }
+
+    private void test_CellIdentityLte_getMobileNetworkOperator() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            List<CellInfo> cellInfos = telephonyManager.getAllCellInfo();
+            for (CellInfo cellInfo : cellInfos) {
+                if (cellInfo instanceof CellInfoLte) {
+                    CellInfoLte cellInfoLte = (CellInfoLte) cellInfo;
+                    String mobileNetworkOperator = cellInfoLte.getCellIdentity().getMobileNetworkOperator();
+                    // Do something with mobileNetworkOperator
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                test_CellIdentityLte_getMobileNetworkOperator();
+            }
+        }
+    }
+}
+```
+
+This code is checking whether the READ_PHONE_STATE permission is granted and if not, it requests for it. Then it uses the TelephonyManager to get a list of CellInfo objects, checks to see if each CellInfo is an instance of CellInfoLte, and if it is, it gets the mobile network operator string. If the permission is not granted, it does not function until the permission is granted.

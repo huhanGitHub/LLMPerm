@@ -1,0 +1,21 @@
+Java API java/nio/file/attribute/UserPrincipalLookupService.java is not supported by Android. Therefore, you won't be able to use it in an Android activity. You can only use it in a standard Java project. Here is an example in a Java Project:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
+
+public void test_UserPrincipalLookupService_lookupPrincipalByGroupName() {
+    UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+    try {
+        UserPrincipal user = lookupService.lookupPrincipalByGroupName("admin");
+
+        // Use the UserPrincipal object in your code...
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In this example, we are trying to look up the principal for the group "admin". Please keep in mind that this will only work if the group "admin" exists on the system where the code is being run.

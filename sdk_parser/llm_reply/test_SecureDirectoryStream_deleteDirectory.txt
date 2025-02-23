@@ -1,0 +1,40 @@
+Please note that Android does not support the `java.nio.file` package until API level 26 (Android 8.0, Oreo). Also, Android does not support `SecureDirectoryStream` yet. But anyways, here's how you would use it in a general Java application:
+
+```java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
+public void test_SecureDirectoryStream_deleteDirectory(Path dirPath) throws IOException {
+    DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dirPath);
+
+    if (directoryStream instanceof SecureDirectoryStream) {
+        SecureDirectoryStream<Path> secureDirectoryStream = (SecureDirectoryStream<Path>) directoryStream;
+
+        Files.walkFileTree(dirPath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                secureDirectoryStream.deleteEntry(file.getFileName());
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                if (exc != null) throw exc;
+                if (!dir.equals(dirPath)) {
+                    secureDirectoryStream.deleteEntry(dir.getFileName());
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+}
+```
+
+In the above method(`test_SecureDirectoryStream_deleteDirectory`), a `SecureDirectoryStream` is created for the provided directory path(`dirPath`). A `FileVisitor` is used to traverse each file within the directory and sub-directories, if any. 
+
+Each visited file is deleted by calling `secureDirectoryStream.deleteEntry(file.getFileName())` and after visiting all files within a directory, the directory itself is deleted unless it is the initial directory.
+
+Also, please note that this example will not work if the `SecureDirectoryStream` is not supported by the file system or if the path does not point to a directory.
+
+For Android, you'd have to use classes/methods provided in the `android.os` package to delete a directory and all its contents. For security reasons, `SecureDirectoryStream` was introduced in JDK 7 for more secure file deletion but it's still not part of the Android SDK.

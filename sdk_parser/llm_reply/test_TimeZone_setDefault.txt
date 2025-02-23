@@ -1,0 +1,33 @@
+Here is a simple usage example:
+
+```java
+import java.util.TimeZone;
+
+public void test_TimeZone_setDefault() {
+  // Get the default TimeZone
+  TimeZone defaultTimeZone = TimeZone.getDefault();
+
+  // Print the default TimeZone
+  System.out.println("Default TimeZone: " + defaultTimeZone.getID());
+
+  // Set the default TimeZone to "America/Los_Angeles"
+  TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
+
+  // Get the new default TimeZone
+  TimeZone newDefaultTimeZone = TimeZone.getDefault();
+
+  // Print the new default TimeZone
+  System.out.println("New Default TimeZone: " + newDefaultTimeZone.getID());
+
+  // Verify that the default TimeZone has been changed successfully
+  if (!newDefaultTimeZone.getID().equals(defaultTimeZone.getID())) {
+    System.out.println("Default TimeZone successfully changed");
+  } else {
+    System.out.println("Failed to change default TimeZone");
+  }
+}
+```
+
+This method first prints the default TimeZone that is currently set in the system. Then, It sets the default TimeZone to "America/Los_Angeles". Afterwards, it prints the new default TimeZone that has been set. In the end, it checks if the default TimeZone has been changed successfully. If the ID of the new default TimeZone is not equal to the ID of the default TimeZone that was originally set in the system, it prints "Default TimeZone successfully changed". If the IDs are equal, it means the default TimeZone has not been changed and it prints "Failed to change default TimeZone".
+
+Please remember that `Timezone.setDefault()` will change the default TimeZone for your entire app and potentially affect other parts of your code that use TimeZone. Therefore, it's generally advised to use this method carefully. If possible, handle TimeZone changes on a per-use basis.

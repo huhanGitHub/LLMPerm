@@ -1,0 +1,38 @@
+Below is an example of a Java method in an Android Activity that uses android.se.omapi.Channel's transmit method. It assumes that the Channel object is available and that the application already has the necessary permissions.
+
+``` java
+import android.se.omapi.Channel;
+import android.util.Log;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    // You would usually get your Channel instance through a Reader
+    private Channel channel;
+
+    public void test_Channel_transmit() {
+        if (channel != null) {
+            byte[] command = new byte[] { (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x08 };
+            try {
+                byte[] response = channel.transmit(command);
+                if (response != null) {
+                    Log.d("Test Channel", "Transmit success. Response: " + new String(response));
+                } else {
+                    Log.d("Test Channel", "Response is null.");
+                }
+            } catch (IOException e) {
+                Log.e("Test Channel", "Error in transmit: " + e.getMessage());
+            } catch (SecurityException e) {
+                Log.e("Test Channel", "Missing required permissions.");
+            }
+        } else {
+            Log.e("Test Channel", "Channel is null.");
+        }
+    }
+}
+```
+
+This simulation command (0x0084000008) will generate a random number each time you execute it. The `transmit()` method sends this command to the card and returns the response. 
+
+Please note it's only example, in real application you should close channels when you're done with them. Also try-catch is necessary since exceptions can be thrown if there's an IO error or if the necessary permissions haven't been granted. 
+
+The android application should have the permission `com.android.permission.BIND_DEVICE_ADMIN` to access Open Mobile API (android.se.omapi).

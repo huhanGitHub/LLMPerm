@@ -1,0 +1,32 @@
+Here is a method named test_MbmsDownloadSession_create that shows an example of how you could use the MbmsDownloadSession class in an Android activity. This involves creating an instance of MbmsDownloadSession to establish a download session.
+
+```java
+import android.content.Context;
+import android.telephony.MbmsDownloadSession;
+import android.telephony.mbms.MbmsDownloadSessionCallback;
+
+public void test_MbmsDownloadSession_create() {
+    Context context = this; // 'this' refers to an instance of an Android Context class (typically an Activity)
+    MbmsDownloadSessionCallback sessionCallback = new MbmsDownloadSessionCallback() {
+        @Override
+        public void onError(int errorCode, String message) {
+            super.onError(errorCode, message);
+            // handle the error here, based on the error codes defined in MbmsErrors class
+        }
+        // Define other callback methods here per your requirement
+    };
+
+    try {
+        MbmsDownloadSession session = MbmsDownloadSession.create(context, sessionCallback);
+        // Now you can use 'session' object to download files using MBMS
+    } catch (IllegalArgumentException | IllegalStateException e) {
+        // Handle exception here 
+    }
+}
+```
+
+In this example, we are first creating a Context object which is a reference to the calling activity. Next, an instance of MbmsDownloadSessionCallback is created which includes the methods that will be called in response to various events related to the download session.
+
+Then, we create a download session through MbmsDownloadSession's create method by passing the Context object and MbmsDownloadSessionCallback instance. 
+
+In a real-world scenario, you will also need to handle potential exceptions and errors while creating a download session. The callback methods in MbmsDownloadSessionCallback would allow you to set the necessary actions, such as resolving errors or updating the UI.

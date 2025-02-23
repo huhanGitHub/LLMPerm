@@ -1,0 +1,27 @@
+Here is an example of a self-contained method named test_Files_setOwner. Notice that this code will throw some Exceptions because it needs permissions to read and change the file's owner. This only works for JVM, since Android does not support the FileOwnerAttributeView due to its Linux-based file system.
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
+
+public void test_Files_setOwner() {
+    try {
+        Path path = FileSystems.getDefault().getPath("/path/to/your/file");
+        FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+        UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+        UserPrincipal newOwner = lookupService.lookupPrincipalByName("newOwner");
+        ownerAttributeView.setOwner(newOwner);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Please replace "/path/to/your/file" with the actual path to your file and "newOwner" with the name of the new owner. This code will set the owner of the file at the specified path to the new owner. 
+
+It's important to know that this won't work for Android, only for a regular JVM, since Android doesn't support java.nio.file.attribute.FileOwnerAttributeView. So, be careful where you intend to use it.

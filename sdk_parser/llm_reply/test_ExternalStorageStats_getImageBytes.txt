@@ -1,0 +1,46 @@
+Below is the method test_ExternalStorageStats_getImageBytes:
+
+Since this method is running a potentially long operation, this should not be done on the UI thread. Hence it's being run on a separate thread.
+
+Please note this example also requires permissions. Add those in the AndroidManifest.xml file.
+
+```java
+<uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Here's how to invoke the method in your Activity:
+
+```java
+private UsageStatsManager usageStatsManager;
+
+// in your onCreate method
+if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+    usageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
+}
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        test_ExternalStorageStats_getImageBytes("your.package.name");
+    }
+}).start();
+```
+
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_ExternalStorageStats_getImageBytes(String packageName) {
+    try {
+        ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(packageName, 0);
+        StorageStatsManager storageStatsManager = (StorageStatsManager) getSystemService(Context.STORAGE_STATS_SERVICE);
+        ExternalStorageStats externalStorageStats = storageStatsManager.queryExternalStatsForUser(applicationInfo.storageUuid, android.os.Process.myUserHandle());
+        long imageBytes = externalStorageStats.getImageBytes();
+        Log.d("AppLog", "External Image Bytes for package:" + packageName + " is:" + imageBytes);
+    } catch (PackageManager.NameNotFoundException | IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This method gets the ExternalStorageStats for a given package and then extracts the number of bytes used by image files.

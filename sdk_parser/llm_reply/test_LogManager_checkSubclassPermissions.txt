@@ -1,0 +1,41 @@
+Here's an example of a method `test_LogManager_checkSubclassPermissions` which you might use inside your android activity to test the checkSubclassPermissions method from LogManager. This method is protected and it's not directly accessible, but you can test if LogManager has any subclasses using a try-catch block:
+
+```java
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_LogManager_checkSubclassPermissions();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_LogManager_checkSubclassPermissions() {
+        try {
+            LogManager logManager = LogManager.getLogManager();
+            Logger logger = Logger.getLogger(getClass().getName());
+
+            // Create a subclass of LogManager
+            class MyLogManager extends LogManager {}
+
+            MyLogManager myLogManager = new MyLogManager();
+
+            logger.info("Subclass created: " + myLogManager);
+
+        } catch (SecurityException e) {
+            // If the invocation of checkSubclassPermissions throws a security exception,
+            // it means that LogManager has indeed a subclass
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.severe("Subclass is not permitted");
+        }
+    }
+}
+```

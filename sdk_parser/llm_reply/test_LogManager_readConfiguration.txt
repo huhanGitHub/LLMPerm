@@ -1,0 +1,37 @@
+Sure, here is an example of a method that uses the readConfiguration() method from the java.util.logging.LogManager class. This method is designed to read a logging properties file, configure the LogManager, and print to the console whether the configuration was successfully read or not.
+
+You must replace '/path/to/your/logging.properties' with the actual path to your logging properties file. This file informs the LogManager what logging levels to use for certain functionality.
+
+Note: Logging configuration based on properties file isn't pretty much used in Android, instead Logcat is used for that matter. However this example is in strict adherence with your request. 
+
+```java
+import java.util.logging.LogManager;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public void test_LogManager_readConfiguration() {
+    LogManager logManager = LogManager.getLogManager();
+    try {
+        FileInputStream fis = new FileInputStream("/path/to/your/logging.properties");
+        logManager.readConfiguration(fis);
+        System.out.println("LogManager configuration successfully read.");
+        fis.close();
+    } catch (IOException e) {
+        System.out.println("Could not read LogManager configuration: " + e.getMessage());
+    }
+}
+```
+
+In case of Android, usually one doesn't require to configure the entire log manager. Android has a built-in logging system that any apps can use to output messages. For example:
+
+```java
+import android.util.Log;
+
+public void test_Log_Android() {
+    String TAG = "MyAppTag";
+    Log.d(TAG, "Debug message");
+    Log.i(TAG, "Information message");
+    Log.w(TAG, "Warning message");
+    Log.e(TAG, "Error message");
+}
+```

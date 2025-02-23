@@ -1,0 +1,48 @@
+Below is an example of a method for testing the creation of an `MbmsStreamingSession`. This method is written adhering to the Android framework.
+
+```java
+public void test_MbmsStreamingSession_create() {
+    // Context of the app
+    Context context = this.getApplicationContext();
+    // ExecutorService to run tasks in the background
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    // Instance of the MbmsStreamingSessionListener to receive callbacks
+    MbmsStreamingSession.MbmsStreamingSessionCallback callback = new MbmsStreamingSession.MbmsStreamingSessionCallback() {
+        @Override
+        public void onError(int errorCode, String message) {
+            super.onError(errorCode, message);
+            Log.e("MbmsStreamingSessionTest", "onError: " + message);
+        }
+
+        @Override
+        public void onStreamingServiceStateUpdated(List<StreamingServiceInfo> services) {
+            super.onStreamingServiceStateUpdated(services);
+            for (StreamingServiceInfo service : services) {
+                Log.d("MbmsStreamingSessionTest", "Service updated: " + service.getServiceClassName());
+            }
+        }
+    };
+
+    try {
+        // Create an instance of the MbmsStreamingSession
+        MbmsStreamingSession mbmsStreamingSession = MbmsStreamingSession.create(context, executorService, callback);
+        
+        // Check if session is not null
+        assertNotNull(mbmsStreamingSession);
+        Log.d("MbmsStreamingSessionTest", "MbmsStreamingSession creation successful");
+
+        // Do something with the MbmsStreamingSession instance
+        // mbmsStreamingSession.startStreaming(...);
+    } catch (IllegalStateException e) {
+        Log.e("MbmsStreamingSessionTest", "MbmsStreamingSession could not be created", e);
+    } catch (RuntimeException e) {
+        Log.e("MbmsStreamingSessionTest", "Unexpected exception", e);
+    }
+}
+```
+
+In this example, note that we are providing a `MbmsStreamingSession.MbmsStreamingSessionCallback` with methods to handle errors and streaming service state updates. When the `MbmsStreamingSession` is successfully created, you can use this object to start or stop streaming. 
+
+Remember that `MbmsStreamingSession.create(Context context, Executor executor, MbmsStreamingSessionCallback callback)` might throw `IllegalStateException` if you've already created an instance of `MbmsStreamingSession`, as this is a singleton for any given subscription ID. 
+
+Please note this API requires the carrier or OEM to support the functionality, and so it might not be available on all devices. Also note that you would need `android.permission.ACCESS_MBMS` permission to access these APIs.

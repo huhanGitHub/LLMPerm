@@ -1,0 +1,26 @@
+Here is a Java example of using the `Files.lines` method, which reads all lines from a file. This method does not close the file automatically, hence the use of a `try-with-resources` block to ensure the file is closed when we're done with it.
+
+In Android, access to the filesystem is blocked by default for security reasons. So to test this function you need to run it in plain Java environment like console application or JUnit test.
+
+```java
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+public static void test_Files_lines() {
+    Path filePath = Paths.get("path_to_your_file.txt");
+
+    try (Stream<String> lines = Files.lines(filePath)) {
+        lines.forEach(System.out::println);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Replace `"path_to_your_file.txt"` with the path to an actual file on your filesystem. 
+
+In this example, the `Files.lines` method is used to read all the lines from a file as a `Stream<String>`. The `try-with-resources` block ensures that the file is closed after it is read, even if an exception is thrown. The lines from the file are then printed to the console using a method reference to `System.out::println`.

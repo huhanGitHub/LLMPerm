@@ -1,0 +1,75 @@
+Below is a simple method for testing AsyncQueryHandler's startQuery method in an Android activity. Note that this method assumes you have a ContentResolver available and correct permission to query a content provider.
+
+```java
+import android.content.AsyncQueryHandler;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
+
+public class ExampleActivity extends AppCompatActivity {
+
+    private AsyncQueryHandler mAsyncQueryHandler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_example);
+
+        test_AsyncQueryHandler_startQuery();
+    }
+
+    private void test_AsyncQueryHandler_startQuery() {
+
+        // Create an instance of AsyncQueryHandler
+        mAsyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+
+            @Override
+            protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+
+                // Handle the result of the query here
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        // Assuming you are querying Contacts and want to fetch display name
+                        String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY));
+                        Log.d("TestTag", "Contact Name: " + displayName);
+                    } while (cursor.moveToNext());
+                }
+
+                // Don't forget to close the cursor
+                if (cursor != null) cursor.close();
+            }
+
+        };
+
+        // This is the URI for the content provider
+        Uri uri = ContactsContract.Contacts.CONTENT_URI;
+
+        // The columns to retrieve
+        String[] projection = new String[] {
+                ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
+        };
+
+        // Assume we are checking contacts permissions before running the query
+        if (checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            // Starts the query
+            mAsyncQueryHandler.startQuery(
+                    0,                     // Token to identify the query
+                    null,                  // Any object which needs to be passed back on callback
+                    uri,                   // The URI for the content provider to query
+                    projection,            // The columns to retrieve
+                    null,                  // No where clause, return all records
+                    null,                  // No where clause, so arguments are not needed
+                    null                   // Sort order
+            );
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},0);
+        }
+
+    }
+}
+```
+It's important to note that you need to handle the permissions for accessing the data. Here, permission to read contacts data has been checked before starting the query. If they are not granted, they are requested.

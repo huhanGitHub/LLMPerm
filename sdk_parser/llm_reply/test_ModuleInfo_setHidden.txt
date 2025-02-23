@@ -1,0 +1,47 @@
+In order to use the `setHidden` method of the `ModuleInfo` class, we first need to get an instance of `ModuleInfo`. However, the `ModuleInfo` is an immutable class and objects of this class are created by the system, so we cannot create a new instance directly.
+
+Also note that `setHidden` is actually a hidden method in the Android framework, it is not exposed to the developer and it is intended only for system-level processes. Sunsequently, it can't be invoked directly.
+
+Given the constraints, here is an example of how you would generally access and manipulate module information in Android:
+
+```java
+import android.content.pm.ModuleInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_ModuleInfo_setHidden();
+        } catch (Exception e) {
+            Log.e("MainActivity", "Failed to test ModuleInfo.setHidden", e);
+        }
+    }
+
+    private void test_ModuleInfo_setHidden() throws Exception {
+        PackageManager pm = getApplicationContext().getPackageManager();
+        List<ModuleInfo> moduleInfoList = pm.getInstalledModules(PackageManager.MATCH_ALL);
+        for (ModuleInfo moduleInfo : moduleInfoList) {
+            // if there would be this function we could use it as follows
+            // moduleInfo.setHidden(true);
+
+            // Print the module info for testing purpose
+            Log.d("MainActivity", "Module Name: " + moduleInfo.getName());
+            Log.d("MainActivity", "Module Package Name: " + moduleInfo.getPackageName());
+            Log.d("MainActivity", "Module is Hidden: " + moduleInfo.isHidden());
+        }
+    }
+}
+```
+
+This code will list all installed modules and print their names, package names, and hidden statuses. However, we can't use `ModuleInfo.setHidden` function as it is not accessible and doesn't exist.

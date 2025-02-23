@@ -1,0 +1,63 @@
+Sure, here is an example of how you might create a test for the `setArchive` method in the `DosFileAttributeView` API.
+
+```java
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.DosFileAttributeView;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        String fileName = Environment
+                          .getExternalStorageDirectory()
+                          .getAbsolutePath() + "/test.txt";
+
+        try {
+            test_DosFileAttributeView_setArchive(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_DosFileAttributeView_setArchive(String filePath) throws IOException {
+        // This operation is platform-dependent and is only available to operating
+        // systems that support the DOS attributes. If the FileStore associated
+        // with the file does not support these attributes then this method returns null
+       
+        File file = new File(filePath);
+        Path path = file.toPath();
+        DosFileAttributeView view = Files.getFileAttributeView(path, DosFileAttributeView.class);
+        if(view != null) {
+            // Set Archive flag for the file
+            view.setArchive(true);
+            Log.d("DosFileAttributeView","Successfully set 'Archive' attribute for the file");
+        } else {
+            Log.d("DosFileAttributeView","FileStore does not support DOS attributes");
+        }
+    }
+}
+```
+
+In this code:
+
+- A file is created in the external storage of the Android device with the name `test.txt`.
+- `test_DosFileAttributeView_setArchive` function is used to set the `Archive` flag for the specified file.
+- The `DosFileAttributeView` for this file is obtained using `Files.getFileAttributeView()`.
+- If the file store associated with the file supports DOS attributes, `setArchive(true)` is used to set the `Archive` attribute for the file.
+
+Please note:
+
+- For this to work, your Andriod device must support and have access to DOS attributes for files (which is not common).
+- This code reads/writes to external storage, and thus requires the `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` permission. Add `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>` and `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>` in your `AndroidManifest.xml`.
+
+And be aware this code can throw a `java.nio.file.FileSystemException` if the file system does not support the attribute or the attribute value provided is invalid.

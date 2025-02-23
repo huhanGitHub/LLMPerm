@@ -1,0 +1,39 @@
+Assuming you have granted the necessary permissions in your Android manifest file, here is how you can create the `test_HardwarePropertiesManager_getFanSpeeds` method:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N)
+public void test_HardwarePropertiesManager_getFanSpeeds() {
+    // checking if the current version of Android supports HardwarePropertiesManager
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+        // getting the system service for HardwarePropertiesManager
+        HardwarePropertiesManager hardwarePropertiesManager = (HardwarePropertiesManager) getSystemService(Context.HARDWARE_PROPERTIES_SERVICE);
+
+        try {
+            // getting fan speeds using the getFanSpeeds method
+            float[] fanSpeeds = hardwarePropertiesManager.getFanSpeeds();
+
+            // it's always good to check if the returned value is not null
+            if (fanSpeeds != null) { 
+                for (float fanSpeed: fanSpeeds) {
+                    // Printing the fan speed values to the console
+                    System.out.println("Fan speed: " + fanSpeed);
+                }
+            }
+
+        } catch (Exception e) {
+            // catching possible exceptions
+            e.printStackTrace();
+        }
+
+    } else {
+
+        // Print out a message if the current version of Android does not support HardwarePropertiesManager
+        System.out.println("HardwarePropertiesManager is not supported on this device");
+    }
+}
+```
+
+Please note that HardwarePropertiesManager is only available starting from Android version 7.0 (API 24) and it requires `android.Manifest.permission#DEVICE_POWER` permission in order to retrieve the fan speeds. This API is usually used for devices such as Android Things, that are built for Internet of Things (IoT) where you might need to read fan speeds and temperatures.
+
+Please replace `getSystemService(Context.HARDWARE_PROPERTIES_SERVICE)` with `context.getSystemService(Context.HARDWARE_PROPERTIES_SERVICE)` if you are working within classes other than `Activity`.

@@ -1,0 +1,36 @@
+The following is an example of a method that uses the `SliceManager` class in Android to check slice permissions. It's important to note that slice permissions and accessing them are a part of newer Android APIs (API level 28 and above).
+
+Make sure to handle the necessary permissions in the AndroidManifest.xml file. The instructions to do so can be found in Android official documentation. 
+
+This method uses try/catch to prevent the app from crashing if the slice is not available.
+
+```java
+// Imports needed for this method
+import android.app.slice.SliceManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+public void test_SliceManager_enforceSlicePermission() {
+    // Replace with your specific slice URI
+    Uri myUri = Uri.parse("content://com.example.app/myslice");
+
+    // You need to obtain a reference to the SliceManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        SliceManager sliceManager = (SliceManager) getSystemService(Context.SLICE_SERVICE);
+
+        // Check if the Slice permissions have been granted
+        try {
+            sliceManager.enforceSlicePermission(myUri, getPackageName());
+            // If no SecurityException is thrown, permission is granted
+            System.out.println("Slice permission is granted.");
+        } catch (SecurityException e) {
+            // Catch an exception if the permission is not granted
+            System.out.println("Slice permission is NOT granted. " + e.getMessage());
+        }
+    }
+}
+```
+
+Remember to replace `"content://com.example.app/myslice"` with the actual URI for your slice. You can also replace `getPackageName()` with the actual package name of the app that needs the permission. You should have slice permissions defined in your app manifest file before using this method.

@@ -1,0 +1,67 @@
+In the following code, we will use the android.se.omapi.SEService and android.se.omapi.Reader classes in a simple Activity to get an instance of a Reader from the SEService, which is used in Secure Element communication.
+
+We implemented a SEService.OnConnectedListener to handle the process of getting the Reader after the SEService connection is established. 
+
+```java
+import android.se.omapi.Reader;
+import android.se.omapi.SEService;
+
+public class MainActivity extends AppCompatActivity implements SEService.OnConnectedListener {
+    private SEService seService;
+    private Reader reader;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            // Initialize the SEService object.
+            seService = new SEService(this, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (seService != null && seService.isConnected()) {
+            seService.shutdown();
+        }
+    }
+
+    @Override
+    public void onConnected() {
+        // Test method to get Reader.
+        test_SEService_getReader();
+    }
+
+    public void test_SEService_getReader() {
+        if (seService == null) {
+            Log.e("test_SEService_getReader", "SEService is null");
+            return;
+        }
+        if (!seService.isConnected()) {
+            Log.e("test_SEService_getReader", "SEService is not connected");
+            return;
+        }
+        // Get the Reader array.
+        Reader[] readers = seService.getReaders();
+        if (readers.length > 0) {
+            // Assume the first reader for the test.
+            reader = readers[0];
+            Log.d("test_SEService_getReader", "Reader name: " + reader.getName());
+        } else {
+            Log.e("test_SEService_getReader", "No reader available");
+        }
+    }
+}
+```
+
+Please ensure to have the necessary permissions in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+```
+
+This example is a simple and direct usage of the `getReaders()` method from `SEService`. According to the Android Developers official documentation, the `getReaders()` method "Provides a list of all available Secure Element readers". Please tailor the code to your specific needs.

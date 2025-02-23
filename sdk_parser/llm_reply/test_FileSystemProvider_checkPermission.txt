@@ -1,0 +1,35 @@
+Below is a self-contained method `test_FileSystemProvider_checkPermission` that can be used as an example of using the java.nio.file.spi.FileSystemProvider API. In this example, permission to read a file using the file system provider is checked:
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.spi.FileSystemProvider;
+
+public void test_FileSystemProvider_checkPermission() {
+    // Path to the file that we want to check the permission
+    Path path = Paths.get("/path/to/file"); 
+
+    // Get the default FileSystemProvider
+    FileSystemProvider provider = path.getFileSystem().provider();
+
+    // check the read permission
+    try {
+        provider.checkAccess(path, java.nio.file.AccessMode.READ);
+        // permission granted
+        Toast.makeText(this, "Permission granted to read the file", Toast.LENGTH_SHORT).show();
+    } catch (IOException e) {
+        // permission denied or file not found
+        Toast.makeText(this, "Permission denied or file not found", Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
+}
+```
+As FileSystemProvider is part of java.nio.file.spi, it's a Java API, and it can be used in Android 26 and above (as Android 26 is when Java 8 APIs were fully desugared and started supporting). But this class isn't much used in Android, it's mostly used in Java software development for file systems in a custom way. 
+
+Remember to add the necessary permissions in Android app manifests when dealing with file read operations.
+
+Please note that calling I/O operations on the main thread can lead to NetworkOnMainThreadException, it's always a better practice to move such operations to a different thread. Use Async Task or Services or other multi-threading concepts in such cases. 
+
+And in terms of permissions, Android 6.0 (Marshmallow) introduced the runtime permissions model where user needs to grant the permission at runtime. You need to handle that as well for dangerous permissions like accessing storage.

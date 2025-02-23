@@ -1,0 +1,35 @@
+Here is a simple test method that demonstrates how to obtain a SyncStateContract. Note that actual usage might depend on specific needs, so this is just a baseline example.
+
+```
+public void test_SyncStateContract_get() {
+    // A content resolver is needed to get access to the content provider
+    ContentResolver contentResolver = getContentResolver();
+    // The account object representing the account we are checking
+    android.accounts.Account account = new android.accounts.Account("com.example", "example.type");
+    // The authority must match the one in the content provider
+    String authority = "com.example.authority";
+
+    byte[] syncState = null;
+    try {
+        syncState = ContentResolver.getSyncState(account, authority);
+    } catch (RemoteException e) {
+        // Catch the exception as needed
+    }
+
+    if (syncState != null) {
+        // Do something with the sync state
+    } else {
+        // The sync state was not set
+    }
+}
+```
+
+This method tries to get the synchronization state for the given account and authority. The sync state is a byte array and can be used for anything (typically it would be something like the progress of a sync).
+
+Note that `getSyncState` can throw a `RemoteException` if there is a problem communicating with the sync adapter, so it must be caught and handled appropriately.
+
+In the Android manifest file, you must declare android.permission.READ_SYNC_STATS, or this method will throw a SecurityException.
+
+Replace "com.example", "example.type", and "com.example.authority" with your own specific account name, account type, and authority respectively. 
+
+Remember actual implementation and actions taken should be customized to your needs. If you need specifics on what to do with the syncState byte array, you need to consult the documentation or resources that define what the byte array contains for your specific implementation.

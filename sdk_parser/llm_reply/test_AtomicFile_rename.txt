@@ -1,0 +1,47 @@
+Here's a method that demonstrates the usage of AtomicFile in renaming a file:
+
+```Java
+import android.util.AtomicFile;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+     //...
+
+    public void test_AtomicFile_rename() {
+        AtomicFile atomicFile = null;
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            File oldFile = new File(getFilesDir(), "oldFileName.txt");
+            atomicFile = new AtomicFile(oldFile);
+            fileOutputStream = atomicFile.startWrite();
+
+            File newFile = new File(getFilesDir(), "newFileName.txt");
+            boolean isRenamed = oldFile.renameTo(newFile);
+
+            if(!isRenamed){
+                throw new IOException("Failed to rename file");
+            }
+            atomicFile.finishWrite(fileOutputStream);
+            Log.d("Test", "Successfully renamed. AtomicFile is used.");
+
+        } catch (IOException e) {
+            Log.e("Test", "Failed to use AtomicFile", e);  
+            if(atomicFile != null){
+               atomicFile.failWrite(fileOutputStream);
+            }
+        } finally {
+            if(fileOutputStream != null){
+                try { fileOutputStream.close(); } catch (IOException e) { e.printStackTrace(); }
+            }
+        }
+    }
+}
+```
+
+The `test_AtomicFile_rename` method uses an `AtomicFile` to handle a file rename operation. `AtomicFile` is part of Android's internal APIs and is used to perform atomic operations on a file. Atomic operations are operations that either fully complete or don't happen at all, ensuring data consistency.
+
+In the code above, we're attempting to rename a file `oldFileName.txt` to `newFileName.txt`. If the rename operation fails for any reason (the IOException caught in the try/catch block), `AtomicFile` ensures that the original file is as it was before the operation began using `failWrite()`. If the rename operation is successful, we commit the changes with `finishWrite(FileOutputStream stream)`.

@@ -1,0 +1,45 @@
+Here is a simplified example of a method called `test_AsyncQueryHandler_startUpdate`. In this example, I'm just inserting some dummy data to the `Contacts` database:
+
+```java
+public void test_AsyncQueryHandler_startUpdate() {
+    // Assign the respective permission required for reading from the Contacts database.
+    int permissionCheck = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.WRITE_CONTACTS);
+
+    // Check whether the permission is granted or not.
+    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        // If permission is granted, move on to perform the update operation.
+
+        // Initialize the AsyncQueryHandler
+        AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onUpdateComplete(int token, Object cookie, int result) {
+                // This method will be called when the update operation is complete
+                super.onUpdateComplete(token, cookie, result);
+                Log.i("info", "Update operation is complete");
+            }
+        };
+
+        // Configure the operation parameters. Replace these with your actual parameters.
+        Uri uri = ContactsContract rawContacts.CONTENT_URI;
+        String selection = ContactsContract.RawContacts.CONTACT_ID + "=?";
+        String[] selectionArgs = new String[] {"contact_id_string"};
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContactsContract.Data.DISPLAY_NAME, "new_name");
+
+        // Perform the update operation.
+        asyncQueryHandler.startUpdate(1, null, uri, contentValues, selection, selectionArgs);
+    } else {
+        // If permission is not granted, request the necessary permissions
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_CONTACTS},
+                PERMISSION_REQUEST_CODE);
+    }
+}
+```
+
+This method would be used in an Android Activity to test writing to the Contacts content provider, which requires runtime permissions to be granted. 
+
+The `startUpdate` method from `AsyncQueryHandler` makes it easy to perform updates on a separate thread, and receive a callback on the UI thread when the operation is complete.
+
+Note that this code does not actually test whether the update operation worked, it just wraps the update operation in a method for the sake of an example. If you want to test the result of the operation, you should keep track of the `result` argument provided to `onUpdateComplete` (which tells how many rows were impacted by the update), and add some respective logic.

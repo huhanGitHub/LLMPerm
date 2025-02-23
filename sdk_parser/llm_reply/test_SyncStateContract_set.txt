@@ -1,0 +1,37 @@
+Here's a usage example of the `SyncStateContract` class. This example provides a code snippet of an Android Activity where we use the account object and provider authority to construct a URI and this is passed to an Android system's ContentResolver to set some sync data:
+
+```java
+import android.accounts.Account;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.util.Log;
+
+public void test_SyncStateContract_set() {
+
+    try {
+        // get instance of Account
+        Account account = new Account("testAccount", "com.test.package");
+        String authority = "com.test.provider";
+
+        // construct URI with account and authority
+        Uri uri = SyncStateContract.Helpers.getUriForAccount(account, authority);
+
+        byte[] data = new byte[] {1, 2, 3, 4, 5}; // the data you want to set
+
+        // get the ContentResolver and set the sync state
+        ContentResolver resolver = this.getContentResolver();
+        SyncStateContract.Helpers.set(resolver, uri, data);
+
+    } catch (Exception exception) {
+        Log.e("SyncStateContractTest", "Failed to test SyncStateContract: "+exception.getMessage());
+    }
+
+}
+```
+
+Please remember to replace the dummy data (e.g "testAccount", "com.test.package" and "com.test.provider") with your correct data. Also, the use of this method requires the `GET_ACCOUNTS` permission and any app using this method should declare this permission in its manifest file.
+
+In addition, this code is trying to manipulate sync settings, which could have other side effects based on what your ContentProvider doing in sync operation, so please be cautious about its implications.

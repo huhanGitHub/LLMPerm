@@ -1,0 +1,29 @@
+Here is an example of usage of the DngCreator API in Android Java. Although mind you, this method won't work as a standalone due to many dependencies it needs to work. It's a rather simple way of creating a DNG file from a captured photo in Android. In this example, we are assuming that cameraCaptureResult and image are previously defined as final CaptureResult and final Image.
+
+```java
+public void test_DngCreator_writeByteBuffer() {
+  File file = new File(getExternalFilesDir(null), "pic.dng");
+  FileOutputStream output = null;
+  try {
+      output = new FileOutputStream(file);
+      DngCreator dngCreator = new DngCreator(mCharacteristics, mCaptureResult);
+      dngCreator.writeImage(output, mRawImage);
+      Toast.makeText(mContext, "Saved: " + file, Toast.LENGTH_LONG).show();
+  } catch (IOException e) {
+      e.printStackTrace();
+  } finally {
+      mRawImage.close();
+      if (null != output) {
+          try {
+              output.close();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+      }
+  }
+}
+```
+
+In the above code, mCaptureResult is of type CaptureResult and mRawImage is of type Image. They need to be final and have been obtained by the Camera2 API during a RAW capture session.
+
+Please note there are other surrounding steps not shown here such as requesting permissions for WRITE_EXTERNAL_STORAGE and setting up a CameraCaptureSession. It's suggested to check Android documentation for complete guide on capture requests for RAW images and handling camera output.

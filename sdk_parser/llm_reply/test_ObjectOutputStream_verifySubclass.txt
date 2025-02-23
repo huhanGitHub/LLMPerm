@@ -1,0 +1,36 @@
+Here is an example of how you could use the `ObjectOutputStream` class in Java. Please note that this class is not specific to Android.
+
+```java
+public static void test_ObjectOutputStream_verifySubclass() {
+    ObjectOutputStream objectOutputStream = null;
+    try {
+        // create a new file with an ObjectOutputStream
+        objectOutputStream = new ObjectOutputStream(new FileOutputStream("testFile.bin"));
+        
+        // write something in the file
+        objectOutputStream.writeUTF("Hello World");
+
+        // flush the stream to insure all of the information was written to 'testfile.bin'
+        objectOutputStream.flush();
+
+        // close output stream when we're done with it
+        objectOutputStream.close();
+    } catch(IOException ex) {
+        ex.printStackTrace();
+    } finally {
+        if(objectOutputStream != null) {
+            try {
+                objectOutputStream.close();
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+This method will create a new `ObjectOutputStream` and use it to write a String "Hello World" into a binary file named "testFile.bin". The `flush()` method is used to ensure that the buffer is empty and all data has been written to the output, and `close()` to release the system resources tied to this stream. 
+
+The method gets wrapped in a try-catch because the `ObjectOutputStream` constructor and its methods can throw an `IOException` if something goes wrong with I/O operations. In the final clause, an additional try-catch is added to try to close the stream if it was successfully opened, regardless of whether an exception occurred or not when using the stream.
+
+This specific example does not directly work with subclasses because `ObjectOutputStream` is designed to serialize any serializable object and doesn't provide a method to only verify subclasses.

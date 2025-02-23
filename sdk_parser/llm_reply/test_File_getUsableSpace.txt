@@ -1,0 +1,32 @@
+In Android or JAVA, You can make use of the java.io.File class to get the usable or free space in the file system. The getUsableSpace() method returns the size (in bytes) which can be used to store data on the file partition. 
+
+Here is a self-contained method `test_File_getUsableSpace()` that demonstrates an example usage of the getUsableSpace() method:
+
+```java
+import java.io.File;
+
+public void test_File_getUsableSpace() {
+    // Referencing a location in the file system. 
+    // In this case, it is the root directory of the SD Card.
+    File file = new File("/storage/emulated/0/");
+
+    // Here, getUsableSpace() method is called on the file object.
+    long usableSpace = file.getUsableSpace();
+
+    // The method returns the available space in bytes.
+    // Convert it to MB for easier readability by dividing it by (1024 * 1024)
+    double usableSpaceInMB = usableSpace / (double) (1024 * 1024);
+
+    // Print the usable space in MB
+    System.out.println("Usable space (MB): " + usableSpaceInMB);
+}
+```
+
+This method will print out the usable space on the root directory of the SD Card. Please note if you want to make it work on real Android device, you need to add the appropriate permissions for accessing storage in the AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+And also don't forget to request these permissions at runtime.

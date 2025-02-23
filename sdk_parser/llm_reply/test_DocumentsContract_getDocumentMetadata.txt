@@ -1,0 +1,43 @@
+Here's an example of how you can write a method called `test_DocumentsContract_getDocumentMetadata()` to get metadata of a document using the `DocumentsContract` API. This method needs to be used within an Android Activity class.
+
+Please note, the following method requires the READ_EXTERNAL_STORAGE permission to access and read the document metadata. Make sure to declare it in your app's manifest file and also check for the permission at runtime.
+
+```java
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.provider.DocumentsContract.Document;
+import android.provider.MediaStore;
+
+public void test_DocumentsContract_getDocumentMetadata(Context context, Uri uri) {
+    Cursor cursor = null;
+    try {
+        String[] projection = new String[] { Document.COLUMN_DISPLAY_NAME, Document.COLUMN_SIZE, Document.COLUMN_MIME_TYPE };
+        cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        
+        if (cursor != null && cursor.moveToFirst()) {
+            int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+            int mimeIndex = cursor.getColumnIndex(Document.COLUMN_MIME_TYPE);
+            String name = cursor.getString(nameIndex);
+            long size = cursor.getLong(sizeIndex);
+            String mimeType = cursor.getString(mimeIndex);
+            
+            // Do something with the metadata...
+            
+            Log.d("Document Metadata", "Name: " + name + ", Size: " + size + ", MIME Type: " + mimeType);
+        }
+    } catch(Exception e){
+        e.printStackTrace();
+    } finally {
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+}
+```
+
+You must replace `Uri uri` in the method parameter with the actual URI of the document to fetch its metadata.
+
+Example call: You might fetch the URI from a file picker intent and then call this function as `test_DocumentsContract_getDocumentMetadata(this, documentUri);` in your activity.

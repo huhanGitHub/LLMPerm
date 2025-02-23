@@ -1,0 +1,71 @@
+Here is an example of a self-contained method which is used to test the copyMessageToSim method by sending a dummy message in Android. Following method needs to be added in your activity:
+
+Please note that the "copyMessageToSim" method is deprecated from Android 4.4(Kitkat).
+
+```java
+public void test_SmsManager_copyMessageToSim() {
+    try {
+        // get an instance of SmsManager
+        SmsManager smsManager = SmsManager.getDefault();
+
+        // define a dummy message and destination address
+        String destinationAddress = "9876543210";
+        String message = "Hello, World!";
+
+        // Convert message into pdu
+        byte[] pdu = message.getBytes();
+
+        // copy the message to the SIM card
+        boolean result = smsManager.copyMessageToSim(null, pdu, SmsManager.STATUS_ON_ICC_SENT);
+
+        // print the result
+        if(result) {
+            Toast.makeText(getApplicationContext(),
+                    "Message copied to SIM successfully!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Failed to copy message to SIM!", Toast.LENGTH_LONG).show();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Remember that for using `SmsManager` you must request the `SEND_SMS` permission in your `AndroidManifest.xml`:
+```xml
+<uses-permission android:name="android.permission.SEND_SMS"/>
+```
+Also, note that from Android 6.0 (API level 23) you need to request permission in runtime. Here is how you may ask for the required permission for sending SMS:
+```java
+private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+
+private void checkSmsPermission() {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+        != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(this, 
+            new String[]{Manifest.permission.SEND_SMS}, 
+            MY_PERMISSIONS_REQUEST_SEND_SMS);
+    } else {
+        test_SmsManager_copyMessageToSim();
+    }
+}
+
+@Override
+public void onRequestPermissionsResult(int requestCode, 
+                                       String permissions[], int[] grantResults) {
+    switch (requestCode) {
+        case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+            if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                test_SmsManager_copyMessageToSim();
+            } else {
+                Toast.makeText(getApplicationContext(), 
+                "SMS failed, please enable SMS permissions.", Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
+    }
+}
+```
+You will need to call `checkSmsPermission()` from your Activity's `onCreate` method.

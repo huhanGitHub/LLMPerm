@@ -1,0 +1,40 @@
+Sure, here is an example of how to use the JapaneseEra class by calling the writeExternal method from it. It demonstrates how you can create an instance of JapaneseEra, convert it into a ByteArrayOutputStream, then write this stream into ObjectOutputStream. 
+
+Please note that Java Time package is introduced in JAVA 8, which might not support all Android platforms. In order to use it in Android, you need at least need Android API version 26 or higher.
+
+The following is your requested method:
+
+```java
+public void test_JapaneseEra_writeExternal() {
+    try {
+        // Create a JapaneseEra instance
+        JapaneseEra era = JapaneseEra.HEISEI;
+
+        // Create a ByteArrayOutputStream which is resizable to write to byte arrays
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        // Create an ObjectOutputStream to write our JapaneseEra into our ByteArrayOutputStream
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+
+        // Write the JapaneseEra to the ObjectOutputStream
+        era.writeExternal(oos);
+
+        // Flush the ObjectOutputStream to ensure all data is written to the ByteArrayOutputStream
+        oos.flush();
+
+        // Convert the ByteArrayOutputStream data into a byte array
+        byte[] byteArray = bos.toByteArray();
+
+        // Close the ObjectOutputStream
+        oos.close();
+
+        // Log the byte array
+        Log.d("JapaneseEraByteArray", Arrays.toString(byteArray));
+    } catch (IOException e) {
+        // Log the exception
+        Log.e("JapaneseEraByteArrayError", e.getMessage());
+    }
+}
+```
+
+You can call this method in your Android API 26+ Activity and it will log the output in a byte array which represents the JapaneseEra.HEISEI object. The catch block handles any IOExceptions that might occur during this process. The ObjectOutputStream.writeExternal() method is useful when you want to convert object into bytes, e.g., object serialization.

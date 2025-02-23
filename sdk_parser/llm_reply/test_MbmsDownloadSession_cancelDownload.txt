@@ -1,0 +1,30 @@
+Below is an example of the `test_MbmsDownloadSession_cancelDownload` method. Please note that actual API usage may require additional setup and error handling.
+
+```java
+public void test_MbmsDownloadSession_cancelDownload() {
+    // Assuming we have the context of your current activity
+    Context context = this;
+    
+    // Initializing a DownloadRequest object. 
+    // In actual usage, this would usually be obtained by setting various parameters on it.
+    DownloadRequest downloadRequest = new DownloadRequest.Builder().build();
+
+    // Getting an instance of MbmsDownloadSession
+    MbmsDownloadSession session = MbmsDownloadSession.create(context);
+
+    if (session != null) {
+        // Cancelling download.
+        // Note: In your actual usage, ensure appropriate error handling
+        try {
+            session.cancelDownload(downloadRequest);
+        } catch (MbmsException e) {
+            // Handle exception here
+        } finally {
+            // It's important to always call `session.close()` when done to free up system resources.
+            session.close();
+        }
+    }
+}
+```
+
+This example doesn't represent actual functionality, it just shows how to use MbmsDownloadSession's cancelDownload method. In real-world use, necessary checks and error handling should be implemented. Also, you need to take care of service initialization and proper way to get DownloadRequest based on your usage.

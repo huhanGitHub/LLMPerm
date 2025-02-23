@@ -1,0 +1,58 @@
+Below is an example of how to use the method 'onSendTextSms' in `CarrierMessagingService.java`. Note, starting from Android 10 (API level 29), apps must have the SEND_SMS permission, regardless of the app's target SDK version.
+
+In order to test permissions, you should implement the permission check using `checkSelfPermission()` and `requestPermissions()` methods. Once the permission is granted, you can call `test_CarrierMessagingService_onSendTextSms()`. Here is the implementation of the methods.
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    private static final int PERMISSION_REQUEST_CODE = 101;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if (checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_CODE);
+        } else {
+            test_CarrierMessagingService_onSendTextSms();
+        }
+    }
+
+    private void test_CarrierMessagingService_onSendTextSms() {
+        // initializing carrier messaging service
+        CarrierMessagingService carrierMessagingService = new CarrierMessagingService() {
+            @Override
+            public void onSendTextSms(String text, int subId, String destAddress, ResultCallback<Integer> resultCallback) {
+                super.onSendTextSms(text, subId, destAddress, resultCallback);
+                // The logic to send SMS goes here
+            }
+        };
+
+        // Calling onSendTextSms method
+        String text = "Hello, World!";
+        int subId = 1;
+        String destAddress = "1234567890";
+        carrierMessagingService.onSendTextSms(text, subId, destAddress, new ResultCallback<Integer>() {
+            @Override
+            public void onReceiveResult(Integer result) {
+                // Handle Result here
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted!", Toast.LENGTH_LONG).show();
+                test_CarrierMessagingService_onSendTextSms();
+            } else {
+                Toast.makeText(this, "Permission not granted", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+}
+```
+
+Please note that `CarrierMessagingService` is an abstract class and you cannot generate instance directly with new keyword. Furthermore the `onSendTextSms()` function does not actually send the SMS, it should be overridden in your subclass to add the logic to send SMS. This code will not work directly, it's just for demonstration of how to use the method.

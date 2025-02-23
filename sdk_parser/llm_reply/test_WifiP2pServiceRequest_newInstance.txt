@@ -1,0 +1,31 @@
+Here's a simple example of how you might use the `WifiP2pServiceRequest.newInstance()` method in Android:
+
+```java
+import android.net.wifi.p2p.nsd.WifiP2pServiceRequest;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_WifiP2pServiceRequest_newInstance();
+    }
+
+    private void test_WifiP2pServiceRequest_newInstance() {
+        try {
+            WifiP2pServiceRequest serviceRequest = WifiP2pServiceRequest.newInstance();
+            Log.d("MainActivity", "WifiP2pServiceRequest instance created: " + serviceRequest);
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error creating WifiP2pServiceRequest instance", e);
+        }
+    }
+}
+```
+
+In this example, the `test_WifiP2pServiceRequest_newInstance()` method is called from the `onCreate()` method of the `MainActivity`. A new instance of `WifiP2pServiceRequest` is created using the `newInstance` method. If the instance is successfully created, it is logged. If there is an error, the exception is logged. 
+
+Please note that the `newInstance()` method of `WifiP2pServiceRequest` is deprecated starting from API 29, hence it is recommended to use alternatives like `newInstance(int, String)`.

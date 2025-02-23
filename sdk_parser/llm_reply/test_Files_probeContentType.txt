@@ -1,0 +1,39 @@
+The method `Files.probeContentType(Path path)` is used to detect a file's MIME type or content type. Please note that the Files API is a part of the Java NIO package and doesn't necessarily work on all Android versions because Android doesn't fully support Java NIO.
+
+Let's detect the MIME type of a local file on your device:
+
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    
+    // ...
+    
+    public String test_Files_probeContentType() {
+        String mimeType = "";
+        try {
+            // Set the path of the file
+            Path path = Paths.get("/path/to/your/file");
+
+            // Use Files.probeContentType(Path) to get the file's MIME type
+            mimeType = Files.probeContentType(path);
+            
+            // Log or return the MIME type
+            Log.i("MIME Type", "The detected MIME type is: " + mimeType);
+        } catch (IOException e) {
+            // Error handling, e.g. Log to console
+            Log.e("MIME Type", "Error probing MIME type", e);
+        }
+        
+        return mimeType;
+    }
+    
+    // ...
+}
+```
+Here, `"/path/to/your/file"` should be replaced with the full local path to your actual file. The `IOException` can be thrown if an I/O error occurs, meaning that there could be an issue with accessing the file. You should call the `test_Files_probeContentType()` method to check the content type of the file.
+
+Although this code will work in a full Java environment, it will not work in an Android app. Android does not support full Java NIO, which includes `java.nio.file.Files` class, until Android 8 (Oreo, API level 26). If you're targeting earlier Android versions, you'll need to use different APIs to accomplish the same task.

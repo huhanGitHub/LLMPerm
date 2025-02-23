@@ -1,0 +1,37 @@
+The Java NIO SelectorProvider allows us to create selectors and different types of channels, but it doesn't directly provide a mechanism to test if a channel is inherited or not. Nevertheless, we can test the SocketChannel creation process using SelectorProvider as this:
+
+```java
+public void test_SelectorProvider_inheritedChannel() {
+    try {
+        // Get the default SelectorProvider
+        SelectorProvider provider = SelectorProvider.provider();
+
+        // Open a new SocketChannel
+        SocketChannel socketChannel = provider.openSocketChannel();
+
+        // Check if the SocketChannel is open
+        if (socketChannel.isOpen()) {
+            System.out.println("Socket channel is open");
+        } else {
+            System.out.println("Socket channel is not open");
+        }
+
+        // Close the SocketChannel
+        socketChannel.close();
+        
+        // Try to use the SelectorProvider to open another SocketChannel
+        try {
+            SocketChannel anotherSocketChannel = provider.openSocketChannel();
+            System.out.println("Another socket channel is open");
+            anotherSocketChannel.close();
+        } catch (IOException e) {
+            System.out.println("Unable to open another socket channel");
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Remember that this code is not for Android as the android.os.NetworkOnMainThreadException will be thrown if a network operation is performed on the main thread. It is recommended to perform network operations on a separate worker thread and then use Handlers or AsyncTask to synchronize the network data with the UI component whenever necessary.

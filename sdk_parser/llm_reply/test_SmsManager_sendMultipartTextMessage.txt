@@ -1,0 +1,39 @@
+Here is an example method called "test_SmsManager_sendMultipartTextMessage". This method uses the SmsManager class in android to send a multipart text message. Remember that you need to add appropriate permissions in AndroidManifest.xml file to make it work, and that sending SMS may incur additional costs depending on the user's data plan.
+
+Add the following line to your AndroidManifest.xml, inside the manifest tag:
+```xml
+<uses-permission android:name="android.permission.SEND_SMS"/>
+```
+
+Below is the Java code for the method:
+
+```java
+public void test_SmsManager_sendMultipartTextMessage(String phoneNumber, String message) {
+
+    SmsManager smsManager = SmsManager.getDefault();
+
+    ArrayList<String> parts = smsManager.divideMessage(message);
+
+    int numParts = parts.size();
+
+    ArrayList<PendingIntent> sendIntents = new ArrayList<PendingIntent>();
+    ArrayList<PendingIntent> deliveryIntents = new ArrayList<PendingIntent>();
+
+    for (int i = 0; i < numParts; i++) {
+        Intent msentIntent = new Intent(Intent.ACTION_SEND);
+        Intent mDeliveryIntent = new Intent(Intent.ACTION_DELIVER_DATA);
+
+        sendIntents.add(PendingIntent.getBroadcast(getApplicationContext(), 0, msentIntent, 0));
+        deliveryIntents.add(PendingIntent.getBroadcast(getApplicationContext(), 0, mDeliveryIntent, 0));
+    }
+
+    smsManager.sendMultipartTextMessage(phoneNumber, null, parts, sendIntents, deliveryIntents);
+ 
+}
+```
+
+This function will send a multipart text to the phone number provided. Each part of the message will trigger an intent when it is sent and when it is delivered.
+
+Please note, replace `Intent.ACTION_SEND` and `Intent.ACTION_DELIVER_DATA` with the real action you intend to trigger.
+
+Bear in mind that this function will operate on a real device only and not on emulators which don't have telephony services. Also, consider adding error handling for your production application as sending SMS can fail for a variety of reasons.

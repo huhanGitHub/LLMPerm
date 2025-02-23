@@ -1,0 +1,47 @@
+Here is an example:
+
+```java 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFileAttributeView;
+import java.nio.file.attribute.PosixFilePermissions;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_PosixFileAttributeView_setPermissions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_PosixFileAttributeView_setPermissions() throws IOException {
+        // Define the file or directory path.
+        Path path = Paths.get("path-to-your-file");
+
+        // Get the PosixFileAttributeView.
+        PosixFileAttributeView view = Files.getFileAttributeView(path, PosixFileAttributeView.class);
+
+        // Define the permissions.
+        String permissions = "rwxr-x---";
+
+        // Set permissions if view is not null
+        if (view != null) {
+            view.setPermissions(PosixFilePermissions.fromString(permissions));
+        } else {
+            throw new UnsupportedOperationException("PosixFileAttributeView is not supported.");
+        }
+    }
+}
+```
+Note: 
+1. This example uses the `java.nio.file.attribute.PosixFileAttributeView` class, which provides a Java interface to the POSIX file attribute view. This means it may not function properly on non-POSIX file systems.
+2. Please replace "path-to-your-file" with actual file or directory path.
+3. The syntax of permissions string is "rwxrwxrwx" (owner, group, other). Each character has specific meaning: 'r' (read), 'w' (write), 'x' (execute), '-' (no permission). For example: "rwxr-x---" means owner can read, write, and execute, group can read, and others have no permissions.

@@ -1,0 +1,52 @@
+Here is a simple method named `test_FileSystemProvider_newFileChannel` that exemplifies how to use the `newFileChannel` method from `java.nio.file.spi.FileSystemProvider`. This method reads data from a given Path. Please note that this function requires API 26 or greater.
+
+```java
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.spi.FileSystemProvider;
+
+public class MainActivity extends AppCompatActivity {
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_FileSystemProvider_newFileChannel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void test_FileSystemProvider_newFileChannel() throws IOException {
+        // Obtain the default FileSystemProvider
+        FileSystemProvider provider = FileSystemProvider.installedProviders().get(0);
+
+        // Get the path to the file location
+        Path path = Paths.get(getFilesDir() + "/test.txt");
+         
+        // Opening the file channel
+        try (FileChannel fileChannel = provider.newFileChannel(path, Collections.emptySet())) {
+            ByteBuffer buf = ByteBuffer.allocate(1024);
+            while (fileChannel.read(buf) != -1) {
+                buf.rewind();
+                System.out.print(new String(buf.array(), 0, buf.limit()));
+                buf.flip();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This code creates a new ReadableByteChannel in the provider for the file defined by the given path. Creates an example with a local file (in this case "test.txt" that should be located in the 'files' directory of your android application on the device) to read data and output it to the console. 
+
+Please remember to set the correct permission if your are reading files from external storage. In this case, you do not need to worry about this because you are using the `getFilesDir()` method which provides a path to an internal directory.

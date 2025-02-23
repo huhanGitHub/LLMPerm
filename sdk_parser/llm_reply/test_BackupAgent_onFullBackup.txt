@@ -1,0 +1,49 @@
+Sure, here's an example of how you might create a test method for `BackupAgent.onFullBackup()`:
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.FullBackup;
+import android.app.backup.FullBackupDataOutput;
+import android.os.ParcelFileDescriptor;
+import android.content.Context;
+
+public class MyActivity extends Activity {
+   public void test_BackupAgent_onFullBackup() {
+       MyBackupAgent myBackupAgent = new MyBackupAgent();
+       FullBackupDataOutput output = new FullBackupDataOutput(ParcelFileDescriptor.autoCloseOutputStream(ParcelFileDescriptor.adoptFd(1)));
+   
+       try {
+           myBackupAgent.onFullBackup(output);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
+   
+   // Define your own BackupAgent
+   static class MyBackupAgent extends BackupAgent {
+       @Override
+       public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) {}
+
+       @Override
+       public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) {}
+   
+       @Override
+       public void onFullBackup(FullBackupDataOutput data) throws IOException {
+           // Configure FullBackupDataOutput
+           FullBackup.backupToTar(getPackageName(), FullBackup.ROOT_TREE_TOKEN, null, 
+               getApplicationInfo().dataDir, data.getData());
+
+           FullBackup.backupToTar(getPackageName(), FullBackup.DATABASE_TREE_TOKEN, null, 
+               getApplicationInfo().dataDir, data.getData());
+
+           // Test Android permissions here
+       }
+   }
+}
+```
+
+This snippet first creates an instance of a custom subclass of `BackupAgent`. We then instantiate a `FullBackupDataOutput` using a `ParcelFileDescriptor` that wraps a file descriptor. Afterwards, we call the `onFullBackup()` method and catch any exceptions. 
+
+The custom backup agent, `MyBackupAgent`, defines its own implementation of `onFullBackup()`. It also defines the required `onBackup()` and `onRestore()` methods, but leaves them empty. The `MyBackupAgent.onFullBackup()` method backs up to a `tar` file, which theoretically could be tested for permissions.
+
+**Remember**: Before running your application, you should add a uses-permission line for "android.permission.BACKUP" in your application's manifest file. See the [Android documentation](https://developer.android.com/guide/topics/manifest/permission-element) for more details.

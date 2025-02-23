@@ -1,0 +1,34 @@
+Here is an Android method example named "test_MbmsDownloadReceiver_generateFreshTempFiles" which makes use of the mbms/MbmsDownloadReceiver in a hypothetical scenario where we want to generate fresh temporary files through MbmsDownloadReceiver object:
+
+Please note that using this API requires the "android.Manifest.permission#DOWNLOAD_MULTICAST" permission. 
+
+```java
+import android.content.Context;
+import android.telephony.mbms.MbmsDownloadReceiver;
+
+public void test_MbmsDownloadReceiver_generateFreshTempFiles() {
+    // Ideally, context should be your Activity or Application context.
+    // This is a placeholder context
+    Context context = getApplicationContext();
+
+    // Create an instance of MbmsDownloadReceiver
+    MbmsDownloadReceiver downloadReceiver = new MbmsDownloadReceiver();
+
+    try {
+        // Use the generateFreshTempFile API method to create temporary files
+        // Pass in String argument (ideally an ID or name) to create unique temp files.
+        File freshTempFile = downloadReceiver.generateFreshTempFile(context, "myFile");
+
+        // Continue with your code. The freshTempFile now points to a unique, clean file.
+        // Note: This file will be cleaned up when your app is uninstalled, provide a fallback mechanism in case this file is not available 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This example assumes that your app has the necessary permissions and is set up to work with the MbmsDownloadReceiver API. It also does not handle the case where the device doesn't support this API. 
+
+Please replace "myFile" with suitable id or name for your fresh temp file. Also replace "context = getApplicationContext()" with the actual context of your application or activity.  Don't forget to handle IOException properly as per your application requirement. 
+
+This API and permissions are quite limited (rarely given out) - it's unlikely that you will ever need to use it unless you are a carrier or OEM.

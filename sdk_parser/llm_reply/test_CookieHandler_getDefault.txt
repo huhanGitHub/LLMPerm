@@ -1,0 +1,35 @@
+Below is an example of a method `test_CookieHandler_getDefault`, which demonstrates the usage of the `getDefault` method of `java.net.CookieHandler` API in Java.
+
+This method checks if the default system-wide `CookieHandler` exists. If it does not exist, then it sets a new default `CookieHandler` and checks it again.
+
+```java
+import java.net.CookieHandler;
+import java.net.CookieManager;
+
+public void test_CookieHandler_getDefault() {
+    // Checking the default system-wide CookieHandler
+    CookieHandler defaultCookieHandler = CookieHandler.getDefault();
+
+    if (defaultCookieHandler == null) {
+        System.out.println("No default CookieHandler found. Setting a new one.");
+
+        // Creating a new CookieManager
+        CookieManager cookieManager = new CookieManager();
+
+        // Setting it as the default system-wide CookieHandler
+        CookieHandler.setDefault(cookieManager);
+
+        // Checking the default CookieHandler again
+        defaultCookieHandler = CookieHandler.getDefault();
+
+        if (defaultCookieHandler != null) {
+            System.out.println("A new default CookieHandler has been set.");
+        } else {
+            System.out.println("Failed to set a new default CookieHandler!");
+        }
+    } else {
+        System.out.println("Found a default CookieHandler.");
+    }
+}
+```
+The above `test_CookieHandler_getDefault` method can be used within an Android activity or any other Java class, but please be careful with cookie handling as it relates to user privacy and data integrity and should be managed properly.

@@ -1,0 +1,39 @@
+Sure, here is an example of a method test_Files_list which represents the usage of the java/nio/file/Files.list API:
+
+Please note that this method requires a minimum API level of 26.
+
+```java
+import android.util.Log;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+public void test_Files_list() {
+    try {
+        // Path to directory
+        Path dir = Paths.get(getFilesDir().getAbsolutePath());
+
+        try (Stream<Path> paths = Files.list(dir)) {
+            paths
+                .filter(Files::isRegularFile)
+                .forEach(path -> Log.i("Files list", path.getFileName().toString()));
+        }
+
+    } catch (IOException e) {
+        Log.e("Files list", "An error occurred", e);
+    }
+}
+```
+
+In this example, we use android.util.Log to display names of all regular files present in the directory.
+
+Exception handling is crucial while dealing with I/O operations, so we've wrapped our code with try-with-resources to ensure that open resources are closed appropriately and catch block to handle potential IOException.
+
+Make sure your application has necessary permissions to perform these operations.
+
+As this code uses the Java 8's Files.list(), which is a part of the Java NIO, not all Android versions would support it.
+   
+This method retrieves the path to all the files in the directory specified by the Path object (obtained by getting application's Files directory via getFilesDir() method), filters out directories, and prints out names of the files in the directory.

@@ -1,0 +1,31 @@
+While I understand your requirement, it's important to note that directly setting the status of GPS is not feasible in Android due to security and privacy reasons. The GPS status is managed internally by the system and cannot be set by developers. 
+
+However, the android.location package provides classes by means of which you can get information about the status of the GPS. 
+Another alternative is to mock location for testing purposes, or to check if GPS is enabled, and then request the user to enable it if it isn't.
+
+That said, here is how you might test if GPS is enabled on a device:
+
+```java
+public void test_GpsStatus_setStatus() {
+    LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+    
+    if (locationManager != null) {
+        // Checks if GPS provider is enabled
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!isGPSEnabled) {
+            // Request user to enable GPS
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        } else {
+            // GPS is enabled, do your work here
+        }
+    } else {
+        Log.e("GPSStatus", "Location Manager is null");
+    }
+}
+```
+
+Please note that your activity needs to inherit from AppCompatActivity or other base activity class to access methods like `getSystemService()`, `startActivity()`. Also, don't forget to request location permission in your android manifest file and at runtime.
+
+Another common use case is to listen for changes in the GPS status. The `GpsStatus.Listener` interface would allow you to do this. It contains the `onGpsStatusChanged()` method which is fired every time the GPS status changes.

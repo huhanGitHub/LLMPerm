@@ -1,0 +1,49 @@
+Sure, here is a basic example of such a function. This function attempts to open the first MIDI input port available. Please note that some error handling and device capabilities checking is omitted for the simplicity.
+
+```java
+import android.media.midi.MidiDeviceInfo;
+import android.media.midi.MidiDevice;
+import android.media.midi.MidiManager;
+import android.os.Bundle;
+import android.util.Log;
+
+public void test_MidiDevice_openInputPort() {
+    MidiManager midiManager = (MidiManager) getSystemService(Context.MIDI_SERVICE);
+    MidiDeviceInfo[] infos = midiManager.getDevices();
+
+    if (infos.length == 0) {
+        Log.d("MidiTest", "No MIDI devices found");
+        return;
+    }
+
+    midiManager.openDevice(infos[0], new MidiManager.OnDeviceOpenedListener() {
+        @Override
+        public void onDeviceOpened(MidiDevice device) {
+            if (device == null) {
+                Log.d("MidiTest", "Could not open device");
+                return;
+            }
+
+            MidiDevice.MidiConnection connection;
+            try {
+                connection = device.openInputPort(0);
+                if (connection == null) {
+                    Log.d("MidiTest", "Could not open input port");
+                    return;
+                }
+                Log.d("MidiTest", "Input port opened successfully");
+            } catch (Exception e) {
+                Log.d("MidiTest", "Exception: " + e);
+            }
+        }
+    }, null);
+}
+```
+
+This method finds the first available MIDI device and tries to open its first input port. If successful, it logs a success message to the Android log.
+
+This method uses asynchronous calls and thus does not block the main thread. It is assumed to be called from some method in an activity, like `onCreate`.
+
+Please note that you should add error handling and device capabilities checking in a production environment. You should also release MIDI devices and connections when you're done with them to free up system resources.
+
+Also, you should not forget to request necessary permissions in `AndroidManifest.xml` and handle permissions at runtime where necessary.

@@ -1,0 +1,71 @@
+Here's a possible method `test_CarrierMessagingService_downloadMms` that you might add to an Android activity in order to interact with the `CarrierMessagingService` API. However, keep in mind that you can't directly use CarrierMessagingService, it's not designed to be used by third-party Apps. It's a system-level service and it's designed to be implemented by the carriers.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
+public void test_CarrierMessagingService_downloadMms() {
+    // Check if the READ_SMS permission is already available.
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+            != PackageManager.PERMISSION_GRANTED) {
+        // READ_SMS permission has not been granted.
+        ActivityCompat.requestPermissions(this,
+                  new String[]{Manifest.permission.READ_SMS},
+                  MY_PERMISSIONS_REQUEST_READ_SMS);
+    } else {
+        // READ_SMS is already available, we can use CarrierMessagingService to download MMS
+        try {
+            // You can not initialize it like this as it's an abstract class. Mentioned for understanding purpose.
+            CarrierMessagingService carrierMessagingService = new CarrierMessagingService ();
+            Uri mmsUri = Uri.parse("content://mms-sms/");
+            carrierMessagingService.downloadMms(mmsUri, new CarrierMessagingService.Callback() {
+                @Override
+                public void onDownloadMmsComplete(int result) {
+                    Log.d("DownloadMmsComplete", "Result: " + result);
+                }
+
+                @Override
+                public void onSendMmsComplete(int result, byte[] sendConfPdu) {
+                    Log.d("SendMmsComplete", "Result: " + result);
+                }
+
+                @Override
+                public void onFilterComplete(int result) {
+                    Log.d("FilterComplete", "Result: " + result);
+                }
+
+                @Override
+                public void onSendMultipartSmsComplete(int result, int[] messageRef) {
+                    Log.d("SendMultipartSmsComplete", "Result: " + result);
+                }
+
+                @Override
+                public void onSendSmsComplete(int result, int messageRef) {
+                    Log.d("SendSmsComplete", "Result: " + result);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// Here is the callback method that handles the permission request
+@Override
+public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    switch (requestCode) {
+        case MY_PERMISSIONS_REQUEST_READ_SMS: {
+            if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
+                test_CarrierMessagingService_downloadMms();
+            } else {
+                Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+    }
+}
+```
+
+Please note that you need to define and initialize `MY_PERMISSIONS_REQUEST_READ_SMS` as a unique integer. This is used as the request code for the permission request. Also Monet Mobile Telephony stack (including MMS) is not available on all Android devices. Therefore, some modifications may need to be made to this code to avoid a `SecurityException` or other similar issues. 
+
+Please update it accordingly as per your requirement.

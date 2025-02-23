@@ -1,0 +1,29 @@
+Sure, here's how you would use the RestrictionsManager's getApplicationRestrictions method in a test case. Note that this method relies on the calling context being an administrator, so this test case assumes that the context in which it's being run has admin rights.
+
+```java
+public void test_RestrictionsManager_getApplicationRestrictionsPerAdmin() {
+
+    // get the current Activity
+    Activity currentActivity = getActivity();
+
+    // Obtain RestrictionsManager object
+    RestrictionsManager restrictionsManager = (RestrictionsManager) currentActivity.getSystemService(Context.RESTRICTIONS_SERVICE);
+
+    // Get application restrictions specific to the admin
+    Bundle appRestrictions = restrictionsManager.getApplicationRestrictions();
+
+    if (appRestrictions != null) {
+        Set<String> keys = appRestrictions.keySet();
+        for (String key : keys) {
+            //Print each key-value pair
+            //Note: The actual type of the value may need to be checked
+            // and appropriate Bundle get-method may need to be called
+            Log.i("RestrictionsTest", "Key: " + key + " Value: " + appRestrictions.get(key));
+        }
+    }
+}
+```
+
+In the above code, we get the current Activity using `getActivity()`. The `getSystemService(Context.RESTRICTIONS_SERVICE)` returns a handle to a system-level service - in this case the Restriction Manager for this app. The `getApplicationRestrictions()` is then used on the RestrictionsManager object to get the restrictions that have been applied to the current application by the administrator. If there are restrictions, we simply print each key value pair.
+
+This test case is designed to run in an Android app with a valid Activity, and will need the necessary permissions to be set in the AndroidManifest.xml to allow the use of the RestrictionsManager.

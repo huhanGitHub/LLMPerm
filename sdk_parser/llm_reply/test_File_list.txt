@@ -1,0 +1,39 @@
+Here is an Android/Java method that demonstrates the usage of the java.io.File class and its list method:
+
+```java
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Call the method with a directory path 
+        test_File_list("/sdcard/");
+    }
+
+    /**
+    * Demonstrates the usage of the list method of the java.io.File class
+    */
+    public void test_File_list(String directoryPath) {
+        // Creating a File object for directory
+        File directory = new File(directoryPath);
+
+        // Get all the list of files in string array
+        String[] files = directory.list();
+
+        if (files != null) {
+            for (String file : files) {
+                System.out.println("File: " + file);
+            }
+        } else {
+            System.out.println("The specified directory does not exist or an I/O error occurred.");
+        }
+    }
+}
+```
+
+This method prints the names of all the files and directories in the specified directory path. 
+
+Please remember in Android, depending on the directory you're trying to access, you may need to request certain permissions in your application's manifest file such as READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE.

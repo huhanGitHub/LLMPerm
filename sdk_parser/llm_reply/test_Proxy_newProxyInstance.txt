@@ -1,0 +1,47 @@
+Sure, here is an example of how you can use the `Proxy.newProxyInstance` method. This method creates a proxy instance that implements specified interfaces, using an invocation handler to implement method calls. 
+
+In this example, the proxy will implement the `Runnable` interface. The invocation handler will print a message when `run` method is called.
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_main);
+
+  try {
+   test_Proxy_newProxyInstance();
+  } catch (Exception e) {
+   e.printStackTrace();
+  }
+ }
+
+ public void test_Proxy_newProxyInstance() {
+  Class[] interfaces = new Class[]{Runnable.class};
+  InvocationHandler handler = new InvocationHandler() {
+   @Override
+   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    if (method.getName().equals("run")) {
+     System.out.println("Proxy 'run' method called");
+     return null;
+    }
+
+    return method.invoke(proxy, args);
+   }
+  };
+
+  // create proxy instance
+  Runnable runnable = (Runnable) Proxy.newProxyInstance(Runnable.class.getClassLoader(), interfaces, handler);
+
+  // now calling run method on proxy instance will lead to handler's invoke method.
+  runnable.run();
+ }
+}
+```
+
+Please ensure that you have appropriate logging permission in manifest and proper log viewing setup as we are using `System.out.println` to print the call. It might not be directly visible in Android. 
+
+The `Proxy.newProxyInstance` method do not specifically belong to android but is a JAVA API that can be utilized within android. 
+
+Please note that the use of Java's Proxy is quite advanced and can lead to difficult to debug issues if not used with care. The example here shows a very basic usage. You would typically use the Proxy functionality in larger or more complex applications where you have lots of classes to manage or when you are building a framework etc.

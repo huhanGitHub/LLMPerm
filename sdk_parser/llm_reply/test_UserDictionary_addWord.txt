@@ -1,0 +1,24 @@
+Sure, but please note that `UserDictionary` needs the `WRITE_USER_DICTIONARY` permission, so don't forget to add it to your AndroidManifest.xml file.
+
+Here is an example of how you may want to add a word to the UserDictionary:
+
+```java
+private void test_UserDictionary_addWord(Context context, String word, String shortcut) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        // On Jelly bean and above, direct user dictionary insertion is supported
+        UserDictionary.Words.addWord(context, word, UserDictionary.Words.FREQUENCY_HIGH, shortcut, Locale.getDefault());
+    } else {
+        // On older versions, this feature is not supported
+        Toast.makeText(context, "This feature is not supported on your device.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+This method would add a word to the user dictionary with high frequency and an assigned shortcut. Please replace `Context context` with your object of `Context`. `String word, String shortcut` are the word and its shortcut that you want to add to the dictionary.
+
+In order to execute this code successfully, you must include the following permission line to your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+```
+
+Please remember that this method is not supported on Android versions below Jelly Bean (API 16).

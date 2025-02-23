@@ -1,0 +1,36 @@
+Sure, here is an example method using Java NIO's FileSystemProvider. This method tries to delete a file if it exists. Please note that deleteIfExists method can throw IOException if an I/O error occurs.
+
+Because it's a heavy task, is recommended to run it in background or in a separate thread, but according to your instructions, it is an example just for testing the method in an Android Activity, I will not consider these aspects.
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.spi.FileSystemProvider;
+
+public void test_FileSystemProvider_deleteIfExists() {
+    // obtain a reference to the FileSystemProvider
+    FileSystemProvider provider =  FileSystems.getDefault().provider();
+
+    // create a path instance
+    Path filePath = FileSystems.getDefault().getPath("path/to/file.txt");
+
+    try {
+        // use the provider to try and delete the file
+        boolean isDeleted = provider.deleteIfExists(filePath);
+
+        if (isDeleted) {
+            System.out.println("File was deleted");
+        } else {
+            System.out.println("File doesn't exist or it couldn't be deleted");
+        }
+    } catch (IOException e) {
+        // handle the exception
+        System.out.println("An error occurred when trying to delete the file " + e.getMessage());
+    }
+}
+```
+
+Please replace `"path/to/file.txt"` with your actual file path. Moreover, you need to ask for the `WRITE_EXTERNAL_STORAGE` permission if your file is located in the external storage. 
+
+This method cannot be directly used in Android because Android does not support natively java.nio.file before API 26. From API 26 onwards you could, but is recommended to use Android file managing system with its classes.

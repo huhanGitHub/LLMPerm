@@ -1,0 +1,49 @@
+Sure, here is the example usage of `WebChromeClient.onGeolocationPermissionsShowPrompt`:
+
+```java
+@Test
+public void test_WebChromeClient_onGeolocationPermissionsShowPrompt() {
+    WebView webView = new WebView(context);
+    final String[] geoLocations = new String[] {"_test_geolocation"};
+    webView.setWebChromeClient(new WebChromeClient(){
+        @Override
+        public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
+            
+            // Always grant permission assuming you have asked for GEO permissions in AndroidManifest.xml
+            // Or ask user permission to access geolocation data
+            
+            if (shouldGrantPermissionBasedOnYourCondition()) {
+                callback.invoke(origin, true, false);
+            } else {
+                callback.invoke(origin, false, false);
+            }
+
+           assertEquals(geoLocations[0], origin);
+        }
+    });
+
+    // Load any url to invoke the prompt
+    webView.loadUrl("https://www.example.com");
+}
+
+private boolean shouldGrantPermissionBasedOnYourCondition() {
+    // your condition
+    return true;
+}
+```
+In the given method, first, we are creating a new `WebView` instance and setting a custom `WebChromeClient` to it. Inside `onGeolocationPermissionsShowPrompt` method you are getting a callback which you can invoke with any values. You are allowed to ask user to grant the permission as per your business logics.
+
+The `callback.invoke(origin, true, false);`, this line of code allows your webview to access geolocation. First parameter is URL, second is whether you allow WebView to track your location or not and third is whether you want it to remember your preference.
+
+Then we load URL to the WebView instance which will trigger `onGeolocationPermissionsShowPrompt` prompting for geolocation permissions.
+
+Take into account that, in case you want to use geolocation you must include `ACCESS_FINE_LOCATION` or `ACCESS_COARSE_LOCATION` permissions to your AndroidManifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+Finally, remember that starting from Android Marshmallow (6.0), you have to request permissions at runtime, even if they are declared in the manifest.
+
+Note: `'context'` must be initialized with your instance of Context, possibly `this` or `getApplicationContext()` when writing within `Activity` class. The example asserts that the geolocation url is "_test_geolocation" for testing, please replace it with real geolocation url in practical development.

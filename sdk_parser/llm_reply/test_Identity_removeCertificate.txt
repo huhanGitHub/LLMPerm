@@ -1,0 +1,65 @@
+Below is an example of how you might use the java.security.Identity removeCertificate(Certificate certificate) method in a test within an Android Activity in Java.
+
+```java
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.Identity;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyManagementException;
+import java.security.Principal;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ByteArrayInputStream inputStream = null;
+        String certificateString = "-----BEGIN CERTIFICATE----- ... -----END CERTIFICATE-----";
+
+        try {
+            inputStream = new ByteArrayInputStream(certificateString.getBytes("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        test_Identity_removeCertificate(inputStream);
+    }
+
+    private void test_Identity_removeCertificate(ByteArrayInputStream inputStream){
+        try {
+            // Step 1 : Generate identity
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+            keyGen.initialize(2048);
+            KeyPair pair = keyGen.generateKeyPair();
+            PrivateKey privateKey = pair.getPrivate();
+            PublicKey publicKey = pair.getPublic();
+            Identity identity = new Identity("testIdentity", new Principal() {
+                @Override
+                public String getName() {
+                    return "test";
+                }
+            });
+            identity.setPublicKey(publicKey);
+
+            // Step 2 : Generate certificate
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+            Certificate certificate = certificateFactory.generateCertificate(inputStream);
+
+            identity.addCertificate(certificate);
+
+            // Step 3 : Remove the certificate
+            identity.removeCertificate(certificate);
+
+        } catch (CertificateException | NoSuchAlgorithmException | KeyManagementException ex) {
+            // handle the exception
+            ex.printStackTrace();
+        }
+    }
+}
+```
+Please note this snippet might be different depending on the specific task. MainActivity.java is used in this example and the code goes under the onCreate() method which is called when the Activity is first created. The certificate needs to be a valid X.509 certificate base64 encoded.

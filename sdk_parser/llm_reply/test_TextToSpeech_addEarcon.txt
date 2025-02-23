@@ -1,0 +1,36 @@
+```java
+public void test_TextToSpeech_addEarcon() {
+    TextToSpeech tts = null;
+    String earconName  = "earconName";
+    String packageName = "packageName";
+    int resourceId  = 1000;
+
+    try {
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+            if(status != TextToSpeech.ERROR) {
+                // Adding earcon
+                int result = tts.addEarcon(earconName, packageName, resourceId);
+            
+                if(result == TextToSpeech.SUCCESS) {
+                    Log.d("TTS", "Earcon added successfully");
+                } else {
+                    Log.d("TTS", "Failed to add earcon");
+                }
+            }
+            }
+        });
+
+    } catch (Exception ex) {
+        Log.e("TTS", "Initialization failed");
+    } finally {
+        if (tts != null) {
+            tts.shutdown();
+        }
+    }
+}
+```
+The method test_TextToSpeech_addEarcon initializes TextToSpeech and adds an earcon using the addEarcon method. The status of adding the earcon is checked and logged. If TextToSpeech is not initialized correctly, an exception is caught and logged. After all operations, tts.shutdown() is called to release the resources.
+
+Note: Be sure to have the relevant permissions (e.g., MODIFY_AUDIO_SETTINGS) in order to use TTS service. Also, ensure that the relevant audio file exists in the packageName provided and its id matches with the resourceId.

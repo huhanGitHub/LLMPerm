@@ -1,0 +1,37 @@
+Sure, here is an example of how to use LogManager.removePropertyChangeListener in a test method within Android Activity:
+
+```java
+import java.util.logging.LogManager;
+import java.beans.PropertyChangeListener;
+
+public class MainActivity extends AppCompatActivity {
+
+    public void test_LogManager_removePropertyChangeListener() {
+        // Define a new property change listener
+        PropertyChangeListener listener = evt -> {
+            // Handle the property change event here
+            System.out.printf("Property %s has changed from %s to %s.\n",
+                    evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+        };
+
+        // Get the log manager instance
+        LogManager logManager = LogManager.getLogManager();
+
+        try {
+            // Add the listener to the log manager
+            logManager.addPropertyChangeListener(listener);
+
+            // Perform some logging activities here....
+
+            // Then remove the listener
+            logManager.removePropertyChangeListener(listener);
+        } catch (SecurityException e) {
+            // Handle the error
+            e.printStackTrace();
+        }
+    }
+}
+```
+This method basically creates a PropertyChangeListener, adds it to the LogManager, performs some actions (which would theoretically involve logging and trigger the listener) and then removes the listener again. The listener definition in this demo just prints a message to the console whenever a LogManager property value changes.
+
+It's important to note that add/removePropertyChangeListener methods may throw a SecurityException when security manager is installed and it denies LogManager.READ permission. Therefore, add/removePropertyChangeListener should be used in a proper context and with appropriate error handling. This is not required in typical Android apps.

@@ -1,0 +1,50 @@
+Sure, I will write a method in Kotlin that checks whether a MediaSession2 instance is trusted. Since the trusted status of MediaSession2 is not directly available, we will create a representation of trust based on some custom conditions (if the session is active and the media item is not null in our example). Please adapt it to your requirements as needed:
+
+```kotlin
+import android.media.MediaSession2
+import android.media.MediaSession2.SessionCallback
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+
+class YourActivity : AppCompatActivity() {
+
+    private var mediaSession: MediaSession2? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_your)
+
+        initMediaSession()
+    }
+
+    private fun initMediaSession() {
+        val sessionCallback = object : SessionCallback() {
+            // Override necessary callback methods.
+        }
+
+        mediaSession = MediaSession2.Builder(this, "TAG")
+            .setSessionCallback(mainExecutor, sessionCallback)
+            .build()
+    }
+
+    private fun test_MediaSession2_isTrusted(): Boolean {
+        try {
+            if (mediaSession == null || !mediaSession!!.isActive || mediaSession!!.currentMediaItem == null) {
+                return false
+            }
+        } catch (e: Exception) {
+            Log.e("YourActivity", "Error checking MediaSession2 trust status.", e)
+            return false
+        }
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaSession?.close()
+    }
+}
+```
+
+This is a Kotlin-based example from an existing Android activity where a MediaSession2 instance is created and a method named `test_MediaSession2_isTrusted()` is introduced to check its trusted status. The trusted status of a MediaSession2 object is not defined by an API, so it's just a demonstration of using MediaSession2.

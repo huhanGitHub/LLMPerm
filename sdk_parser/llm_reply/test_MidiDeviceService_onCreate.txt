@@ -1,0 +1,55 @@
+To use the MidiDeviceService, you need to extend it in your own service class. You can't use it directly in your activity class. However, you can start your service in your activity. Here's how you'd do that.
+
+In your service class:
+
+```java
+import android.media.midi.MidiDeviceService;
+import android.media.midi.MidiReceiver;
+import android.media.midi.MidiSender;
+
+public class MyMidiDeviceService extends MidiDeviceService {
+
+    @Override
+    public MidiReceiver[] onGetInputPortReceivers() {
+        // create your MidiReceiver array here
+        MidiReceiver[] receivers = new MidiReceiver[1];
+        receivers[0] = new MyMidiReceiver();
+        return receivers;
+    }
+
+    private class MyMidiReceiver extends MidiReceiver {
+        public void onSend(byte[] msg, int offset, int count, long timestamp)
+                throws IOException {
+            // override this method to receive MIDI messages
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // overall setup logic here
+    }
+}
+```
+
+In your activity class:
+
+```java
+public class MyActivity extends Activity {
+
+    public void test_MidiDeviceService_onCreate() {
+        Intent intent = new Intent(this, MyMidiDeviceService.class);
+        startService(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        test_MidiDeviceService_onCreate();
+    }
+}
+```
+
+In this example, `MyMidiDeviceService` extends `MidiDeviceService` and overrides the necessary methods: `onCreate` and `onGetInputPortReceivers`. It creates an class named `MyMidiReceiver` that extends `MidiReceiver` and overrides `onSend` method which is called when a MIDI message is received.
+
+`test_MidiDeviceService_onCreate` in `MyActivity` starts `MyMidiDeviceService`. Note that you will need to define your service in your application's manifest file for this code to work.

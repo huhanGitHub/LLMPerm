@@ -1,0 +1,31 @@
+Here is a self-contained method for testing the CellInfoWcdma's `setCellSignalStrength` function. It requires a suitable `CellSignalStrengthWcdma` object to be passed, which provides information about the signal strength of a WCDMA (3G) network.
+
+Please note that this procedure might not work as intended if the app doesn't have the proper Android permissions. Make sure to request the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions in your app's manifest.
+
+```java
+import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrengthWcdma;
+import android.util.Log;
+
+public void test_CellInfoWcdma_setCellSignalStrength(CellSignalStrengthWcdma strength) {
+    // Create a new CellInfoWcdma object
+    CellInfoWcdma info = new CellInfoWcdma();
+
+    // Try to set the cell signal strength
+    try {
+        info.setCellSignalStrength(strength);
+        Log.d("Test", "Cell signal strength set successfully");
+    } catch (SecurityException e) {
+        Log.e("Test", "Failed to set cell signal strength - app might not have the necessary permissions", e);
+    }
+}
+```
+Please note that the `setCellSignalStrength` function is a hidden method and not part of the public SDK. It is not meant to be accessed directly and the code might not compile. 
+
+Furthermore, the `setCellSignalStrength` is intended more for system use rather than third-party applications and it might not provide the functionality you expect. It is recommended to only use the public APIs provided in the SDK. 
+
+It's also important to note that Android system considers the telephony state as sensitive information. Therefore new versions of Android might not allow you to access this information. 
+
+If you are trying to monitor the network status or measure its performance you may use NetworkCallbacks (`android.net.ConnectivityManager.NetworkCallback`) and monitor the state of the network and data transfer. Alternatively use `android.telephony.PhoneStateListener` to monitor changes in different telephony states on the device. 
+
+You can also use `CellInfo` (`android.telephony.CellInfo`) class to get network signal strength among other details about the cellular connection. Although this will need user's location permission as the information about cell signal can give insights about user's location.

@@ -1,0 +1,36 @@
+Here is an example of how to test the `playDtmfTone` method in `RemoteConference` class.
+
+First of all, you need permission is your manifest xml. 
+
+```xml
+<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+```
+
+And then you could code like follow:
+
+```java
+public void test_RemoteConference_playDtmfTone() {
+    String conferenceId = "myConferenceId"; // replace this with your conference id
+    Char dtmfChar = '1'; // replace this with your dtmf tone
+
+    // Create a telecom manager instance
+    TelecomManager telecomManager = (TelecomManager) getSystemService(Context.TELECOM_SERVICE);
+    
+    if (telecomManager != null) {
+        // Get the current conference
+        RemoteConference conference = telecomManager.getConference(conferenceId);
+        
+        if (conference != null) {
+            // Play the dtmf tone
+            conference.playDtmfTone(dtmfChar);
+            conference.stopDtmfTone();
+        } else {
+            Log.e("test", "Conference not found");
+        }
+    } else {
+        Log.e("test", "Telecom manager not found");
+    }
+}
+```
+
+Note: This function will not work unless you have the `MODIFY_PHONE_STATE` permission declared in your app's manifest file with protection level being "signature|privileged". This means only system apps or apps signed with the system key can use this method, due to security reasons. This function will silently fail for third-party applications.

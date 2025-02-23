@@ -1,0 +1,72 @@
+Sure, below is an example of using the ConsumerIrManager in an Android activity. 
+
+In this example, the ConsumerIrManager is used to transmit a signal using the phone's infrared emitter. Additionally, a call is made to check if the permission `Manifest.permission.TRANSMIT_IR` is granted. If the permission is not granted, we request for it.
+
+Please note that as of API level 28, android.hardware.ConsumerIrManager.transmit() is no longer publicly available.
+
+```java
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.hardware.ConsumerIrManager;
+import android.Manifest;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+
+public class MainActivity extends Activity {
+
+    private static final int INFRARED_PERMISSION_CODE = 1;
+    private ConsumerIrManager irManager;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        irManager = (ConsumerIrManager) getSystemService(CONSUMER_IR_SERVICE);
+
+        // Check if we have the required permission
+        if (ContextCompat.checkSelfPermission(this,
+                      Manifest.permission.TRANSMIT_IR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.TRANSMIT_IR}, INFRARED_PERMISSION_CODE);
+        }
+        else {
+            // If permission is granted, we can test transmission functionality
+            test_ConsumerIrManager_transmit();
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case INFRARED_PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    test_ConsumerIrManager_transmit();
+                }
+            }
+        }
+    }
+
+    private void test_ConsumerIrManager_transmit() {
+        if(irManager.hasIrEmitter()) {
+            // Contains the IR pattern and frequency to transmit
+            int frequency = 38000;
+            int[] pattern = {1901, 4453, 625, 1614, 625, 1586, 625, 1614, 625, 4463, 625, 1586, 625, 1614, 625, 1586, 625, 1586, 625, 1586, 625, 1614, 625, 1586, 625, 1614, 625, 1586, 625, 1614, 625, 1586, 625, 3923, 625, 1586, 625, 1564};
+
+            try {
+                // Transmit the pattern at the frequency
+                irManager.transmit(frequency, pattern);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+Remember to add the `TRANSMIT_IR` permission in your manifest file as below:
+
+```xml
+<manifest ... >
+    <uses-permission android:name="android.permission.TRANSMIT_IR" />
+    ...
+</manifest>
+```

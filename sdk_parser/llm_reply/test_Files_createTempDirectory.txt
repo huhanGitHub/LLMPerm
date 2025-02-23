@@ -1,0 +1,27 @@
+Sure, here is a very basic usage example for the `Files.createTempDirectory()` function in Java. This is a self-contained method, meaning it includes necessary import statements inside the method itself to avoid dependency issues.
+
+Please note, that `Files.createTempDirectory()` API might not work properly in Android and this code mostly suitable for Java desktop applications. If you want to create temp file in Android, consider using `context.getCacheDir();`
+
+```java
+public void test_Files_createTempDirectory() {
+    try { 
+        // Import necessary classes
+        Class.forName("java.nio.file.Files");
+        Class.forName("java.nio.file.Path");
+        Class.forName("java.nio.file.Paths");
+
+        // The Files.createTempDirectory() method creates a new directory in the default temporary-file directory, using the given prefix to generate its name. 
+        // Here, we are using 'TestTempDir' as our prefix
+        java.nio.file.Path tempDir = java.nio.file.Files.createTempDirectory("TestTempDir");
+
+        // Output the path of the temporary directory to standard output
+        System.out.println("Temporary Directory Path: " + tempDir.toString());
+
+    } catch(Exception e) {
+        // Exception handling code
+        e.printStackTrace();
+    }
+}
+```
+
+This code creates a temporary directory in the default location for temporary files with the 'TestTempDir' prefix, then prints the path of this directory to the standard output. Error handling is done using a simple try-catch block, any exceptions thrown are printed to the error output.

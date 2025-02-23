@@ -1,0 +1,37 @@
+Here is an example of a test method for the `open` function found in `SipManager`. The `open` function is used to open a SIP profile. 
+
+Please note, in order to use `SIP` functionality, it's required to add `uses-permission android:name="android.permission.USE_SIP"` in `AndroidManifest.xml` file.
+
+Also, to use the SipManager, it's necessary to get an instance through the function `newInstance` in order to use it.  `newInstance` requires a `Context`. This test case is designed to be run inside an android activity:
+
+```java
+import android.content.Context;
+import android.net.sip.SipException;
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+
+public void test_SipManager_open() {
+    Context context = this;
+    // Use application context to avoid memory leaks
+    if(SipManager.isVoipSupported(context) && SipManager.isApiSupported(context)) {
+        SipManager manager = SipManager.newInstance(context);
+        if(manager != null) {
+            SipProfile.Builder builder;
+            try {
+                builder = new SipProfile.Builder("username", "domain");
+                builder.setPassword("password");
+                SipProfile profile = builder.build();
+                manager.open(profile);
+            } catch (Exception e) {
+                // Handle SipException (thrown by builder build and open methods)
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+The function `isVoipSupported(context)` determines if VOIP is supported by the device and `isApiSupported(context)` checks if the SIP API methods can be used. Also a `SipProfile` must be built and opened. This `SipProfile` must contain the proper SIP account details.
+
+You can replace `"username"`, `"domain"` and `"password"` with actual values.
+
+Note: Catching general `Exception` is generally a bad practice. It's better to catch specific exceptions that you expect might be thrown. Here we expect a `SipException`, thus we catch it specifically. You might want to add a method to handle `SipException` in a user-friendly way, because usually it's not the best idea to print stack trace to the user.

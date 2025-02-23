@@ -1,0 +1,75 @@
+Before we write our method, we should first implement SIP initialization in the Android Activity. For this SIP communication, you need to have a SIP account.
+
+Let's assume we have already configured the SipManager and SipProfile for an existing SIP account in our activity as follows:
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    private SipManager mSipManager = null;
+    private SipProfile mSipProfile = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Check if the device supports SIP
+        if(SipManager.isVoipSupported(getApplicationContext()) && 
+             SipManager.isApiSupported(getApplicationContext())) {
+            mSipManager = SipManager.newInstance(this);
+
+            // Assuming having an active SIP account
+            // Add your account username, domain and password
+            String username = "YourSIPUsername";
+            String domain = "example.com";
+            String password = "YourSIPPassword";
+            
+            try {
+                SipProfile.Builder builder = new SipProfile.Builder(username, domain);
+                builder.setPassword(password);
+                mSipProfile = builder.build();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "SIP not supported", Toast.LENGTH_SHORT).show();           
+        }
+    }
+
+    // Then add the test_SipAudioCall_startAudio method here
+}
+```
+
+Now, let's write our test_SipAudioCall_startAudio method inside the MainActivity:
+
+```java
+public void test_SipAudioCall_startAudio() {
+    try {
+        if(mSipManager != null) {
+            // For testing, let's try to call the same SIP account
+            final SipAudioCall.Listener listener = new SipAudioCall.Listener() {
+                @Override
+                public void onCallEstablished(SipAudioCall call) {
+                    call.startAudio();
+                    call.setSpeakerMode(true);
+                    call.toggleMute();
+                }
+                // We can also implement other SipAudioCall conditions such as onCallEnded, onCallBusy, etc.
+            };
+
+            mSipManager.makeAudioCall(mSipProfile.getUriString(), mSipProfile.getUriString(), listener, 30);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+The above example attempts to make an audio call using the SipAudioCall.startAudio() method. The SipAudioCall is established with a listener that starts the audio, sets the speaker mode and toggles the mute when the call is established.
+
+Please do replace the SIP account credentials and ensure you have the necessary permissions for INTERNET and USE_SIP in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.USE_SIP" />
+```

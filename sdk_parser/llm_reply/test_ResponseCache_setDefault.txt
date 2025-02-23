@@ -1,0 +1,46 @@
+Here's an example of how you might build a method for setting the default ResponseCache in an Android activity:
+
+```java
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
+import java.io.IOException;
+import java.net.CacheRequest;
+import java.net.CacheResponse;
+import java.net.ResponseCache;
+import java.net.URI;
+import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_ResponseCache_setDefault();
+    }
+
+    public void test_ResponseCache_setDefault() {
+        ResponseCache.setDefault(new ResponseCache() {
+            @Override
+            public CacheResponse get(URI uri, String requestMethod, Map<String, List<String>> requestHeaders) throws IOException {
+                // In real application, you may want to fetch a cached response from storage.
+                // Return a CacheResponse if the response is available in cache, else return null
+                return null;
+            }
+
+            @Override
+            public CacheRequest put(URI uri, URLConnection urlConnection) throws IOException {
+                // In real application, you may want to store some response to cache.
+                // Return a CacheRequest that will store the response in cache or return null.
+                return null;
+            }
+        });
+    }
+}
+```
+
+In this code, we've set a `ResponseCache` that doesn't really do anything—it always returns `null` from `get` method and `put` method. In a real-world application, you'd probably want to implement `get` to fetch a cached response from your own storage that you set earlier via the `put` method, and `put` to store a new response to cache.

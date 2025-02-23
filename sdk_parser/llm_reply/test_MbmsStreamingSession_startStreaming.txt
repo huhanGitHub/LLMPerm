@@ -1,0 +1,45 @@
+Here is a simplified example of using the `MbmsStreamingSession.startStreaming` method in a test function within an Android activity:
+
+```java
+public class MainActivity extends AppCompatActivity {
+     
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        try {
+            test_MbmsStreamingSession_startStreaming();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_MbmsStreamingSession_startStreaming() throws IOException {
+        // Get an instance of MbmsStreamingSession
+        MbmsStreamingSession streamingSession = MbmsStreamingSession.create(this);
+
+        // Set up a streams callback to handle streaming results
+        StreamingServiceCallback serviceCallback = new StreamingServiceCallback() {
+                @Override
+                public void onError(int errorCode, String message) {
+                    // Handle error
+                }
+
+                @Override
+                public void onStreamStateUpdated(int state, int reason) {
+                    // Handle status updates
+                }
+            };
+
+        // Define a URI to stream
+        Uri streamingUri = Uri.parse("https://www.example.com/video.mp4");
+
+        // Start the stream
+        streamingSession.startStreaming(streamingUri, serviceCallback, null);
+    }
+}
+```
+In this example, the `MbmsStreamingSession` is created in an Android activity, and then called to start streaming a video from a given URI. Streaming status is logged and errors are handled via the anonymous implementation of `StreamingServiceCallback`.
+
+Please note that your real application should handle permissions and network status and also release resources appropriately when they're no longer needed (calling `streamingSession.close()` when you're done with MBMS streaming). Also, do not forget to add the necessary permissions into your android manifest file. This is a test method and not meant for production use. The address `https://www.example.com/video.mp4` is a placeholder and should be replaced with real address. This code won't run successfully as is, due to the placeholder URI. This just provides a template on how to use `MbmsStreamingSession`, and error handling and stream state updates are kept generic for the same reasons.

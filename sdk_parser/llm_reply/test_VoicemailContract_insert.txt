@@ -1,0 +1,30 @@
+The below code snippet is a self-contained method `test_VoicemailContract_insert` which demonstrates basic usage of VoicemailContract in Android. This method inserts a new voicemail into the system.
+
+```java
+private void test_VoicemailContract_insert() {
+    ContentResolver contentResolver = getContentResolver();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(Voicemails.SOURCE_PACKAGE, getPackageName());
+    contentValues.put(Voicemails.DATE, System.currentTimeMillis());
+    contentValues.put(Voicemails.HAS_CONTENT, 1);
+    contentValues.put(Voicemails.NUMBER, "+123456789");
+    contentValues.put(Voicemails.DURATION, 60);
+    contentValues.put(Voicemails.TRANSCRIPTION, "Transcription text");
+
+    try {
+        Uri uri  = contentResolver.insert(VoicemailContract.Voicemails.CONTENT_URI, contentValues);
+        if (uri != null) {
+            Toast.makeText(this, "Voicemail inserted successfully", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Voicemail insert failed", Toast.LENGTH_LONG).show();
+        }
+    } catch (IllegalArgumentException e) {
+        e.printStackTrace();
+        Toast.makeText(this, "Voicemail insert failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+}
+```
+
+Please keep it in mind that the use of VoicemailContract is subject to certain permissions and most Android devices disable third-party apps to write to the voicemail content provider. To overcome this, the app must declare `com.android.voicemail.permission.ADD_VOICEMAIL` in the manifest and ask for it at runtime if it has not been previously granted. Also, modifying the voicemail provider directly via the VoicemailContract is not recommended for apps as mentioned in the Android documentation. Instead, apps should only modify voicemail data through a voicemail service. 
+
+Please note the error handling is quite basic in this example, you may need to add a more robust error handling as appropriate to your app.

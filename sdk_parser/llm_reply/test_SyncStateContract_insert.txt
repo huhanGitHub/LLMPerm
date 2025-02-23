@@ -1,0 +1,45 @@
+Sure, here's a Java example of how you can use the `SyncStateContract` API in Android. This example illustrates how to insert a new sync state for the given account and authority.
+
+```java
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.SyncStateContract;
+import android.accounts.Account;
+
+public void test_SyncStateContract_insert(Activity activity, Account account, String authority, byte[] data) {
+    try {
+        final String CONTENT_URI = "content://com.android.contacts";
+        final Uri uri = Uri.parse(CONTENT_URI);
+        final ContentResolver resolver = activity.getContentResolver();
+
+        // first, we need to check if there is already sync state data
+        Cursor cursor = resolver.query(SyncStateContract.Helpers.getUri(uri, account, authority), null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            long rowId = cursor.getLong(cursor.getColumnIndex(SyncStateContract.Columns._ID));
+            cursor.close();
+
+            // update if there is already state data
+            ContentValues values = new ContentValues();
+            values.put(SyncStateContract.Columns.DATA, data);
+            resolver.update(SyncStateContract.Helpers.getUri(uri, rowId), values, null, null);
+        } else {
+            // insert if there is no state data
+            SyncStateContract.Helpers.insert(resolver, uri, account, authority, data);
+        }
+    } catch (Exception e) {
+        Log.e("SyncStateContract", "Failed to insert/update", e);
+    }
+}
+```
+In the above code, replace `'content://com.android.contacts'` with the appropriate content URI provided by the content provider in your application. 
+
+This method takes in an `Account` object, an `authority` String (identifies the sync service), and a `data` byte array (the actual sync state data to insert).
+
+Please note though that since Android 10 (API level 29), direct access to sync adapters that run in the background is no longer allowed. 
+
+This restriction does not affect how users interact with the sync adapters (e.g., enabling/disabling sync, initiating a sync). Rather, they restrict one app from initiating a sync on behalf of another app, helping to keep the device in a low-power state unless the user explicitly wants to sync data. 
+
+You should consider using `WorkManager` for deferred tasks that require guaranteed execution instead.

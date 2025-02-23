@@ -1,0 +1,50 @@
+In order to perform the self-contained method test_FileSystemProvider_newInputStream(), we will need to access a file (given through its path) and gather an InputStream from it, using the FileSystemProvider. Please note that this specific use-case might not make too much sense because FileSystemProvider is an abstract class, and in typical usage, you get instances of its subclasses transparently, e.g. from a Path object. Furthermore, in Android, you are usually better off using higher-level API whenever possible, like `context.getAssets().open(fileName)` for assets.
+
+This method is to show you the example so you get the concept right. 
+
+```java
+import java.io.InputStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.spi.FileSystemProvider;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        try {
+            test_FileSystemProvider_newInputStream("/path/to/your/file");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_FileSystemProvider_newInputStream(String filePath) throws IOException {
+        // Specify the file we want to read from
+        FileSystem fileSystem = FileSystems.getDefault();
+        Path path = fileSystem.getPath(filePath);
+
+        // Get the provider of the FileSystem
+        FileSystemProvider provider = fileSystem.provider();
+
+        // Open a new InputStream
+        try (InputStream in = provider.newInputStream(path)) {
+            // Read from the file
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Do something with each line from the file
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            // Handle the exception
+            throw new RuntimeException("Could not open file", e);
+        }
+    }
+}
+```
+This code will read the file line by line and print each line to the Console. Replace /path/to/your/file with an actual path to a file in your filesystem.

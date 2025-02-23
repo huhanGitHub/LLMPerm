@@ -1,0 +1,49 @@
+Here is a basic example of a method using the NfcV transceive function:
+
+```java
+private void test_NfcV_transceive() {
+    Tag myTag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    if (myTag != null) {
+        NfcV nfcvTag = NfcV.get(myTag);
+
+        if(nfcvTag != null){
+            try {
+                nfcvTag.connect();
+
+                byte[] myCommand = new byte[] {
+                        (byte)0x00, (byte)0x20, // command: GET_SYSTEM_INFO
+                        (byte)0x00 // parameter: all
+                };
+
+                byte[] response = nfcvTag.transceive(myCommand);
+
+                // Print the response
+                String responseInHex = bytesToHex(response);
+                Log.i("Test", "Response in hex: " + responseInHex);
+
+                nfcvTag.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "No NfcV found. Please scan an NfcV tag.", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
+This method is meant to be called when you detect a Tag (i.e., when an `ACTION_TAG_DISCOVERED` or `ACTION_NDEF_DISCOVERED` Intent is delivered to your Activity). It first retrieves the Tag object from the Intent's extras. Then, it gets an NfcV object using `NfcV.get(myTag)`. With the NfcV object, it is able to connect to the tag and send commands using the transceive() method.
+
+Remember to add the NFC permission in your AndroidManifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+```
+
+In addition, using an NFC technology like NfcV requires your activity to run in single top launch mode. This ensures that the same activity instance receives all new intents:
+
+```xml
+<activity android:name=".activities.MyActivity"
+         android:launchMode="singleTop">
+...
+</activity>
+```

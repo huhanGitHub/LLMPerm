@@ -1,0 +1,42 @@
+Here is an example of a method that uses the `Files.newDirectoryStream` API from Java NIO package. Please remember that this method can throw an `IOException` so you should handle that appropriately within an Android app.
+
+```java
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_Files_newDirectoryStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_Files_newDirectoryStream() throws IOException {
+        // define the path
+        Path dir = Paths.get("/path/to/directory");
+
+        // use try-with-resources to ensure the stream is closed after usage
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+            for (Path entry : stream) {
+                // print or process each entry
+                System.out.println(entry.getFileName());
+            }
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+}
+```
+
+This test method will open a `DirectoryStream` for a given directory and then loop through each entry in the directory, printing the name of the file or directory.
+
+Please note that file handling operations usually require specific permissions in Android. You should request the `READ_EXTERNAL_STORAGE` or `WRITE_EXTERNAL_STORAGE` permissions in your Android app as appropriate.

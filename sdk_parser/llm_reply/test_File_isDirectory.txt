@@ -1,0 +1,29 @@
+Here is a simple test method for "isDirectory()" method of File API in Java.
+This method creates a File object for a specific path and then checks if that path is a directory or not. This is intended for use in an Android activity.
+
+Please note, this requires the "READ_EXTERNAL_STORAGE" permission in your AndroidManifest.xml as it reads the file system.
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+```java
+private void test_File_isDirectory() {
+    // Specify the path.
+    String path = Environment.getExternalStorageDirectory().toString();
+
+    // Create a File object for the specified path.
+    File file = new File(path);
+
+    // Check if the path represents a directory using isDirectory() method.
+    if (file.isDirectory()) {
+        // This path represents a directory.
+        Toast.makeText(this, path + " is a directory.", Toast.LENGTH_SHORT).show();
+    } else {
+        // This path does not represent a directory.
+        Toast.makeText(this, path + " is not a directory.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+You can call this method in any of the lifecycle methods of the Android activity, such as onCreate(), or based on any specific user interaction. This method not only checks if the specified path represents a directory, but also displays a toast message depending on whether it is a directory or not.

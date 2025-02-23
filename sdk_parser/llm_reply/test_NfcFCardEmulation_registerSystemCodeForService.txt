@@ -1,0 +1,34 @@
+Here's an example of how to use `NfcFCardEmulation` method `registerSystemCodeForService` in an Android context.
+
+Please note this method is a private API starting from Android O, which means it's not advisable to use it for any production level apps as it can cause bugs and restrictions on some devices given that private APIs are not stable across different Android versions.
+
+```java
+private boolean test_NfcFCardEmulation_registerSystemCodeForService() {
+    String packageName = "com.example.test";  // Update it with your package name.
+    String serviceClassName = "com.example.test.MyNfcFService";  // Update with your NFC service class name.
+    String systemCode = "4056";  // Replace it with your system code.
+    boolean success = false;
+
+    // Get an instance of NfcFCardEmulation.
+    NfcFCardEmulation nfcFCardEmulation = NfcFCardEmulation.getInstance(NfcAdapter.getDefaultAdapter(this));
+
+    // Create a new ComponentName instance pointing to our service.
+    ComponentName serviceName = new ComponentName(packageName, serviceClassName);
+        
+    try {
+        // Register the system code for our service.
+        success = nfcFCardEmulation.registerSystemCodeForService(serviceName, systemCode);
+    } catch(Exception e) {
+        e.printStackTrace();
+        Log.e(TAG, "Failed to register system code");
+    }
+    
+    return success;
+}
+```
+
+Assuming `MyNfcFService` is a class that extends `HostApduService` (or `OffHostApduService`). If the system code registration is successful, this will return `true`, else `false`.
+
+Please note, to use NFC related features you will need to add NFC permission in your Manifest file using `<uses-permission android:name="android.permission.NFC" />`. Also, the device needs to support NFC feature.
+
+Don't forget to handle the NFC permission properly at the runtime as well, if your app targets Android 6.0 (API level 23) or higher.

@@ -1,0 +1,39 @@
+Here is the method test_CellIdentityTdscdma_getMobileNetworkOperator. This method tests the `getMobileNetworkOperator` method of `CellIdentityTdscdma` class. However, this method may need access to sensitive permissions such as `READ_PHONE_STATE`. Please ensure that the required permissions are granted in the android manifest.
+
+```java
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoTdscdma;
+import android.telephony.TelephonyManager;
+import android.widget.Toast;
+import androidx.annotation.RequiresPermission;
+import androidx.core.app.ActivityCompat;
+
+public void test_CellIdentityTdscdma_getMobileNetworkOperator(Context context){
+    // Check READ_PHONE_STATE permission
+    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(context, "Permission READ_PHONE_STATE not granted", Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    if (telephonyManager != null) {
+        List<CellInfo> cellInfoList = telephonyManager.getAllCellInfo();
+        for (CellInfo cellInfo : cellInfoList) {
+            if (cellInfo instanceof CellInfoTdscdma) {
+                CellInfoTdscdma cellInfoTdscdma = (CellInfoTdscdma) cellInfo;
+                String  networkOperator = cellInfoTdscdma.getCellIdentity().getMobileNetworkOperator();
+                Toast.makeText(context, "Mobile Network Operator: " + networkOperator, Toast.LENGTH_SHORT).show();
+             }
+        }
+    } else {
+        Toast.makeText(context, "Telephony Manager is NULL", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+Note: This example assumes that your app is running in an activity context, and you're calling this method within that activity. If not, you may need to replace `this` usage with an appropriate `Context`. Also, it assumes that your app is using the androidx libraries. 
+
+Additionally, getting cell information and the mobile network operators may not work on all devices with all cell networks. Some networks may not make this information available.

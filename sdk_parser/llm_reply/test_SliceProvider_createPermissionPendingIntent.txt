@@ -1,0 +1,46 @@
+Here is a sample method that tests the `createPermissionPendingIntent` method of `SliceProvider` class. This method will create a `PendingIntent` that the app can use to request slice permission:
+
+```java
+public void test_SliceProvider_createPermissionPendingIntent() {
+    SliceProvider sliceProvider = new SliceProvider() {
+        @Override
+        public boolean onCreateSliceProvider() {
+            // The slices provider must be created here, returning false by default
+            return false;
+        }
+
+        @Nullable
+        @Override
+        public Slice onBindSlice(Uri sliceUri) {
+            // Here you provide the slice Uri, I am returning null by by default
+            return null;
+        }
+
+        @Override
+        public boolean checkAccessAllowed(Uri sliceUri) {
+            // Here you perform the access check, returning false by default
+            return false;
+        }
+    };
+
+    String pkg = "com.example.yourapp";   // Use your package name
+    Uri uri = Uri.parse("content://" + pkg + "/path");
+    PendingIntent pendingIntent = sliceProvider.createPermissionRequest(uri, pkg);
+
+    if (pendingIntent != null) {
+        try {
+            pendingIntent.send();  // This will send the request
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+    } else {
+        Log.e(TAG, "PendingIntent was null");
+    }
+}
+```
+
+Don't forget that the `sliceProvider.createPermissionRequest` method is part of the `SliceProvider` class and needs be called within a child class of `SliceProvider`. You also need to ensure that the above method is running on the UI thread because `pendingIntent.send()` can throw exception if called on a background thread.
+
+In above code snippet, replace `"com.example.yourapp"` and `"content://" + pkg + "/path"` with your actual package name and the actual Uri to your slice respectively.
+
+Lastly, Slice functionality requires minSdkVersion to be 28 or the AndroidX library to be used for backward compatibility.

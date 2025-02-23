@@ -1,0 +1,39 @@
+Here is a basic example of a self-contained method test_WebChromeClient_onPermissionRequest that tests the WebChromeClient's onPermissionRequest method:
+
+```java
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+
+public void test_WebChromeClient_onPermissionRequest() {
+    WebView myWebView = new WebView(this);
+
+    myWebView.setWebChromeClient(new WebChromeClient() {
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (request.getOrigin().toString().equals("https://my.trusted.site.com")) {
+                        request.grant(request.getResources());
+                    } else {
+                        request.deny();
+                    }
+                }
+            });
+
+        }
+
+        @Override
+        public void onPermissionRequestCanceled(PermissionRequest request) {
+            super.onPermissionRequestCanceled(request);
+        }
+    });
+}
+```
+
+In this example, we have a `WebView` (`myWebView`) and we use `setWebChromeClient` method to provide our own implementation of `WebChromeClient`. Inside `WebChromeClient`, we override `onPermissionRequest` to handle permission requests from our web page. 
+
+For simplification, this test method grants all requests that come from `"https://my.trusted.site.com"` and denies others. 
+
+Please replace `"https://my.trusted.site.com"` with your trusted site. Please note that the actual use of `WebChromeClient` would require adequate attention to various edge-cases which depends on the specific needs of your application. Also, the permissions should always be managed safely in the real-life applications.

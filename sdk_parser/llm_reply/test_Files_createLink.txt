@@ -1,0 +1,41 @@
+Here's a method called "test_Files_createLink" which uses java.nio.file.Files to create a new link to an existing file. This method is only illustrative as Android does NOT support it and Java Files APIs are not recommended for file operations on Android due to various incompatibilities with devices:
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MainActivity extends AppCompatActivity {
+    
+    //...
+    
+    public void test_Files_createLink() {
+        try {
+            // Name of the existing file
+            Path existingFilePath = Paths.get("/path/to/existingFile.txt");
+
+            // Name of the new link
+            Path linkPath = Paths.get("/path/to/newLinkFile.txt");
+
+            // Create a link from new file to existing file
+            Files.createLink(linkPath, existingFilePath);
+
+            Toast.makeText(this, "Link Created Successfully", Toast.LENGTH_SHORT).show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "Error while creating link", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    //...
+}
+```
+This test function will attempt to link an existing file to a new file. If the operation succeeds it will display "Link Created Successfully" and if fails it will show "Error while creating link".
+
+Remember to have necessary read and write permissions in your Android Manifest file.
+
+Again, this function WON'T WORK on Android platform as mentioned earlier. The java.nio.file is only included from API 26 and is not recommended. 
+
+This is more of a Java SE related task then Android. Please run this on a Java SE environment such as desktop application not Android.
+
+For Android, consider using File, FileInputStream, FileOutputStream, and related classes for file operations.

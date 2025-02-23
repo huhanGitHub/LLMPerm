@@ -1,0 +1,43 @@
+Here is a self-contained method `test_SipManager_register`:
+
+This method demonstrates an example usage of the Android SipManager API. It includes all necessary setup and cleanup steps to register and unregister a SIP profile.
+
+Please note that this code requires the `android.permission.USE_SIP` and `android.permission.INTERNET` permissions.
+
+```java
+public void test_SipManager_register() {
+    SipManager sipManager = null;
+    SipProfile sipProfile = null;
+
+    try {
+        // Check if SIP VoIP is supported on this device.
+        if(SipManager.isVoipSupported(this) && SipManager.isApiSupported(this)) {
+
+            sipManager = SipManager.newInstance(this);
+
+            SipProfile.Builder builder = new SipProfile.Builder("username", "domain");
+            builder.setPassword("password");
+            sipProfile = builder.build();
+
+            // Register the profile.
+            sipManager.open(sipProfile);
+        }
+    } catch (SipException e) {
+        // Handle exception e.g., SIP is not supported or internet permission not granted.
+        e.printStackTrace();
+    } finally {
+        // Don't forget to close the SipProfile and SipManager to release resources. 
+        if (sipProfile != null) {
+            try {
+                sipManager.close(sipProfile.getUriString());
+            } catch (SipException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+Remember that this is a simplified usage example and it doesn't include things like input validation and handling other potential exceptions. Additionally, the SIP account username, domain, and password are hardcoded here for simplicity. In a real use case you should retrieve them from appropriate sources or user input.
+
+Also, the method `SipManager.open(SipProfile)` used here only opens a local profile that can be used for outgoing calls. To also receive incoming calls, you need to use the method `SipManager.open(SipProfile, PendingIntent, SipRegistrationListener)`.

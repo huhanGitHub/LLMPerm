@@ -1,0 +1,29 @@
+```java
+import android.os.Environment;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import android.util.Log;
+
+public void test_Files_createDirectory() {
+    try {
+        // Specify the path of the directory to be created
+        String pathName = Environment.getExternalStorageDirectory() + "/ExampleDir"; //Note: You may need to request WRITE_EXTERNAL_STORAGE permission
+
+        // Use Paths to get a Path representing the directory
+        Path path = Paths.get(pathName);
+
+        // Use Files.createDirectory() to create the directory
+        if (!Files.exists(path)) {
+            Files.createDirectory(path);
+            Log.i("Directory Create Test", "Directory " + pathName + " has been created.");
+        } else {
+            Log.i("Directory Create Test", "Directory " + pathName
+                    + " already exists.");
+        }
+    } catch (IOException e) {
+        Log.e("Directory Create Test", "Error creating directory.", e);
+    }
+}
+```
+This "test_Files_createDirectory" method is used to create a directory in the external storage of an Android device. Note that this requires the WRITE_EXTERNAL_STORAGE permission, and you should make sure to have this permission requested and granted in your Android app before using this method. Additionally, as of API level 29, apps are not allowed to have unrestricted access to external storage, so you may need to use the Scoped Storage model if your app targets API level 29 or higher.

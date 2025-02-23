@@ -1,0 +1,44 @@
+URLClassLoader's getPermissions() method is used to grant permission for the code loaded from the specified URL. It is critical while building a Secure Class Loading mechanism for Java applications. It returns an instance of PermissionCollection that contains the permissions granted to the code.
+
+Here's an example of how you can utilize this code.
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.cert.Certificate;
+
+public class TestActivity extends Activity {
+    private void test_URLClassLoader_getPermissions() {
+        try {
+            // Creating a new instance of URLClassLoader
+            File file = new File("/src/test");  // indicate the correct path 
+            URL url = file.toURI().toURL();
+            URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url});
+            
+            // The location from where to load the classes
+            CodeSource codeSource = new CodeSource(url, (Certificate[]) null);
+            
+            // Getting the permissions of the URL
+            PermissionCollection permissionCollection = urlClassLoader.getPermissions(codeSource);
+            
+            // Enumerating and printing each permission
+            for (Permission permission : Collections.list(permissionCollection.elements())) {
+                System.out.println(permission);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+```
+
+This function will load a URLClassLoader from a certain directory, then get the permissions of the class files from that place and print each permission.
+
+Please modify it to meet your actual case, perhaps you may need to handle the permissions with the specific logic instead of just printing them out.
+
+Notice: This method can't be directly executed on Android because Android uses its own class loader (PathClassLoader or DexClassLoader) rather than Java's URLClassLoader.

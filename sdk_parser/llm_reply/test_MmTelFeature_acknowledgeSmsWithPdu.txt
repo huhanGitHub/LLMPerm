@@ -1,0 +1,37 @@
+Sure, unfortunately MmTelFeature.java does not provide visibility to its methods for external use except its Listener's callbacks. acknowledgeSmsWithPdu is not a public method of the MmTelFeature class and hence cannot directly be used.
+
+However, if we were to conduct a unit test on a hypothetical public acknowledgeSmsWithPdu method, you could do something similar to the following:
+
+```java
+public class MyActivity extends Activity {
+    private MmTelFeature mMmTelFeature;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize your MmTelFeature object
+        // Note: This is a hypothetical scenario because you cannot directly instantiate MmTelFeature normally,
+        // this is just for the purpose of illustrating the test method example
+        mMmTelFeature = new MmTelFeature();
+    }
+
+    public void test_MmTelFeature_acknowledgeSmsWithPdu() {
+        // Define the parameters for the method acknowledgeSmsWithPdu
+        int token = 12345;
+        int messageRef = 123;
+        int result = 0; // 0 means success, 1 means failure
+
+        // Since it's an hypothetical scenario, we expect the method doesn't return any value (void)
+     try {
+        if (mMmTelFeature != null) {
+                mMmTelFeature.acknowledgeSmsWithPdu(token, messageRef, result);
+                Log.d("MmTelFeature", "Sms with pdu acknowledged successfully.");
+            }
+        } catch (Exception e) {
+            Log.e("MmTelFeature", "Error acknowledging sms with pdu, " + e.getMessage());
+        }
+    }
+}
+```
+In the above method, we assume that the MmTelFeature class provides a public method called acknowledgeSmsWithPdu. However, in reality, such function does not exist as a directly usable feature. Therefore, you may need to find an alternative based on your requirements.

@@ -1,0 +1,26 @@
+Here is an example of a method that uses the `java.io.File` class in a **Java** environment to delete a file:
+
+```java
+public boolean test_File_delete() {
+    File file = new File("path/to/your/file");
+    
+    // Checks if file exists
+    if (file.exists()) {
+        // Deletes the file
+        return file.delete();
+    }
+    return false;    // Returns false if the file does not exist
+}
+```
+
+Please replace "path/to/your/file" with the actual path of the file you wish to delete. This method will return `true` if file deletion is successful, `false` otherwise.
+
+If you are targeting an **Android** environment, remember you may need to request the `WRITE_EXTERNAL_STORAGE` permission or `READ_EXTERNAL_STORAGE` permission in your manifest file depending on your use case:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Also, while working with files on Android, you should prefer using `getExternalFilesDir(String)` or `getFilesDir()` over hard coding paths. These methods return paths to directories that your app can work within without requesting any permissions. 
+
+If you are planning to delete a file on Android, you have to do this operation asynchronously considering the main thread should not be blocked, you can use a separate Thread, an AsyncTask, or Kotlin Coroutines.

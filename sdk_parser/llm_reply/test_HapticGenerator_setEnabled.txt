@@ -1,0 +1,52 @@
+Below is a method "test_HapticGenerator_setEnabled" which is an example of how you can use a hypothetical "HapticGenerator" from the Android API. Please note that this is a synthetic example, considering HapticGenerator is not available in Android API.
+
+```java
+import android.media.audiofx.HapticGenerator;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private HapticGenerator hapticGenerator;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //Initialize the HapticGenerator object
+        hapticGenerator = new HapticGenerator();
+
+        // setup the button that will run the test
+        Button runTestButton = findViewById(R.id.run_test_button);
+        runTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                test_HapticGenerator_setEnabled();
+            }
+        });
+    }
+
+    public void test_HapticGenerator_setEnabled() {
+        try {
+            // Enable the Haptic Generator
+            hapticGenerator.setEnabled(true);
+            
+            //Print status
+            if(hapticGenerator.getEnabled()) {
+                Log.d("HapticGenerator", "HapticGenerator is enabled");
+            } else {
+                Log.d("HapticGenerator", "Failed to enable the HapticGenerator");
+            }    
+            
+        } catch (Exception e) {
+            Log.e("HapticGenerator", "Error in enabling the HapticGenerator", e);
+        }
+    }
+}
+```
+In the code above, I've created a test method to enable the HapticGenerator. When the 'run_test_button' button is clicked, this method is invoked. It enables the HapticGenerator and then checks if it is enabled or not. If the HapticGenerator is enabled, it logs a success message, otherwise it logs a failure message. 
+
+Please replace `HapticGenerator` with the appropriate Class as per your requirements.

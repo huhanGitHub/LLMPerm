@@ -1,0 +1,53 @@
+Within the Android NFC API, the NdefFormatable class is used when a discovered tag is not NDEF-formatted or if the tag's NDEF format is not recognized (for instance, a third-party NFC tag). Here's an example usage:
+
+Please note that Android requires you to handle the NFC intents on a new thread when you're dealing with raw tags, like NdefFormatable.
+
+```java
+public void test_NdefFormatable_formatReadOnly(final Tag tag) {
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                // Fetch the NdefFormatable instance for the tag
+                NdefFormatable formatable = NdefFormatable.get(tag);
+
+                if (formatable != null) {
+                    try {
+                        // Connect to the tag
+                        formatable.connect();
+
+                        // Create a new NDEF message to write to the tag
+                        NdefMessage ndefMessage = new NdefMessage(NdefRecord.createUri("https://google.com"));
+
+                        try {
+                            // Makes NFC read-only 
+                            // Note: This is irreversible operation. Once you made the tag read-only, 
+                            // you can't write new data to it anymore
+                            formatable.formatReadOnly(ndefMessage);
+                        } catch (Exception e) {
+                            // Handle exception when formatting tag to read-only fails
+                            Log.e("TAG_FORMAT", "Failed to format tag to read-only", e);
+                        }
+                    } catch (IOException e) {
+                        // Handle exception when connection to tag fails
+                        Log.e("TAG_FORMAT", "Connection to tag failed", e);
+                    } finally {
+                        formatable.close();
+                    }
+                }
+            } catch (Exception e) {
+                // Handle general exception
+                Log.e("TAG_FORMAT", "Error formatting tag", e);
+            }
+        }
+    }).start();
+}
+```
+
+In this code, we are writing a URL NdefRecord to the discovered tag and making the NFC read-only, which means the NFC cannot be written again in the future. Make sure to handle exceptions appropriately for your use case.
+
+Ensure to add the NFC permissions in your AndroidManifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+```

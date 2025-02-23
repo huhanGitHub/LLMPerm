@@ -1,0 +1,45 @@
+Here's an example of how you can use the SipSession.answerCall method in Android.
+
+```java
+public void test_SipSession_answerCall() {
+    SipManager sipManager;
+    SipProfile sipProfile;
+    SipSession sipSession;
+
+    try {
+        sipManager = SipManager.newInstance(this);
+
+        SipProfile.Builder sipProfileBuilder = new SipProfile.Builder("USERNAME", "DOMAIN");
+        sipProfileBuilder.setPassword("PASSWORD");
+        sipProfile = sipProfileBuilder.build();
+
+        sipManager.open(sipProfile);
+        SipManager.Listener sipListener = new SipManager.Listener() {
+            @Override
+            public void onRinging(SipSession session, SipProfile caller, String sessionDescription) {
+                super.onRinging(session, caller, sessionDescription);
+                try {
+                    session.answerCall(sessionDescription, 30);
+                } catch (SipException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        sipSession = sipManager.createSipSession(sipProfile, sipListener);
+
+    } catch (ParseException | SipException ex) {
+        ex.printStackTrace();
+    }
+}
+```
+
+Before using above code, Ensure that the following permissions are added in your AndroidManifest.xml file.
+
+```xml
+<uses-permission android:name="android.permission.USE_SIP" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+The 'USERNAME', 'DOMAIN', and 'PASSWORD' need to be filled with your SIP provider account information.
+
+Please notice that because the SipSession.answerCall() method throws SipException as mentioned in the Android documentation, it is necessary to catch this kind of exception. You should also ensure that your device supports SIP API, you can check this by calling SipManager.isApiSupported(Context).

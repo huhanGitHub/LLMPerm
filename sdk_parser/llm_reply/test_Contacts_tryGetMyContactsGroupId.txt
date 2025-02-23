@@ -1,0 +1,54 @@
+Here is a sample method `test_Contacts_tryGetMyContactsGroupId`. In this method, we first check if the required permission (`READ_CONTACTS`) is granted. If the permission is not granted, a request is made for the needed permissions. We use the `ContentResolver` along with the `ContactsContract` API to fetch the Contact Groups.
+
+```Java
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.provider.ContactsContract;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.content.Context;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public void test_Contacts_tryGetMyContactsGroupId(Context context){
+    // Checking if READ_CONTACTS permission is already granted
+    if(ContextCompat.checkSelfPermission(context,Manifest.permission.READ_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED){
+        // If the permission is not already granted then asking for the permission
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_CONTACTS},1);
+    } else {
+        // Permission had already been granted
+        getMyContactsGroupId(context);
+    }
+}
+
+public void getMyContactsGroupId(Context context){
+    String selection = ContactsContract.Groups.DELETED + "=?";
+    String[] selectionArgs = { "0" };
+    // defining the columns to retrieve
+    String[] projection = new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE };
+    ContentResolver cr = context.getContentResolver();
+    Cursor cursor = cr.query(ContactsContract.Groups.CONTENT_URI, projection, selection, selectionArgs, null);
+
+    if (cursor.moveToFirst()){
+        do {
+            // Get the contact ID
+            String groupId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Groups._ID));
+
+            // Get the contact's name
+            String groupName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Groups.TITLE));
+
+            // Displaying contact information in log for debugging
+            System.out.println("Group ID: " + groupId + ", Group Name: " + groupName);
+        } while (cursor.moveToNext());
+    }
+    cursor.close();
+}
+```
+
+In this example, `getMyContactsGroupId(Context context)` method fetches all non-deleted contact groups, but is invoked only when `READ_CONTACTS` permission is granted. Note that permission check is done in method `test_Contacts_tryGetMyContactsGroupId(Context context)`. 
+
+Please modify these methods according to your use case, especially error handling.
+
+This code will not run on the main thread, it is recommended to run it on a background thread. And don't forget to handle `SecurityException` when the app does not have the necessary permissions. Excessive permission requests could lead to your app being less attractive, or even being uninstalled by the users.

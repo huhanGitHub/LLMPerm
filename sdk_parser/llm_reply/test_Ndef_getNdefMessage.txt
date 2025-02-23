@@ -1,0 +1,43 @@
+The Android API called "android.nfc.tech.Ndef" allows applications to read from and write to tags which have been formatted to NDEF (NFC Data Exchange Format). So, the "test_Ndef_getNdefMessage" method could look something like this:
+
+```java
+public void test_Ndef_getNdefMessage() {
+    NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
+    if (adapter != null && adapter.isEnabled()) {
+        Tag tag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag != null) {
+            try {
+                Ndef ndef = Ndef.get(tag);
+                if (ndef != null) {
+                    ndef.connect();
+                    NdefMessage ndefMessage = ndef.getNdefMessage();
+                    if (ndefMessage != null) {
+                        // Do something with the message
+                        // For example, print the first record to Logcat:
+                        Log.i("NdefMessage", new String(ndefMessage.getRecords()[0].getPayload()));
+                    }
+                    ndef.close();
+                }
+            } catch (IOException | FormatException e) {
+                e.printStackTrace();
+            }
+        }
+    } else {
+        Toast.makeText(this, "NFC is not available on this device.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+It uses the Ndef API to obtain an Ndef instance for a given tag, reads the NFC Data Exchange Format (NDEF) message from it and logs the first record of the message. It uses `NfcAdapter.EXTRA_TAG` to retrieve `Tag` object from the intent. Connection to the `Ndef` object is required before it communicates with the NFC tag. Please catch `IOException` and `FormatException` accordingly.
+
+Don't forget to add necessary permission and intent-filter on your AndroidManifest.xml:
+```xml
+<uses-permission android:name="android.permission.NFC" /> 
+
+<activity android:name=".MainActivity">
+    <intent-filter>
+        <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+    </intent-filter>
+</activity>
+```

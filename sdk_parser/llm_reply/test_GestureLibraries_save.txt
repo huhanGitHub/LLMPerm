@@ -1,0 +1,36 @@
+Sure, here is a simple example method on how to use the `GestureLibraries.save()` function to save gesture libraries into file in Android:
+
+```Java
+public void test_GestureLibraries_save() {
+    
+    // Create a GestureLibrary object
+    GestureLibrary gestureLibrary = GestureLibraries.fromFile(getExternalFilesDir(null) + "/" + "mygesture");
+
+    // Create a new Gesture object
+    Gesture gesture = new Gesture();
+
+    // Add GestureStroke to Gesture
+    ArrayList<GesturePoint> gesturePoints = new ArrayList<>();
+    gesturePoints.add(new GesturePoint(0f,0f, 0));
+    gesturePoints.add(new GesturePoint(1f,1f, 1));
+    GestureStroke stroke = new GestureStroke(gesturePoints);
+    gesture.addStroke(stroke);
+
+    // Add Gesture to Gesture Library
+    gestureLibrary.addGesture("My gesture", gesture);
+
+    // Save GestureLibrary
+    boolean isGestureSaved = gestureLibrary.save();
+
+    // Check whether gesture is saved successfully
+    if(isGestureSaved){
+        Toast.makeText(this, "Gesture saved successfully", Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(this, "Failed to save gesture", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+This is a very basic example and in a real-life application, the gesture points would typically be collected from user input rather than being manually created like in this example.
+
+Do remember that you'll need to handle write permissions properly in your manifest file if you're targeting Android 6.0 (API level 23) or higher.

@@ -1,0 +1,38 @@
+Below is the requested method `test_AdvertiseSettings_setAdvertiseMode`. This method creates a new instance of `AdvertiseSettings` using its `Builder` class, sets the advertising mode and then retrieves the mode for verification.
+
+Please note that the varying advertising modes are as follows:
+
+1. `ADVERTISE_MODE_LOW_POWER`
+2. `ADVERTISE_MODE_BALANCED`
+3. `ADVERTISE_MODE_LOW_LATENCY`
+
+```java
+public void test_AdvertiseSettings_setAdvertiseMode() {
+    // Check for bluetooth permissions before creating `AdvertiseSettings`
+    if (checkSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED
+            && checkSelfPermission(Manifest.permission.BLUETOOTH_ADMIN) == PackageManager.PERMISSION_GRANTED) {
+        // Create a new instance of `AdvertiseSettings`
+        AdvertiseSettings settings = new AdvertiseSettings.Builder()
+                // Set the advertising mode to low latency
+                .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
+                .build();
+        
+        // Get the advertise mode for verification
+        int mode = settings.getMode();
+
+        // Verify the advertising mode is correct
+        if (mode == AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY) {
+            Log.i("AdvertiseSettingsTest", "Advertise mode set to low latency");
+        } else {
+            Log.e("AdvertiseSettingsTest", "Advertise mode not set correctly");
+        }
+    } else {
+        // Request for bluetooth permissions if not granted
+        requestPermissions(new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN}, 1);
+    }
+}
+```
+
+In the above method, please remember to replace `checkSelfPermission` and `requestPermissions` with the code/actions related to how you are handling permissions in your Android application (these methods belong to the `Activity` class, hence we're assuming it's being used within the context of an activity).
+
+Also, make sure to use the `Log` statements for simplification purposes. Replace those with what you would normally use in your testing scenario to report test results. You may also want to adjust the permissions request code (the integer `1` in the `requestPermissions` method) to something that won't conflict with other permissions requests in your application.

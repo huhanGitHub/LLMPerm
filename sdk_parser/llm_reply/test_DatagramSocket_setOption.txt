@@ -1,0 +1,28 @@
+This test method is a usage example of the setOption method of DatagramSocket API in Java. The method shows how to set the SocketOptions.SO_TIMEOUT for a DatagramSocket.
+
+```java
+import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.net.SocketOptions;
+
+public void test_DatagramSocket_setOption() {
+    DatagramSocket datagramSocket = null;
+    try {
+        // Instantiate DatagramSocket
+        datagramSocket = new DatagramSocket();
+
+        // Set SO_TIMEOUT to 5000 milliseconds for the DatagramSocket.
+        // If the DatagramSocket does not receive a packet within 5000 milliseconds, it will throw a SocketTimeoutException.
+        datagramSocket.setSoTimeout(5000);
+    } catch (SocketException e) {
+        // Handle SocketException which can occur in case of network errors
+        e.printStackTrace();
+    } finally {
+        if (datagramSocket != null) {
+            // Close the DatagramSocket cleanly
+            datagramSocket.close();
+        }
+    }
+}
+```
+This example creates a new DatagramSocket, and sets its timeout to 5000 milliseconds by using setSoTimeout() method. This means that if a packet is not received within this time, a SocketTimeoutException is thrown. When you're done with the DatagramSocket, it's important to close it to free up network resources. In this example, datagramSocket.close() is used in a finally block to ensure that the socket is always closed, regardless of what happens in the try block. Please note, network operations cannot be performed in the main thread in an android application, so this code should be implemented in a different thread.

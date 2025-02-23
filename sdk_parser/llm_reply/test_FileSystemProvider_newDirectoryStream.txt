@@ -1,0 +1,36 @@
+Testing the `newDirectoryStream()` method of the `FileSystemProvider` class in Java can be quite complex due to its dependencies and many use cases. Below is a simplified example that creates a directory stream and iterates through its paths:
+
+Since `FileSystemProvider` is an abstract class, we will use `FileSystems.getDefault().provider()` to get the default file system provider.
+
+Remember that this code needs proper exception handling and clean-up logic in a real-world scenario.
+
+```java
+import java.io.IOException;
+import java.nio.file.*;
+
+public void test_FileSystemProvider_newDirectoryStream() {
+    // The directory we want to list
+    Path directory = Paths.get("/some/directory/path/");
+
+    // The file system provider 
+    FileSystemProvider provider = FileSystems.getDefault().provider();
+
+    try (DirectoryStream<Path> stream = provider.newDirectoryStream(directory, "*")) {
+        for (Path file: stream) {
+            System.out.println(file.getFileName());
+        }
+    } catch (IOException | DirectoryIteratorException x) {
+        // IOException can never be thrown by the iteration.
+        // In this snippet, it can // only be thrown by newDirectoryStream.
+        System.err.println(x);
+    }
+}
+```
+
+This code will print all the file names in the specific directory that match the glob string `"*"`, which means all files.
+
+The string `"*"` is a glob string. It is used to filter the files that will be iterated. You can replace it with any valid glob string.
+
+Remember that you have to add error handling and cleaning up after yourself in real code.
+
+This should be run in a thread other than the UI thread in Android since it involves file operations.

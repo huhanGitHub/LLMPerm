@@ -1,0 +1,27 @@
+Here you go:
+
+```java
+public void test_SocketHandler_connect() {
+    try {
+        // Create a SocketHandler. The host name and TCP port number need to be specified in the form "hostname:port".
+        // For this test, we'll use localhost:5000.
+        SocketHandler handler = new SocketHandler("localhost", 5000);
+
+        // Log a simple INFO message.
+        handler.publish(new LogRecord(Level.INFO, "Test message"));
+
+        // Close the Handler to free resources.
+        handler.close();
+    } catch (IOException e) {
+        // Handle error: could not connect to host
+        e.printStackTrace();
+    } catch (SecurityException e) {
+        // Handle error: security violation occured
+        e.printStackTrace();
+    }
+}
+```
+
+This method attempts to create a `SocketHandler` connected to `localhost` on port `5000`. It then uses the handler to log a test message. If any exception occurs (for example, if the host can't be reached, or if there's a security issue), it's caught and the stack trace is printed.
+
+Please note that SocketHandler is rarely used in Android as it is not a good practice due to network constraints on mobile devices. Moreover, logging over network is also not generally a good approach, rather Android provides its own logging mechanism through the `android.util.Log` class. Because of these reasons, using SocketHandler class might be really hard and might not even work on Android. Also, note that you need the internet permission (`<uses-permission android:name="android.permission.INTERNET" />`) in your Android app manifest to use network features in your app.

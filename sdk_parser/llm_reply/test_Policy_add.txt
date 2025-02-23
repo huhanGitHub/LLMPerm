@@ -1,0 +1,20 @@
+There is no `add` method in the `java.security.Policy` class of Android SDK or Java API. This class is used for accessing the installed security policy. We can get, set, and refresh the Policy object but we cannot add anything directly.
+
+The most typical uses for `java.security.Policy` are `getPolicy()`, `setPolicy(Policy p)`, `refresh()`, `getPermissions(ProtectionDomain domain)`, etc.
+
+Here is an example usage of `Policy.getPolicy()`, considering that there is no add method in the `Policy` class:
+
+```java
+public void test_Policy_get() {
+    // Gets the system-wide security policy
+    Policy policy = Policy.getPolicy();
+    
+    if (policy != null) {
+        System.out.println("Policy is: " + policy.toString());
+    } else {
+        System.out.println("No policy installed.");
+    }
+}
+```
+
+Remember that using the `Policy` class requires the `java.security.manager` Security Property to be set. Otherwise, `Policy.getPolicy()` will return null. Security manager and security policies are advanced topics in Java, usually only directly manipulated when building complex, security-sensitive applications, or middleware frameworks or tools that need to enforce or work with security constraints.

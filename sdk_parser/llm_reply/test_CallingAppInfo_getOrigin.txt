@@ -1,0 +1,56 @@
+Here's how you might create a `test_CallingAppInfo_getOrigin` method:
+
+```java
+import android.content.pm.PackageManager;
+import android.service.contentsuggestions.CallingAppInfo;
+import android.os.Bundle;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_CallingAppInfo_getOrigin();
+    }  
+
+    public void test_CallingAppInfo_getOrigin() {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.GET_ACCOUNTS}, PERMISSION_REQUEST_CODE);
+        } else {
+            performGetOriginTest();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    performGetOriginTest();
+                } else {
+                    Toast.makeText(this, "Permission denied. Cannot perform test", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+ 
+    private void performGetOriginTest() {
+        int originUid = 12345; // Assuming this as uid
+        CallingAppInfo callingAppInfo = new CallingAppInfo(originUid);
+        int uid = callingAppInfo.getOrigin();
+        Toast.makeText(this, "The origin UID is: " + uid, Toast.LENGTH_LONG).show();
+    }
+}
+```
+
+This method is making a permission request for GET_ACCOUNTS. If the permission is granted `performGetOriginTest()` is called to create a `CallingAppInfo` object and get the origin of the app using `getOrigin()`. A toast message is displayed with the returned UID. If the permission is not granted, a toast message stating the failed test is shown.
+
+Please note that the CallingAppInfo API is hidden in the Android framework and is not available for every developer to use directly. The provided example assumes the visibility of that class. It's best to use APIs and classes that Android exposes for app development.

@@ -1,0 +1,31 @@
+Here's an example usage of ProcessBuilder. This code snippet sets environment variables and runs a command line process. Notice the use of ProcessBuilder.environment() to retrieve the process's environment and modify it.
+
+```java
+import android.util.Log;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Map;
+
+public void test_ProcessBuilder_environment() {
+    try {
+        ProcessBuilder processBuilder = new ProcessBuilder("ls");
+        Map<String, String> envVariables = processBuilder.environment();
+        envVariables.put("Variable1", "Value1");
+        envVariables.put("Variable2", "Value2");
+
+        Process process = processBuilder.start();
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+            Log.v("ProcessBuilderTest", line);
+        }
+        process.waitFor();
+    } catch (Exception e) {
+        Log.e("ProcessBuilderTest", "Error while running the ProcessBuilder", e);
+    }
+}
+```
+
+In the above code, we set up a ProcessBuilder to run the Unix "ls" command. We then retrieve a map of the process's environment variables using ProcessBuilder.environment() and add a couple of our own. The remainder of the code reads from the process's standard output and writes to the Android Log.
+
+Please note that this example requires the Android app to have the INTERNET permission. Also note that this method might not work on all Android devices, as many manufacturers restrict the ability to run command line processes for security reasons.

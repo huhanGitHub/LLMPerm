@@ -1,0 +1,76 @@
+Here's an example of how you might use Android's TextToSpeech API in an Android activity:
+
+```java
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity {
+    private TextToSpeech tts;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button speakButton = findViewById(R.id.speakButton);
+
+        // Initialize TextToSpeech engine
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                // Check if initialization was successful
+                if (status == TextToSpeech.SUCCESS) {
+                    // Set speech language. 
+                    // Note: This might not be available for all languages, check returned result.
+                    int result = tts.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Toast.makeText(MainActivity.this, "This language is not supported", Toast.LENGTH_LONG).show();
+                    } else {
+                        speakButton.setEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Initialization Failed", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        speakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test_TextToSpeech_speak("Hello, this is a TextToSpeech test!");
+            }
+        });
+    }
+
+    // Example of a TextToSpeech method
+    public void test_TextToSpeech_speak(String text) {
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Don't forget to shutdown TextToSpeech engine
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+}
+```
+
+In this example, `test_TextToSpeech_speak(String text)` is the method that uses `tts.speak(...)` to convert the input text to speech. The initialization and setup for the `TextToSpeech` engine is performed in the `onCreate` method of the Activity. The `TextToSpeech` engine sets the language to US English and alerts the user if the language is not supported. 
+ 
+The `speakButton` is wired to call the `test_TextToSpeech_speak` method when clicked, passing it a hard-coded string to speak.
+
+Finally, the `TextToSpeech` engine is stopped and shutdown in `onDestroy` to prevent memory leaks.
+
+This a simple example and does not handle some edge cases, such as what to do when the `TextToSpeech` engine initialization fails. 
+
+Also, the speak button is enabled even though the TextToSpeech initialization can fail, causing a crash when the button is pressed.

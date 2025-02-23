@@ -1,0 +1,38 @@
+Here is an example of a method named `test_MifareUltralight_writePage`, which makes use of the `MifareUltralight` Class in `android.nfc.tech` package to write data to a page of a MIFARE Ultralight tag:
+
+This example assumes that nfcAdapter and nfcPendingIntent are already initialized.
+```java
+public void test_MifareUltralight_writePage(Tag tag, int page, byte[] data) {
+    MifareUltralight mifare = MifareUltralight.get(tag);
+    try {
+        mifare.connect();
+        mifare.writePage(page, data);
+        Toast.makeText(this, "Data written to page " + page, Toast.LENGTH_SHORT).show();
+    } catch (IOException e) {
+        Toast.makeText(this, "Write operation has failed", Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+    } finally {
+        if (mifare != null) {
+            try {
+                mifare.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+In this method, 
+
+- We obtain an instance of `MifareUltralight`  using the static `get(Tag)` method and passing it a `Tag`, which represents the NFC tag that is in proximity.
+
+- We then establish a communication link to the NFC tag using the `connect()` method.
+
+- We write data to a page on the NFC tag using `writePage(int, byte[])` method.
+
+- Once we're done, we close the communication link.
+
+- The entire operation is wrapped in a try-catch-finally block to handle any `IOException`s that might arise, and to ensure that the communication link is always closed 
+
+Please note that the method expects a valid `Tag` object, page number and the data to be written in a byte array. The `Tag` object is usually obtained from the `onNewIntent(Intent)` method of the activity when an NFC tag is discovered.
+The page number and data to be written should be determined based on the specific requirements of your application. Make sure that the page number and data length are within the allowed range for the Mifare Ultralight card you are writing to. Not adhering to this could result in an `IOException`.

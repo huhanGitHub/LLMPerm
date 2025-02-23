@@ -1,0 +1,42 @@
+Here is a simple example of a method test_LogManager_addPropertyChangeListener:
+
+```java
+public void test_LogManager_addPropertyChangeListener(){
+    // Prepare a new instance of LogManager
+    LogManager logManager = LogManager.getLogManager();
+
+    // Create a new PropertyChangeListener
+    PropertyChangeListener pcl = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            System.out.println("Change occurred in: " + evt.getPropertyName());
+        }
+    };
+
+    try {
+        // Add the PropertyChangeListener to logManager
+        logManager.addPropertyChangeListener(pcl);
+
+        // Get the current log level
+        System.out.println(logManager.getLevel());
+
+        // Change the log level
+        logManager.setLevel(Level.SEVERE);
+
+        // Get the current log level (should be new changed level)
+        System.out.println(logManager.getLevel());
+
+    } catch (SecurityException e) {
+        e.printStackTrace();
+    } finally {
+        // Remove listener
+        logManager.removePropertyChangeListener(pcl);
+    }
+}
+```
+
+This method initializes a LogManager object and creates a new PropertyChangeListener. The listener logs to the console whenever a property in the LogManager is changed.
+
+It's necessary to handle a SecurityException because a SecurityManager can be present and it can disallow modifications to the LogManager.
+
+Finally, please note that usually, in Android development, Logcat is used instead of java.util.logging.

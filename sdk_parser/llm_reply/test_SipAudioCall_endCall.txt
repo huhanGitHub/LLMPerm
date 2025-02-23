@@ -1,0 +1,52 @@
+Sure, here is a general idea of how this method could be implemented.
+
+Let's assume that you have the `SipAudioCall` instance initialized and ready for action:
+```java
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+
+public void test_SipAudioCall_endCall() {
+    try {
+        // Initialize manager
+        SipManager manager = SipManager.newInstance(this);
+        
+        // Initialize SipProfile
+        SipProfile.Builder builder = new SipProfile.Builder("username", "domain");
+        builder.setPassword("password");
+        SipProfile profile = builder.build();
+        
+        // Initialize SipAudioCall.Listener
+        SipAudioCall.Listener listener = new SipAudioCall.Listener() {
+            
+            @Override
+            public void onCallEstablished(SipAudioCall call) {
+                call.startAudio();
+                call.setSpeakerMode(true);
+                if (call.isMuted()) {
+                    call.toggleMute();
+                }
+            }
+            
+            @Override
+            public void onCallEnded(SipAudioCall call) {
+                // Call ended, handle actions here
+            }
+        };
+        
+        // Make an outgoing call
+        SipAudioCall call = manager.makeAudioCall(profile.getUriString(), "sip:destination@domain.com", listener, 30);
+        
+        // Now, let's end the call
+        if (call != null) {
+            call.endCall();
+        }
+        
+    } catch (Exception e) {
+        // Handle the exception here
+    }
+}
+```
+This method is calling the `endCall` method of `SipAudioCall` which will terminate the call. Please note that before calling `endCall`, you should check whether the call is `null` to avoid `NullPointerException`. Remember to replace "username", "domain", and "password" variables with your SIP account credentials, and "sip:destination@domain.com" with the SIP address you're trying to call.
+
+Please consider this is not production-ready code and it should be improved for real use, including the need for additional checks and better error handling.

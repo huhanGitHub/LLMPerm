@@ -1,0 +1,38 @@
+Here's a simple usage example of DrmManagerClient's `installDrmEngine()` method. This method installs a DRM plug-in (digital rights management) that is used for the access of DRM protected content.
+
+```java
+public void test_DrmManagerClient_installDrmEngine() {
+    // Context of the application
+    Context context = this.getApplicationContext();
+
+    // Create an instance of DrmManagerClient
+    DrmManagerClient client = new DrmManagerClient(context);
+
+    // Specify DRM engine file path
+    String drmEngineFilePath = "/path/to/drmEngineFile";
+
+    // Install DRM engine
+    DrmInfoRequest drmInfoRequest = new DrmInfoRequest(DrmInfoRequest.TYPE_REGISTRATION_INFO, "application/octet-stream");
+
+    // Set the path to the DRM engine plug-in
+    drmInfoRequest.put("file_path", drmEngineFilePath);
+
+    try {
+        // Proactively install the DRM engine plug-in
+        DrmInfo drmInfo = client.acquireDrmInfo(drmInfoRequest);
+        int result = client.processDrmInfo(drmInfo);
+
+        // Check if the DRM engine was installed successfully
+        if (result == DrmManagerClient.ERROR_NONE) {
+            Log.d("DrmTest", "The DRM engine was installed successfully.");
+        } else {
+            Log.e("DrmTest", "Failed to install the DRM engine.");
+        }
+    } catch (Exception e) {
+        Log.e("DrmTest", "An error occurred while installing the DRM engine.", e);
+    }
+}
+```
+Please replace "/path/to/drmEngineFile" with the real path of your DRM engine file. Also, note that you'll need to handle exceptions as necessary for your app's specific use case.
+
+This code assumes that the `installDrmEngine()` function is invoked from an Activity, so `this` refers to the activity specifically. If the method is used in different context, you might need to obtain the context differently.

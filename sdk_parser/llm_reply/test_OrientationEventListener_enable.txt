@@ -1,0 +1,39 @@
+Here's a possible implementation of the method `test_OrientationEventListener_enable` in a hypothetical Android Activity:
+
+```java
+import android.content.Context;
+import android.view.OrientationEventListener;
+
+public void test_OrientationEventListener_enable() {
+    Context context = this;  // or getApplicationContext(), dependent on your need
+    int rate = SensorManager.SENSOR_DELAY_NORMAL;
+    OrientationEventListener listener = new OrientationEventListener(context, rate) {
+        @Override
+        public void onOrientationChanged(int orientation) {
+            // handle here
+            if (orientation == ORIENTATION_UNKNOWN) {
+                // sensor turned off
+                Log.d("OrientationEventListener", "Sensor turned off");
+            } else {
+                // sensor turned on, process orientation value
+                Log.d("OrientationEventListener", "Orientation: " + orientation);
+            }
+        }
+    };
+
+    if (listener.canDetectOrientation()) {
+        listener.enable();
+        Log.d("OrientationEventListener", "Listener enabled");
+    } else {
+        Log.d("OrientationEventListener", "Cannot detect orientation");
+        listener.disable();
+    }
+}
+```
+In this example, an `OrientationEventListener` is created with the context of the current Activity and a normal delay rate for sensor events. The anonymous inner class provided defines the `onOrientationChanged` method which is called when new sensor data is available.
+
+The `canDetectOrientation` method is used to check if the device has the necessary hardware to detect orientation changes. If it does, the listener is enabled with the `enable` method, otherwise it's disabled with the `disable` method.
+
+Please note this goes inside an Android `Activity` class. Be careful when using `this` in different contexts. This code also assumes you've requested the necessary permissions in the Android app manifest. 
+
+Additionally, note that the onOrientationChanged method is called when the device rotation changes. Some devices have poor rotation detection, thus this method might not be called on such devices when the device is rotated.

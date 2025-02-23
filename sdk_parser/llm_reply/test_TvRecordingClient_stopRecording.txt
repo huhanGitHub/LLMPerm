@@ -1,0 +1,40 @@
+Sure, below is an example of a method named `test_TvRecordingClient_stopRecording` using `TvRecordingClient` in Android:
+
+```java
+import android.media.tv.TvRecordingClient;
+import android.os.Looper;
+import android.content.Context;
+import android.media.tv.TvInputManager;
+
+public void test_TvRecordingClient_stopRecording(Context context) {
+    // Get the instance of TvInputManager
+    TvInputManager tvInputManager = (TvInputManager) context.getSystemService(Context.TV_INPUT_SERVICE);
+    
+    // Initialize RecordingCallback
+    TvRecordingClient.RecordingCallback recordingCallback = new TvRecordingClient.RecordingCallback() {
+        @Override
+        public void onRecordingStopped(Uri recordedProgramUri) {
+            super.onRecordingStopped(recordedProgramUri);
+            // Implement what to do when recording stops
+            System.out.println("Recording stopped");
+        }
+
+        @Override
+        public void onError(int error) {
+            super.onError(error);
+            // Implement what to do in case of an error
+            System.out.println("Error occurred");
+        }
+    };
+    
+    // Create an instance of TvRecordingClient
+    final TvRecordingClient tvRecordingClient = new TvRecordingClient(context, "Your input ID", recordingCallback, new Handler(Looper.myLooper()));
+
+    // Call stopRecording
+    tvRecordingClient.stopRecording();
+}
+```
+In this `test_TvRecordingClient_stopRecording` method code, first TvInputManager is initialized and then used to call a TvRecordingClient.stopRecording() method assuming that recording was started before. This method calls stopRecording() method of the TvRecordingClient class. Before calling stopRecording() method, it is necessary to override onRecordingStopped() and onError() methods of RecordingCallback because these methods will be called when the recording stops and when the error occurs respectively.
+Remember to replace "Your input ID" with the Id of the TV input service that handles the current TV input.
+
+Please note that your activity must have the `android.permission.RECORD_TV` permission to use `stopRecording()` method.

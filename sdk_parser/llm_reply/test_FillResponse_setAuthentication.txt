@@ -1,0 +1,30 @@
+Here is a usage example of using `FillResponse.Builder` to create a FillResponse and set authentication with `setAuthentication()` method:
+
+```java
+@TargetApi(Build.VERSION_CODES.O)
+public void test_FillResponse_setAuthentication() {
+    IntentSender intentSender = PendingIntent.getActivity(
+        this, 
+        0, 
+        new Intent(this, MainActivity.class),
+        PendingIntent.FLAG_UPDATE_CURRENT
+    ).getIntentSender();
+    
+    AutofillId autofillId = new AutofillId(1);
+
+    // Create an array of AutofillId to be passed into setAuthentication() method
+    AutofillId[] autofillIds = new AutofillId[]{ autofillId };
+
+    // Create a FillResponse
+    FillResponse fillResponse = new FillResponse.Builder()
+        .setAuthentication(autofillIds, intentSender, new Dataset.Builder().build())
+        .build();
+
+    // Log the FillResponse for debugging
+    Log.d("FillResponseTest", fillResponse.toString());
+}
+```
+
+Note: This is just an example and may not work on your code depending on several things such as the version of Android you're running or other dependencies. In this example, `MainActivity.class` has been used, please replace it with the name of the class that you want to start when an item in this `FillResponse` requires authentication. The `AutofillId` used here is also just for example purposes, you'll want to replace it with the actual `AutofillId` of the view that needs to be autofilled.
+
+You may need to handle the authentication in the activity that is started by the `IntentSender`. In the above example, the `MainActivity` would be responsible for checking the user's credentials and then, if the authentication succeeds, setting the autofill value for the view identified by the `AutofillId`.

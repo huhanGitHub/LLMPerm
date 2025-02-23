@@ -1,0 +1,43 @@
+To use the CombinedVibration API you will need to have Android 12 (API level 31) and above. But keep in mind, currently (October 2021) there's no specific method called startParallel in the CombinedVibration API in Android Official Documentation (check this on : https://developer.android.com/reference/android/os/vibration/CombinedVibration)
+
+So, let's imagine a way to do it, considering the actuators in parallel.
+
+Here is a basic example of a combined vibration in parallel using Android's VibrationEffect API and CombinedVibration class. 
+
+Now, the code would be something like this:
+
+```java
+public class TestClass{
+
+    // Usage example of CombinedVibration API.
+    public void test_CombinedVibration_startParallel(Context context) {
+        //check and request if the device does not have permission.
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.VIBRATE}, 1);
+        }
+        
+        // Proceed if permission is granted
+        else{
+            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            
+            if (vibrator != null && vibrator.hasVibrator()) {
+
+                VibrationEffect vibe1 = VibrationEffect.createOneShot(500, VibrationEffect.EFFECT_HEAVY_CLICK);
+                VibrationEffect vibe2 = VibrationEffect.createOneShot(500, VibrationEffect.EFFECT_TICK);
+                
+                // Assuming the device has a multi-actuator (which contains at least two actuators)
+                CombinedVibration combined = CombinedVibration.startParallel()
+                        .addVibration(0, vibe1) // 0 represents the index of the actuator
+                        .addVibration(1, vibe2) // 1 represents the the index of the actuator;
+                        .combine();              
+
+                vibrator.vibrate(combined);
+            }
+        }
+    }
+
+}
+```
+This test_CombinedVibration_startParallel method can be called in an Android activity to start vibration with multiple actuators in parallel. The manual permission check for vibration is necessary since Android 6.0 (API level 23). This test method can be used graciously to anticipate if a given device can offer a graceful experience for the haptic feedback or only the simplest vibration.
+
+Again, remember that this was just a simulation, because of the non-existence of `startParallel()` method in the official documentation of CombinedVibration API.

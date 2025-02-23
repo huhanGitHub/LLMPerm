@@ -1,0 +1,49 @@
+Below is an example of a method named test_Sensor_getHighestDirectReportRateLevel. The purpose of this method is to use the getHighestDirectReportRateLevel() method provided by the Sensor API.
+
+```java
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.content.Context;
+
+public class MainActivity extends AppCompatActivity {
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize Sensor Manager
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        // Initialize Accelerometer Sensor
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        // Test Method
+        test_Sensor_getHighestDirectReportRateLevel(accelerometer);
+    }
+
+    public void test_Sensor_getHighestDirectReportRateLevel(Sensor sensor){
+        if(sensor != null){
+            int highestRateLevel = sensor.getHighestDirectReportRateLevel();
+
+            // Now we perform a check on the returned value.
+            if (highestRateLevel >= 0){
+                Log.i("testMethod", "Highest Direct Report Rate Level: " + highestRateLevel);
+            }
+            else{
+                Log.i("testMethod", "Method not supported");
+            }
+        }else{
+            Log.i("testMethod", "Sensor not available");
+        }
+    }
+
+}
+```
+
+This method initializes the SensorManager and retrieves the device's accelerometer sensor. Then it calls getHighestDirectReportRateLevel() on the sensor. The rate level is then confirmed through standard output in logcat. If the sensor or the API doesn't support this method, it will log that the sensor or method is not available. 
+
+This usage example assumes that the method will be called in a standard Android Activity.

@@ -1,0 +1,39 @@
+Unfortunately, android does not support `java.nio.file.spi.FileSystemProvider` so we can't show an example within an Android environment but we can show a Java example. Below is an example using `java.nio.file.spi.FileSystemProvider`:
+
+```java
+import java.nio.file.*;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.List;
+
+public void test_FileSystemProvider_Copy() {
+    try {
+        List<FileSystemProvider> providersList = FileSystemProvider.installedProviders();
+        FileSystemProvider provider = null;
+
+        for (FileSystemProvider p : providersList) {
+            if (p.getScheme().equalsIgnoreCase("file")) {
+                provider = p;
+                break;
+            }
+        }
+
+        if (provider != null) {
+            Path copyFrom = Paths.get("path-to-source-file");
+            Path copyTo = Paths.get("path-to-destination-file");
+
+            provider.copy(copyFrom, copyTo, StandardCopyOption.COPY_ATTRIBUTES, 
+                          StandardCopyOption.REPLACE_EXISTING);
+        }
+    } catch (Exception ex) {
+        System.out.println("Exception occurred: " + ex.toString());
+    }
+}
+``` 
+
+In this example, we first list out all the `FileSystemProvider` types available. We then find the provider that uses the "file" scheme which is a provider that works with the Windows or Unix file system. The `copyFrom` is the path to the file you want to copy and `copyTo` is the path where you want to copy the original file to. You can refer to the options used in the `provider.copy()` method at [this link](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/StandardCopyOption.html).
+
+Please adjust paths according to your requirement. 
+
+Remember that this code does not work in the Android environment. Java NIO package includes file I/O (featuring buffered, scatter/gather, channel I/O, etc.) and has been supported since Android 2.3 (API level 9). However, support for certain NIO features such as `FileChannel`, introduced in Android 4.4 (API level 19), is added in higher API levels.
+
+For file copy in Android, you may use other alternatives like `java.io.FileInputStream`, `java.io.FileOutputStream` and `android.content.ContentResolver`.

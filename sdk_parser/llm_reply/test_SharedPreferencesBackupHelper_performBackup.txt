@@ -1,0 +1,42 @@
+Here is a basic usage sample code of SharedPreferencesBackupHelper's performBackup() method inside an activity:
+
+```java
+import android.app.backup.BackupDataOutput;
+import android.app.backup.BackupAgentHelper;
+import android.app.backup.SharedPreferencesBackupHelper;
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String PREFS_NAME = "my_prefs";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            test_SharedPreferencesBackupHelper_performBackup();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method performs a backup of SharedPreferences
+    private void test_SharedPreferencesBackupHelper_performBackup() throws IOException {
+        // Create a new SharedPreferencesBackupHelper
+        BackupAgentHelper backupAgent = new BackupAgentHelper();
+        SharedPreferencesBackupHelper helper = new SharedPreferencesBackupHelper(this, PREFS_NAME);
+        // Add the helper to the BackupAgent
+        backupAgent.addHelper(PREFS_NAME, helper);
+        // Create dummy data and output
+        BackupDataOutput data = new BackupDataOutput(ParcelFileDescriptor.adoptFd(1).getFileDescriptor());
+        // Perform Backup
+        helper.performBackup(new ParcelFileDescriptor(ParcelFileDescriptor.adoptFd(1)), data, BackupAgentHelper.TYPE_FULL);
+    }
+}
+```
+
+Please note that this sample code is only an illustration and will not function fully since the file descriptor provided to the `BackupDataOutput` is fake and `performBackup()` needs a real file descriptor for writing backup data.
+
+<longText>Please also take note that backups are not done in the main thread in a real-world application as they can be a potentially long operation, it should ideally be performed on a separate thread or worker. In this example, it is performed on the main thread just for simplicity of the example.</longText>

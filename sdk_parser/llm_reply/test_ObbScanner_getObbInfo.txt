@@ -1,0 +1,37 @@
+Below is an example of a method testing the use of ObbScanner and its getObbInfo method. This method requires a context and file path string, scans an OBB file at the given path, and returns OBB info as output.
+
+```java
+import android.content.res.ObbInfo;
+import android.content.res.ObbScanner;
+import android.util.Log;
+import java.io.File;
+import java.io.IOException;
+
+public void test_ObbScanner_getObbInfo(Context context, String filePath) {
+    ObbInfo obbInfo = null;
+    try {
+        // Scan the OBB file
+        obbInfo = ObbScanner.getObbInfo(filePath);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    if (obbInfo != null) {
+        // Print OBB info
+        Log.d("OBB_INFO", "Package Name: " + obbInfo.packageName +
+                            ", Version: " + obbInfo.version +
+                            ", Flags: " + obbInfo.flags);
+                        
+    } else {
+        Log.d("OBB_INFO", "OBB info could not be retrieved.");
+    }
+}
+```
+In this method:
+
+1. Call ObbScanner's getObbInfo method on the file path to get the OBB info. This method can throw an IOException, so wrap it in a try-catch block.
+2. Check if the OBB info is not null. If it is, print out the package name, version, and flags. Otherwise, print a message saying the OBB info could not be retrieved.
+
+You would call this method supplying a context from your app and the file path to the OBB file.
+
+Note: ObbScanner class was deprecated in API level 29. Consider using ActionOpenDocument, ActionOpenDocumentTree, etc. With these APIs, apps can let the system handle all content access and pickers.

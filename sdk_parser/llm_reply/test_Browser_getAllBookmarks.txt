@@ -1,0 +1,52 @@
+Please be aware that starting with Android 6.0 Marshmallow (or API 23), accessing a browser's bookmarks and history is prohibited due to privacy policies. However, for educational purposes, here's an example of how it used to work. This code will fail on modern devices and is outdated.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+public void test_Browser_getAllBookmarks() {
+    ContentResolver cr = getContentResolver();
+    String[] projection = new String[] {Browser.BookmarkColumns.TITLE,
+                                        Browser.BookmarkColumns.URL};
+    String selection = Browser.BookmarkColumns.BOOKMARK + " = 0"; // 0 = history, 1 = bookmark
+    Cursor cursor = cr.query(Browser.BOOKMARKS_URI, projection, selection, null, null);
+    if (cursor != null) {
+        while(cursor.moveToNext()) {
+            String title = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns.TITLE));
+            String url = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns.URL));
+            // Do something with title and url
+            Log.i("Browser Details", "Title: " + title + ", URL: " + url);
+        }
+        cursor.close();
+    }
+}
+```
+
+Please replace the Log calls with your own logging mechanism or use them to persist the data elsewhere. This example just logs all the historical URLs visited and the title at the time of visiting.
+
+Ensure to require the `android.permission.READ_HISTORY_BOOKMARKS` permission in your `AndroidManifest.xml` by adding `<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>`. 
+
+It's also crucial to note you have to handle runtime permission when your target API level is 23 (Marshmallow) and above as explained below.
+
+```java
+if (ContextCompat.checkSelfPermission(thisActivity, Manifest.permission.READ_HISTORY_BOOKMARKS)
+        != PackageManager.PERMISSION_GRANTED) {
+    // Permission is not granted
+    // Should we show an explanation?
+    if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+            Manifest.permission.READ_HISTORY_BOOKMARKS)) {
+        // Show an explanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+    } else {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(thisActivity,
+                new String[]{Manifest.permission.READ_HISTORY_BOOKMARKS},
+                MY_PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS);
+        // MY_PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+    }
+} Else{
+    // Permission has already been granted
+    test_Browser_getAllBookmarks();
+}
+```

@@ -1,0 +1,37 @@
+Here is the example method using java.nio.file.attribute.AclFileAttributeView. However, this API isn't available in Android, so make sure you're looking for a Java Solution.
+
+```Java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.AclEntry;
+import java.nio.file.attribute.AclFileAttributeView;
+import java.util.List;
+
+public void test_AclFileAttributeView_getAcl() {
+    Path file = Paths.get("/path/to/your/file.txt"); // replace with your file path
+
+    // get AclFileAttributeView
+    AclFileAttributeView aclAttr 
+          = Files.getFileAttributeView(file, AclFileAttributeView.class);
+
+    try {
+        List<AclEntry> acl = aclAttr.getAcl();
+        for (AclEntry aclEntry : acl) {
+            System.out.println(
+                  String.format("Principal: %s, Type: %s, Permissions: %s, Flags: %s",
+                        aclEntry.principal().getName(),
+                        aclEntry.type(),
+                        aclEntry.permissions(), 
+                        aclEntry.flags()));
+        }
+    } catch (IOException e) {
+        System.out.println("Failed getting ACL entries: " + e.getMessage());
+    }
+}
+```
+
+This code gets a `AclFileAttributeView` for a specified file, then gets the ACL (Access Control List) entries using `getAcl()` method. The ACL entries are then printed to the console. Please replace "/path/to/your/file.txt" to the path of your intended file. 
+
+Remember, file system that support ACLs or user permissions like NTFS on Windows, ext3/4 on Linux, or HFS+ on Mac OS X can use this. But not all file systems support this feature, and not all versions of Java support this feature. On unsupported file systems, the getFileAttributeView() call will return null. 
+
+**Note: The Java NIO APIs are not available on the Android platform.**

@@ -1,0 +1,34 @@
+In an Android Activity, you can create a method called test_SensorManager_getDefaultSensor() to use the SensorManager API to access the default sensor of a specific type (for instance, the accelerometer).
+
+Below is how you can do it in code:
+
+```java
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.content.Context;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Your other code here ....
+
+    public void test_SensorManager_getDefaultSensor() {
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        if (accelerometerSensor != null) {
+            // The device has an accelerometer sensor
+            System.out.println("The device has an accelerometer sensor");
+        } else {
+            // The device doesn't have an accelerometer sensor
+            System.out.println("The device doesn't have an accelerometer sensor");
+        }
+    }
+}
+```
+In the test_SensorManager_getDefaultSensor() method, we firstly get the SensorManager instance using the getSystemService() method. Then we call the getDefaultSensor() method on the SensorManager instance to get the default Sensor of the desired type.
+
+This usage example checks if the device has an accelerometer sensor. The Sensor.TYPE_ACCELEROMETER constant is used to indicate the accelerometer sensor. If the device has an accelerometer sensor, the getDefaultSensor() method will return a non-null Sensor instance. Otherwise, it will return null.
+
+You can replace Sensor.TYPE_ACCELEROMETER with other sensor types according to the Android documentation: https://developer.android.com/reference/android/hardware/Sensor.html.
+
+For example, if you want to check if the device has a proximity sensor, you can replace Sensor.TYPE_ACCELEROMETER with Sensor.TYPE_PROXIMITY.

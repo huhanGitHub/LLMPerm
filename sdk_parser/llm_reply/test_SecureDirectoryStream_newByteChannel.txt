@@ -1,0 +1,33 @@
+Here is a method showcasing the use of `SecureDirectoryStream`'s `newByteChannel` method:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_SecureDirectoryStream_newByteChannel() {
+    Path path = Paths.get(Environment.getExternalStorageDirectory().toString() + "/test.txt");
+
+    // Checking for the required permission
+    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        OpenOption[] options = new OpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rw-r--r--");
+
+        FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
+
+        try {
+            SecureDirectoryStream<Path> secureDirectoryStream = (SecureDirectoryStream<Path>)
+                    Files.newDirectoryStream(path.getParent());
+            secureDirectoryStream.newByteChannel(path.getFileName(), options, attr);
+
+            secureDirectoryStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } else {
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+    }
+}
+```
+Please ensure you have the required permissions to read/write storage in the manifest file of your Android project. Also, `SecureDirectoryStream` is a interface which provides more secure mechanism for directories and can be applied only when you're using a file system that supports Posix permissions.
+  
+This `test_SecureDirectoryStream_newByteChannel()` is an example of a method which creates a new byte channel to open an existing file in the directory, writes it with specified options (`CREATE` and `WRITE`) and sets the posix file permissions (`rw-r--r--`) which means - Read/Write for owner, Read for group and others.
+
+In this case, I have chosen a file from external storage for demonstration. Replace it with the appropriate path/file from your application's directory.

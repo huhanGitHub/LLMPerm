@@ -1,0 +1,67 @@
+Here is an example method of using `AsynchronousServerSocketChannel.bind()` in Java:
+
+```java
+public void test_AsynchronousServerSocketChannel_bind() {
+    ExecutorService executorService = Executors.newCachedThreadPool();
+
+    try {
+        // Step1: Open Asynchronous Server Socket Channel
+        AsynchronousServerSocketChannel asyncServerChannel = AsynchronousServerSocketChannel.open();
+
+        // Step2: Bind to a local address
+        asyncServerChannel.bind(new InetSocketAddress("localhost", 5000));
+
+        System.out.println("Server: Binding at localhost:5000");
+
+        // Set a completion handler to handle callbacks
+        asyncServerChannel.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
+            @Override
+            public void completed(AsynchronousSocketChannel result, Void attachment) {
+                // Print a message on successful connection
+                System.out.println("Server: Received a connection");
+
+                try {
+                    // Close the connection
+                    result.close();
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
+
+                // Accept the next connection
+                asyncServerChannel.accept(null, this);
+            }
+
+            @Override
+            public void failed(Throwable exc, Void attachment) {
+                // Print a message if the connection attempt failed
+                System.out.println("Server: Failed to accept a connection");
+                exc.printStackTrace();
+            }
+        });
+
+        // Run the server for 10 seconds
+        executorService.schedule(() -> {
+            try {
+                System.out.println("Server: Shutting down");
+                asyncServerChannel.close();
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        }, 10, TimeUnit.SECONDS);
+
+        // Keep the main thread alive for the server to run
+        while( !Thread.interrupted() ) {
+            Thread.sleep(1000);
+        }
+
+    } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+    } finally {
+        executorService.shutdown();
+    }
+}
+```
+
+This method defines an asynchronous server that listens on `localhost` port `5000`. It accepts connections, prints a message, then closes the connection. 
+
+Please note that this is a basic example, in a real application you would probably want to actually do something with the connection before closing it (like reading/writing data). Additionally, the server runs on the same thread as the main application which may not be ideal in a real application. In a real application, you would probably want to run this kind of code in a separate thread or service.

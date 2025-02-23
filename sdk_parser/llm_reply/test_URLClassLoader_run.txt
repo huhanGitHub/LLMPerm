@@ -1,0 +1,38 @@
+In java/net/URLClassLoader.java, the URLClassLoader is a part of Java's standard library, not Android's. This class loader is used to load classes and resources from a search path of URLs referring to both JAR files and directories. Here is an example of how it can be used.
+
+```java
+import java.net.URLClassLoader;
+import java.net.URL;
+import java.lang.reflect.Method;
+import java.io.File;
+
+public static void test_URLClassLoader_run() {
+  try {
+    //path to the directory or JAR file
+    File file = new File("/path/to/your/directory/or/JAR");
+
+    //Convert File to a URL
+    URL url = file.toURI().toURL();          
+    URL[] urls = new URL[]{url};
+
+    //Create a new class loader with the directory
+    URLClassLoader clsLoader = new URLClassLoader(urls);
+
+    //Load in the class; MyClass.class should be located in
+    //the directory or file file:/path/to/your/directory/MyClass.class
+    Class cls = clsLoader.loadClass("MyClass");
+
+    //Create a new instance from the loaded class
+    Object obj = cls.newInstance();
+
+    //Getting a method from the loaded class and invoking it
+    Method method = cls.getDeclaredMethod("myMethod");
+    method.invoke(obj);
+  } catch (Exception e) {
+    e.printStackTrace();
+  } 
+}
+```
+This method is loading a class from a specified URL (which could be a file path or JAR file path), and then it's creating an instance of that class and invoking one of its method named 'myMethod'.
+
+However, always be careful when using URLClassLoader along with reflection. The class or jar files that you are loading the classes from, can contain malicious code.

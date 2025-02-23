@@ -1,0 +1,58 @@
+Here is a sample usage of the "setNfcid2ForService" method from the NfcFCardEmulation class. Note that the method requires the API level to be 29 or more.
+
+Please make sure to replace "YOUR_COMPONENT_NAME_HERE" and "YOUR_NFCID2_HERE" with actual values. 
+
+```Java
+@RequiresApi(api = Build.VERSION_CODES.Q)
+public void test_NfcFCardEmulation_setNfcid2ForService() {
+    //Initialize NfcF Card Emulation.
+    NfcFCardEmulation nfcFCardEmulation = NfcFCardEmulation.getInstance(NfcAdapter.getDefaultAdapter(this));
+    
+    ComponentName componentName = new ComponentName("YOUR_PACKAGE_NAME_HERE", "YOUR_COMPONENT_NAME_HERE");
+    String nfcid2 = "YOUR_NFCID2_HERE";
+    
+    try {
+        //Make sure to register a valid Service for NFC in your application's Manifest.xml
+        boolean result = nfcFCardEmulation.setNfcid2ForService(componentName, nfcid2);
+        
+        if(result) {
+            Log.d("test", "Successfully registered NFCID2 for service.");
+        } else {
+            Log.e("test", "Failed to register NFCID2, check your Component Name and/or nfcid2.");
+        }
+    } catch(SecurityException e) {
+        //In case your application does not have the necessary NFC permissions,
+        //a SecurityException will be thrown.
+        Log.e("test", e.getMessage());
+    }
+}
+```
+
+For this code to function correctly, you will have to declare necessary NFC permissions in your AndroidManifest.xml file like this:
+
+```xml
+<manifest ... >
+    <!-- Required NFC Permissions -->
+    <uses-permission android:name="android.permission.NFC"/>
+
+    <!-- Your other permissions -->
+
+    <application ... >
+        <!-- Your Activity/Service, which uses NFC -->
+        <service android:name=".YourServiceName"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
+            </intent-filter>
+            <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/apduservice"/>
+        </service>
+
+        <!-- Your other activities/services -->
+
+    </application>
+</manifest>
+```
+
+This provided example works in an Android environment only. This application asks for NFC permissions and attempts to set service for NFC card emulation with a given NFCID2. Replace the placeholders (those in capital letters) with your actual values.

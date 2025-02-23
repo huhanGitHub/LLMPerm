@@ -1,0 +1,57 @@
+Below is an example of an Android method called `test_Logger_setResourceBundle` that utilizes the `setResourceBundle` function of the `java.util.logging.Logger` API.
+
+The `java.util.logging.Logger` API is used to log messages for specific system or application components. `setResourceBundle` method is used to set a resource bundle name.
+
+```java
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.logging.*;
+import java.util.ResourceBundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+             test_Logger_setResourceBundle();
+        } catch (Exception e) {
+             Log.e("Error", e.getMessage(), e);
+        }
+    }
+
+    public void test_Logger_setResourceBundle() {
+        // Create a new Logger instance
+        Logger logger = Logger.getLogger("com.myapp");
+
+        // Create a ResourceBundle
+        ResourceBundle bundle = ResourceBundle.getBundle("com.myapp.MyBundle");
+
+        // Set the logger's resource bundle
+        logger.setResourceBundle(bundle);
+
+        // Log a message
+        logger.info("Testing setResourceBundle");
+
+        // The output will be different depending on your defined resource bundle and 
+        // your system's current default locale.
+    }
+}
+```
+
+Note: `setResourceBundle` was deprecated in API level after 26, You should use `Logger.getGlobal().info()` or `Level.INFO` instead.
+
+Resource bundle "com.myapp.MyBundle" is supposed to be a properties file located in your project. The structure of it might look something like this:
+
+```properties
+#File MyBundle.properties
+# Define your properties
+info.key = This is an info log.
+warning.key = This is a warning log.
+error.key = This is an error log.
+```
+
+The keys defined in myBundle will be used to call different log messages depending on the current locale and language preferences.

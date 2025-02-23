@@ -1,0 +1,63 @@
+Sure, in order to use `SyncInfo` in Android, you also need to use the `Account` and `ContentProvider` classes. Here's an example to test creating an account with redacted information:
+
+Please note `SyncInfo` class is added in API level 21.
+
+```java
+import android.accounts.Account;
+import android.content.ContentResolver;
+import android.content.SyncInfo;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+public class TestActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+
+        try {
+            test_SyncInfo_createAccountRedacted();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_SyncInfo_createAccountRedacted() {
+        // Create a new account and assign it to a sync adapter
+        final String AUTHORITY = "example.com";
+        final String ACCOUNT_TYPE = "com.example";
+        final String ACCOUNT_NAME = "Test Account";
+        Account mAccount = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
+
+        // Get instance of ContentResolver
+        ContentResolver contentResolver = getContentResolver();
+
+        // Request sync for the new account
+        contentResolver.requestSync(mAccount, AUTHORITY, Bundle.EMPTY);
+
+        // Get the information from the active sync
+        SyncInfo syncInfo = ContentResolver.getCurrentSync();
+
+        // Check if the active sync is for the created account
+        if (syncInfo != null && syncInfo.account.equals(mAccount)) {
+            // Redact and output the account information
+            String redactedAccountName = mAccount.name.replaceAll(".", "*");
+            String redactedAccountType = mAccount.type.replaceAll(".", "*");
+            Log.d("TEST_SYNCINFO", "SyncAccount Name: " + redactedAccountName + ", Type: " + redactedAccountType);
+        }
+    }
+}
+```
+The example creates an account, requests a sync, and then access the sync information to redact and output the account information.
+
+Also keep in mind to include below permissions in your android manifest:
+```xml
+<uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+<uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+```
+Please use this code as a reference and replace the placeholders (`example.com`, `com.example`, `Test Account`) with your actual values.

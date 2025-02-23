@@ -1,0 +1,26 @@
+Here is the test method to check the usage of AcousticEchoCanceler.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+public void test_AcousticEchoCanceler_create() {
+    // Assuming you are in an activity and already have audio permissions
+    // Here, 0 is used as default audio session Id. In a real scenario, you would use the audio session Id of the AudioRecord or AudioSource you want to cancel echo
+    AcousticEchoCanceler echoCanceler = AcousticEchoCanceler.create(0);
+
+    if (echoCanceler != null) {
+        echoCanceler.setEnabled(true);
+        boolean isEnabled = echoCanceler.getEnabled();
+        if (!isEnabled) {
+            // Echo canceler created but not enabled. Handle error here
+            Toast.makeText(this, "Failed to enable AcousticEchoCanceler.", Toast.LENGTH_LONG).show();
+        }
+    } else {
+        // Echo canceler not created. Handle error here
+        Toast.makeText(this, "Failed to create AcousticEchoCanceler.", Toast.LENGTH_LONG).show();
+    }
+} 
+```
+
+Just to add, this method is useful when we are dealing with audio input streams. It is used to decrease the echo effect of the audio being played. The echo canceler removes the major portion of the echo received in the microphone signal during playback.
+
+And remember, AcousticEchoCanceler is not always available on all devices, so always check for null when creating the instance and handle it appropriately.

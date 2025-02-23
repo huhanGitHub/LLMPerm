@@ -1,0 +1,42 @@
+Here's a simple example of how you can use the Files.getOwner(Path) method in Java NIO. This example is a simple test method named test_Files_getOwner. This method retrieves the owner of a file in the file system and logs it.
+
+Please note that this code does not work on Android, as the Java NIO file attribute features are not supported by Android. This method will be tested in a Java main method, instead of Android Activity.
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.UserPrincipal;
+
+public class Test {
+    public void test_Files_getOwner() {
+        // Define the path object
+        Path path = Paths.get("/path/to/file");
+
+        try {
+            // Use Files.getOwner(Path) method to get the owner of file
+            UserPrincipal owner = Files.getOwner(path);
+            
+            // Print or log the owner name
+            System.out.println("Owner: " + owner.getName());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Test test = new Test();
+        test.test_Files_getOwner();
+    }
+
+}
+```
+
+In this code, we have a test_Files_getOwner() method where:
+
+- "/path/to/file" should be replaced by the path of a real file in your file system.
+- The Files.getOwner() method is used to retrieve the owner of a specified file.
+- The owner's name is then printed to the console.
+- If any IO exception occurs, it is caught and the stack trace will be printed.

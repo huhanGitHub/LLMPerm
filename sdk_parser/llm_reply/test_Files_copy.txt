@@ -1,0 +1,40 @@
+Sure, here's a simple usage example of using the Files.copy() method in a standalone method. Note that while you can use java.nio.file API in Android, it's only available from Android API level 26 and onwards.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_Files_copy() {
+        File file = new File("/path/to/source/file");
+        File copiedFile = new File("/path/to/destination/file");
+
+        try {
+
+            Path copied = file.toPath();   //convert file to path
+            Path originalPath = copiedFile.toPath(); //convert file to path
+
+            Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+```
+
+The above code will copy a file to a provided destination. If the destination file already exists, it will be replaced due to StandardCopyOption.REPLACE_EXISTING.
+
+Remember to replace "/path/to/source/file" and "/path/to/destination/file" with your actual file paths.
+
+Also, please note that the File and Files classes require your app to declare the READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE permissions in its manifest.
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Before you attempt to do any file I/O, you should also check if you have those permissions at runtime, and request them if necessary:
+```java
+if (ContextCompat.checkSelfPermission(thisActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        != PackageManager.PERMISSION_GRANTED) {
+    // Permission is not granted
+}
+```
+Do not forget to run these file operations in a background thread to avoid blocking the UI thread.

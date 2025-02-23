@@ -1,0 +1,44 @@
+Here's a sample method. Please note that this requires Android SDK version 23 and above, as the `android.net.Network` class is only available in API 23 and up.
+
+Please also be aware that this code assumes you already have permission to access the network state. If not, you will need to request this permission in your app's manifest file.
+
+```java
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.ConnectivityManager;
+import android.net.NetworkRequest;
+import android.content.Context;
+import android.util.Log;
+
+public void test_Network_connectToHost() {
+    ConnectivityManager connectivityManager = 
+        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+    NetworkRequest.Builder builder = new NetworkRequest.Builder();
+    builder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+    builder.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+
+    connectivityManager.requestNetwork(builder.build(), new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(Network network) {
+            // the network is now available
+            Log.i("Network", "Network available: " + network);
+            connectivityManager.bindProcessToNetwork(network);
+
+            // Perform networking operations here...
+            // For instance, connect to a host
+
+        }
+
+        @Override
+        public void onLost(Network network) {
+            // the network has lost
+            Log.i("Network", "Network lost: " + network);
+            connectivityManager.bindProcessToNetwork(null);
+        }
+    });
+}
+```
+In the `onAvailable` method, you can write your own code to connect to a host. Be aware that network operations cannot be done on the main thread in Android. To perform network operations, you can use libraries such as `OkHttp`, `Retrofit`, or `Volley`, or you can use `AsyncTask` or `Thread`. 
+
+In the `onLost` method, we unbind the process from the lost network. Without this, your app would stay bound to the network that no longer exists, which could lead to your networking operations failing.

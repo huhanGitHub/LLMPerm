@@ -1,0 +1,50 @@
+Unfortunately, the "updateNotification" method is internally used and is not exposed for us to override or call directly, so it would be hard to create a unit test or usage example for this.
+
+However, if you are interested in a general usage of the MediaSession2Service, below is a very basic example:
+
+```java
+import android.media.MediaSession2;
+import android.media.Session2Command;
+import android.media.Session2CommandGroup;
+import android.media.Session2Token;
+
+public class MyMediaSession2Service extends MediaSession2Service {
+    private MediaSession2 mSession;
+
+    @Override
+    public Session2Token onGetSession(ControllerInfo controllerInfo) {
+        if (mSession == null) {
+            mSession = new MediaSession2.Builder(this)
+            .setSessionCallback(getMainExecutor(), new MySessionCallback())
+            .setId("MyMusicService")
+            .build();
+        }
+        return mSession.getToken();
+    }
+
+    class MySessionCallback extends MediaSession2.SessionCallback {
+        @Override
+        public Session2CommandGroup onConnect(MediaSession2 session, ControllerInfo controller) {
+            Session2CommandGroup.Builder commands = new Session2CommandGroup.Builder();
+            commands.addCommand(new Session2Command(Session2Command.COMMAND_CODE_PLAYBACK_PLAY));
+            return commands.build();
+        }
+    }
+}
+```
+
+This create a MediaSession2Service that allows controllers to command it to play. Do note that this is just a rough basic example. Real implementation would need to handle things such as disconnecting, controlling playback, loading media, etc.
+
+Additionally, remember to add your service into your AndroidManifest.xml:
+
+```xml
+<service
+    android:name=".MyMediaSession2Service"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.media.MediaSession2Service"/>
+    </intent-filter>
+</service>
+```
+
+I hope this is useful, and let me know if you need any more help.

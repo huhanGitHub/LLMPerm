@@ -1,0 +1,46 @@
+Sure, here is the mocked Android code for the method test_HardwarePropertiesManager_getDeviceTemperatures:
+
+```java
+import android.content.Context;
+import android.os.HardwarePropertiesManager;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+@RequiresApi(api = Build.VERSION_CODES.N)
+public class MainActivity extends AppCompatActivity {
+    public void test_HardwarePropertiesManager_getDeviceTemperatures() {
+        HardwarePropertiesManager hardwarePropertiesManager =
+                (HardwarePropertiesManager) getSystemService(Context.HARDWARE_PROPERTIES_SERVICE);
+        
+        // Check if HardwarePropertiesManager is not null
+        if(hardwarePropertiesManager != null) {
+            HardwarePropertiesManager.Temperatures[] deviceTemperatures;
+            
+            // Get CPU temperatures
+            deviceTemperatures = hardwarePropertiesManager.getDeviceTemperatures(HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU, HardwarePropertiesManager.TEMPERATURE_CURRENT);
+            for (HardwarePropertiesManager.Temperatures temperatures : deviceTemperatures) {
+                System.out.println("CPU Temperature: " + temperatures.getCurrentTemperature());
+            }
+            
+            // Get GPU temperatures
+            deviceTemperatures = hardwarePropertiesManager.getDeviceTemperatures(HardwarePropertiesManager.DEVICE_TEMPERATURE_GPU, HardwarePropertiesManager.TEMPERATURE_CURRENT);
+            for (HardwarePropertiesManager.Temperatures temperatures : deviceTemperatures) {
+                System.out.println("GPU Temperature: " + temperatures.getCurrentTemperature());
+            }
+            
+            // Get Battery temperatures
+            deviceTemperatures = hardwarePropertiesManager.getDeviceTemperatures(HardwarePropertiesManager.DEVICE_TEMPERATURE_BATTERY, HardwarePropertiesManager.TEMPERATURE_CURRENT);
+            for (HardwarePropertiesManager.Temperatures temperatures : deviceTemperatures) {
+                System.out.println("Battery Temperature: " + temperatures.getCurrentTemperature());
+            }
+        }
+    }
+}
+```
+
+Important notes : 
+
+- This code is for Android N (API 24) or later versions.
+- The HardwarePropertiesManager API is generally used for devices like IoT or Auto where a device can have multiple temperature sensors apart from CPU, GPU and Battery.
+- Remember that for Android Q (API level 29) the getDeviceTemperatures is deprecated. You'd have to get device temperatures another way, likely with a manufacturer's SDK.

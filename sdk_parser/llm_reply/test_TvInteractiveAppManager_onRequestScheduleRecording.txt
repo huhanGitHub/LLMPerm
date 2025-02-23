@@ -1,0 +1,38 @@
+Below is a basic mock unit test method for TvInteractiveAppManager's onRequestScheduleRecording method, assuming there's a class method with the same name. In an actual unit test, you'd use a mock framework like Mockito.
+
+```java
+public void test_TvInteractiveAppManager_onRequestScheduleRecording() {
+    // Assume TvInteractiveAppManager instance creation
+    TvInteractiveAppManager tvInteractiveAppManager = new TvInteractiveAppManager();
+
+    // Assuming that the function onRequestScheduleRecording requires 2 parameters: Uri and Bundle
+    Uri mockUri = Uri.parse("your://mock.uri");
+    Bundle mockBundle = new Bundle();
+    
+    // Assume putting some values into the bundle
+    mockBundle.putInt("MOCK_KEY", 1);
+
+    // Call to the method using the mock parameters
+    tvInteractiveAppManager.onRequestScheduleRecording(mockUri, mockBundle)
+
+    /*
+        Here you would assert that the results are as expected using the assert methods. 
+        Since it's not clear what TvInteractiveAppManager's onRequestScheduleRecording does
+        and I don't have access to such packages, I'm unable to provide the assert codes.
+    */
+}
+```
+
+Please ensure that the TvInteractiveAppManager class and the onRequestScheduleRecording method are accessible in terms of their access modifiers, otherwise this test method will not work.
+
+This code is dependent on the actual definition of `onRequestScheduleRecording` method, currently, I've assumed it requires a Uri and a Bundle object.
+
+The bundle mockBundle is populated with mock data, in real usage, you'll need to put in actual data that makes sense, dictated by the requirements of `onRequestScheduleRecording` method.
+
+Remember to import required packages at the top of your java file:
+
+```java
+import android.media.tv.interactive.TvInteractiveAppManager;
+import android.net.Uri;
+import android.os.Bundle;
+```

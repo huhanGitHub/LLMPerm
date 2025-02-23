@@ -1,0 +1,54 @@
+Here's an example of how you could test the `registerConnectivityDiagnosticsCallback` feature of `ConnectivityDiagnosticsManager`. This mock test method is written in Java for an Android activity.
+
+It's important to note that the `ConnectivityDiagnosticsManager` is used to receive network diagnostics information. Therefore, this feature requires permission which is `Manifest.permission.CONNECTIVITY_DIAGNOSTICS`.
+
+```java
+public void test_ConnectivityDiagnosticsManager_registerConnectivityDiagnosticsCallback() {
+    // Check if the app has the necessary permission
+    if (checkSelfPermission(Manifest.permission.CONNECTIVITY_DIAGNOSTICS)
+            == PackageManager.PERMISSION_DENIED) {
+        Log.e(TAG, "Connectivity diagnostics permissions denied.");
+        return;
+    }
+
+    ConnectivityDiagnosticsManager connectivityDiagnosticsManager =
+            (ConnectivityDiagnosticsManager)
+                    getSystemService(Context.CONNECTIVITY_DIAGNOSTICS_SERVICE);
+
+    ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback 
+            connectivityDiagnosticsCallback =
+            new ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback() {
+        @Override
+        public void onNetworkDiagnosticsReportAvailable(
+                Network network,
+                connectivityDiagnosticsManager.ConnectivityReport connectivityReport) {
+            // you can use this space to implement your logic for example,
+            // Log network diagnostics information.
+            Log.i(TAG, "Network: " + network.toString());
+            Log.i(TAG, "ConnectivityReport: " + connectivityReport.toString());
+        }
+    };
+
+    // Ensure to check not null for the ConnectivityDiagnosticsManager
+    if (connectivityDiagnosticsManager != null) {
+        connectivityDiagnosticsManager.registerConnectivityDiagnosticsCallback(
+                new NetworkRequest.Builder().build(), 
+                getMainExecutor(), 
+                connectivityDiagnosticsCallback);
+    } else {
+        Log.e(TAG, "Cannot retrieve ConnectivityDiagnosticsManager");
+    }
+}
+```
+
+This tests if:
+
+- The app has necessary permissions
+- The `ConnectivityDiagnosticsManager` or `ConnectivityDiagnosticsCallback` are not null
+- And then testing the registration of the callback.
+
+Also, you will need to add the following permission to your Android manifest file:
+
+```xml
+<uses-permission android:name="android.permission.CONNECTIVITY_DIAGNOSTICS"/>
+```

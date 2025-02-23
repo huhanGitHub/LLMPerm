@@ -1,0 +1,36 @@
+Sure, here is the example how you might use the `checkAccess` method from `java.util.logging.Handler` class in a testing method within an Android activity.
+
+```java
+import java.util.logging.*;
+
+public void test_Handler_checkPermission() {
+    // Create a new handler
+    Handler handler = new StreamHandler(System.out, new SimpleFormatter()) {
+        @Override
+        public void close() {
+            super.close();
+        }
+
+        @Override
+        public void publish(LogRecord record) {
+            super.publish(record);
+            flush();
+        }
+    };
+
+    try {
+        // Check for permission
+        handler.checkAccess();
+        System.out.println("Access granted");
+    } catch (SecurityException e) {
+        System.out.println("No permission to perform this operation");
+        e.printStackTrace();
+    }
+}
+```
+
+This is a test method which checks access of a `Handler` object. `checkAccess` method is supposed to be used in a context of a security manager, it will throw a `SecurityException` if there is a security manager and it denies access.
+
+Please note that using permissions and the `checkAccess` method in Android is not straightforward and requires additional care, such as checking whether your app has the necessary permissions at runtime, and potentially asking the user for these permissions.
+
+Also, this example may not work as expected in an Android app because the standard Java logging framework is not used in Android. Android has its own logging system (the android.util.Log class).

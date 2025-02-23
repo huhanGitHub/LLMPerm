@@ -1,0 +1,19 @@
+Here is a self-contained method called "test_DocumentsContract_findDocumentPath" that demonstrates how to use the findDocumentPath API in android.provider.DocumentsContract.java. 
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+public void test_DocumentsContract_findDocumentPath() {
+    ContentResolver contentResolver = getContentResolver();
+    Uri treeUri = DocumentsContract.buildDocumentUri("com.android.providers.downloads.documents", "document");
+    
+    try {
+        String documentPath = DocumentsContract.findDocumentPath(contentResolver, treeUri);
+        Log.d("DocumentPathTest", "The DocumentPath: " + documentPath);
+    } catch (FileNotFoundException e) {
+        Log.e("DocumentPathTest", "FileNotFoundException: ", e);
+    }
+}
+```
+In this test function, "getContentResolver()" gets ContentResolver instance, and "DocumentsContract.buildDocumentUri()" helps in building the URI for the desired document. We pass these objects to the "DocumentsContract.findDocumentPath()" method and it returns the path of the document.
+
+In real scenarios, you'd replace "com.android.providers.downloads.documents" and "document" with the appropriate provider authority and document ID respectively. The exception handling catches a FileNotFoundException in case the document requested doesn't exist.

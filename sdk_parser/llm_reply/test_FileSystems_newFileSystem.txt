@@ -1,0 +1,45 @@
+Below is a custom method `test_FileSystems_newFileSystem()` which basically shows you how to use `FileSystems.newFileSystem()` to create a file system in Java.
+
+Please note that this method requires an API level of 26 or more. 
+
+Also, please keep in mind that the code below does NOT run on Android since `java.nio.file` package is not part of Android's Java SDK. From Android 8.0 (API level 26) onwards a subset of `java.nio.file` is available, but the `java.nio.file.FileSystems` class isn't.
+
+```java
+import java.nio.file.*;
+import java.io.*;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_FileSystems_newFileSystem();
+        } catch(Exception e) {
+            System.out.println("Exception Occurred: " + e.getMessage());
+        }
+    }
+
+    public void test_FileSystems_newFileSystem() throws IOException {
+        // file system URI
+        URI fileSystemUri = URI.create("jar:file:/test.zip");
+
+        // initialize environment map
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+
+        // open or create the file system
+        try (FileSystem fs = FileSystems.newFileSystem(fileSystemUri, env)) {
+            // use fs to work with the file system
+            System.out.println("File System: " + fs.toString());
+        }
+    }
+}
+```
+
+In the above example, we are trying to open or create a file system that is stored in a zip file `test.zip`. The URI has the `jar:file:` scheme. Please modify the URI as per your requirement. Keep in mind that the specified zip file path should be accessible from your program, else it will throw `java.nio.file.FileSystemNotFoundException`.

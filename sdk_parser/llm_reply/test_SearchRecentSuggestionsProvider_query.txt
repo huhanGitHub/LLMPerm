@@ -1,0 +1,53 @@
+The `SearchRecentSuggestionsProvider` is an API that allows to add recent query suggestions functionality to a search feature. Below is a usage example for the `query` method.
+
+Before we begin, please note that to use `SearchRecentSuggestionsProvider` you have to provide a unique authority string, along with an integer database version number, and then define your suggestion provider class using a `SearchRecentSuggestions` object.
+
+Here is the creation of `SuggestionProvider` class:
+
+```java
+public class SuggestionProvider extends SearchRecentSuggestionsProvider {
+    public final static String AUTHORITY = "com.example.SuggestionProvider";
+    public final static int MODE = DATABASE_MODE_QUERIES;
+
+    public SuggestionProvider() {
+        setupSuggestions(AUTHORITY, MODE);
+    }
+}
+```
+You should add the following definition in your manifest file:
+
+```xml
+<provider 
+    android:name="com.example.SuggestionProvider" 
+    android:authorities="com.example.SuggestionProvider">
+</provider>
+```
+Now let's move to your requested `test_SearchRecentSuggestionsProvider_query` method inside an activity:
+
+```java
+public void test_SearchRecentSuggestionsProvider_query() {
+    // Initialize with the unique authority string 
+    SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, 
+        SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
+    
+    // Insert a suggestion into the database
+    suggestions.saveRecentQuery("Android Guide", null);
+
+    // Create a cursor and retrieve all the data
+    Cursor cursor = suggestions.getQueryCursor("Android Guide", null);
+    
+    if (cursor.moveToFirst()){
+        do{
+            String query = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1));
+            Log.d("SUGGESTION", query);
+        } while (cursor.moveToNext());
+    }
+    
+    // Do not forget to close the cursor
+    cursor.close();
+}
+```
+
+This will print out the recent query, in this case, "Android Guide" in the debug message.
+
+Use this function for testing purposes. Be aware that in AndroidManifest the `SuggestionProvider` should have exported set to false for security reasons unless it's specifically designed to be shared with other apps.

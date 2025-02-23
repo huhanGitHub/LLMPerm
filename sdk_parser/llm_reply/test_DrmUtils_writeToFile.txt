@@ -1,0 +1,45 @@
+First, we need to understand that the DrmUtils class in Android is meant to be a utility class for handling DRM related functionality. However, it does not provide direct methods to write to a file. We can use java.io classes to accomplish file writing. 
+
+Below is a method `test_DrmUtils_writeToFile` example, where we are writing a simple string to a file, but note that this doesn't utilize DrmUtils methods:
+
+```Java
+public void test_DrmUtils_writeToFile() {
+    File file = new File(getFilesDir(), "testFile.txt");
+
+    String content = "This is the content that will be written to the file.";
+
+    FileOutputStream fos = null;
+    
+    try {
+        fos = new FileOutputStream(file);
+        fos.write(content.getBytes());
+        fos.close();
+
+        Toast.makeText(this, 
+            "Successfully written to " + file.getAbsolutePath(),
+            Toast.LENGTH_SHORT).show();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (fos != null) {
+                fos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Please use this method within an Android Activity and it's not a usage example of android/drm/DrmUtils.java API. This method writes the text string 'content' into a file named 'testFile.txt' located in the private files directory of the app.
+
+Please replace `getFilesDir()` with the appropriate method in your Android activity to return the app's private directory if you receive a `cannot resolve method` error.
+
+Remember to add the appropriate permissions in your Android Manifest file if you are writing to external storage.
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```

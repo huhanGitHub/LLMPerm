@@ -1,0 +1,33 @@
+Here is a simple example of a test_SipAudioCall_holdCall method according to your request. This examples assumes you already have created and initialized a SipAudioCall instance. Please remember that you must have appropriate permissions and session initialization according to your application's needs.
+
+```java
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipException;
+
+public class MainActivity extends AppCompatActivity {
+    private SipAudioCall sipAudioCall;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize your SipAudioCall instance here
+        // sipAudioCall = new SipAudioCall(....);
+        try {
+            test_SipAudioCall_holdCall();
+        } catch (SipException se) {
+            // Handle exceptions here
+        }
+    }
+
+    public void test_SipAudioCall_holdCall() throws SipException {
+        if (sipAudioCall != null && sipAudioCall.isOnHold() == false) {
+            sipAudioCall.holdCall(30);
+        }
+    }
+}
+```
+In the example, the test_SipAudioCall_holdCall method attempts to put the active SIP call on hold. The method will throw a SipException if the SipAudioCall fails to get placed on hold.
+
+Please adapt the code above according your context. Remember to check and request for necessary permissions and manage exceptions according to your needs. You might also want to handle the case when there's no active call or the call is already on hold. Also, understand that SipAudioCall is deprecated from API 29.

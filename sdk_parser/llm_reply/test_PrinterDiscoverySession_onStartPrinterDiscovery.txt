@@ -1,0 +1,72 @@
+Below is a hypothetical usage example of onStartPrinterDiscovery method from PrinterDiscoverySession.
+
+Please note that Print services are required to extend the PrinterDiscoverySession class and implement certain methods, including onStartPrinterDiscovery. A real-world usage example of this could be in the case when we want to implement a custom print service that discovers available printers on a network when the print dialogue is opened.
+
+```java
+import android.content.Context;
+import android.printservice.PrinterDiscoverySession;
+import android.printservice.PrintService;
+import android.printservice.PrintServiceInfo;
+
+public class MyPrintService extends PrintService {
+    private MyPrinterDiscoverySession myPrinterDiscoverySession;
+
+    @Override
+    protected PrinterDiscoverySession onCreatePrinterDiscoverySession() {
+        myPrinterDiscoverySession = new MyPrinterDiscoverySession(this);
+        return myPrinterDiscoverySession;
+    }
+
+    @Override
+    protected void onRequestCancelPrinterDiscovery() {
+        myPrinterDiscoverySession.cancelPrinterDiscovery();
+    }
+
+
+    // Inner class
+    class MyPrinterDiscoverySession extends PrinterDiscoverySession {
+        private final Context context;
+
+        public MyPrinterDiscoverySession(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onStartPrinterDiscovery(List<PrinterId> priorityList) {
+            // Here you would implement the logic to discover printers. 
+            // For instance, you might start a background task to scan the network for printers. 
+            // This example just signals the start of printer discovery with a log message.
+            Log.d("MyPrintService", "Starting printer discovery");
+        }
+
+        @Override
+        public void onStopPrinterDiscovery() {
+            // stop the discovery process
+            Log.d("MyPrintService", "Stopping printer discovery");
+        }
+
+        // Other methods...
+
+    }
+
+    // Call test_PrinterDiscoverySession_onStartPrinterDiscovery
+    private void test_PrinterDiscoverySession_onStartPrinterDiscovery() {
+        List<PrinterId> printerIds = new ArrayList<>();
+        myPrinterDiscoverySession.onStartPrinterDiscovery(printerIds);
+    }
+}
+```
+
+Please do remember to include the necessary permissions in your AndroidManifest.xml as print services require the android.permission.BIND_PRINT_SERVICE permission which must be granted by the user at install time. 
+
+```xml
+<service android:enabled="true" android:exported="true" 
+    android:name=".MyPrintService"
+    android:permission="android.permission.BIND_PRINT_SERVICE">
+    <intent-filter>
+    <action android:name="android.printservice.PrintService"/>
+    </intent-filter>
+    <meta-data android:name="android.printservice" 
+    android:resource="@xml/my_print_service"/>
+</service>
+```

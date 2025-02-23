@@ -1,0 +1,40 @@
+Here is the example usage of the `deleteAll` method with the `VoicemailContract` in Android:
+
+```java
+public void test_VoicemailContract_deleteAll() {
+    // Get the content resolver
+    ContentResolver contentResolver = getContentResolver();
+
+    // Define the selection and selection arguments for the delete operation
+    String selection = VoicemailContract.Voicemails._ID + "=?";
+    String[] selectionArgs = { "1" }; // replace "1" with the specific voicemail ID that you want to delete
+
+    // The delete operation is performed on the Voicemails content URI
+    Uri voicemailsUri = VoicemailContract.Voicemails.CONTENT_URI;
+
+    try {
+        // Execute the delete operation
+        int numRowsDeleted = contentResolver.delete(voicemailsUri, selection, selectionArgs);
+
+        // Check the number of rows deleted
+        if (numRowsDeleted > 0) {
+            Log.d("VoicemailContract", "Successfully deleted " + numRowsDeleted + " voicemails.");
+        } else {
+            Log.d("VoicemailContract", "No voicemails were deleted.");
+        }
+    } catch (Exception e) {
+        // If an exception occurs, log an error message
+        Log.e("VoicemailContract", "Error deleting voicemail", e);
+    }
+}
+```
+
+In this example, the `delete` method of the `ContentResolver` is used to delete the voicemail(s) that match the provided selection and selection arguments. The `ContentResolver` is used to access the device's Voicemail Provider, which is the underlying data store for all voicemails on the device. 
+
+The `VoicemailContract.Voicemails.CONTENT_URI` is the URI for the "voicemails" table of the Voicemail Provider.
+
+Remember to add the permission in your app's manifest file to allow your app to read/write voicemails:
+
+```xml
+<uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
+```

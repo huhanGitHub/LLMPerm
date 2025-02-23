@@ -1,0 +1,35 @@
+Below is an example of how you can use the Person.Builder setUri() method:
+
+```java
+import android.app.Person;
+import android.net.Uri;
+import android.widget.Toast;
+
+public void test_Person_setUri() {
+    try {
+        // Construct the URI for the user's profile picture
+        String profilePictureUri = "content://path/to/user/profile/picture";
+
+        // Create a new Person instance using the Person.Builder class 
+        Person user = new Person.Builder()
+                .setUri(Uri.parse(profilePictureUri))
+                .setName("User Name")
+                .build();
+
+        //Output user's name and uri to check if the uri is set
+        Toast.makeText(this, "User's name: " + user.getName() + ", User's uri: " + user.getUri(),
+                Toast.LENGTH_LONG).show();
+    } catch (Exception e) {
+        Toast.makeText(this, "Failed to set user's uri with an error: " + e.getMessage(),
+                Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+In this function, we are creating a new Person instance and setting the Uri of the profile picture of the user using the setUri method. If the Uri is correctly set, we are showing a Toast message displaying the user's name and the Uri. If there is an Exception, we catch it and display a Toast message showing the error.
+
+Please replace `"content://path/to/user/profile/picture"` and `"User Name"` with actual values.
+
+Also note that this is just an example. In actual use, you would need to handle permissions and possibly other issues depending on where the Uri resource is located.
+
+The `test_Person_setUri` is a synthetic example, you can call this method during the life cycle of your activity but usually you will use the Person object where you process or display user information. Make sure to run this code on the UI thread since Toast.makeText, and Show() methods manipulate with UI and they require to be executed on the UI thread of execution.

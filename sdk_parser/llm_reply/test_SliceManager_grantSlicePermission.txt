@@ -1,0 +1,40 @@
+Below is a code snippet representing a method test_SliceManager_grantSlicePermission, an example usage of the android slice manager api, including granting slice permission:
+
+```Java
+// Import the required classes
+import android.app.slice.SliceManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_SliceManager_grantSlicePermission();
+    }
+
+    private void test_SliceManager_grantSlicePermission() {
+        // Create a SliceManager instance
+        SliceManager sliceManager = (SliceManager) getSystemService(Context.SLICE_SERVICE);
+
+        // Define the URI of the Slice 
+        Uri sliceUri = Uri.parse("content://com.your-package.your-slice-provider/slice-path");
+
+        // Define the package name of the app to give permission to
+        String pkgName = "com.another-app-package";
+
+        // Check if the permission is not already granted
+        if (!sliceManager.checkSlicePermission(sliceUri, pkgName)) {
+            // Grant the permission
+            sliceManager.grantSlicePermission(pkgName, sliceUri);
+        }
+    }
+}
+```
+
+Please note that this example assumes you have a SliceProvider implemented and are granting permission to another app to access your slices. The Uri and package names should be replaced with actual values for your application setup. The permission to use the Slice Manager must also be properly set in the manifest.

@@ -1,0 +1,13 @@
+Currently, `android.telephony.MbmsGroupCallSession` doesn't provide a public constructor to create its instance, which means you can't instantiate this class directly. 
+
+`MbmsGroupCallSession` is part of the MediaBroadcast Multicast Service (MBMS), aimed to provide efficient delivery of broadcast and multicast services, both within a cell as well as within the core network. 
+
+This API is related to the 5G technology for providing group-based calling facility. Mainly for the Networks and Telco based applications.
+
+As of Android 11, all the methods of `MbmsGroupCallSession` class (like `download`, `removeService`, `sendLogs`, etc.) are hidden, which means they're not part of publicly available Android API and thus, are not available for the third-party developers.
+
+We don't have a proper way to create an instance of `MbmsGroupCallSession` in any activity in Android or call any of its methods. So, currently we won't be able to write `test_MbmsGroupCallSession_create` method to test this class. 
+
+Note: Directly using hidden methods in your code is strongly discouraged because hidden methods can be removed or modified without any notice, so your code might not work on different Android versions.
+
+Reference: [Android Developer: MbmsGroupCallSession](https://developer.android.com/reference/android/telephony/mbms/MbmsGroupCallSession)

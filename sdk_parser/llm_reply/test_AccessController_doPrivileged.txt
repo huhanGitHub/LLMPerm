@@ -1,0 +1,35 @@
+Here's an example of testing the `AccessController.doPrivileged()` method. This method provides a way of executing a code block with elevated permissions, useful when dealing with restricted operations like file access or Internet connectivity.
+
+Note that the approach is generally used in java applications rather than Android. Android has its own permission model which is not exactly compatible with Java's `AccessController.doPrivileged()` usage.
+
+```java
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity {
+
+    // ...
+
+    public File test_AccessController_doPrivileged() {
+        return AccessController.doPrivileged(
+                new PrivilegedAction<File>() {
+                    public File run() {
+                        // privileges are asserted here
+                        File file = new File("testfile.txt");
+                        if (file.exists()) {
+                            System.out.println("File exists");
+                        } else {
+                            System.out.println("File does not exist");
+                        }
+                        return file;
+                    }
+                }
+        );
+    }
+}
+```
+
+This code executes a privileged action (reading a file) within the `doPrivileged` block. It will either print out "File exists" or "File does not exist", based on whether the file "testfile.txt" exists or not.
+
+Remember that normal Android applications won't be able to use this approach due to the Android sandboxing features. This code is more appropriate for Java desktop applications or Java-based server applications. For Android, you would have to request permissions at runtime and add the required permissions to your AndroidManifest.xml file first.

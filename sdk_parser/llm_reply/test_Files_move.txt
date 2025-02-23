@@ -1,0 +1,33 @@
+Below is an example of a method that uses the `java.nio.file.Files` API to move a file from one location to another. Please note that in Android it's recommended to use scoped storage or public directories for saving files, this example is more suitable for pure Java applications.
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+    
+    // ...
+
+    public void test_Files_move() {
+        try {
+            Path source = Paths.get("/path/to/original/file.txt");
+            Path target = Paths.get("/path/to/new/location/file.txt");
+
+            // Moves the file
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+            Log.i("Test", "File moved successfully.");
+        } catch (Exception ex) {
+            Log.e("Test", "An error occurred while moving the file: " + ex.getMessage());
+        }
+    }
+}
+```
+
+This example attempts to move a file located at "/path/to/original/file.txt" to "/path/to/new/location/file.txt". If a file already exists at the target location, it will be replaced.
+
+The `StandardCopyOption.REPLACE_EXISTING` option specifies that if a file already exists at the target location, it should be replaced by the source file. If not stated, and a file already exists at the target location, then an `java.nio.file.FileAlreadyExistsException` would be thrown.
+
+`android.util.Log` is used for logging messages, and it requires the Android Manifest permission `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`.

@@ -1,0 +1,31 @@
+Here you go. The below method `test_SSLSocketFactory_createSocket` demonstrates an example of how to use `SSLSocketFactory`'s `createSocket` method. The method will be used in an Android activity. To use it, you need to add internet permissions in your Android Manifest.
+
+```java
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import java.io.IOException;
+
+public void test_SSLSocketFactory_createSocket() {
+    try {
+        SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket("google.com", 443);
+
+        System.out.println("Connected to google.com");
+
+    } catch (IOException e) {
+        System.err.println("Could not create socket to google.com:443");
+        e.printStackTrace();
+    }
+}
+```
+
+Just put this code inside any context (Activity, Fragment etc) where it makes sense for you. It's a standard Java Socket connection via SSL. Replace "google.com" and 443 with your own values.
+
+This will connect to the HTTPS (443) port of google.com. If the connection is successful, it will print "Connected to google.com". If there is an error, it will print "Could not create socket to google.com:443" and the stack trace for the error.
+
+In most cases, you would need to replace `System.out.println` and `System.err.println` with the logging/printing functionality of your Android application because Android does not support console output. Please also note, that you need to call this function from a background thread, because you are performing a networking operation which is time consuming.
+
+Insert it in AndroidManifest.xml file:
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```

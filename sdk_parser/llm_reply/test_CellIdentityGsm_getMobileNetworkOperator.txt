@@ -1,0 +1,49 @@
+To get the mobile network operator in Android, you need to use the `TelephonyManager` API. Here is the code:
+
+```java
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+import androidx.core.app.ActivityCompat;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
+            return;
+        }
+
+        String operator = test_CellIdentityGsm_getMobileNetworkOperator(this);
+
+    }
+
+    public String test_CellIdentityGsm_getMobileNetworkOperator(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String networkOperator = telephonyManager.getNetworkOperator();
+        int mcc = 0, mnc = 0;
+        
+        if (networkOperator != null) {
+            mcc = Integer.parseInt(networkOperator.substring(0, 3));
+            mnc = Integer.parseInt(networkOperator.substring(3));
+        }
+
+        return "MCC: " + mcc + " MNC: " + mnc;
+    }
+}
+```
+
+In this code:
+- First, we're checking if we have the necessary location permissions and if not, we're asking for them.
+- Then, we're creating a `TelephonyManager` instance and getting the network operator. The network operator will be a 5 or 6 digit number where the first three digits are the MCC (mobile country code) and the remaining are the MNC (mobile network code).
+- Finally, we're extracting the MCC and MNC and returning them as a string.
+
+This method does need running on a real device or emulator with a valid SIM Card to get a meaningful result.

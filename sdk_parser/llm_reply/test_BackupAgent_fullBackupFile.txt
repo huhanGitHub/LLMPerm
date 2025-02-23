@@ -1,0 +1,49 @@
+Here's an example method for testing `BackupAgent.fullBackupFile()`. This method should reside inside an Activity.
+
+Since `BackupAgent` class is abstract, we're not allowed to make an instance of it and directly use it. We can, however, implement it into our own custom backup agent class.
+
+The `fullBackupFile()` requires permissions that include write access to external storage and `BACKUP` permission which is only granted to system applications.
+
+This snippet will not work properly on a non-rooted device or a device that not running a custom firmware with your application being marked as a system app due to the required permissions.
+
+Can't be tested in an Activity, needs an instance of backup agent which is created by the system.
+
+```java
+public class MyBackupAgent extends BackupAgent {
+    @Override
+    public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+        // Not relevant for this example
+    }
+    @Override
+    public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
+        // Not relevant for this example
+    }
+
+    public void test_BackupAgent_fullBackupFile() {
+        // Check External Storage permission
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // Check BACKUP permission
+            if(ContextCompat.checkSelfPermission(this, "android.permission.BACKUP") == PackageManager.PERMISSION_GRANTED) {
+                // Create file for backup
+                File backupFile = new File(Environment.getExternalStorageDirectory(), "backup_test");
+                try {
+                    if(!backupFile.createNewFile()) {
+                        Log.d("Backup Test", "File already exists or failed to create");
+                    }
+                    fullBackupFile(backupFile, new FullBackupDataOutput(new ParcelFileDescriptor.AutoCloseOutputStream(
+                        ParcelFileDescriptor.open(new File(Environment.getExternalStorageDirectory(), "backup_test"),
+                        ParcelFileDescriptor.MODE_READ_WRITE))));
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.d("Backup Test", "Backup permission not granted");
+            }
+        } else {
+            Log.d("Backup Test", "Write External Storage permission not granted");
+        }
+    }
+}
+```
+
+Again, note that this cannot be run on an emulator or a standard device because of the `BACKUP` permission. This is more a theoretical example and cannot be used in a traditional user-level application.

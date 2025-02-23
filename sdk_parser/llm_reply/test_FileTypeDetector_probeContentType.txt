@@ -1,0 +1,47 @@
+Sure, here's an example of how one might use the `FileTypeDetector` abstract class in a method within an Android activity:
+
+Note: The `FileTypeDetector` is an abstract class that needs to be subclassed to be used such as in this mocking manner.
+
+```java
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.spi.FileTypeDetector;
+
+public class MainActivity extends AppCompatActivity {
+
+    private class MockFileTypeDetector extends FileTypeDetector {
+
+        @Override
+        public String probeContentType(Path path) throws IOException {
+            // Implement your logic to determine the file type based on the Path.
+            // For simplicity, this mock method says everything is "text/plain".
+            return "text/plain";
+        }
+    }
+
+    public void test_FileTypeDetector_probeContentType() {
+        // Create a new MockFileTypeDetector
+        MockFileTypeDetector mockFileTypeDetector = new MockFileTypeDetector();
+
+        // Create a mock Path object (requires API level 26).
+        Path fakePath = Paths.get("/path/to/file.txt");
+
+        // Call probeContentType and store the result.
+        String result = "";
+        try {
+            result = mockFileTypeDetector.probeContentType(fakePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Print the result to the log.
+        Log.d("FileTypeDetectorTest", "File type: " + result);
+    }
+}
+```
+
+In this mock method `probeContentType(Path path)`, it always returns the MIME type "text/plain", irrespective of the path provided. In a real-world usage scenario, you would implement your own logic to determine the file type based on the file path. 
+
+The `test_FileTypeDetector_probeContentType()` method is just an example. It creates a `MockFileTypeDetector`, a mock `Path`, and then calls `probeContentType()` on the detector with the path as an argument. The resulting MIME type is then printed to the log.
+
+However, note that Android java.nio.file API is not generally available until API Level 26 (Android 8.0—Oreo) for the usage with `Paths.get()`.

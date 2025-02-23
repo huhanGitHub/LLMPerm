@@ -1,0 +1,43 @@
+```java
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient.Info;
+
+public class TestActivity extends AppCompatActivity {
+
+    private static final String TAG = "TestActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+
+        try {
+            test_AdId_getAdId(this);
+        } catch (Exception e) {
+            Log.e(TAG, "Error retrieving Ad ID", e);
+        }
+    }
+
+    private void test_AdId_getAdId(Context context) throws Exception {
+        Info adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
+        String adId = adInfo.getId();
+        Log.i(TAG, "Ad ID: " + adId);
+
+        boolean isLAT = adInfo.isLimitAdTrackingEnabled();
+        if (isLAT) {
+            Log.i(TAG, "Limit Ad Tracking is enabled");
+        } else {
+            Log.i(TAG, "Limit Ad Tracking is disabled");
+        }
+    }
+}
+```
+
+This test method retrieves the user-specific Android advertising ID and checks whether the user enabled the Limit Ad Tracking setting. This information is then logged to Logcat.
+
+Please note that according to Google's guidelines (https://support.google.com/googleplay/android-developer/answer/6048248?hl=en), you must make sure to respect the user's selection of the Limit Ad Tracking setting. If Limit Ad Tracking is enabled, use the advertising ID only for non-user-specific "contextual advertising" and for certain limited purposes.
+
+Moreover, depending on your usage of the advertising ID, your app's privacy policy may need to be updated and you may need to obtain the user's explicit consent. Please review Google's policy and, if necessary, consult with a lawyer.

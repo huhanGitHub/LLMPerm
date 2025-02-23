@@ -1,0 +1,24 @@
+Below is an example method of using the DeleteDocument function from the android DocumentsContract API. 
+
+```java
+public boolean test_DocumentsContract_deleteDocument(ContentResolver contentResolver, Uri documentUri) {
+    boolean isSuccess = false;
+    
+    try {
+        DocumentsContract.deleteDocument(contentResolver, documentUri);
+        isSuccess = true;
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    return isSuccess;
+}
+```
+
+In the above example code, you would need to pass in a ContentResolver object (which typically can be obtained via `context.getContentResolver()`) and a Uri object that represents the URI of the document you wish to delete.
+
+Then, the function `DocumentsContract.deleteDocument(contentResolver, documentUri)` is called which deletes the document pointed by the provided URI.
+
+This code is placed inside a try-catch block to catch any possible exceptions that might be thrown due to a missing file with the given URI.
+
+Please note that this requires the WRITE_EXTERNAL_STORAGE permission and that you should call this method from a secondary thread as `deleteDocument` method may take long to execute.
+If you call this method from the main thread, your app might become unresponsive and you'll get the `ANR (Application Not Responding)` error.

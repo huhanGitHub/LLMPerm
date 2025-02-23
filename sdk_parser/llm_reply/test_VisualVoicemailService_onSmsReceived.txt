@@ -1,0 +1,26 @@
+Below is a basic example of how you might use the onSmsReceived method from the VisualVoicemailService API. This method is a part of the VisualVoicemailService API contract. It is called when a new visual voicemail SMS has been received.
+
+Due to some restrictions on Android, you can't directly test this method because its protected and you cannot directly access this service as a normal android app. The service is system level service and runs for Operator App which is system level app.
+
+However, Here's a basic hypothetical example of what a test case might look like:
+
+```java
+public void test_VisualVoicemailService_onSmsReceived() {
+    Intent intent = new Intent();
+    intent.setAction("android.intent.action.NEW_VVM");
+    String dialString = "number_to_dial";
+    intent.putExtra(TelephonyManager.EXTRA_PHONE_ACCOUNT_HANDLE, dialString);
+    VisualVoicemailService visualVoicemailService = new VisualVoicemailService() {
+        @Override
+        public void onSmsReceived(VisualVoicemailTask task) {
+            // Place test logic here. 
+        }
+    };
+
+    // Simulate the system call for a new VVM. 
+    visualVoicemailService.onHandleIntent(intent);
+}
+```
+This function creates a new VisualVoicemailService object and then calls onSmsReceived. In a production environment, the Android Telephony system would create this object and call the onSmsReceived method. 
+
+Remember - Android's `VisualVoicemailService` is designed to be used by the system, not by applications. Therefore, if you're working on a normal app, it's quite likely that you won't have direct access to this service, even for testing. This example is hypothetical and more for understanding the usage rather than actual execution. To access it and test it, you need to have an app signed by the system certificate, typically only available to phone manufacturers and mobile network operators.

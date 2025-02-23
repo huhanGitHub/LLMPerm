@@ -1,0 +1,33 @@
+Here is an example of a method that might work for you in your Android Activity. In the example below, it's assumed that you have the context and other details to create MbmsStreamingSession.
+
+This Android API is used to interface with mobile broadcast services provided by the carrier, so you need to understand it requires the appropriate service.
+```java
+private void test_MbmsStreamingSession_requestUpdateStreamingServices() {
+   ...
+   // Assume the context and service class has been initialized
+   Context context = this;
+   Executor executor = Executors.newSingleThreadExecutor();
+   String serviceClass = "";  // The service class, which should be given by carrier or service provider
+   
+   // Create the callback for streaming session
+   MbmsStreamingSession.Callback callback = new MbmsStreamingSession.Callback() {
+       @Override
+       public void onError(int errorCode, String message) {
+           // Handle the error accordingly
+           Log.e("MbmsStreamingSession", "Error requesting streaming service update: " + errorCode + ", " + message);
+       }
+   };
+   
+   MbmsStreamingSession session = MbmsStreamingSession.create(context, executor, callback);
+   
+   // Request the update streaming services
+   // This will trigger the carriers to push the updated streaming services to the device
+   session.requestUpdateStreamingServices(serviceClass);
+   
+   // Please Call session.close() when you're finished to release resources 
+   ...
+}
+```
+Unfortunately, there is no way of running this code in unit test because it requires a system service action which can not be mocked (The system service usage is inside create method of MbmsStreamingSession - it directly calls to system service). 
+
+Moreover, MbmsStreamingSession is available from API level 28. Therefore, the device running the code need to be in API level 28 and above.

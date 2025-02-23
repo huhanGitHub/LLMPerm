@@ -1,0 +1,35 @@
+Here's a general example of how one might use the `Files.newBufferedWriter` method in a utility function inside an activity. This method writes a text to a file in internal storage.
+
+Please note this is a general Java method and might not work in Android context as Android uses different way to create or access Files. For Android you should take permissions and use `File`, `FileOutputStream` or `FileWriter` classes.
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class MainActivity extends AppCompatActivity {
+
+    ...
+
+    public void test_Files_newBufferedWriter() {
+        Path path = Paths.get(getFilesDir().getAbsolutePath(), "example.txt");
+
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE)) {
+            writer.write("This is a test");
+        } catch (IOException e) {
+            Log.e("Test", "Error writing file", e);
+        }
+    }
+
+    ...
+}
+```
+In this code, `Paths.get()` is used to create a file path. The `getFilesDir().getAbsolutePath()` method call gets the path to the files directory inside the app's internal storage. 
+
+Then, `Files.newBufferedWriter()` is used to create a `BufferedWriter` on the given path, specifying the character set and a write option - in this case, `StandardOpenOption.CREATE`, which means that the file will be created if it does not exist.
+
+The `BufferedWriter.write()` method is used to write a string to the file.
+
+Finally, the `BufferedWriter` is automatically closed due to the try-with-resources statement, even if an exception is thrown. Any `IOException`s are caught and logged.

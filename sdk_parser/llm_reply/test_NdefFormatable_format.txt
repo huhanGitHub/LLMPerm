@@ -1,0 +1,43 @@
+Here's an example of how you might use the NdefFormatable API in an Android application. This method will be used in an Android activity to write a text data on a NFC tag.
+
+In this example, I'm creating a new method called test_NdefFormatable_format:
+
+```java
+public void test_NdefFormatable_format(NdefFormatable formatable) {
+    try {
+        // Connect to the NFC tag
+        formatable.connect();
+
+        // Create an NDEF message to write on the tag
+        NdefRecord ndefRecord = NdefRecord.createTextRecord("en", "Hello World");
+        NdefMessage ndefMessage = new NdefMessage(ndefRecord);
+
+        // Format the tag with the message
+        formatable.format(ndefMessage);
+    } catch (FormatException e) {
+        // Handle error during the formatting
+        e.printStackTrace();
+    } finally {
+        // Make sure to close the connection with the tag
+        try {
+            formatable.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This test method is passing the NdefFormatable instance which is already initialized before. You may refer some other example to initializing and getting instance of NdefFormatable from Tag.
+
+Note : In real life application, make sure to add necessary permission in AndroidManifest.xml to use NFC and handle the NFC state, such as:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+```
+
+Before trying to read or write NFC tags, make sure that NFC is enabled on the device. You can insert the necessary checks and prompt the user to turn it on if it's off. Make sure to handle error cases, like if NFC is not supported by the device or turned off.
+
+In this example, we used `NdefRecord.createTextRecord` which is only available from API level 21. For previous versions you need to create NdefRecords manually. 
+
+Please update it according to your requirements and handle cases properly like handling exceptions and displaying user readable information if anything goes wrong.

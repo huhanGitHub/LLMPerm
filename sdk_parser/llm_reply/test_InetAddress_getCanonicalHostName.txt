@@ -1,0 +1,23 @@
+Here is an example of a self-contained method that demonstrates usage of the getCanonicalHostName method of the InetAddress class in Java:
+
+```Java
+public void test_InetAddress_getCanonicalHostName(){
+    try {
+        // Get local IP address
+        InetAddress myIP = InetAddress.getLocalHost();
+
+        // Get canonical host name
+        String canonicalHostName = myIP.getCanonicalHostName();
+        
+        // Print canonical host name
+        System.out.println("Canonical Host Name: " + canonicalHostName);
+
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Please note that `InetAddress.getLocalHost()` method does not essentially give you the real device IP address but the localhost IP (127.0.0.1). In a typical android application usage, you might need to use a different method to get the IP address of the device on a WiFi or 3G network for instance.
+
+Warning: It is not recommended to perform network operations on the main thread as this could block the UI and lead to an "Application Not Responding" error. To avoid this, consider using another thread to run networking operations. Google recommends using Android's `AsyncTask` or dedicated networking libraries like `Retrofit` or `Volley` for running network operations separately. This method is just an example and not recommended for production code.

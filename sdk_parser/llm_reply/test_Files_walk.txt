@@ -1,0 +1,35 @@
+Here is an example of a self-contained method utilizing java.nio.file.Files.walk API. This API is used to visit all directories and read files for a particular path.
+
+Due to the way Android handles file permissions, this test will only work with API level 26 (Android 8.0 Oreo) and above.
+
+Please note that this implementation will not work on every Android device due to sandbox restrictions. If you don't have the necessary permissions, you will receive a SecurityException. To use it effectively and safely, you should take this into consideration and add appropriate permissions to your AndroidManifest.xml file.
+
+```java
+import android.os.Environment;
+import android.util.Log;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+public void test_Files_walk() {
+    String dirPath = Environment.getExternalStorageDirectory().toString();
+    try (Stream<Path> stream = Files.walk(Paths.get(dirPath), 1)) {
+        stream.filter(Files::isReadable)
+                .filter(Files::isRegularFile)
+                .forEach(path -> {
+                    Log.i("File Path", String.valueOf(path));
+                });
+    } catch (IOException e) {
+        Log.e("Files Walk Error", "Unable to read directory", e);
+    }
+}
+```
+Add these permissions to your AndroidManifest.xml file.
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+The test_Files_Walk method utilizes Files.walk to visit each file in the specified directory. The stream is filtered to only include readable, regular files (not directories). Each remaining path is logged to the console. If there's an exception while reading the directory or files, it is caught and logged as an error.

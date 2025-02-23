@@ -1,0 +1,53 @@
+Here's a simple example of how you might write a test_MtpDevice_importFile method. Note that this example doesn't include any real testing; it's simply demonstrating the creation and use of an MtpDevice instance:
+
+```java
+import android.mtp.MtpDevice;
+import android.mtp.MtpObjectInfo;
+import android.mtp.MtpStorageInfo;
+import android.os.ParcelFileDescriptor;
+
+import java.io.IOException;
+
+public void test_MtpDevice_importFile(MtpDevice device, int fileId, String storagePath) {
+    if (device == null) {
+        throw new IllegalArgumentException("MtpDevice device cannot be null");
+    }
+
+    if (fileId <= 0) {
+        throw new IllegalArgumentException("File id should be greater than 0");
+    }
+
+    if (storagePath == null) {
+        throw new IllegalArgumentException("File storage path cannot be null");
+    }
+
+    // Get the file info
+    MtpObjectInfo fileInfo = device.getObjectInfo(fileId);
+    if (fileInfo == null) {
+        throw new IllegalArgumentException("File with id " + fileId + " does not exist");
+    }
+
+    ParcelFileDescriptor pfd = null;
+    try {
+        pfd = ParcelFileDescriptor.open(new File(storagePath, fileInfo.getName()), ParcelFileDescriptor.MODE_READ_WRITE);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    // Import the file from the MTP device
+    if (!device.importFile(fileId, pfd.getFileDescriptor())) {
+        // Handle the error
+    }
+
+    // Don't forget to clean up!
+    if (pfd != null) {
+        try {
+            pfd.close();
+        } catch (IOException e) {
+            // Clean up error
+        }
+    }
+}
+```
+
+In this test_MtpDevice_importFile method, the file with given id on the MTP device is being imported to the provided storage path. Note that this code doesn't do any real error handling, so you'd want to work on that in a real-world scenario.

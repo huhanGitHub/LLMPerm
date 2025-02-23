@@ -1,0 +1,29 @@
+```
+public void test_TileService_requestListeningState() {
+    TileService tileService = new TileService() {
+        @Override
+        public void onClick() {
+            super.onClick();
+        }
+    };
+    
+    try {
+        Method requestListeningState = TileService.class.getMethod("requestListeningState", Context.class, ComponentName.class);
+        requestListeningState.invoke(tileService, getApplicationContext(), new ComponentName("com.example", "com.example.MainActivity"));
+
+        Log.i("TileServiceTest", "Listening state requested successfully");
+    } catch (NoSuchMethodException ne) {
+        Log.e("TileServiceTest", "Failed to invoke requestListeningState - method not found", ne);
+    } catch (InvocationTargetException ite) {
+        Log.e("TileServiceTest", "Failed to invoke requestListeningState - error thrown", ite);
+    } catch (IllegalAccessException iae) {
+        Log.e("TileServiceTest", "Failed to invoke requestListeningState - access error", iae);
+    }
+}
+```
+
+Please note that there is a depending situation. Normally, you would have to override the `onStartListening()`, `onStopListening()`, and `onClick()` methods in your `TileService` implementation class, because they are the key moments when tiles get updated and interacted with.
+
+In a `TileService` instance, you usually can't call `requestListeningState` directly because it's a static method that expects a `Context` and a `ComponentName` as its parameters. This test method uses reflection to call this method, passing a hypothetical `MainActivity` from package `com.example` as its `ComponentName`. 
+
+You can change these values to the correct package and component name according to your application's package and the class where this code is being written.

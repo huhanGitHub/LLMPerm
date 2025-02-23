@@ -1,0 +1,36 @@
+Sure, here is a self-contained example method test_Files_notExists which uses java.nio.file's Files.exists function to check if a file does not exist:
+
+```java
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            boolean result = test_Files_notExists();
+            Log.d("FileTest", "File does not exist: " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean test_Files_notExists() {
+        // provide the path to the file you want to check
+        String filePath = getApplicationContext().getFilesDir().getPath() + "/test.txt";
+        Path path = Paths.get(filePath);
+
+        // return if the file does not exist
+        return !Files.exists(path);
+    }
+}
+```
+
+Please note that Android may have stricter rules on file access, especially on later versions due to scoped storage. Always ensure you have the necessary permissions and handle them in your app appropriately.
+
+In this example, we use the exists method from the Files class to check if a file exists. We then negate the return value (`!Files.exists(path)`) to check if the file does not exist. The file path (`filePath`) points to a file named "test.txt" in the app's files directory. This directory is accessible without special permissions on Android. Remember to replace “test.txt” with the name of your file.

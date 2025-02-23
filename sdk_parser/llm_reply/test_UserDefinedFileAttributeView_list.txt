@@ -1,0 +1,33 @@
+UserDefinedFileAttributeView is a part of java.nio.file.attribute library that provides the view of user-defined file attributes. In the method below, it is used to list all user-defined attributes of a file. Please note that this might not work on all file systems. Only some file systems support user-defined file attributes.
+
+```java
+public void test_UserDefinedFileAttributeView_list() {
+    try {
+        // Path to the file
+        Path file = Paths.get("/path/to/your/file");
+        
+        // Get UserDefinedFileAttributeView of the file
+        UserDefinedFileAttributeView userView =
+            Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
+
+        // List the user defined attributes
+        List<String> userAttributeList = userView.list();
+
+        // Print user defined attributes
+        for (String attribute : userAttributeList) {
+            System.out.println("Attribute: " + attribute);
+        }
+    } catch (IOException e) {
+        // Do something
+        System.out.println("An error occurred: " + e.getMessage());
+    }
+}
+```
+Remember to include this import at the beginning of your file:
+```java
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.io.IOException;
+import java.util.List;
+```
+Note: This feature is not supported by all file systems. Therefore, make sure to handle the `UnsupportedOperationException` which gets thrown when the underlying file system doesn't support this feature.

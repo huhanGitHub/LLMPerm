@@ -1,0 +1,39 @@
+Here's an example of how you can use the `SearchRecentSuggestions.truncateHistory` method in Android. This method is helpful for deleting all recent search suggestions.
+
+First, you need to make sure the necessary permission is declared in your AndroidManifest.xml.
+
+```xml
+<uses-permission android:name="android.permission.WRITE_HISTORY_BOOKMARKS"/>
+```
+
+This example assumes you created a `SearchRecentSuggestions` instance which interacts with a content provider based on your authority and mode.
+
+```java
+import android.app.Activity;
+import android.provider.SearchRecentSuggestions;
+
+public class TestActivity extends Activity {
+
+    private static final String AUTHORITY = "com.example.app.SearchSuggestionProvider";
+    private static final int MODE = 0;
+
+    // ...
+
+    /**
+     * A method to demonstrate the usage of SearchRecentSuggestions.truncateHistory.
+     */
+    public void test_SearchRecentSuggestions_truncateHistory() {
+        // Create a new SearchRecentSuggestions instance.
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, 
+                                                                         AUTHORITY, 
+                                                                         MODE);
+
+        // Call truncateHistory() method to clear all search history.
+        suggestions.truncateHistory();
+    }
+}
+```
+
+You should replace `"com.example.app.SearchSuggestionProvider"` and `MODE` with your actual authority and the mode set while creating the search suggestions. Remember, this will clear ALL the recent search suggestions.
+
+`truncateHistory()` may need to be called in a background thread as it has potential to block your UI thread due to the underlying `ContentResolver#delete` operation, which depends on your 'ContentProvider' implementation and how much data it needs to delete.

@@ -1,0 +1,43 @@
+Here's a sample usage of the `openInputPort` method in the `MidiDeviceServer` class in Android. Please note that you need to handle the midi device connections in your code.
+
+```java
+import android.media.midi.MidiDeviceServer;
+import android.media.midi.MidiReceiver;
+import android.media.midi.MidiSender;
+import android.os.Binder;
+import android.os.IBinder;
+
+public void test_MidiDeviceServer_openInputPort() {
+    MidiDeviceServer.Callback callback = new MidiDeviceServer.Callback() {
+        @Override
+        public void onDeviceStatusChanged(MidiDeviceServer server, MidiDeviceStatus status) {
+        }
+    };
+
+    MidiReceiver[] inputPortReceivers = new MidiReceiver[1];
+    inputPortReceivers[0] = new MidiReceiver() {
+        @Override
+        public void onSend(byte[] msg, int offset, int count, long timestamp) throws IOException {
+            // Process the received MIDI data here.
+        }
+    };
+
+    MidiSender[] outputPortSenders = new MidiSender[1];
+    outputPortSenders[0] = new MidiSender() {
+    };
+
+    IBinder token = new Binder();
+    MidiDeviceServer server = new MidiDeviceServer(null, inputPortReceivers, outputPortSenders, callback, token);
+
+    try {
+        MidiReceiver receiver = server.openInputPort(0);
+        // Use the receiver to send MIDI data here.
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This code creates a `MidiDeviceServer` with a single input port and output port. It opens the input port and gets a `MidiReceiver` that can be used to send MIDI data to the device. Note that the `MidiDeviceServer` constructor used here is only available in Android 6.0 (API level 23) and higher. If your app needs to support lower API levels, you'll need to use a different method to create the `MidiDeviceServer`.
+
+Also, this code is self-contained and does not handle the disconnection of the midi device. You should implement additional code to handle these cases according to your actual application requirements.

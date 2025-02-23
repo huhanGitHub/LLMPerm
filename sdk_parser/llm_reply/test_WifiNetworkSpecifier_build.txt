@@ -1,0 +1,42 @@
+```
+/**
+ * Usage example of the android WifiNetworkSpecifier API.
+ */
+private void test_WifiNetworkSpecifier_build() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        WifiNetworkSpecifier.Builder builder = new WifiNetworkSpecifier.Builder();
+        builder.setSsidPattern(new PatternMatcher("TestNetwork", PatternMatcher.PATTERN_PREFIX));
+        builder.setWpa2Passphrase("TestPassword");
+
+        WifiNetworkSpecifier wifiNetworkSpecifier = builder.build();
+
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .setNetworkSpecifier(wifiNetworkSpecifier)
+            .build();
+
+        final ConnectivityManager connectivityManager = (ConnectivityManager)
+            getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                // The network is available
+                super.onAvailable(network);
+                connectivityManager.bindProcessToNetwork(null);
+            }
+        };
+
+        connectivityManager.requestNetwork(networkRequest, networkCallback);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }));
+    } else {
+        // WifiNetworkSpecifier is not supported prior to API 29
+        Toast.makeText(this, "WifiNetworkSpecifier is not supported on this device.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+In this example, we request a specific WiFi network named "TestNetwork" with a "TestPassword" WPA2 passphrase. If the network is available, it's made the default network for our app. For older devices (prior to API 29), this API is not supported hence it shows a Toast message to the user. This approach ensures that your app doesn't crash on devices with a lower API level.

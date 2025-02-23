@@ -1,0 +1,34 @@
+Here is a sample code snippet where you can use the BlockedNumberContract API to set enhanced block settings in an Android app. The_provider.BlockedNumberContract.BlockedNumbers.CONTENT_URI is used to access the blocked numbers database of the device.
+
+This method needs the 'android.permission.READ_BLOCKED_NUMBERS' and 'android.permission.WRITE_BLOCKED_NUMBERS' in the manifest file of your android project. Please make sure you have these permissions added and also requested at runtime.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N_MR1)
+public void test_BlockedNumberContract_setEnhancedBlockSetting(Activity activity) {
+    // Check if the app has necessary permissions.
+    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_BLOCKED_NUMBERS) != PackageManager.PERMISSION_GRANTED  ||
+        ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_BLOCKED_NUMBERS) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_BLOCKED_NUMBERS, Manifest.permission.WRITE_BLOCKED_NUMBERS}, 0);
+    } else {
+        setEnhancedBlockSetting();
+    }
+}
+
+@RequiresApi(api = Build.VERSION_CODES.N_MR1)
+public void setEnhancedBlockSetting() {
+    ContentResolver contentResolver = getContentResolver();
+    ContentValues contentValues = new ContentValues();
+    // Set the telephone number to be blocked.
+    contentValues.put(BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER, "1234567890");
+    // Set the enhanced blocking mode for this number.
+    contentValues.put(BlockedNumberContract.BlockedNumbers.COLUMN_ENHANCED_SETTING, BlockedNumberContract.BlockedNumbers.ENHANCED_SETTING_KEY_BLOCK_PAYPHONE);
+    Uri uri = contentResolver.insert(BlockedNumberContract.BlockedNumbers.CONTENT_URI, contentValues);
+     if (uri != null) {
+         Toast.makeText(this, "Number blocked successfully!", Toast.LENGTH_SHORT).show();
+     } else {
+         Toast.makeText(this, "Failed to block the number.", Toast.LENGTH_SHORT).show();
+     }
+}
+```
+
+This snippet will request the required permissions if they are not already granted. If the permissions are granted, it will block a number with the enhanced setting of blocking payphones. Then it will post a toast message to inform the user about the success or failure of the operation.

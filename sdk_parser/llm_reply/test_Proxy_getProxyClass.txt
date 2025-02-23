@@ -1,0 +1,33 @@
+Below is an example of a method called `test_Proxy_getProxyClass()` demonstrating the usage of Java's `Proxy.getProxyClass()` method, which is used to generate a proxy class that implements specified interfaces.
+
+Please set-up this method in the appropriate Android Activity:
+
+```java
+public void test_Proxy_getProxyClass() {
+    // Create ClassLoader instance
+    ClassLoader classLoader = getClass().getClassLoader();
+
+    // Array to hold the interfaces which the proxy class will implement
+    Class[] interfaces = new Class[]{java.util.List.class};
+
+    // Generate a proxy class via getProxyClass() method
+    try {
+        Class<?> proxyClass = Proxy.getProxyClass(classLoader, interfaces);
+
+        // Printing the name of generated proxy class
+        if (proxyClass != null)
+            Log.i("ProxyTest", "Name of Proxy Class: " + proxyClass.getName());
+    }catch (IllegalArgumentException e) {
+        Log.e("ProxyTest", "Illegal argument provided to proxy class generator: " + e.getMessage());
+    }
+}
+```
+
+This method, `test_Proxy_getProxyClass()`, creates a new proxy class that implements the `List` interface. This class is then retrieved and its name is logged. If there are any issues with the provided arguments, an `IllegalArgumentException` will be caught and logged.
+
+Remember to replace `Log.i` and `Log.e` with the appropriate code for your application to output log information. Also, don't forget to add the necessary imports for your class which include
+
+```java
+import java.lang.reflect.Proxy;
+import android.util.Log;
+```

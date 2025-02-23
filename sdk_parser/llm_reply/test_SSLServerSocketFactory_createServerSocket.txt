@@ -1,0 +1,24 @@
+Here is a method example for creating a ServerSocket using SSLServerSocketFactory in android. Please note you have to ensure your Android app has a network permission, and you handle the IOException properly.
+
+```JAVA
+public void test_SSLServerSocketFactory_createServerSocket() {
+    int serverPort = 443; // You can specify your port here
+    SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+    try {
+        // this will create SSL server socket on the specified port with 0 backlog
+        SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(serverPort);
+        
+        // set client authentication to false since we do not need client side certificate
+        sslServerSocket.setNeedClientAuth(false);
+        System.out.println("SSL Server Socket is created successfully");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+Remember to call this function in a new Thread or an AsyncTask, you cannot perform network operations on the Main UI thread in Android. If you try to do so, NetworkOnMainThreadException will be thrown.
+
+If you wish to enable client side certificates, you would need to handle keystore management inside your java certification management. You might have separate keystore for client and server side certificates. It is generally recommended to avoid using client side certificates unless it is really necessary for your application. 
+
+In real-world scenario, you definitely don't want to print stack trace when exception is caught. You should take appropriate actions such as showing user-friendly error message or retrying creating the socket after certain time interval.

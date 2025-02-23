@@ -1,0 +1,31 @@
+Here is a simple example of a method that uses the createHighSpeedRequestList method from the CameraConstrainedHighSpeedCaptureSession class. This test method would sit within an Android Activity class and it assumes that an instance of this class is available.
+
+The `createHighSpeedRequestList` function allows you to create a high-speed output request list from an input request, mainly used for high-speed video recording. High speed video recording configurations allow capture request to have different controls set for odd/even output video frames.
+
+```java
+void test_CameraConstrainedHighSpeedCaptureSession_createHighSpeedRequestList() {
+    try {
+        // Assume that we have an instance of the CameraConstrainedHighSpeedCaptureSession
+        CameraConstrainedHighSpeedCaptureSession highSpeedSession;
+
+        // Assume that we have a CaptureRequest.Builder object already
+        CaptureRequest.Builder builder;
+
+        // Add necessary configuration to the builder then build
+        CaptureRequest request = builder.build();
+
+        // Call to function we want to test
+        List<CaptureRequest> highSpeedRequestList =
+                highSpeedSession.createHighSpeedRequestList(request);
+
+        // When permissions or configurations are not correctly done; 
+        // the function can throw a CameraAccessException
+    } catch (CameraAccessException e) {
+        // Handle the exception appropriately
+        e.printStackTrace();
+    }
+}
+```
+Please note that `createHighSpeedRequestList` itself does not involve Android Permissions check, the permissions check should be done where you initialize the Camera and CaptureRequest. This example expects all necessary camera resources and permissions already granted.
+
+The API tend to trigger a `CameraAccessException` in case the configurations are not correctly done or if the required permissions to camera are denied. Always catch this Exception where you are invoking `createHighSpeedRequestList` method to avoid unexpected application crash.

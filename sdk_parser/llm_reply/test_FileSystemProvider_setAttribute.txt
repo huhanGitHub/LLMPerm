@@ -1,0 +1,42 @@
+Below is a java method to test `FileSystemProvider.setAttribute()` from `java.nio.file.spi.FileSystemProvider`. The method creates a temporary file and sets a custom attribute to it.
+
+```java
+public void test_FileSystemProvider_setAttribute() {
+    // Path to temporary file
+    Path tempFile = null;
+    String attribute = "isTemporary";
+    Object value = true;
+    
+    try {
+        // create a temporary file
+        tempFile = Files.createTempFile("test", ".txt");
+        System.out.println("Temporary file created: " + tempFile);
+
+        // get the file system provider
+        FileSystemProvider provider = FileSystems.getDefault().provider();
+
+        // Set the attribute
+        provider.setAttribute(tempFile, attribute, value, LinkOption.NOFOLLOW_LINKS);
+        System.out.println("Attribute set.");
+
+    } catch (IOException e) {
+        System.err.println("Exception occurred: " + e.toString());
+
+    } finally {
+        if (tempFile != null) {
+            try {
+                // clean up the temporary file
+                Files.delete(tempFile);
+                System.out.println("Temporary file deleted.");
+
+            } catch (IOException e) {
+                System.err.println("Failed to delete the temporary file: " + e.toString());
+            }
+        }
+    }
+}
+```
+
+Please note that `FileSystemProvider.setAttribute()` method is abstract and it depends on the implementation. In default file system provider in many operating systems doesn't support user-defined file attributes which means you could get an `UnsupportedOperationException` when trying to set a custom attribute.
+
+Also this code is not fit for use in Android because the java.nio.file (which was introduced in Java 7) is not part of the Android SDK. Android applications should use the java.io package or the android.content.res.AssetManager class for file I/O.

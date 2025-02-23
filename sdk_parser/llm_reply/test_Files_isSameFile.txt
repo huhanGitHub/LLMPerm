@@ -1,0 +1,30 @@
+In Android, the Java NIO file API is not used frequently due it's not fully supported, however, here's a simple example how to check if two Path objects locate the same file using `Files.isSameFile`. Remember that this requires at least API level 26 (Android 8.0).
+
+This method could be a part of a Java application. 
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+  
+public void test_Files_isSameFile() {
+    // Defining two paths
+    Path path1 = Paths.get("/tmp/file1.txt");
+    Path path2 = Paths.get("/tmp/file1.txt");
+  
+    try {
+        // Using Files.isSameFile
+        boolean isSameFile = Files.isSameFile(path1, path2);
+  
+        // Printing if the two paths map to same file
+        System.out.println(isSameFile);
+    } catch (IOException e) {
+        // Handling exception
+        e.printStackTrace();
+    }
+}
+```
+Remember that you must provide correctly the directories paths `/tmp/file1.txt` and `/tmp/file1.txt` or any file path that exists.
+
+The Code above used two identical paths to the same file. `isSameFile` method, checks if two paths resolve to the same file. it returns true if both paths locate an equal after taking into considerations symbolic links, if exists, false otherwise. It will also return true if both paths locate the same directory in file-system.

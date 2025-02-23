@@ -1,0 +1,47 @@
+In this example, I am using Android's File API because java.nio.file.Files API is not directly available for Android. File API can be used to check if a file is accessible or not in Android.
+
+Here is a method that can be used in an Android activity to check if a certain file is accessible (readable):
+
+```java
+public boolean test_Files_isAccessible(String filePath) {
+    File file = new File(filePath);
+    return file.canRead();
+}
+```
+
+In the method, a File object is created with the path of the file we want to access. Then the method `canRead()` of the File object is called, which returns true if the file is readable. So, if this method returns true, the file is accessible. 
+
+Please make sure the necessary permissions to read from the external storage is given in AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+Also, from Android 6.0 (Marshmallow) and later, you need to request these permissions at runtime. Below is the sample code for runtime permission check:
+
+```java
+if (ContextCompat.checkSelfPermission(thisActivity,
+        Manifest.permission.READ_EXTERNAL_STORAGE)
+  != PackageManager.PERMISSION_GRANTED) {
+
+    // Permission is not granted
+    // Should we show an explanation?
+    if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        // Show an explanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+    } else {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(thisActivity,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+        // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+    }
+} else {
+    // Permission has already been granted
+}
+```

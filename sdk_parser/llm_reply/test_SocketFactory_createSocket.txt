@@ -1,0 +1,32 @@
+Below is an example which demonstrates the usage of SocketFactory in Java:
+
+```java
+import java.io.IOException;
+import java.net.Socket;
+import javax.net.SocketFactory;
+
+public void test_SocketFactory_createSocket() {
+    SocketFactory socketFactory = SocketFactory.getDefault();
+    Socket socket = null;
+    try {
+        // By providing the ip address and port number, create a client socket.
+        socket = socketFactory.createSocket("192.168.1.2", 8080);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        // Always ensure the socket is closed when finished.
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+In this example, test_SocketFactory_createSocket method will create a socket using SocketFactory by requiring IP address and port number on which socket wants to connect. It's catching IOException in case if any IO error occurred during the socket communication i.e. creating socket or closing socket. At last, it is shielding the code in final block to ensure the sockets should be closed once they are no longer needed.
+
+Please note, this task should ideally be performed in a separate worker thread as network operations on the main thread can lead to unresponsiveness of UI in Android, and this practice is also not allowed starting from Android 3.0 (Honeycomb).
+
+The IP address and port used here are dummy, you should replace it with your actual server IP and port.

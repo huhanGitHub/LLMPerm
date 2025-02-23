@@ -1,0 +1,41 @@
+Here is an example usage of java.nio.file.spi.FileSystemProvider.newOutputStream method. In order to utilize FileSystemProvider in Android, you'll need to allow 'minSdkVersion' 26 (Android 8.0, Oreo) and above in the gradle.properties since Java NIO classes are available from there. 
+
+Please note, Exceptions like, 'InvalidPathException', 'FileAlreadyExistsException' etc., should be properly handled in production grade code.
+
+This method writes a String to a file using a newOutputStream from a FileSystemProvider instance.
+
+```java
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Paths;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.List;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_FileSystemProvider_newOutputStream(){
+    List<FileSystemProvider> providers = FileSystemProvider.installedProviders();
+    
+    for (FileSystemProvider provider : providers) {
+        try {
+            if (provider.getScheme().equalsIgnoreCase("file")) {
+                OutputStream outputStream = provider.newOutputStream(Paths.get("/path/to/your/output/file.txt"));
+                BufferedOutputStream bos = new BufferedOutputStream(outputStream);
+                
+                String textToWrite = "Test string to be written to file!";
+                bos.write(textToWrite.getBytes());
+                bos.flush(); // Make sure all data is sent
+                bos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+Warning: Make sure to add the permission of access to the file storage in your app's Android Manifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```

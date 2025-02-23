@@ -1,0 +1,63 @@
+Here is an example of a code that creates the `test_NfcFCardEmulation_enableService` method. Please note, this example uses a stubbed `NfcAdapter` and an `Activity` and the real Android OS behaviour may vary.
+
+```java
+import android.content.Context;
+import android.nfc.NfcAdapter;
+import android.nfc.cardemulation.NfcFCardEmulation;
+import android.nfc.cardemulation.NfcFServiceInfo;
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+
+    // Mock system service name for NfcFCardEmulation
+    private static final String NFC_F_CARD_EMULATION_SERVICE = "nfcf_card_emulation";
+
+    overr ide
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_NfcFCardEmulation_enableService(this);
+    }
+
+    private void test_NfcFCardEmulation_enableService(Context context) {
+        try {
+            // Obtain a reference to the system NFC adapter
+            NfcAdapter adapter = NfcAdapter.getDefaultAdapter(context);
+
+            // Instantiate the NfcFCardEmulation instance
+            NfcFCardEmulation nfcFCardEmulation = NfcFCardEmulation.getInstance(adapter);
+
+            // Create a new service info with default values
+            List<String> systemCodes = Arrays.asList("4000", "FE00");
+            List<String> dynamicSystemCodes = Arrays.asList("4010", "FE10");
+            NfcFServiceInfo serviceInfo = new NfcFServiceInfo(systemCodes, dynamicSystemCodes);
+
+            // Register the service info
+            boolean serviceRegistered = nfcFCardEmulation.registerSystemCodeForService(context.getPackageName(), serviceInfo);
+            if (!serviceRegistered) {
+                Log.e(TAG, "Could not register NFC-F service");
+                return;
+            }
+
+            // Enable the service
+            boolean serviceEnabled = nfcFCardEmulation.enableService(context, context.getPackageName());
+            if (!serviceEnabled) {
+                Log.e(TAG, "Could not enable NFC-F service");
+                return;
+            }
+
+            Log.i(TAG, "NFC-F service registered and enabled");
+        } catch (Exception e) {
+            Log.e(TAG, "Error during NFC-F service setup", e);
+        }
+    }
+}
+```
+Please note, you should ask for the NFC permission in your app's Manifest file with `<uses-permission android:name="android.permission.NFC" />`.

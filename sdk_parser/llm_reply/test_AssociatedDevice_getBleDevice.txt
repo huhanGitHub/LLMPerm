@@ -1,0 +1,42 @@
+Here is a simple implementation of a method, `test_AssociatedDevice_getBleDevice()`, to use with your `AssociatedDevice` class. This example doesn't specifically test permissions. However, to access BLE (Bluetooth Low Energy) device, your app must request the `ACCESS_FINE_LOCATION` or `ACCESS_COARSE_LOCATION` permissions in addition to `BLUETOOTH` permissions.
+
+```java
+private void test_AssociatedDevice_getBleDevice() {
+    // Check for necessary permissions
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) 
+            != PackageManager.PERMISSION_GRANTED) { 
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+            MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+    }
+
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) 
+            != PackageManager.PERMISSION_GRANTED) { 
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.BLUETOOTH},
+            MY_PERMISSIONS_REQUEST_BLUETOOTH);
+    }
+
+    // Initialize the AssociatedDevice
+    AssociatedDevice associatedDevice = // Please implement if your class has specific constructors or methods to obtain an instance
+
+    // Call getBleDevice method
+    BluetoothDevice bleDevice = associatedDevice.getBleDevice();
+
+    // Log the BLE device name and address
+    if (bleDevice != null) {
+        Log.i("TestTag", "BLE Device Name: " + bleDevice.getName() + ", Address: " + bleDevice.getAddress());
+    } else {
+        Log.i("TestTag", "Cannot get BLE device, the bleDevice is null");
+    }
+}
+```
+
+Note: make sure that the correct constants `MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION` and `MY_PERMISSIONS_REQUEST_BLUETOOTH` are declared in your activity class scope:
+
+```java
+private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+private static final int MY_PERMISSIONS_REQUEST_BLUETOOTH = 2;
+```
+
+Make sure to update the requesting calls of permissions if those do not correspond to your app flow. It is also important to handle the permissions result in `onRequestPermissionsResult` method.

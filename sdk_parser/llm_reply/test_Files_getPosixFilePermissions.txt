@@ -1,0 +1,33 @@
+The following code is an example for using getPosixFilePermissions method from java.nio.file.Files in Java:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Set;
+
+public void test_Files_getPosixFilePermissions() {
+    try {
+        // Considering you are in a Unix-like system
+        Path filePath = FileSystems.getDefault().getPath("/path/to/your/file.txt");
+
+        // Fetch the permissions
+        Set<PosixFilePermission> posixFilePermissions = Files.getPosixFilePermissions(filePath);
+
+        // Convert to String form
+        String permissions = PosixFilePermissions.toString(posixFilePermissions);
+        System.out.println("Permissions: " + permissions);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+This code will return the POSIX permissions of the mentioned file (like "rwxr--r--").
+
+Please note that the function `Files.getPosixFilePermissions()` is not available in an Android environment. This function is part of the java.nio.file package, which is unavailable by default in Android. In Android, you can use methods such as `File.setReadable()`, `File.setWritable()`, and `File.setExecutable()` to set file permissions.
+
+Also note that it will work only on file systems which support POSIX file permission model. If the file system does not support the POSIX, it would throw UnsupportedOperationException.

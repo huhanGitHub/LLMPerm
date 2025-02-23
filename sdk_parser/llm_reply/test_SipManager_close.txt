@@ -1,0 +1,46 @@
+In Android, SIP Manager is used to manage SIP sessions, like initiating a SIP call, listen for incoming calls etc. Here is the requested Java method for API usage example.
+
+```java
+public void test_SipManager_close(){
+    android.net.sip.SipManager sipManager;
+    android.net.sip.SipProfile sipProfile;
+
+    try {
+        //initialize the SipManager
+        sipManager = android.net.sip.SipManager.newInstance(this);
+
+        //define the SipProfile
+        SipProfile.Builder builder = new SipProfile.Builder("user", "realm");
+        builder.setPassword("password");
+        sipProfile = builder.build();
+
+        //open the SipManager with the defined profile
+        sipManager.open(sipProfile);
+
+        if(sipManager != null){
+            System.out.println("SipManager opened successfully");
+        }
+
+        //now, close the SipManager
+        sipManager.close(sipProfile.getUriString());
+        if(sipManager.isOpened(sipProfile.getUriString()) == false){
+            System.out.println("SipManager closed successfully");
+        }
+    } catch (Exception e) {
+        if(sipManager != null) {
+            try {
+                sipManager.close(sipProfile.getUriString());
+            } catch (Exception e1) {
+                System.out.println("Error in closing SipManager: " + e1.getMessage());
+            }
+        }
+        System.out.println("Error in SipManager: " + e.getMessage());
+    }
+}
+```
+
+This function can be used in any activity, given that android.net.sip.SipManager and android.net.sip.SipProfile are imported and their related permissions are added in AndroidManifest.xml. 
+
+Also, keep in mind that the SIP API is not supported on all devices, so you should always first check for SIP support on a device using the SipManager.isApiSupported(android.content.Context) and SipManager.isVoipSupported(android.content.Context) functions before trying to use the SIP classes. 
+
+Please adjust the code according to your requirement (username, domain, password etc.)

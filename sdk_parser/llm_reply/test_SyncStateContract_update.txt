@@ -1,0 +1,41 @@
+In order to use android.provider.SyncStateContract, you will need the READ_SYNC_STATS and WRITE_SYNC_SETTINGS permissions in your Android Manifest.xml file.
+
+Here is an example of a method that updates a SyncStateContract:
+
+```java
+public void test_SyncStateContract_update() {
+    //Get reference to ContentResolver
+    ContentResolver contentResolver = getContentResolver();
+    
+    //Define Bundle for extras
+    Bundle extras = new Bundle();
+    
+    try {
+        //Get reference to Authority of ContentProvider
+        String authority = "com.example.myapp.provider";
+        
+        //Get reference to Account
+        Account account = new Account("test_account", "com.example.myapp");
+        
+        //Update sync settings
+        //Enable sync for the account and authority
+        ContentResolver.setSyncAutomatically(account, authority, true);
+        
+        //Set the frequency of sync to 1 hour
+        ContentResolver.addPeriodicSync(account, authority, extras, 3600);
+        
+        Toast.makeText(getApplicationContext(), "Sync settings updated.", Toast.LENGTH_SHORT).show();
+    } catch (Exception e) {
+        //Handle exception
+        Toast.makeText(getApplicationContext(), "Error updating sync settings.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+This method sets the sync settings for a specified account and authority, including enabling automatic syncing and setting the frequency of syncing. 
+
+Before you can use this method, you will need to create a new account (in this case, "test_account") and a new authority (in this case, "com.example.myapp.provider"). You can create an account using the AccountManager system service, and you can create a new authority by creating a new ContentProvider.
+
+Please replace "com.example.myapp" and "com.example.myapp.provider" with your own application's package name and authority, respectively. 
+
+Remember, this code should be placed within an activity or some sort of event handler for it to be executed.

@@ -1,0 +1,62 @@
+Here is the JAVA method test_MifareClassic_writeBlock for Android API MifareClassic:
+
+```java
+public boolean test_MifareClassic_writeBlock(NfcAdapter nfcAdapter, Intent intent, int blockIndex, byte[] data) {
+    MifareClassic mifareClassic = MifareClassic.get(nfcAdapter.getTag());
+    boolean success = false;
+
+    if (mifareClassic != null) {
+        try {
+            mifareClassic.connect();
+            boolean auth = false;
+            byte[] defaultKey = MifareClassic.KEY_DEFAULT;
+
+            auth = mifareClassic.authenticateSectorWithKeyA(mifareClassic.blockToSector(blockIndex), defaultKey);
+
+            if (auth) {
+                // Write data to block
+                mifareClassic.writeBlock(blockIndex, data);
+                
+                success = true;
+                Log.d("MifareClassic", "Write Block Success!");
+            } else {
+                Log.d("MifareClassic", "Failed to authenticate with tag.");
+            }
+
+        } catch (IOException e) {
+            Log.e("MifareClassic", "IOException while writing MifareClassic message...", e);
+        } finally {
+            if (mifareClassic != null) {
+                try {
+                    mifareClassic.close();
+                } catch (IOException e) {
+                    Log.e("MifareClassic", "Error closing tag...", e);
+                }
+            }
+        }
+    }
+
+    return success;
+}
+```
+
+This function first gets the MifareClassic object from the NFC Adapter's current tag. Then it authenticates to the tag with the default key. If authentication is successful, it writes data to the block at the specified index. You may need to update the authentication method or key depending on the requirements of your specific application.
+
+Remember, you also need the following permissions in your AndroidManifest.xml :
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+<uses-feature android:name="android.hardware.nfc" android:required="true" />
+```
+
+And you should check NFC is enabled and available before using:
+
+```java
+NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
+NfcAdapter adapter = manager.getDefaultAdapter();
+if (adapter != null && adapter.isEnabled()) {
+    //NFC is available and enabled
+}else{
+    //NFC not available
+}
+```

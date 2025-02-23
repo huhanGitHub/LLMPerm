@@ -1,0 +1,46 @@
+In order to access and manipulate the browser's history in Android, you'll need the `READ_HISTORY_BOOKMARKS` and `WRITE_HISTORY_BOOKMARKS` permissions. Please keep in mind that as of Android 6.0 (API level 23), runtime permission is required for these permissions. Also, the Android Browser provider is no longer maintained after Android version 5.1.
+
+```java
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.Browser;
+import android.util.Log;
+
+public void test_Browser_deleteFromHistory() {
+    String urlToBeDeleted = "https://www.example.com";
+
+    ContentResolver resolver = getContentResolver();
+    Cursor cursor = null;
+
+    try {
+
+        cursor = Browser.getAllBookmarks(resolver); //obtain all bookmarks
+        cursor.moveToFirst(); // move to the first record
+
+        while (cursor.isAfterLast() == false) { // loop until the end
+            String url = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns.URL));
+            if (url.equalsIgnoreCase(urlToBeDeleted)) { // if the url matches your criteria
+                String id = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns._ID));
+                resolver.delete(Browser.BOOKMARKS_URI, Browser.BookmarkColumns._ID + "=?", new String[]{id});
+                break; // break the loop after deleting
+            }
+            cursor.moveToNext();
+        }
+
+    } catch (Exception e) {
+        Log.e("Deleting URL", "Error deleting URL from history", e);
+    } finally {
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+}
+```
+
+Before calling this method, make sure to request the necessary permissions:
+
+```java
+<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+<uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"/>
+```

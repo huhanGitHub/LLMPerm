@@ -1,0 +1,29 @@
+Based on the current Android documentation, the class android.telephony.UiccCardInfo does not have a getPorts() method, hence it is not possible to provide an example of a method that uses "getPorts()" from this class. However, I can provide an example of usage of the "UiccCardInfo" class.
+
+```java
+public void test_UiccCardInfo() {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+        List<UiccCardInfo> uiccCardInfos = telephonyManager.getUiccCardsInfo();
+        if (uiccCardInfos != null && !uiccCardInfos.isEmpty()) {
+            for (UiccCardInfo uiccCardInfo : uiccCardInfos) {
+                String cardId = uiccCardInfo.getCardId();
+                int slotIndex = uiccCardInfo.getSlotIndex();
+                boolean isEuicc = uiccCardInfo.isEuicc();
+
+                // log or use the obtained UiccCardInfo
+                Log.d("UiccCardInfo", "CardId: " + cardId + ", SlotIndex: " + slotIndex + ", IsEuicc: " + isEuicc);
+            }
+        } else {
+            Log.d("UiccCardInfo", "No Uicc Card Info available");
+        }
+    } else {
+        Log.d("UiccCardInfo", "API version does not support getting Uicc Card Info");
+    }
+}
+```
+
+This method requires the "READ_PRIVILEGED_PHONE_STATE" permission, which is a system-level permission and not available to third-party apps. Please ensure that this code is run on a suitable Android version (R or above) and that necessary permissions are granted.
+
+Therefore, you should be aware of these API constraints. Please adjust the certain permission level or use alternative approaches suitable to your app if you are developing a third-party app.

@@ -1,0 +1,35 @@
+Here is an example of a method called `test_PathPermission_writeToParcel` which utilizes the `PathPermission.java` API from Android:
+
+```java
+import android.content.pm.PathPermission;
+import android.os.Parcel;
+
+public void test_PathPermission_writeToParcel() {
+
+    // Create a new PathPermission. This can be used to restrict access to specific paths
+    PathPermission pathPermission = new PathPermission(
+        "/test/path", // This is the path pattern that apps need to access
+        PathPermission.PATTERN_LITERAL, // This means the path is a simple literal match 
+        "android.intent.action.VIEW", // The permission required for read access 
+        "android.permission.WRITE_EXTERNAL_STORAGE" // The permission required for write access 
+    );
+
+    // Output the PathPermission to logs for debugging
+    Log.d("PathPermissionTest", "Created PathPermission: " + pathPermission.toString());
+
+    // Create a new Parcel
+    Parcel parcel = Parcel.obtain(); 
+
+    // Write the PathPermission to the Parcel
+    pathPermission.writeToParcel(parcel, 0);
+
+    // Output the Parceled PathPermission to logs for debugging
+    Log.d("PathPermissionTest", "Parceled PathPermission: " + parcel);
+
+    // Don't forget to recycle the parcel
+    parcel.recycle();
+}
+```
+This code will first create a `PathPermission` instance, which involved specifying two different types of permissions: read access and write access. The read access is represented as an intent such as `VIEW` to show that this permission is being requested from another app, while the access permission is the Android system's `WRITE_EXTERNAL_STORAGE` permission. 
+
+Then, it creates an empty `Parcel` object and writes the `PathPermission` instance to the `Parcel`. This effectively serializes the `PathPermission` and prepares it to be sent across process boundaries. The call to `parcel.recycle()` at the end ensures that the memory used by the `Parcel` is properly released.

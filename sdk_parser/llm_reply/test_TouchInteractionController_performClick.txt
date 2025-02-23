@@ -1,0 +1,55 @@
+Below is an example usage of the `TouchInteractionController` API in Android:
+
+First, please ensure to include the following permission in your `AndroidManifest.xml`
+```xml
+<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+```
+Then you can use the `TouchInteractionController` like below:
+
+```java
+import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.TouchInteractionController;
+import android.view.MotionEvent;
+
+public class MyActivity extends Activity {
+
+    private AccessibilityService mService;
+    private TouchInteractionController touchInteractionController;
+
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        mService = new AccessibilityService() {
+            // Add required methods...
+        };
+
+        touchInteractionController = mService.getTouchInteractionController();
+        test_TouchInteractionController_performClick(100.0f, 100.0f);
+    }
+
+    public void test_TouchInteractionController_performClick(float x, float y) {
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis();
+
+        // Create a "down" event
+        MotionEvent downEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+
+        // Create an "up" event
+        MotionEvent upEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
+
+        // Perform our "click"
+        if(touchInteractionController != null) {
+            touchInteractionController.injectEvents(downEvent, upEvent, (completed) -> {
+                if (completed) Log.d("TAG","Click performed");
+                else Log.d("TAG","Click not performed");
+            });
+        } else Log.d("TAG", "TouchInteractionController not available");
+    }
+}
+```
+
+Please note that, You need to obtain the `TouchInteractionController` from `AccessibilityService`. However, please keep in mind that the use of TouchInteractionController outside of the AccessibilityService context is restricted as the service provides access to sensitive user data.
+
+Additionally, due to its security implications, the `WRITE_SECURE_SETTINGS` permission is not normally granted to third-party apps. It is used by system apps or apps signed with the system key.

@@ -1,0 +1,30 @@
+Here is the Java method for getting all visited URLs from Android's browser:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.M)
+public void test_Browser_getAllVisitedUrls(){
+    if (checkSelfPermission(Manifest.permission.READ_HISTORY_BOOKMARKS) == PackageManager.PERMISSION_GRANTED) {
+        String[] proj = new String[]{Browser.BookmarkColumns.URL};
+        String sel = Browser.BookmarkColumns.BOOKMARK + " = 0"; // 0 = history, 1 = bookmark
+        Cursor mCur = getContentResolver().query(Browser.BOOKMARKS_URI, proj, sel, null, null);
+        mCur.moveToFirst();
+
+        if (mCur.moveToFirst() && mCur.getCount() > 0) {
+            while (mCur.isAfterLast() == false) {
+                Log.v("Visited URLs", mCur.getString(mCur.getColumnIndex(Browser.BookmarkColumns.URL)));
+                mCur.moveToNext();
+            }
+        }
+    } else {
+        requestPermissions(new String[]{Manifest.permission.READ_HISTORY_BOOKMARKS}, PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS);
+    }
+}
+```
+
+Please note that the android.provider.Browser is deprecated in API level 23 and no longer exists on API level 29 and above. You might need to consider using CustomTabs or creating your own browser.
+
+This method first checks if the READ_HISTORY_BOOKMARKS permission is granted, if yes it will continue to retrieve the history, if not it will request the permission. You need to handle the user's answer in onRequestPermissionsResult() method. Also, keep in mind to declare the permission in your AndroidManifest.xml:
+
+```xml
+<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+```

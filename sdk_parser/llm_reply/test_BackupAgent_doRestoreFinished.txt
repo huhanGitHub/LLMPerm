@@ -1,0 +1,52 @@
+The 'doRestoreFinished()' method in BackupAgent is used to warn the application that the restore operation is ended. Below is a test method 'test_BackupAgent_doRestoreFinished()' for this API feature. Required permissions are checked before invoking 'doRestoreFinished()' method.
+
+Please note that the actual BackupAgent can't be easily tested within an Activity as it requires specific system conditions to invoke its methods. This is just a conceptual representation of how it can be done.
+
+```java
+import android.Manifest;
+import android.app.backup.BackupAgent;
+import android.content.pm.PackageManager;
+import android.os.ParcelFileDescriptor;
+import androidx.core.content.ContextCompat;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Your BackupAgent implementation
+    class TestBackupAgent extends BackupAgent {
+        @Override
+        public void onCreate() {
+            // Your implementation here
+        }
+
+        @Override
+        public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+            // Your implementation here
+        }
+
+        @Override
+        public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
+            // Your implementation here
+        }
+    }
+
+    // Creating BackupAgent instance
+    TestBackupAgent backupAgent = new TestBackupAgent();
+
+    public void test_BackupAgent_doRestoreFinished() {
+        // Check if the app has necessary permissions
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BACKUP) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            return;
+        }
+
+        try {
+            // Call 'doRestoreFinished()' of BackupAgent
+            backupAgent.doRestoreFinished();
+        } catch (Exception ex) {
+            // Handle exception
+        }
+    }
+}
+```
+Just remember that you may need to replace the 'TestBackupAgent' class with your own implementation. Furthermore, this example assumes that your MainActivity has the necessary permissions to perform a backup. Don't forget to declare the required permissions in the AndroidManifest.xml file. You should always run such sensitive operations in async tasks or background threads – never on the main/UI thread.

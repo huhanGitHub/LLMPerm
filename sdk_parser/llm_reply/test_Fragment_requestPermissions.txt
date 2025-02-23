@@ -1,0 +1,43 @@
+Here is an example of a method that uses the `requestPermissions` method from the `Fragment` class in Android:
+
+```java
+public void test_Fragment_requestPermissions() {
+    Fragment fragment = new Fragment() {
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            // Check if the only required permission has been granted
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Permission granted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Permission not granted.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+    if (ContextCompat.checkSelfPermission(this, permission)
+            != PackageManager.PERMISSION_GRANTED) {
+        
+        // Should show an explanation for the user
+        if (fragment.shouldShowRequestPermissionRationale(permission)) {
+            // Show an explanation to the user asynchronously
+            Toast.makeText(this, "We need your permission to read external storage.", Toast.LENGTH_LONG).show();
+        }
+        
+        fragment.requestPermissions(new String[] {permission}, 0);
+    } else {
+        Toast.makeText(this, "Permission already granted.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+In this method, we created an anonymous `Fragment` instance and overrode its `onRequestPermissionsResult` method, which will be called when the user responds to the permission request. The `requestCode` you set in `requestPermissions()` will be delivered here.
+
+Note that if the app already has the permission, it will display a toast saying that the permission is already granted. If it doesn't and the app has requested this permission previously but the user denied the request, it should show a rationale to the user. Then the permission is requested with `requestPermissions()`.
+
+Don't forget to add the permission to the manifest file.
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```

@@ -1,0 +1,41 @@
+Please note that `Files.readAllBytes` is a method of the Java NIO (New I/O) API and not of Android API. It reads all the bytes of a file as an array of bytes. Here is a simple usage example:
+
+```java
+import android.util.Log;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        try {
+            test_Files_readAllBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+            
+    public void test_Files_readAllBytes() throws IOException {
+        // Creating Path to the file.
+        Path filePath = Paths.get("/path/to/your/file.txt");
+        // Reading all bytes from the file
+        byte[] allBytes = Files.readAllBytes(filePath);
+
+        // Now 'allBytes' contains all the bytes from the file.
+        // You can convert it to string if the file was a text file.
+        String content = new String(allBytes);
+        
+        Log.i("MyActivity", "File content: " + content);
+    }
+}
+```
+
+Replace `"/path/to/your/file.txt"` with the path to the file you want to read. If you are trying to read a file from the Android device storage, you may need to ask for the READ_EXTERNAL_STORAGE permission.
+
+Note that Files.readAllBytes() may not be suitable for very large files, due to the risk of OutOfMemoryError.

@@ -1,0 +1,33 @@
+Sure, here's a sample method for checking if a number is system blocked using the `BlockedNumberContract` on Android. This method will also request the necessary permissions if they haven't been granted yet. Remember to include the READ_BLOCKED_NUMBERS permission in your Android Manifest file:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N)
+public void test_BlockedNumberContract_shouldSystemBlockNumber(Activity activity) {
+    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_BLOCKED_NUMBERS) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_BLOCKED_NUMBERS}, 1);
+    } else {
+        checkBlockedNumber(activity, "1234567890");
+    }
+}
+
+@RequiresApi(api = Build.VERSION_CODES.N)
+private void checkBlockedNumber(Context context, String phoneNumber) {
+    Uri blockedNumbersUri = BlockedNumberContract.BlockedNumbers.CONTENT_URI;
+    String[] projection = new String[]{BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER};
+    String selection = BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER + " = ?";
+    String[] selectionArgs = new String[]{phoneNumber};
+
+    try (Cursor cursor = context.getContentResolver().query(blockedNumbersUri, projection, selection, selectionArgs, null)) {
+        if (cursor != null && cursor.moveToFirst()) {
+            System.out.println("Number is system blocked.");
+        } else {
+            System.out.println("Number is not system blocked.");
+        }
+    } catch (SecurityException e) {
+        System.out.println("Permission Required.");
+    }
+}
+```
+In this example, `"1234567890"` is the number you're checking against the blocked numbers. Be sure to replace it with the number you want to test.
+
+The `checkBlockedNumber` method queries the BlockedNumberProvider to check if the supplied number is system blocked. It prints a message to standard output indicating whether the number is blocked or not.

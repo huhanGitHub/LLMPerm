@@ -1,0 +1,38 @@
+Here is an example of a test method for CursorLoader.loadInBackground - 
+
+```java
+import android.app.Activity;
+import android.net.Uri;
+import android.content.CursorLoader;
+import android.provider.ContactsContract;
+
+public class MainActivity extends Activity{
+    // ....
+
+    public void test_CursorLoader_loadInBackground(){
+        Uri contentUri = ContactsContract.Contacts.CONTENT_URI;
+        String[] projection = new String[] { ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME };
+        String selection = "((" + ContactsContract.Contacts.DISPLAY_NAME + " NOTNULL) AND (" 
+                + ContactsContract.Contacts.DISPLAY_NAME + " != '' ))";
+        String[] selectionArgs = null; 
+        String sortOrder = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " ASC";
+
+        CursorLoader cursorLoader = new CursorLoader(
+            this,   // Parent activity context
+            contentUri,   // Table to query
+            projection,     // Projection to return
+            selection,            // No selection clause
+            selectionArgs,         // No selection arguments
+            sortOrder             // Default sort order
+        ); 
+
+        cursorLoader.loadInBackground(); 
+    }
+}
+```
+
+This method fetches all contacts that have a display name from the contacts content provider database and orders them by the DISPLAY_NAME_PRIMARY in ascending order. 
+
+CursorLoader.loadInBackground() is an asynchronous operation that performs the actual query on a separate thread, so it could be used for potentially long operations such as fetching data over the network, or disk I/O.
+
+In real implementation, you need to check the cursor results in a Callback after loadInBackground() or use LoaderManager to manage the whole lifecycle of your loader.

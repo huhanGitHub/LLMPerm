@@ -1,0 +1,35 @@
+In Java, the `Files.newOutputStream` is used to open a file, returning an output stream to write bytes to the file. Here is a usage example wrapped in a method named `test_Files_newOutputStream`:
+
+```java
+import android.util.Log;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.OutputStream;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+  
+   //...
+
+    public void test_Files_newOutputStream() {
+        Path path = Paths.get(getFilesDir(), "MyFile.txt");
+        String textToWrite = "Hello World!";
+
+        try (OutputStream outputStream = Files.newOutputStream(path)) {
+            outputStream.write(textToWrite.getBytes());
+            Log.d("test_Files_newOutputStream", "Successfully written to the file");
+        } catch (IOException e) {
+            Log.e("test_Files_newOutputStream", "Failed to write to the file", e);
+        }
+    }
+}
+```
+
+Please note that this might not be the complete code. There are some constraints with using this approach in an Android application:
+
+1. Java's `java.nio.file.*` package is only available on Android API level 26 and above.
+
+2. `getFilesDir()` is a method from Android's `Context` class, this shows how to get the path to the files directory in an Android context. It may not be available just anywhere. In this example, it is being used in an Activity, which is a subclass of Context.
+
+3. Android requires explicit runtime permission to read/write to external storage for API Level 23 (Marshmallow) and above. Make sure to handle permissions accordingly if you are writing to external storage.

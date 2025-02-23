@@ -1,0 +1,58 @@
+Here is an example of the method `test_Session_openLogicalChannel`. This method opens a logical channel. If the operation is successful, it returns the channel or else throws an exception.
+
+``` java
+import android.se.omapi.Channel;
+import android.se.omapi.Session;
+import android.util.Log;
+
+public void test_Session_openLogicalChannel(Session session) {
+    byte[] aid = { (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x62,
+            (byte) 0x03, (byte) 0x01, (byte) 0x05, (byte) 0x00, (byte) 0x00 }; 
+    // This is an ISO 7816-4 command. It tells the card to return FCI Template.
+    
+    try {
+        Channel channel = session.openLogicalChannel(aid);
+        // Checking if the channel is open
+        if (channel != null) {
+            Log.d("OpenLogicalChannel", "Open Logical Channel Successful");
+            // TODO: Add what you want to do with the channel here
+            
+            // Always remember to close the channel once done
+            channel.close();
+        }
+        else {
+            Log.e("OpenLogicalChannel", "Failed to open logical channel, null channel returned");
+        }
+    } catch (Exception e) {
+        Log.e("OpenLogicalChannel", "OpenLogicalChannel error: " + e.toString());
+    }
+}
+```
+
+In this example, this is how `test_Session_openLogicalChannel` is used in an android activity:
+
+```java
+public class MainActivity extends AppCompatActivity {
+    Session session;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_Session_openLogicalChannel(session);
+    }
+
+    public void test_Session_openLogicalChannel(Session session) {
+        /* ... As above ... */
+    }
+}
+```
+
+Remember to add permission in AndroidManifest.xml
+
+```xml
+<uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+```
+
+Note: You need an NFC card and successful establishment of session using Reader and SEService. Remember opening channel and operation will differ depending on different AID values. This is just an example show the usage of openLogicalChannel API.

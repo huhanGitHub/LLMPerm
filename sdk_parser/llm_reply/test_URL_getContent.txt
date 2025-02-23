@@ -1,0 +1,56 @@
+Below is an example of a method, `test_URL_getContent`, that uses the `java.net.URL` and `java.io.BufferedReader` objects. 
+
+This function will connect to the specified URL and fetch the content of the webpage as a String.
+
+```java
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class MainActivity extends AppCompatActivity {
+    
+    // Call this method wherever you need to get content from a URL
+    public void test_URL_getContent(String urlStr) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... urls) {
+                StringBuilder content = new StringBuilder();
+                try {
+                    URL url = new URL(urls[0]);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        content.append(line);
+                    }
+                    
+                    bufferedReader.close();
+                    urlConnection.disconnect();
+                    
+                } catch (Exception e) {
+                    Log.e("URLContentTask", "Error" + e.getMessage());
+                }
+                
+                return content.toString();
+            }
+            
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                //result now holds the content string of the web page
+                Log.d("URLContentTask", "Result: "+result);
+            }
+        }.execute(urlStr);
+    }
+}
+```
+Make sure you have the INTERNET permission in your manifest - `<uses-permission android:name="android.permission.INTERNET" />`.
+
+Also this `test_URL_getContent` method must be run on a background thread, not on the main UI thread, that's why it's wrapped inside the `AsyncTask`. It's because network operations involve latency and must not block the user interface.
+
+This method doesn't return content from function itself but it will print the content in Logcat. Because network call should not be made on UI thread, you can customize the code based on your application's logic & structuring.

@@ -1,0 +1,37 @@
+Here is an example of test method for usage of `SystemFonts` in Android:
+
+```java
+public void test_SystemFonts_mmap() {
+    try {
+        // Get a handle to a system file
+        FileInputStream fileInputStream = new FileInputStream("/system/fonts/Roboto-Regular.ttf");
+
+        // Create a channel of the file
+        FileChannel fileChannel = fileInputStream.getChannel();
+
+        // Map the entire font file in to memory
+        MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+
+        // Create a new system font with the buffer
+        SystemFonts.map(mappedByteBuffer);
+
+        // Asserts a condition, if it fails it throws an AssertionError with the given message.
+        assertNotNull("Font could not be mapped", 
+                       SystemFonts.map(mappedByteBuffer));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Please note, this is a simplified example of testing system fonts. Depending on the exact specifications of your project you may need to extend this example. Please also consider that this example assumes that the SystemFonts class and map() method work as you intend. 
+
+If they don't, you may need to debug the SystemFonts class to ensure it correctly maps the font file into memory. 
+
+In addition, you may need to add code to this test to clean up after the test runs, such as closing the fileInputStream and fileChannel. This can typically be done in a Finally block.
+
+Finally, this usage might require your app to request the `READ_EXTERNAL_STORAGE` permission in the Android Manifest, depending on your target SDK version and whether the specific file paths you're accessing are considered part of "external storage". 
+
+This also doesn't handle the case where the specific font file isn't present on the device; you would typically want to add error handling for this case to prevent your app crashing from an uncaught `FileNotFoundException`. 
+
+Remember that hard-coding file paths can be brittle and vary across devices and Android versions; wherever possible, use API methods to get file paths rather than hard-coding them.

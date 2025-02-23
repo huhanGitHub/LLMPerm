@@ -1,0 +1,35 @@
+In Android, sending a data messages using the SmsManager class is straightforward. However, do remember to add the "SEND_SMS" permission in your AndroidManifest.xml file. 
+
+Here's an example function named `test_SmsManager_sendDataMessage`:
+
+```java
+private void test_SmsManager_sendDataMessage(){
+    try {
+        String smsBody="Hello, this is a test SMS!";
+        String destinationAddress= "1234567890";
+
+        SmsManager smsManager = SmsManager.getDefault();
+        short smsPort = 8901;
+        byte[] smsBodyBytes = smsBody.getBytes();
+
+        PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
+        PendingIntent deliveryIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
+
+        smsManager.sendDataMessage(destinationAddress, null, smsPort, smsBodyBytes, sentIntent, deliveryIntent);
+
+    } catch (Exception ex) {
+        Log.d("Exception ",ex.getMessage());
+    }
+}
+```
+
+Here are some notes about the parameters of `sendDataMessage`:
+
+- `destinationAddress` (String) - the address to send the message to.
+- `scAddress` (String) - the service center address or null to use the current default SMSC.
+- `port` (short) - the port to deliver the message to on the destination.
+- `data` (byte[]) - the message payload.
+- `sentIntent` (PendingIntent) - if not null, will be broadcast when the message is successfully sent.
+- `deliveryIntent` (PendingIntent) - if not null, will be broadcast when the message is delivered to the recipient.
+
+Please note that sending SMS messages programmatically is a potentially dangerous permission and it can be misused for spamming users or even phishing for data. Therefore, any app requesting this permission is scrutinized by Google Play before being accepted into the store. Use it with extreme caution and always respect the user's rights.

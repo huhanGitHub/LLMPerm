@@ -1,0 +1,52 @@
+Sure! Here's a simple usage example of the `ContactsContract.Contacts.Photo` API. In this example, we're attempting to change the photo of a contact given its `contactId`. We're using a hypothetical method `checkWriteContactsPermission()` to handle permission check. The photo data is provided as a byte array (`byte[] photoData`).
+
+Please ensure to correct the permission in the Manifest file.
+
+```java
+import android.provider.ContactsContract;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+import java.io.ByteArrayInputStream;
+
+public void test_Contacts_setPhotoData(Context context, String contactId, byte[] photoData) throws Exception {
+    if (!checkWriteContactsPermission()) {
+        throw new SecurityException("Write Contacts permission is not granted");
+    }
+    
+    Uri rawContactPhotoUri = Uri.withAppendedPath(
+            ContactsContract.Contacts.CONTENT_URI, contactId);
+    ContentResolver contentResolver = context.getContentResolver();
+
+    ContentValues values = new ContentValues();
+    String where = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND " +
+            ContactsContract.Data.MIMETYPE + "=='" +
+            ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'";
+    String[] args = new String[]{contactId};
+    values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, photoData);
+
+    int rows = contentResolver.update(
+            ContactsContract.Data.CONTENT_URI,
+            values,
+            where,
+            args
+    );
+    
+    if (rows != 0) {
+        Log.i("Contact photo", "Contact photo changed");
+    } else {
+        Log.e("Contact photo", "No photo row found for this contact");
+    }
+}
+
+// Illustrative purpose only
+private boolean checkWriteContactsPermission(){
+    // Have your actual permission check logic here
+    return true;
+}
+```
+This method will throw a `SecurityException` if the app doesn't have necessary permissions to modify contacts. This framework requires the android permission `WRITE_CONTACTS`, so please ensure your application is granted the permission correctly.
+
+Remember to replace `checkWriteContactsPermission()` method with actual implementation to check permissions.

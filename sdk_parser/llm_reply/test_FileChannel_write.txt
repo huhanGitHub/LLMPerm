@@ -1,0 +1,56 @@
+Here is an example of how you can use `FileChannel` in an Android application. This method is used to write the text 'Message from test_FileChannel_write' into a file 'testFile.txt'.
+
+```java
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+
+public static void test_FileChannel_write()
+{
+    FileOutputStream fos = null;
+    FileChannel channel = null;
+
+    try {
+        String msg = "Message from test_FileChannel_write";
+        byte[] bytes = msg.getBytes();
+
+        String filePath = Environment.getExternalStorageDirectory().getPath() + "/testFile.txt";
+        fos = new FileOutputStream(filePath);
+        channel = fos.getChannel();
+
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.clear();
+        buffer.put(bytes);
+
+        buffer.flip();
+        while(buffer.hasRemaining()) {
+            channel.write(buffer);
+        }
+
+        Log.i("TestFileChannelWrite", "Message has been written to " + filePath);
+    } catch (IOException e) {
+        Log.e("TestFileChannelWrite", "Error Writing Message", e);
+    } finally {
+        try {
+            if (channel != null) {
+                channel.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        } catch (IOException e) {
+            Log.e("TestFileChannelWrite", "Error Closing Channel/FileOutputStream", e);
+        }
+    }
+}
+```
+
+Please note that this code requires the `WRITE_EXTERNAL_STORAGE` permission. You have to add `uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"` to your AndroidManifest.xml file.
+
+Also since Android 6.0 (API level 23) runtime permission is required for `WRITE_EXTERNAL_STORAGE`, the permission has to be checked and requested at runtime. Please handle that in your calling Activity too.
+
+Also take into account that `Environment.getExternalStorageDirectory().getPath()` is deprecated since API level 29. You should use `Context.getExternalFilesDir()` or other APIs which are suited to your needs instead.

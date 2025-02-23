@@ -1,0 +1,52 @@
+In Android, the `MbmsDownloadReceiver` class is declared abstract and it's typically used to receive downloads from middleware over MBMS.
+
+Unfortunately, this class doesn't have a direct way to verify permissions, so the method `verifyPermissionIntegrity` would have to be created by developer itself.
+
+Hereby, an example code snippet is shown which uses the Android context API to check if the necessary permission is set. It's a general method and can be used with any API needing permission.
+
+```java
+public void test_MbmsDownloadReceiver_verifyPermissionIntegrity() {
+    // Since this class is abstract you cannot instantiate it directly. 
+    // So, you have to extend this class and define the abstract methods.
+    MbmsDownloadReceiver downloadReceiver = new MbmsDownloadReceiver() {
+        @Override
+        public void onAppNotification(int downloadRequestId, @Nullable DownloadProgressListener listener) {
+            // Implementation here...
+        }
+
+        @Override
+        public void onDownloadStateUpdated(int downloadRequestId, @NonNull File result) {
+            // Implementation here...
+        }
+
+        @Override
+        public void onDownloadProgressUpdated(int downloadRequestId, @NonNull DownloadRequest request, @NonNull DownloadProgress status) {
+            // Implementation here...
+        }
+
+        @Override
+        public void onDownloadCompleted(int downloadRequestId, @NonNull File result) {
+            // Implementation here...
+        }
+    };
+
+    // The permission string for MBMS middleware is not specified, so for this example, 
+    // let's use the location permission which will be validated.
+    String permissionToCheck = Manifest.permission.ACCESS_FINE_LOCATION;
+
+    // Your app context - In real Android app, it would be like: Context context = this; 
+    Context context = getApplicationContext(); 
+
+    int permissionCheck = context.checkSelfPermission(permissionToCheck);
+
+    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        // You have the permission
+        Log.i("Permissions", "Permission granted for " + permissionToCheck);
+    } else {
+        // You do not have the permission
+        Log.e("Permissions", "Permission not granted for " + permissionToCheck);
+    }
+}
+```
+
+Note that the SDK version should be checked before using this method as it's available from Android 6.0 (Marshmallow, API level 23) upwards. Also, depending on the required permission it should be declared in the manifest and user consent is to be asked.

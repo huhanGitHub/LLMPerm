@@ -1,0 +1,33 @@
+Below is a simple Android code snippet showing usage of `java.io.File.isFile()` method. 
+
+```java
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_File_isFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_File_isFile() throws IOException {
+        // Let's assume we have a file named "test.txt" in the internal storage of the device
+        File file = new File(getFilesDir(), "test.txt");
+        
+        // Check if the file exists and if it's a file
+        if (file.exists() && file.isFile()) {
+            Toast.makeText(this, "The file is present.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "This is not a file or the file does not exist.", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
+
+This method attempts to find and identify a file named "test.txt" in the internal storage of the device. The `isFile()` method in particular checks if the `File` instance represents a real file in the file system. The `exists()` method is used to check if the file or directory actually exists on disk. 
+
+This code will throw a toast message depending on whether the file exists and is a file.

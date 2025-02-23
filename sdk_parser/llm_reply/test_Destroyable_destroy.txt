@@ -1,0 +1,62 @@
+Surely, but please note that the Destroyable interface is typically used to specify that an object contains sensitive information and requires special handling to make sure this information is not easily available in memory after the object is no longer needed.
+
+Let's write a simple class named `SensitiveData` implementing the `Destroyable` interface:
+
+```java
+import javax.security.auth.DestroyFailedException;
+import javax.security.auth.Destroyable;
+
+public class SensitiveData implements Destroyable {
+    private String data;
+
+    public SensitiveData(String data) {
+        this.data = data;
+    }
+
+    @Override
+    public void destroy() throws DestroyFailedException {
+        if (data != null) {
+            data = null;
+        } else {
+            throw new DestroyFailedException("Unable to destroy the sensitive data");
+        }
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return data == null;
+    }
+}
+```
+
+As per your request, we can then create a method named `test_Destroyable_destroy` in an `Activity`:
+
+```java
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+import javax.security.auth.DestroyFailedException;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_Destroyable_destroy();
+    }
+
+    private void test_Destroyable_destroy() {
+        SensitiveData sensitiveData = new SensitiveData("Secret data");
+        try {
+            sensitiveData.destroy();
+            // Log whether sensitive information is destroyed successfully
+            Log.i("MainActivity", "SensitiveData object is destroyed: " + sensitiveData.isDestroyed());
+        } catch (DestroyFailedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+In the above code first we create instance of our `SensitiveData` class with some sample data. Then we call `destroy` method of `SensitiveData` class to destroy the sensitive data, which is just setting `data` field to `null`. If destruction fails `DestroyFailedException` is thrown. After that we log information if data was destroyed successfully.

@@ -1,0 +1,44 @@
+Here is a simple method for demonstrating the usage of `File.length()` method in an Android activity. This method, `test_File_length()`, would create a file, write some data to it, and then use the `length()` method to calculate the size of the file.
+
+In this method, we are handling all IO related tasks which includes catching all necessary exceptions:
+
+```java
+public void test_File_length() {  
+    // define a file path, you can modify this according to your requirement
+    String filePath = getApplicationContext().getFilesDir().getPath() + "/test.txt";
+  
+    try {  
+        // create a new file object  
+        File file = new File(filePath);  
+
+        // Check if the file exists and create a new one if it doesn't
+        if (!file.exists()){
+            file.createNewFile();
+        }
+
+        // Write some data to the file
+        FileWriter writer = new FileWriter(file);
+        writer.append("Test File for length method");
+        writer.flush();
+        writer.close();
+  
+        // get the length of the file 
+        long lengthOfFile = file.length();  
+        
+        Log.d("TestFileLength", "Size of file in bytes: " + lengthOfFile); 
+    } catch(IOException e) {  
+        // print stacktrace in case of exception  
+        e.printStackTrace();  
+    }  
+}
+```
+
+Please note: 
+The mentioned code will create a file named "test.txt" in the internal storage of the app. The `File.length()` function returns the file size in bytes.
+
+Make sure to add the necessary File read/write permissions in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```

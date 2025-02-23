@@ -1,0 +1,55 @@
+Here's an example of a method test_DocumentsContract_ejectRoot which uses the Android's DocumentsContract API:
+
+```java
+import android.content.ContentResolver;
+import android.content.Context;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+    
+    // Defined Constants
+    private static final String TAG = "MainActivity";
+    private static final String ROOT_URI = "content://com.android.externalstorage.documents/tree/primary:";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        try {
+            test_DocumentsContract_ejectRoot(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_DocumentsContract_ejectRoot(Context context){
+        try{
+            Uri uri = Uri.parse(ROOT_URI);
+            ContentResolver contentResolver = context.getContentResolver();
+
+            boolean ejected = DocumentsContract.ejectRoot(contentResolver, uri);
+
+            if(ejected){
+                Log.i(TAG, "Successfully ejected.");
+            } else{
+                Log.i(TAG, "Failed to eject.");
+            }
+        } catch (Exception e){
+            Log.e(TAG, "Test failed: " + e.getMessage());
+        }
+    }
+}
+```
+
+Before running the above code, ensure your manifest file has the following permissions:
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+Also, make sure to retrieve actual ROOT_URI based on your Android device and targeted root. Please replace "content://com.android.externalstorage.documents/tree/primary:" with your actual root URI.
+
+Do note, since Android Q, scoped storage is enforced, you will be unable to eject roots on newer versions of Android as scoped storage limitations prevent apps from having broad access to external storage.

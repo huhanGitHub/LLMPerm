@@ -1,0 +1,20 @@
+The method `test_FileSystem_getRootDirectories` can look something like this.
+
+Please note that this method is an example of the usage of the java.nio.file.FileSystem API, and not a proper unit test method. For testing purposes, you should use a testing framework like JUnit.
+
+```java
+public void test_FileSystem_getRootDirectories() {
+        FileSystem fileSystem = FileSystems.getDefault();
+        Iterable<Path> rootDirectories = fileSystem.getRootDirectories();
+
+        for (Path path : rootDirectories) {
+            Log.i("ROOT_DIRECTORIES", path.toString());
+        }
+}
+```
+
+This example will get the default FileSystem and print the paths of the root directories to the Android Logcat. The output will depend on the system this code is run on. 
+
+For a more complete display of the directories, you may include a recursive method to display all the directories.
+
+Remember that if you are working in a real Android environment, for actions involving file systems, you require appropriate permissions. As such actions can be slow, consider running them in a separate thread or AsyncTask to avoid blocking the UI thread.

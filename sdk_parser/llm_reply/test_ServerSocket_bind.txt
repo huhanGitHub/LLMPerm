@@ -1,0 +1,38 @@
+Here's an example of a method named `test_ServerSocket_bind` which demonstrates how to create a `ServerSocket`, bind it to a specific port, and handle a single incoming client connection. `ServerSocket` is commonly used to create a server-side TCP socket for network communications. Note that network operations should not be performed on the main thread in a real Android app, so this method is for illustrative purposes only.
+
+```java
+public void test_ServerSocket_bind() {
+    try {
+        // Create new un-bound server socket
+        ServerSocket serverSocket = new ServerSocket();
+
+        // Create a socket address where the server socket will be bound
+        InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8080);
+
+        // Bind the server socket to the specified address
+        serverSocket.bind(socketAddress);
+
+        // Wait for client connection
+        Socket clientSocket = serverSocket.accept();
+        Log.d("Test", "Client connected: " + clientSocket.getInetAddress());
+
+        // Work with the connected client 
+        // For illustration - just close the client socket
+        clientSocket.close();
+
+        // Close the server socket after use
+        serverSocket.close();
+    } catch (IOException ex) {
+        Log.e("Test", "Server Socket error: " + ex.getMessage());
+    }
+}
+```
+
+Remember that you must include the appropriate permisions in the Android app manifest for the app to be permitted to interact with the network:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+``` 
+
+Also, you should not run this type of code on the main thread as it can cause the application to become unresponsive. Use a separate thread or AsyncTask for such tasks.

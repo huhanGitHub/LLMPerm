@@ -1,0 +1,59 @@
+To add the `test_DelegatedAdminReceiver_onChoosePrivateKeyAlias` to your activity, you will need to create or extend a DelegatedAdminReceiver class, and then use a sample implementation of `onChoosePrivateKeyAlias` method. 
+
+Making an assumption that your application has some kind of model class (User for instance), this method can help in determining whether this user can choose a private key alias. Note, this is for demonstration purpose only and may not completely reflect your actual app requirements.
+
+Here is an example class and method:
+
+```java
+import android.app.admin.DelegatedAdminReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.Bundle;
+import android.net.Uri;
+import java.util.Set;
+import javax.net.ssl.X509KeyManager;
+
+public class MyDelegatedAdminReceiver extends DelegatedAdminReceiver {
+   @Override
+   public String onChoosePrivateKeyAlias(Context context, Intent intent, int uid, Uri uri, String alias) {
+       return test_DelegatedAdminReceiver_onChoosePrivateKeyAlias(context, uid, uri, alias);
+   }
+
+   public String test_DelegatedAdminReceiver_onChoosePrivateKeyAlias(Context context, int uid, Uri uri, String alias) {
+       // Assume that your app has some User class and logic to retrieve the user by uid
+       User user = UserManager.getUserByUid(context, uid);
+
+       if (user == null) {
+           throw new IllegalArgumentException("Uknown user uid: " + uid);
+       }
+
+       // Determine which alias to choose based on user and some other params
+       // This is for demonstration purposes only and may not completely reflect your actual app requirements
+       String aliasToChoose;
+       if (user.isSuperUser() && uri.isSecure()) {
+           aliasToChoose = alias + "_super";
+       } else {
+           aliasToChoose = alias + "_regular";
+       }
+
+       return aliasToChoose;
+   }
+}
+```
+
+To test this method, register `MyDelegatedAdminReceiver` in your AndroidManifest.xml:
+
+```xml
+<receiver
+   android:name=".MyDelegatedAdminReceiver"
+   android:permission="android.permission.BIND_DEVICE_ADMIN">
+  <intent-filter>
+      <action android:name="android.app.action.CHOOSE_PRIVATE_KEY_ALIAS" />
+  </intent-filter>
+  <meta-data
+      android:name="android.app.extra.DELEGATED_ADMIN_RECEIVER_SUPPORTS_SWITCH"
+      android:value="true" />
+</receiver>
+```
+
+Then for example, when the system invokes your `onChoosePrivateKeyKeyAlias` method, `test_DelegatedAdminReceiver_onChoosePrivateKeyAlias` will be called. The alias passed into this method will be modified based on whether the `User` associated with the `uid` is a super-user and whether the `uri` is secure.

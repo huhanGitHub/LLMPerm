@@ -1,0 +1,37 @@
+For Android, the java.nio.file.attribute package doesn't contain the FileOwnerAttributeView, as the packages java.nio.file.* are not part of the Android SDK. These packages are part of Java 7, and as such are not yet available on Android. Android only supports a subset of Java 7 features.
+
+However, just for knowledge, here is an example how you can use `FileOwnerAttributeView` in Java:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
+
+public void test_FileOwnerAttributeView_setOwner(String filePath) {
+    // Get the path of the file
+    Path path = FileSystems.getDefault().getPath(filePath);
+    
+    // Get FileOwnerAttributeView of the file
+    FileOwnerAttributeView fileOwnerAttributeView = java.nio.file.Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+    
+    // Fetch UserPrincipalLookupService
+    UserPrincipalLookupService userPrincipalLookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+    
+    try { 
+        // Fetch UserPrincipal of the owner
+        UserPrincipal userPrincipal = userPrincipalLookupService.lookupPrincipalByName("new_owner");
+        
+        // Set new owner to the file
+        fileOwnerAttributeView.setOwner(userPrincipal);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In the above code, you need to provide a valid file path and replace `"new_owner"` with valid owner name in your operating system. It uses FileOwnerAttributeView to get and set the owner of a file.
+
+This function will not work under Android, because entire java.nio.file.* is not supported by default. You would need a workaround for Android.

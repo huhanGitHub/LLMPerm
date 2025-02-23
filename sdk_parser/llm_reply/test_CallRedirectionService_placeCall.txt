@@ -1,0 +1,31 @@
+The following method `test_CallRedirectionService_placeCall` demonstrates how to use the `CallRedirectionService` in Android. Before you run this code, make sure the needed permissions are already granted. 
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.Q)
+public void test_CallRedirectionService_placeCall() {
+    Uri phoneNumber = Uri.parse("tel:1234567890");
+
+    TelecomManager telecomManager = (TelecomManager) this.getSystemService(Context.TELECOM_SERVICE);
+
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+        // Request for CALL_PHONE permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PERMISSION_CALL_PHONE);
+        return;
+    }
+
+    PhoneAccountHandle defaultOutgoingPhoneAccount = telecomManager.getDefaultOutgoingPhoneAccount("tel");
+
+    Bundle extras = new Bundle();
+    extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, defaultOutgoingPhoneAccount);
+
+    telecomManager.placeCall(phoneNumber, extras);
+}
+```
+
+This is a simple method for using the `TelecomManager's` `placeCall` function, which might trigger the call redirection service if one exists and is enabled on the device. You will need to replace `"tel:1234567890"` with the real number you wish to call. 
+
+Please note that before you use the CALL_PHONE permission in your app, you have to request it from the user because it is considered a dangerous permission. The `ActivityCompat.requestPermissions` method is to request the CALL_PHONE permission from the user. You have to replace the `REQUEST_PERMISSION_CALL_PHONE` with your request code. 
+
+The `@RequiresApi` notation is used here to indicate that `CallRedirectionService` requires at least Android Q (API level 29).
+
+The main point here is, `telecomManager.placeCall(phoneNumber, extras)` could potentially trigger `CallRedirectionService.placeCall` if it is configured correctly in the system. But it is the system level service, a 3rd party application usually do not have permission to access it directly.

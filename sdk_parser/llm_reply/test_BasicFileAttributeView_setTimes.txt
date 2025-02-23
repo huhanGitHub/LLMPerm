@@ -1,0 +1,37 @@
+Here is a method that uses the BasicFileAttributeView's setTimes method. This code will attempt to set the last modified time, last access time and creation time of a file. The permissions required for this operation depends on the system and file ownership.
+
+Please remember that this code may not run on Android, as Android's file system may not support all the operations performed by the BasicFileAttributeView. Also, for API Level 26 and higher, you will need the Manifest.permission.READ_EXTERNAL_STORAGE permission, and for API Level 19 and higher, you will additionally need the Manifest.permission.WRITE_EXTERNAL_STORAGE permission.
+
+```java
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+
+public class MainActivity extends AppCompatActivity {
+
+    // ....
+
+    public void test_BasicFileAttributeView_setTimes() {
+        // obtain the path to the file
+        Path path = Paths.get("/path/to/file.txt");
+
+        // obtain the BasicFileAttributeView
+        BasicFileAttributeView view = Files.getFileAttributeView(path, BasicFileAttributeView.class);
+
+        // prepare new times
+        FileTime lastModifiedTime = FileTime.fromMillis(System.currentTimeMillis());
+        FileTime lastAccessTime = FileTime.fromMillis(System.currentTimeMillis());
+        FileTime createTime = FileTime.fromMillis(System.currentTimeMillis());
+
+        try {
+            // set the times
+            view.setTimes(lastModifiedTime, lastAccessTime, createTime);
+        } catch (IOException e) {
+            // handle exception
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This method sets all time attributes of the specified file to the current timestamp. Replace "/path/to/file.txt" with the path to the actual file you want to operate on.

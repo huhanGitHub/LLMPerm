@@ -1,0 +1,33 @@
+Here's a sample usage method for `Files.newBufferedReader` in a Java/Android context. This method reads a given file and prints out its content.
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public void test_Files_newBufferedReader() {
+    // Set your own file path
+    String filePathStr = "path-to-your-file";
+    
+    Path filePath = Paths.get(filePathStr);
+
+    try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+        String line;
+
+        // Read the content of the file line by line
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    } catch (IOException e) {
+        // Exception handling here (print stack trace, log...)
+        e.printStackTrace();
+    }
+}
+```
+
+This method requires the app to have read permissions for the file system. 
+
+Note: Also, if you are using Android, you might need to consider using `AssetManager` and its `open` method to open a file from your assets. The `java.nio.file` [API is not available until Android SDK version 26](https://developer.android.com/reference/java/nio/file/package-summary.html), so if you are targeting a version lower than 26, this code snippet will not work.

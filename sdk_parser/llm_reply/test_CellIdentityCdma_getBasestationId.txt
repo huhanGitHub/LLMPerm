@@ -1,0 +1,54 @@
+In order to create an example method for using the CellIdentityCdma getBaseStationId() API, we'll need to test some Android permissions. For the sake of this example, let's assume that we are using the ACCESS_COARSE_LOCATION permissions, but make sure to request the appropriate permissions according to your needs. Check out the sample code snippet below:
+
+```java
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
+import android.widget.TextView;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_LOCATION = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_CellIdentityCdma_getBasestationId();
+    }
+
+    private void test_CellIdentityCdma_getBasestationId(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_LOCATION);
+        } else {
+            getBaseStationId();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getBaseStationId();
+                }
+                break;
+            }
+        }
+    }
+
+    private void getBaseStationId(){
+        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+        CdmaCellLocation cellLocation = (CdmaCellLocation) telephonyManager.getCellLocation();
+        int basestationId = cellLocation.getBaseStationId();
+
+        //Just for testing purposes. Showing basestationId in a TextView
+        TextView textView = (TextView) findViewById(R.id.basestationIdTextView);
+        textView.setText("BaseStation ID: " + basestationId);
+    }
+}
+```
+In the provided code, we first check if we have the required permissions to access the base station (cellular tower) ID. If we don't have the permission, we request it. If the permission is granted, we use the getBaseStationId() method of the CdmaCellLocation class to retrieve the base station ID and display it in a TextView.

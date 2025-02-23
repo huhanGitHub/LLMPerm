@@ -1,0 +1,49 @@
+Sure, in JAVA or Android we use MulticastSocket class from `java.net` package in the context of work with network and communication related functionalities. Here is the example of using the `leaveGroup` method of `MulticastSocket`:
+
+```java
+public void test_MulticastSocket_leaveGroup() {
+    MulticastSocket mcastSock = null;
+    InetAddress groupAddress = null;
+
+    try {
+        // Create the group address object
+        groupAddress = InetAddress.getByName("224.0.0.1");
+
+        // Create a new multicast socket on port 6789
+        mcastSock = new MulticastSocket(6789);
+        
+        // Join the group 
+        mcastSock.joinGroup(groupAddress);    
+
+        // Now leave the group
+        mcastSock.leaveGroup(groupAddress);
+        
+        // Print status 
+        System.out.println("Successfully left group");
+
+    } catch (UnknownHostException ex) {
+        System.out.println("UnknownHostException: " + ex.getMessage());
+    } catch (IOException ex) {
+        System.out.println("IOException: " + ex.getMessage());
+    } finally {
+        if (mcastSock != null) {
+            try {
+                // Always ensure to close the socket
+                mcastSock.close();
+            } catch (Exception ex) {
+                System.out.println("Exception during closing socket: " + ex.getMessage());
+            }
+        }
+    }
+} 
+```
+
+This function tests the MulticastSocket leaveGroup functionality. It first creates an `InetAddress` for the multicast group (224.0.0.1 in this example), then creates a `MulticastSocket` on port 6789. It joins to the group and then leaves from it. If it's successful, it prints a success message.
+
+Please note that network operations should not be performed on the main thread in a real activity. Android system will throw an exception if network operations are performed on the main thread as it causes the UI to become unresponsive. You can use `AsyncTask` or `Threads` to perform these operations asynchronously. 
+
+Also, don't forget to add the INTERNET permission to your AndroidManifest.xml file if you're going to use this in an Android app:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```

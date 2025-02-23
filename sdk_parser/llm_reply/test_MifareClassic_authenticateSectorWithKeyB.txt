@@ -1,0 +1,42 @@
+Below is a method example to authenticate a Mifare Classic card's sector with Key B. Please ensure you're properly catching potential exceptions for incorrect keys or failed authentications, and you also have the NFC permission in your AndroidManifest.xml file.
+
+```java
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
+import java.io.IOException;
+
+public void test_MifareClassic_authenticateSectorWithKeyB(int sector, byte[] keyB) {
+    
+    try {
+       Tag tagFromIntent = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+       MifareClassic mifareClassic = MifareClassic.get(tagFromIntent);
+     
+       mifareClassic.connect();
+        
+       boolean isAuthenticated = mifareClassic.authenticateSectorWithKeyB(sector, keyB);
+        
+       if (isAuthenticated) {
+              // The sector has been authenticated successfully
+              // Here you can read/write data
+       } else {
+              // Authentication failed
+       }
+
+       mifareClassic.close();
+    
+    } catch (IOException e) {
+       e.printStackTrace();
+       // Handle IO Exception here.. May be thrown if there are I/O problems 
+       // or if the MifareClassic object is already connected
+    }
+}
+```
+
+Please replace "getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);" with how you retrieve the Tag object in your activity.
+
+
+The method takes two parameters: 
+
+- The index of the sector on the Mifare card to authenticate (range: 0-15 for Mifare 1k, 0-39 for Mifare 4k).
+  
+- KeyB, a 6-byte array containing the key to authenticate against the sector. It is generally chosen and set by the system issuing the Mifare cards.

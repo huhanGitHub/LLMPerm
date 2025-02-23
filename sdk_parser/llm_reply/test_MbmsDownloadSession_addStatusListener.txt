@@ -1,0 +1,44 @@
+Here is an example of how you can test the `addStatusListener` method of `MbmsDownloadService` in an Android activity:
+
+```java
+public void test_MbmsDownloadSession_addStatusListener() {
+    // Let's assume that we already have a context (like an Activity or Application)
+    Context context = this;
+
+    // Create an instance of MbmsDownloadSession
+    MbmsDownloadSession downloadSession = MbmsDownloadSession.create(context, new Handler());
+
+    // Create an instance of DownloadStatusListener
+    DownloadStatusListener downloadStatusListener = 
+        new DownloadStatusListener() {
+            @Override
+            public void onStatusUpdated(DownloadRequest downloadRequest, FileInfo fileInfo, int status) {
+                // Either handle the status update here or pass the parameters along
+                // to a method in your activity that's designed to handle this
+                handleStatusUpdated(downloadRequest, fileInfo, status);
+            }
+        };
+
+    // Add DownloadStatusListener to MbmsDownloadSession
+    int resultCode = downloadSession.addStatusListener(downloadStatusListener);
+
+    // Check the result
+    if (resultCode == MbmsDownloadSession.RESULT_SUCCESS) {
+        Log.d("MbmsDownloadSession", "Successfully added the status listener.");
+    } else {
+        Log.e("MbmsDownloadSession", "Failed to add the status listener, result: " + resultCode);
+    }
+}
+
+// This method is part of your activity and is designed to handle status updates
+private void handleStatusUpdated(DownloadRequest downloadRequest, FileInfo fileInfo, int status) {
+    // Handle the status update here
+    Log.d("MbmsDownloadSession", "Download status updated: " + status);
+}
+```
+
+Please note that you have to replace `this` with your activity instance or application context, also define logtag according to your project standards. 
+
+Specific behaviors of how to handle status update needs to be implemented correctly according to your business needs in `handleStatusUpdated` method.
+
+Please make sure that you have the required permissions and your app is eligible to use this API.

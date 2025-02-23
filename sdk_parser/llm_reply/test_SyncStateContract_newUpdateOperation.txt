@@ -1,0 +1,31 @@
+Below is a sample of a method called test_SyncStateContract_newUpdateOperation which can be used as an example of using the SyncStateContract API in an Android app. This code will update the SyncState data as a new operation.
+
+```java
+public void test_SyncStateContract_newUpdateOperation() {
+
+    Account account = new Account("dummyaccount", "com.example");
+    byte[] data = new byte[256];
+    new Random().nextBytes(data);
+
+    try {
+        // Get an instance of ContentProviderClient for the specified URI
+        ContentProviderClient provider = getContentResolver().acquireContentProviderClient(SyncStateContract.Helpers.CONTENT_URI);
+
+        // Update the sync state for the given account
+        SyncStateContract.Helpers.newUpdateOperation(account, data);
+
+        // Verify the state is updated correctly
+        byte[] storedData = SyncStateContract.Helpers.get(provider, account);
+        if(!Arrays.equals(data, storedData)) {
+            throw new Exception("Data mismatch!");
+        }
+
+        Log.i("Test", "SyncStateContract update successful");
+    } catch (Exception ex) {
+        Log.e("Test", "Failed to update SyncStateContract", ex);
+        // Handle the error here
+    }
+}
+```
+
+Keep in mind this is a simple example and might not cover all edge cases and error handling that you might need in your application. Also, you might need to customize the details based on your needs. For example, "dummyaccount" and "com.example" are arbitrary values and should be replaced with actual user account and authority. You also might need to acquire sync state permission to access sync state of an account.

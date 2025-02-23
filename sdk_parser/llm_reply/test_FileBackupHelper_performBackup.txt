@@ -1,0 +1,37 @@
+Here's a simple example of how you could use the `FileBackupHelper` in an Android Activity. This method demonstrates creating a helper, adding it to a backup agent and using it to back up your app's files.
+
+Make sure to define `MY_BACKUP_KEY` as a string constant in your class, and replace `"my_file_path"` with the actual path to the file you want to backup. Note that this method needs to be executed in background thread as it involves I/O operations.
+
+```java
+import android.app.backup.BackupAgentHelper;
+import android.app.backup.FileBackupHelper;
+import android.app.backup.BackupDataOutput;
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+
+public void test_FileBackupHelper_performBackup() {
+    // Create a new BackupAgentHelper
+    BackupAgentHelper helper = new BackupAgentHelper();
+
+    // Create a new FileBackupHelper
+    FileBackupHelper fileBackupHelper = new FileBackupHelper(this, "my_file_path");
+
+    // Add the helper to the agent
+    helper.addHelper(MY_BACKUP_KEY, fileBackupHelper);
+
+    // Create mock BackupDataOutput and ParcelFileDescriptor for the backup operation
+    BackupDataOutput data = null;
+    ParcelFileDescriptor newState = null;
+
+    try {
+        // Call the onBackup method which includes backing up the files
+        helper.onBackup(null, data, newState);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Remember that this is just a simplified example. Real world use of the `FileBackupHelper` and the `BackupAgentHelper` requires much more setup. 
+
+Additionally, this method does not actually perform a backup, since the `BackupDataOutput` and `ParcelFileDescriptor` are `null`. In a real application, these objects would be provided by the Android system when it requests a backup of your app's data.

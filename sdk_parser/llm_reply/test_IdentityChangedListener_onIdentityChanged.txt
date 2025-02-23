@@ -1,0 +1,50 @@
+Here is an example of a method `test_IdentityChangedListener_onIdentityChanged` using the `IdentityChangedListener` class found in the android.net.wifi.aware package. It simulates the IdentityChangedListener's `onIdentityChanged` method behavior within an Android activity. 
+
+```java
+import android.net.wifi.aware.AttachCallback;
+import android.net.wifi.aware.IdentityChangedListener;
+import android.net.wifi.aware.WifiAwareManager;
+import android.net.wifi.aware.WifiAwareSession;
+
+if (SDK_INT >= O_MR1) {
+    private void test_IdentityChangedListener_onIdentityChanged() {
+        // Get instance of WifiAwareManager
+        WifiAwareManager wifiAwareManager = (WifiAwareManager) getSystemService(Context.WIFI_AWARE_SERVICE);
+        
+        // Ensure that Wi-Fi Aware is supported on the device and available
+        if (wifiAwareManager!= null && wifiAwareManager.isAvailable()) {
+            // Create Attach Callback
+            AttachCallback attachCallback = new AttachCallback() {
+                @Override
+                public void onAttached(WifiAwareSession session) {
+                    super.onAttached(session);
+                    // The WifiAwareSession object session is valid and can be used to execute Wi-Fi Aware operations
+                }
+
+                @Override
+                public void onAttachFailed() {
+                    super.onAttachFailed();
+                    // There's some error in attaching Wi-Fi Aware Session
+                }
+            };
+            
+            // Create IdentityChangedListener
+            IdentityChangedListener identityChangedListener = new IdentityChangedListener() {
+                @Override
+                public void onIdentityChanged(byte[] mac) {
+                    super.onIdentityChanged(mac);
+                    // The MAC address of the device has changed. The new MAC address is contained in the mac variable
+                }
+            };
+
+            // Attaching the current app to the Wi-Fi Aware service
+            wifiAwareManager.attach(attachCallback, identityChangedListener, new Handler(Looper.getMainLooper()));
+        } 
+        else {
+            // Wi-Fi Aware is not supported on this device
+        }
+    }
+}
+```
+
+Note: This `test_IdentityChangedListener_onIdentityChanged` method will need to be declared in an Activity that is currently running. The method will not work unless the Android version of the device is Android 8.0 (API level 26) or higher (hence the initial check for `SDK_INT >= O_MR1`). Also, be sure to add the necessary permissions, `ACCESS_FINE_LOCATION` and `CHANGE_WIFI_STATE` to the Android Manifest file. Finally, this Wi-Fi Aware feature might not be supported on some devices.

@@ -1,0 +1,52 @@
+Here is an example of how to create and use `AbstractThreadedSyncAdapter` run method that aligns with the given context.
+
+```java
+import android.accounts.Account;
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProviderClient;
+import android.content.Context;
+import android.content.SyncResult;
+import android.os.Bundle;
+
+public class SyncAdapter extends AbstractThreadedSyncAdapter {
+
+    private final Context mContext;
+
+    public SyncAdapter(Context context, boolean autoInitialize) {
+        super(context, autoInitialize);
+        mContext = context;
+    }
+
+    @Override
+    public void onPerformSync(Account account, Bundle extras, String authority,
+                              ContentProviderClient provider, SyncResult syncResult) {
+        // your sync logic here
+    }
+
+}
+
+public class MainActivity extends AppCompatActivity {
+
+    private SyncAdapter mSyncAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mSyncAdapter = new SyncAdapter(this, true);
+        test_abstractThreadedSyncAdapter_run();
+    }
+
+    private void test_abstractThreadedSyncAdapter_run() {
+        Account dummyAccount= new Account("dummyaccount", "com.example");
+        Bundle bundle = null;      // can be used to pass additional options
+        mSyncAdapter.onPerformSync(dummyAccount, bundle, "com.example", null, null);
+    }
+}
+```
+
+In this code, `SyncAdapter` class is created extending `AbstractThreadedSyncAdapter`. For testing, an instance of `SyncAdapter` is created in `MainActivity` and `test_abstractThreadedSyncAdapter_run` method calls `onPerformSync` method of `SyncAdapter`.
+
+The `onPerformSync` should contain the logic that performs the actual data transfer between the device and the server, which is not included in this example as it will depend on your specific use case and server API.
+
+Please do replace package name "com.example", "dummyaccount" and authority "com.example" with appropriate values based on your project setup. Also note that actual sync logic (onPerformSync) may require permissions and network connection to function properly. Hence, it's crucial that you request necessary permissions and handle scenarios where some of them aren't granted.

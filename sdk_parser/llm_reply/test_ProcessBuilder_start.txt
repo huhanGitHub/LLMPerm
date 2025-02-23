@@ -1,0 +1,45 @@
+Here is a method example for the usage of java.lang.ProcessBuilder in an Android activity:
+
+```java
+private String test_ProcessBuilder_start() {
+    try {
+       // Create a stream to hold the output
+        ByteArrayOutputStream outputByteArray = new ByteArrayOutputStream();
+        PrintStream outputStream = new PrintStream(outputByteArray);
+
+        // Create a new instance of ProcessBuilder
+        ProcessBuilder processBuilder = new ProcessBuilder("ls", "-l");
+        processBuilder.redirectErrorStream(true);
+
+        // start the process
+        Process process = processBuilder.start();
+
+        // Read the output from the command
+        try (BufferedReader bufferedReader = 
+            new BufferedReader(new InputStreamReader(process.getInputStream()))) 
+        {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                outputStream.println(line);
+            }
+        }
+
+        // Wait for the process to finish
+        process.waitFor();
+
+        // Return the output
+        return outputByteArray.toString();
+
+    } catch (IOException | InterruptedException e) {
+        // Print the exception
+        e.printStackTrace();
+
+        // Return the exception message
+        return "Error: " + e.getMessage();
+    }
+}
+```
+
+This method will start a process that lists all files in the current directory (`ls -l`) and returns that list as a String. Keep in mind that the "ls" command is unix-specific, so it won't work on Windows or Android. 
+
+In an Android app, you will usually not use ProcessBuilder to run system commands because Android does not have a full Linux command line. Instead, you might use it to run an included binary that you bundled with your app, or manage a child process created by your app. Processes on Android also have their own security and lifecycle considerations. Consult the Android documentation for more detailed information.

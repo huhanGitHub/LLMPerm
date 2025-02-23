@@ -1,0 +1,39 @@
+Sure, here's an example code for the requested method "test_MediaCas_openSession" which uses MediaCas API in Android.
+
+```java
+import android.media.MediaCas;
+import android.media.MediaCasException;
+import android.media.NotProvisionedException;
+import android.media.ResourceBusyException;
+
+public void test_MediaCas_openSession() {
+    // Replace with the actual CAS system id.
+    int casSystemId = 0;
+
+    MediaCas mediaCas = null;
+    try {
+        mediaCas = new MediaCas(casSystemId);
+        
+        // Open a new session to the CAS. 
+        MediaCas.Session session = mediaCas.openSession();
+
+        // Adding some operations for example purpose.
+        // Replace with your actual operations.
+        byte[] data = {0x01, 0x02, 0x03, 0x04};
+        session.processEcm(data, 0, data.length);
+
+        // Closing the session.
+        session.close();
+
+        // Closing the MediaCas.
+        mediaCas.close();
+        
+    } catch(NotProvisionedException | ResourceBusyException | MediaCasException.UnsupportedCasException | IllegalArgumentException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In above code, use appropriate CAS system ID in place of 'casSystemId'. Open a new session using MediaCas 'openSession' method. I have used 'session.processEcm' operation for example. Replace it with your actual operations. After performing all needed actions, close session by using 'session.close()' method and then close MediaCas by using 'mediaCas.close()' method. 
+
+Also, remember to catch 'NotProvisionedException', 'ResourceBusyException', 'MediaCasException.UnsupportedCasException', and 'IllegalArgumentException' exceptions. These exceptions can occur when a session is not provisioned, a resource is busy, a CAS is not supported, or an illegal argument was passed to a method respectively.

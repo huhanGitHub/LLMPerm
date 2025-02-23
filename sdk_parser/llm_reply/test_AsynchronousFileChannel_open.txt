@@ -1,0 +1,40 @@
+Below is a simple method to demonstrate the usage of AsynchronousFileChannel.open():
+
+Please note that this method would work only on API 26 and above because the android version Oreo (API 26) started to support Java.nio.* classes. Also, since the file operations may require permissions you need to declare necessary permissions in the AndroidManifest.xml file and handle runtime permissions.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_AsynchronousFileChannel_open() {
+    File file = new File(getFilesDir(), "test.txt");
+
+    try {
+        // Create a new file and write some data
+        if (!file.exists()) {
+            FileOutputStream out = openFileOutput("test.txt", MODE_PRIVATE);
+            out.write("Hello World!".getBytes());
+            out.close();
+        }
+
+        // Open existing file for read and write operations
+        AsynchronousFileChannel asynchronousFileChannel = AsynchronousFileChannel.open(
+                Paths.get(file.getAbsolutePath()),
+                StandardOpenOption.READ, StandardOpenOption.WRITE);
+
+        // Use different asynchronous methods to read, write operations
+
+        // Close channel
+        asynchronousFileChannel.close();
+
+    } catch (IOException e) {
+        Log.e("Test",  "IO Exception", e);
+    }
+}
+```
+
+Another key note is FileReader and FileWriter are part of java.nio.charset.* package which is also not fully supported for versions below Oreo.
+
+Also, you would require to add `@RequiresApi(api = Build.VERSION_CODES.O)` annotation before the method because AsynchronousFileChannel is available from the Oreo version of Android.
+
+The above code will open a file named 'test.txt' in the application's private file directory. If the file does not exist, it will create a new one and write some content in it. Then it will open the file using AsynchronousFileChannel for read and write operations. At the end it will close the file.  
+
+The test_AsynchronousFileChannel_open method uses try and catch to capture any IOException that might be thrown. The catch block logs the exception with the message "IO Exception".

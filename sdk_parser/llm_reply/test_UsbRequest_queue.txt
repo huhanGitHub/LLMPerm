@@ -1,0 +1,39 @@
+Sure, below is an example method test_UsbRequest_queue(). This method creates a new UsbRequest, initializes it to work with a UsbEndpoint, and then queues a ByteBuffer to be sent across the endpoint. Note that "endpoint" and "deviceConnection" need to be previously defined and valid.
+
+Please be aware that this is just an example. The actual implementation can be more complex depending on the context of the Android app.
+
+```java
+import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbEndpoint;
+import android.hardware.usb.UsbRequest;
+
+import java.nio.ByteBuffer;
+
+public void test_UsbRequest_queue() {
+    // Creates a new UsbRequest object.
+    UsbRequest usbRequest = new UsbRequest();
+
+    // Initialize this UsbRequest so it can perform I/O operations in the given endpoint.
+    usbRequest.initialize(deviceConnection, endpoint);
+
+    // Prepare a ByteBuffer to be sent.
+    ByteBuffer buffer = ByteBuffer.allocate(100);
+    buffer.put("Test Data".getBytes());
+
+    // Queues a request to send the data contained in the buffer to an endpoint.
+    // The direction of the endpoint must be UsbConstants.USB_DIR_OUT.
+    boolean result = usbRequest.queue(buffer, buffer.capacity());
+
+    // Show an information message
+    if (result) {
+        System.out.println("The request has been successfully queued");
+    } else {
+        System.out.println("Failed to queue the request");
+    }
+    
+    // Remember to close your UsbRequest and release all its resources!
+    usbRequest.close();
+}
+``` 
+
+This is a basic usage of the UsbRequest class and its queue() method. Also remember to handle Exception or error checking as necessary. It's important to handle the IOException that can come from the usb request's read/write operation. And as a best practice, also remember to always release the resources after you're done using them.

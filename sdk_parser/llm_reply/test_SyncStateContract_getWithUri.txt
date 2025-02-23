@@ -1,0 +1,32 @@
+Unfortunately, your request seems to be slightly misguided. The SyncStateContract class in Android is a contract for sync state information - data that the provider can use and modify to handle synchronization. It doesn't have a method called getWithUri.
+
+However, I can only provide an example of using SyncStateContract class, particularly in creating URIs with its help. Since SyncStateContract.Columns is used to specify the metadata such as ACCOUNT_NAME and ACCOUNT_TYPE, these can be used to create uris. 
+
+```java
+public Uri test_SyncStateContract_getWithUri() {
+
+    // Pre-required Constants
+    String CONTENT_AUTHORITY = "com.example.app.provider";
+    String ACCOUNT_NAME = "exampleAccountName";
+    String ACCOUNT_TYPE = "exampleAccountType";
+
+    // Building Sync Uri
+    Uri.Builder builder = new Uri.Builder();
+    builder.scheme(ContentResolver.SCHEME_CONTENT);
+    builder.authority(CONTENT_AUTHORITY);
+    builder.appendPath(SyncStateContract.Columns.ACCOUNT_NAME);
+    builder.appendPath(ACCOUNT_NAME);
+    builder.appendPath(SyncStateContract.Columns.ACCOUNT_TYPE);
+    builder.appendPath(ACCOUNT_TYPE);
+
+    // Uri for Sync
+    Uri uriSync = builder.build();
+
+    // Return the created Uri
+    return uriSync;
+}
+```
+
+Note: This is a made-up example and values of CONTENT_AUTHORITY, ACCOUNT_NAME, and ACCOUNT_TYPE are placeholders. You should substitute them with actual values.
+
+However, remember this isn't a specific method in SyncStateContract called getWithUri, but rather an implementation of how you might use the SyncStateContract in practice to create URIs for content providers.

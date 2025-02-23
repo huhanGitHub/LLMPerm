@@ -1,0 +1,46 @@
+In the current SDK for Android, there is no class or object named SensorDirectChannel. So, it is impossible to write an example usage of `SensorDirectChannel`. If you perhaps misnamed the API or confused it with another one, feel free to let me know and I'll be happy to assist with the correct API. 
+
+For now, I can provide you with an example how to use the Sensor class and work with the accelerometer, should that be of help:
+
+```java
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+    
+public class SensorActivity extends Activity implements SensorEventListener {
+    
+    private SensorManager sensorManager;
+    private Sensor accelerometerSensor;
+    
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sensor);
+
+        this.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        this.accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+    
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Do something when accuracy changed.
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        // Do something when sensor data changed.
+    }
+}
+```
+
+In this example, we're just obtaining a reference to the SensorManager and the accelerometer sensor, register a listener when the Activity comes to the foreground and unregister it when goes into the background.
+
+When sensor data changes, the method `onSensorChanged` is triggered. The actual sensor data is contained in the `values` array of the SensorEvent object. Likewise, when accuracy changes, the method `onAccuracyChanged` is called.

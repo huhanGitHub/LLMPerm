@@ -1,0 +1,57 @@
+Creating a method to test BackupAgent doRestoreInternal function in Android requires permissions to perform this action. However, note that BackupAgent is an abstract class and doRestoreInternal function is protected and not available publicly, so the direct testing of this function may be not possible. But as a demonstration, below is a mock example of how to use this function to restore a backup to a new state.
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataInput;
+import android.app.backup.BackupDataOutput;
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_BackupAgent_doRestoreInternal();
+    }
+
+    public void test_BackupAgent_doRestoreInternal() {
+        new TestBackupAgent().doRestoreInternalTest();
+    }
+
+    class TestBackupAgent extends BackupAgent {
+        @Override
+        public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
+                              ParcelFileDescriptor newState) throws IOException {
+                          
+        }
+
+        @Override
+        public void onRestore(BackupDataInput data, int appVersionCode,
+                              ParcelFileDescriptor newState) throws IOException {
+
+        }
+
+        void doRestoreInternalTest() {
+            ParcelFileDescriptor fileDescriptor =
+                    ParcelFileDescriptor.open(new File("path to your file"), 
+                    ParcelFileDescriptor.MODE_READ_WRITE);
+
+            BackupDataInput dataInput = new BackupDataInput(fileDescriptor.getFileDescriptor());
+
+            try {
+                this.onRestore(dataInput, 1, fileDescriptor);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+To use the BackupAgent you need to add required permissions to your AndroidManifest file.
+```
+<uses-permission android:name="android.permission.BACKUP" />
+```
+Remember that the TestBackupAgent class is a sample and the real implementation depends on how you want to perform the backup and restore operations. You'll have to replace the placeholder path with your actual file location too.
+
+Also note that the Manifest permission "android.permission.BACKUP" is only granted to apps that are signed with the same signing key as the system image, so your app will not be able to obtain it unless it's part of the system or signed with the system key.

@@ -1,0 +1,44 @@
+Here is an example of how you could implement this method in an Android activity:
+
+```java
+import java.io.File;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_File_setReadable();
+    }
+
+    private void test_File_setReadable() {
+        //Create a new file
+        File file = new File(getFilesDir(), "test.txt");
+        try {
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    System.out.println("The file has been created");
+                } else {
+                    System.out.println("The file already exists");
+                }
+            }
+            //First parameter is to make the file readable, second one is whether only the owner can read it
+            //Setting it to true means only the owner can read, setting it to false means everyone can read it
+            if (file.setReadable(true, false)) {
+                System.out.println("The file is now readable for everyone");
+            } else {
+                System.out.println("The operation failed");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+In this example, the method `test_File_setReadable` is called inside the `onCreate` method in the activity. This method creates a new file named "test.txt" in the app's internal file directory. 
+
+The `setReadable` method from `java.io.File` is then used to make the file readable. The first parameter passed to `setReadable` is `true` indicating that we are setting the file to be readable. The second parameter is `false` that means the readable permission is not restricted to the owner of the file only, i.e., the file can be read by any other users.
+
+Please note that this is just an example and might not work in a real-world application. It is just to provide an understanding of using the `setReadable` method in Java/Android.

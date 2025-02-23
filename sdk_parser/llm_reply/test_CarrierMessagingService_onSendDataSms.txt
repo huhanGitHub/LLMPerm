@@ -1,0 +1,71 @@
+Sure, here is a simple example code you can use:
+
+```java
+import android.content.Context;
+import android.net.Uri;
+import android.os.PersistableBundle;
+import android.service.carrier.CarrierMessagingService;
+import android.telephony.SmsManager;
+import android.widget.Toast;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
+
+public class ExampleActivity extends AppCompatActivity {
+
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+
+    public void test_CarrierMessagingService_onSendDataSms(Context context) {
+
+        // Check Permission
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) 
+                                          != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.SEND_SMS)) {
+                Toast.makeText(this, "Permission required to send message.", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        } else {
+            sendSMS(context);
+        }
+        
+    }
+
+    private void sendSMS(Context context) {
+        SmsManager smsManager = SmsManager.getDefault();
+        String destinationAddress = "1234567890";
+        byte[] data = "Send SMS using CarrierMessagingService".getBytes();
+        short destinationPort = (short) 12345;
+        
+        // Send Data Message
+        smsManager.sendDataMessage(destinationAddress, null, destinationPort, data, 
+                                   null, null);
+
+        Toast.makeText(getApplicationContext(), "Message sent.", Toast.LENGTH_LONG).show();
+    }
+
+    // Request Permissions Result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], 
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendSMS(this); 
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                        "SMS send permission denied.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }
+}
+```
+
+Please note, `CarrierMessagingService` is intended for OEMs and carriers to handle messaging in their applications, not for general developer use. However, the `SmsManager` is an API that developers can use to send SMS and MMS messages, which is why it has been used in the above code.

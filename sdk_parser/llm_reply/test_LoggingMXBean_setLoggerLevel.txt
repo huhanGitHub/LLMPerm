@@ -1,0 +1,44 @@
+In Java, the `LoggingMXBean` interface can be used to set and get logger levels or names and view the current logger levels. For use in an Android context, bear in mind that Java's MXBean functionality is only available on full Java applications, not on Android or versions of the JVM that don't provide full support for java.lang.management.
+
+Here is an example usage of `LoggingMXBean` to set logger level:
+
+```java
+import java.util.logging.*;
+
+public void test_LoggingMXBean_setLoggerLevel() {
+    // Get the platform MBean server
+    MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+
+    // Construct the ObjectName for the LoggingMXBean
+    ObjectName mxbeanName = null;
+    try {
+        mxbeanName = new ObjectName(LogManager.LOGGING_MXBEAN_NAME);
+    } catch (MalformedObjectNameException e) {
+        e.printStackTrace();
+    }
+
+    // Get MXBean proxy instance
+    LoggingMXBean proxy = null;
+    try {
+        proxy = JMX.newMXBeanProxy(mbs, mxbeanName, LoggingMXBean.class);
+    } catch (NullPointerException e) {
+        e.printStackTrace();
+    }
+
+    // Test: set logger level
+    try {
+        proxy.setLoggerLevel("global", "INFO");
+    } catch (SecurityException e) {
+        e.printStackTrace();
+    }
+
+    // Verify: get logger level
+    String level = proxy.getLoggerLevel("global");
+    assert (level != null);
+    assert (level.equals("INFO"));
+}
+```
+
+This code will create a test where it sets the level for the Logger "global" to "INFO". Then it will retrieve the level of the "global" Logger to verify the correct level setting.
+
+Please note that above code will not work in Android because `java.lang.management` package is not available in Android. Android has its own logging mechanism, we typically use `android.util.Log`. In fact, if you are looking to perform logging operations in Android you should use Android's built-in Log class.

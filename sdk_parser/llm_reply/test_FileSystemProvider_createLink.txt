@@ -1,0 +1,28 @@
+The `FileSystemProvider` API in Java is not suitable for Android, because Android doesn't support the full set of Java NIO features. However, if you're working with a Java application, you can use it. Here's an example of how to use it for creating a symbolic link:
+
+```java
+import java.nio.file.*;
+import java.nio.file.spi.FileSystemProvider;
+import java.io.IOException;
+
+public void test_FileSystemProvider_createLink() {
+    FileSystemProvider provider = FileSystems.getDefault().provider();
+
+    Path existingFilePath = Paths.get("path/to/existing/file");
+    Path linkPath = Paths.get("path/to/new/link");
+
+    try{
+        provider.createLink(linkPath, existingFilePath);
+        System.out.println("Link created: " + linkPath);
+    }
+    catch(IOException ex){
+        System.err.println("Link creation failed: " + ex.getMessage());
+    }
+}
+```
+
+This function assumes that you already have an existing file at "path/to/existing/file" and creates a new symbolic link to it at "path/to/new/link". If these paths don't exist or can't be accessed, an IOException will be thrown.
+
+Remember to replace `"path/to/existing/file"` and `"path/to/new/link"` with your desired file paths. Also note that you must have write access to the directory in which you want to create the link. Running this code on a file system that doesn't support symbolic links will also result in an IOException.
+
+This API is available in Java 7 and later.

@@ -1,0 +1,41 @@
+In order to use the android/telephony/ims/feature/MmTelFeature.java API, you first need to ensure your Android application has the necessary permissions to send SMS. In your AndroidManifest.xml file, you should already have the following permissions:
+
+```xml
+<uses-permission android:name="android.permission.SEND_SMS"/>
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+```
+
+Here is the method test_MmTelFeature_sendSms:
+
+
+```java
+private void test_MmTelFeature_sendSms() {
+    final String phoneNumber = "1234567890";
+    final String message = "Hello world!";
+
+    // This is just for the test, you should get this service in a proper lifecycle method.
+    MmTelFeature mmTelFeature = new MmTelFeature();
+
+    try {
+        mmTelFeature.sendSms(1, 1, phoneNumber, "", 1, message, PendingIntent.getBroadcast(
+                this, 0, new Intent("SMS_SENT"), 0), PendingIntent.getBroadcast(
+                this, 0, new Intent("SMS_DELIVERED"), 0)
+        );
+
+        Toast.makeText(this, "SMS sent.", Toast.LENGTH_SHORT).show();
+    } catch (Exception e) {
+        Toast.makeText(this, "Failed to send SMS.", Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
+}
+```
+Note that the MmTelFeature.sendSms method requires several parameters.
+- The first two parameters are subId and token, which you will most likely get from your SIM card. In this example I just put placeholder numbers.
+- The third parameter is the phone number that the SMS is being sent to.
+- The fourth parameter is the SMS center address, which is rarely used so I left it empty.
+- The fifth parameter is the type of SMS message, in this case it is 1 for SMS-PP (Point-to-Point) message.
+- The sixth parameter is the SMS message itself.
+- The seventh parameter is a PendingIntent that will be sent when the SMS is sent.
+- The eighth parameter is another PendingIntent that will be sent when the SMS is delivered.
+
+If you are testing this method, make sure to replace the PhoneNumber and Message with actual data. Furthermore, this API has been deprecated in Android S, implying new app developers should find another method(a more updated one) to send messages programmatically.

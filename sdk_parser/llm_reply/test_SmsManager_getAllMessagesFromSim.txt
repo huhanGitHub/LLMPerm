@@ -1,0 +1,45 @@
+Sure, here is an example method illustrating how to fetch all messages from a SIM card using SmsManager API in Android:
+
+```java
+import android.app.Activity;
+import android.telephony.SmsMessage;
+import android.telephony.SmsManager;
+
+import java.util.ArrayList;
+
+/**
+ * Requires permission: 
+ * <uses-permission android:name="android.permission.READ_SMS"/>
+ * <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+ *
+ * NOTE: Starting in Build.VERSION_CODES.KITKAT, no exceptions are thrown if a receiving app has not been granted the necessary
+ * permissions to handle the intent.For more information about permissions, see Security and Permissions.
+ */
+
+public class YourActivity extends Activity {
+
+   public void test_SmsManager_getAllMessagesFromSim() {
+        SmsManager smsManager = SmsManager.getDefault();
+        ArrayList<String> smsMessages = smsManager.getAllMessagesFromIcc();
+        
+        if (smsMessages != null) {
+            for (String message : smsMessages) {
+                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) message);
+                String sender = smsMessage.getDisplayOriginatingAddress();
+                String body = smsMessage.getMessageBody().toString();
+
+                System.out.println("SMS From: " + sender);
+                System.out.println("SMS Body: " + body);
+            }
+        } else {
+            System.out.println("No SMS messages found on SIM card.");
+        }
+    }
+}
+```
+
+This code gets all messages from the SIM card using `smsManager.getAllMessagesFromIcc()` and iterates through them. For each message, it prints out the sender and the body of the message. 
+
+Always remember to check if your list is null to avoid NullPointerExceptions. Also, note that due to Android's privacy model, your app must have permissions to access SMS data, so you should ask for these permissions in your manifest file and at runtime.
+
+Make sure you handle those permissions correctly, as Android can revoke them at any time and your app should handle these situations gracefully. Also, these APIs are available on devices running Android 4.4 (API level 19) and higher.

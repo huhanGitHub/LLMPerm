@@ -1,0 +1,35 @@
+Here's a method that tests if an InetAddress is reachable. It uses the isReachable() method of the InetAddress class, which tries to reach the target address within the given time limit (here set to 2000ms or 2 seconds). The method will return true if the target is reachable, and false if not.
+
+This method could be part of an Android activity class, testing Internet connectivity to a specific server before attempting to download data or perform a similar action:
+
+```java
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class MainActivity extends AppCompatActivity {
+
+    // ...
+
+    public boolean test_InetAddress_isReachable(String address) {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(address);
+            // Try to reach the address within the time limit (2000 milliseconds or 2 seconds)
+            boolean reachable = inetAddress.isReachable(2000);
+            return reachable;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ...
+
+}
+```
+
+Please note that this is a blocking operation, so it should not be executed in the main thread. If you need to perform this action in the UI thread (for example, to update the user interface), you could use an AsyncTask or, if you're using Kotlin, a coroutine.
+
+Also, starting with Android 6.0 (API level 23), you have to request the INTERNET permission even if it's already declared in your manifest. If you're targeting API level 23 or higher, your app must request this permission at runtime, which is not shown in the code above.

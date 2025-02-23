@@ -1,0 +1,57 @@
+This method will test whether a particular file path is a symbolic link or not using the Files.isSymbolicLink method from java.nio.file package. Please note that this code needs to be run on API level 26 and above.
+
+Just remember that in Android Development, access to the file system is usually restricted and requires specific permissions.
+
+In your AndroidManifest.xml add the required permission:
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
+
+Now, here is your example method:
+
+```java
+import java.io.IOException;
+import java.nio.file.*;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_Files_isSymbolicLink() {
+    // Please replace with a valid path in your device
+    Path path = Paths.get("/storage/emulated/0/Download/some_link");
+    
+    // Checking if the path exists, to avoid NoSuchFileException
+    if (Files.exists(path)) {
+        try {
+            boolean isSymbolicLink = Files.isSymbolicLink(path);
+            
+            if (isSymbolicLink) {
+                // Handle if file is a symbolic link
+                // For simplicity, we're just showing a Toast message
+                Toast.makeText(this, "This path is a symbolic link!", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle if file isn't a symbolic link
+                // For simplicity, we're just showing a Toast message
+                Toast.makeText(this, "This path is NOT a symbolic link!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException | UnsupportedOperationException e) {
+            // Handle exception here
+            e.printStackTrace();
+        }
+    } else {
+        // Handle if file doesn't exist
+        // For simplicity, we're just showing a Toast message
+        Toast.makeText(this, "File does not exist!", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+Remember to call this method from the main thread to avoid permissions issues:
+
+```java
+runOnUiThread(new Runnable() {
+    @Override
+    public void run() {
+        test_Files_isSymbolicLink();
+    }
+});
+```

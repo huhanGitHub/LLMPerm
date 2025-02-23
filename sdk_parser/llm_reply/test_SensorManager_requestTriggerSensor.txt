@@ -1,0 +1,32 @@
+Here is a sample usage of the `requestTriggerSensor()` method from the SensorManager class in Android:
+
+```java
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.TriggerEventListener;
+import android.hardware.SensorManager;
+
+public void test_SensorManager_requestTriggerSensor() {
+    SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+    Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION);
+
+    TriggerEventListener triggerEventListener = new TriggerEventListener() {
+        public void onTrigger(SensorEvent event) {
+            // This method will be called when the significant motion sensor triggers
+            // DO something here
+        }
+    };
+
+    // Register the listener with the sensor manager
+    boolean isRegistered = sensorManager.requestTriggerSensor(triggerEventListener, sensor);
+
+    if (!isRegistered) {
+        // Failed to register the trigger sensor listener.
+        // This could be because the sensor is not available, or the device does
+        // not support this sensor, or the sensor is already in use.
+        // Handle this condition
+    }
+}
+```
+
+In this example, we're using the sensor of type `TYPE_SIGNIFICANT_MOTION`, which triggers when a significant motion of the device is detected. You can replace it with any other sensor type based on your needs. The `TriggerEventListener` that we're passing to `requestTriggerSensor()` will be used to handle the sensor events. The method `onTrigger()` inside our `TriggerEventListener` will be called when the sensor triggers. You should put your logic there of what should be done when sensor event occurs.

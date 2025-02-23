@@ -1,0 +1,42 @@
+Here is an example of a method that you can use in an Android Activity to cancel a PrintJob:
+
+```java
+import android.app.Activity;
+import android.content.Context;
+import android.print.PrintJob;
+import android.print.PrintManager;
+
+public class MainActivity extends Activity {
+    public void test_PrintJob_cancel() {
+        // Step 1: Get system service PRINT_SERVICE.
+        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
+
+        // Step 2: Get all print jobs.
+        List<PrintJob> printJobs = printManager.getPrintJobs();
+
+        // Step 3: Cancel all print jobs.
+        for (PrintJob printJob : printJobs) {
+            // Check if the job is not already cancelled or completed
+            if (printJob.isQueued() || printJob.isStarted()) {
+                // Cancel the print job
+                printJob.cancel();
+            }
+        }
+
+        // Optional: Show a toast message indicating that all print jobs are cancelled.
+        Toast.makeText(this, "All print jobs are cancelled.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+This method cancels all print jobs which are queued or started. You may need to add permissions in your AndroidManifest.xml to use print services:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
+Please replace "MainActivity" with your actual activity name and also ensure the device has a print service available.
+
+Note: The Print Job API is added after Android 4.4 (API level 19), so you should make sure the Android version is correct before you use these related features.

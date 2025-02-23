@@ -1,0 +1,48 @@
+Sure, here's an example of how you might implement and test the `createSipSession` method provided by the Android `SipManager` class:
+
+Please note, this example assumes you have declared the uses-permission SIP in your AndroidManifest.xml file.
+
+```java
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+import android.net.sip.SipSession;
+
+public class ExampleActivity extends Activity {
+    
+    private SipManager sipManager = null;
+    private SipProfile sipProfile = null;
+    private SipSession sipSession = null;
+
+    // ...
+
+    public void test_SipManager_createSipSession() {
+
+        try {
+            // Initialize the SipManager.
+            if (sipManager == null) {
+                sipManager = SipManager.newInstance(this);
+            }
+
+            // Set up the SipProfile.
+            SipProfile.Builder builder = new SipProfile.Builder("user_name", "domain.com");
+            builder.setPassword("password");
+            sipProfile = builder.build();
+
+            // Create a SipSession.
+            sipSession = sipManager.createSipSession(sipProfile, null);
+
+            if(sipSession.getState() == SipSession.State.READY_TO_CALL) {
+                Log.i("test_SipManager_createSipSession", "SipSession was successfully created and ready to call.");
+            }
+
+        } catch (Exception e) {
+            Log.e("test_SipManager_createSipSession", "Failed to create SipSession: ", e);
+        }
+    }
+
+    // ...
+
+}
+```
+
+In this example, we first initialize the `SipManager` and `SipProfile`. Then, we use the `createSipSession` method provided by `SipManager` to create a `SipSession`. If the `SipSession` is successfully created and ready to call, a message will be logged. If something goes wrong in the process, the `catch` block will log the exception.

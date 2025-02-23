@@ -1,0 +1,36 @@
+Below is an example of how you can implement test_SSLSession_getSessionContext function:
+
+```java
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSessionContext;
+
+public void test_SSLSession_getSessionContext() {
+    //generating SSL Context
+    SSLContext sslContext = generateSSLContext();
+
+    //creating a dummy SSLSession to get the SessionContext from it
+    SSLSession sslSession = sslContext.getServerSessionContext().getSession("dummy session".getBytes());
+
+    //Getting session context
+    SSLSessionContext sslSessionContext = sslSession.getSessionContext();
+
+    if (sslSessionContext != null) {
+        System.out.println("SSL session context is successfully retrieved.");
+    } else {
+        System.out.println("Failed to retrieve the SSL session context.");
+    }
+}
+
+private SSLContext generateSSLContext(){
+    SSLContext sslContext;
+    try {
+        sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, null, null);
+    } catch (NoSuchAlgorithmException | KeyManagementException e) {
+        throw new RuntimeException("Failed to instanciate sslContext", e);
+    }
+    return sslContext;
+}
+```
+
+This self-contained method will print a message to the console depending on whether the SSLSessionContext has been successfully retrieved from SSLSession. By running this code, you can test the method SSLSession.getSessionContext(). Just put this code in any function you want to use or test, this won't be compilable inside Android Studio without surrounding Android Activity render code. Also please handle exceptions properly in your production code.

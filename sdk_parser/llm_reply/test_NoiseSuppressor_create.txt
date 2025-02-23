@@ -1,0 +1,35 @@
+Below is an example of a method which creates and tests a NoiseSuppressor instance. It assumes that you have a valid AudioRecord object. This method is supposed to be called inside an Android Activity.
+  
+```java
+import android.media.AudioRecord;
+import android.media.audiofx.NoiseSuppressor;
+import android.util.Log;
+
+public void test_NoiseSuppressor_create() {
+    // You should have AudioRecord object ready.
+    // Assuming 'audioRecord' is a valid initiated AudioRecord object.
+    AudioRecord audioRecord = getAudioRecord(); // replace getAudioRecord() with your actual AudioRecord object provider.
+
+    if(NoiseSuppressor.isAvailable()){
+        NoiseSuppressor noiseSuppressor = NoiseSuppressor.create(audioRecord.getAudioSessionId());
+        if(noiseSuppressor != null) {
+            noiseSuppressor.setEnabled(true);
+            if(!noiseSuppressor.getEnabled()){
+                Log.e("test_NoiseSuppressor", "Failed to enable noise suppressor.");
+            }
+            else{
+                // Noise suppressor enabled successfully.
+                Log.i("test_NoiseSuppressor", "Noise suppressor enabled successfully.");
+            }
+        }
+        else {
+            Log.e("test_NoiseSuppressor", "Failed to create noise suppressor.");
+        }
+    }
+    else {
+        Log.e("test_NoiseSuppressor", "Noise suppressor is not available on this device.");
+    }
+}
+```
+
+Please note, it's never recommended to keep the microphone open for long periods since it drains battery. Use it only when necessary. Also, remember to release 'NoiseSuppressor' when you are done with it.

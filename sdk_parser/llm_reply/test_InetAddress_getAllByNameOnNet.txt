@@ -1,0 +1,23 @@
+Here's a simple implementation of the test_InetAddress_getAllByNameOnNet method which uses java.net.InetAddress.getAllByName() method:
+
+```java
+public void test_InetAddress_getAllByNameOnNet() {
+    try {
+        //Here,"www.google.com" is the host you want to get all the InetAddresses.
+        InetAddress[] inetAddresses = InetAddress.getAllByName("www.google.com");
+
+        for(InetAddress inetAddress : inetAddresses) {
+            Log.d("InetAddress_Test", "HostAddress: " + inetAddress.getHostAddress());
+        }
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+}
+```
+In this method, InetAddress.getAllByName() is used to get an array of InetAddress objects for a specified host. The host is represented by a string in this case "www.google.com". The method catches and prints any UnknownHostException. Note that this method must be run in a thread different from the main one to avoid NetworkOnMainThreadException.
+
+Please remember that you will need to add the Internet permission in your AndroidManifest.xml file to allow your application to access the internet.
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```

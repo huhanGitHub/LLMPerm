@@ -1,0 +1,26 @@
+Below is an example of a method called `test_SearchRecentSuggestions_saveRecentQueryBlocking` which uses the `SearchRecentSuggestions` class from Android's `android.provider` package. This method saves a query string to the recent searches of your application.
+
+Assuming your `SearchRecentSuggestionsProvider` is setup correctly, the method will save a Query to your suggestions provider.
+
+```javascript
+public void test_SearchRecentSuggestions_saveRecentQueryBlocking() {
+    // Authority of your SearchRecentSuggestionsProvider.
+    String AUTHORITY = "<Your_SearchRecentSuggestionsProvider_Authority>";
+    // Mode for your SearchRecentSuggestions.
+    int MODE = SearchRecentSuggestions.QUERY_HISTORY_DATABASE;
+
+    // Instance of the SearchRecentSuggestions
+    SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, AUTHORITY, MODE);
+
+    // Your Search Query that we are going to save to Recent Suggestions.
+    String query = "Your Search Query";
+
+    // Save your Query to the recent searches.
+    suggestions.saveRecentQuery(query, null);
+}
+```
+Please replace `<Your_SearchRecentSuggestionsProvider_Authority>` with the authority of your `SearchRecentSuggestionsProvider`.
+
+This method does not return a result because `saveRecentQuery` method in SearchRecentSuggestions class does not return anything. It only saves the provided query to database.
+
+IMPORTANT: This method should be executed on a background thread because `saveRecentQuery` performs disk IO operations and it can block the main/UI thread. Here, for simplicity, I have put it in the main thread. However, it's recommended to use either `AsyncTask`, a separate `Thread`, or other concurrent solution for this task.

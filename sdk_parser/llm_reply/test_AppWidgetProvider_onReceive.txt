@@ -1,0 +1,52 @@
+Below is a simple code example to illustrate the usage of AppWidgetProvider's `onReceive()` method. Please note, normally we don't write such methods in an Activity because AppWidgetProvider is a receiver, not just a simple util class where we could call its methods straightforwardly. The `onReceive()` method is called by the Android AppWidget framework when it has broadcast Intent regarding the widget.
+
+Therefore, the code below will create and update a widget which involves `onReceive()`. 
+
+```java
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.RemoteViews;
+import com.example.test.R;
+
+public class MyAppWidgetProvider extends AppWidgetProvider {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        // Action for widget updating
+        if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
+            // Obtain AppWidgetManager instance
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            // Obtain widget ids
+            ComponentName componentName = new ComponentName(context, MyAppWidgetProvider.class);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+            // Call onUpdate method
+            this.onUpdate(context, appWidgetManager, appWidgetIds);
+        }
+    }
+
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int i = 0; i < appWidgetIds.length; i++) {
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget_layout);
+            views.setTextViewText(R.id.widget_text, "Widget updated");
+            appWidgetManager.updateAppWidget(appWidgetIds[i], views);
+        }
+    }
+}
+```
+Then, in your Activity, you can send a broadcast to trigger `onReceive`:
+
+```java
+public void test_AppWidgetProvider_onReceive(){
+    Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+    intent.setComponent(new ComponentName(this, MyAppWidgetProvider.class));
+    sendBroadcast(intent);
+}
+```
+
+This example assumes that you have a widget with an id `widget_text` in 'res/layout/app_widget_layout.xml'. Also, don't forget to declare your widget receiver and the required permissions in the 'AndroidManifest.xml' file.

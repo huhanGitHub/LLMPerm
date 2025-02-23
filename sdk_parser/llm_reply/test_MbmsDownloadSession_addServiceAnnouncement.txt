@@ -1,0 +1,51 @@
+Here is an example of how you might write the `test_MbmsDownloadSession_addServiceAnnouncement` method. The code utilizes the `MbmsDownloadSession` class, specifically the `addServiceAnnouncement` method. 
+
+Please bear in mind that `MbmsDownloadSession` API is designed for carrier applications and most functions will require `carrier privileges`. 
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_MbmsDownloadSession_addServiceAnnouncement() {
+    // Considering you are in an activity
+    Context context = this;
+
+    // Create an executor
+    Executor executor = Executors.newSingleThreadExecutor();
+
+    // Create a download request as per your requirements
+    DownloadRequest downloadRequest = new DownloadRequest.Builder()
+            .setServiceId("testServiceId")
+            .setServiceClass("testServiceClass")
+            .setDestination(Uri.fromFile(new File("/path/to/download")))
+            .build();
+
+    // Initialize the session and receive a callback
+    MbmsDownloadSession session = MbmsDownloadSession.create(context, executor, 
+        new MbmsDownloadSessionCallback() {
+        @Override
+        public void onError(int errorCode, String message) {
+            super.onError(errorCode, message);
+            // Handle error
+            Log.d("Error: ", message);
+        }
+
+        @Override
+        public void onFileServicesUpdated(List<FileServiceInfo> services) {
+            super.onFileServicesUpdated(services);
+            // Handle file service updates
+        }
+    });
+
+    // Add service announcement
+    try {
+        session.addServiceAnnouncement(downloadRequest);
+        Toast.makeText(context, "Service added successfully", Toast.LENGTH_SHORT).show();
+    } catch (IOException | MbmsException e) {
+        Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+}
+```
+This method creates a single-thread executor and a `DownloadRequest`, and then creates an `MbmsDownloadSession`. The session calls `addServiceAnnouncement()` method to add service announcement for the created `DownloadRequest`. 
+
+Errors are handled in the callback as a Toast notification. So it's just an example and might not work until you configure it according to your use case. 
+
+Dependencies: 
+Android 9.0 (API level 28), Java 8+

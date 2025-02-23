@@ -1,0 +1,40 @@
+Sure, here is an example of the test_SocketHandler_close function using java/util/logging/SocketHandler in the java language:
+
+```java
+import java.net.InetAddress;
+import java.util.logging.*;
+
+/**
+ * Dummy class used to simulate the activity
+ */
+public class MainActivity {
+    /**
+     * SocketHandler instance
+     */
+    SocketHandler socketHandler;
+    
+    /**
+     * Dummy method to set up the socketHandler instance
+     */
+    private void setUpSocketHandler() throws Exception {
+        // Supply your IP and port
+        socketHandler = new SocketHandler(InetAddress.getLocalHost().getHostAddress(), 9000);
+    }
+    
+    /**
+     * Test method for SocketHandler's close function
+     */
+    public void test_SocketHandler_close() {
+        try {
+            setUpSocketHandler();
+            
+            // Close the SocketHandler
+            socketHandler.close();
+        } catch (Exception e) {
+            // Log exception
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+In this code we first create a SocketHandler to a specific IP address and port and then call its close method. Note that this code will work if we have a server running at the specified address and port.

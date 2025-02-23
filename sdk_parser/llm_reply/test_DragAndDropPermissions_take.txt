@@ -1,0 +1,36 @@
+Here's an example of a method that shows how to use the `DragAndDropPermissions` and specifically take() method of an Android API. This method can be a part of an Android activity.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_DragAndDropPermissions_take(View v, DragEvent event) {
+    // Get DragAndDropPermissions instance associated with the current drag and drop operation
+    final DragAndDropPermissions dragAndDropPermissions = DragAndDropPermissions.request(v, event);
+    
+    // Condition to check if dragAndDropPermissions is not null
+    if (dragAndDropPermissions != null) {
+        // If permission is granted, start the drag
+        if (event.getAction() == DragEvent.ACTION_DRAG_STARTED) {
+            // Take persistable read/write permission for the content associated with the DragEvent during drag and drop.
+            dragAndDropPermissions.take();
+            
+            // Your drag and drop operation code here
+        } else if (event.getAction() == DragEvent.ACTION_DRAG_ENDED) {
+            // Once the drag and drop operation ends, release the permissions
+            dragAndDropPermissions.release();
+        }
+    }
+}
+```
+
+Please note: 
+
+- The `@RequiresApi(api = Build.VERSION_CODES.O)` annotation is there because the `DragAndDropPermissions` class is available on Android API level 26 and above. 
+
+- The calling of `take()` grants the permission to access the data associated with the `DragEvent` and the `release()` method revoking those permissions when they are no longer needed.
+
+Test this accordingly as it's a self-contained method and make sure it fits well within your activity or application context.
+- `View v` and `DragEvent event` must be from applicable and instantiated references. 
+
+- Code handling drag and drop operation should be added in // Your drag and drop operation code here. 
+
+This function doesn't handle the complete drag and drop operation, only the permission-taking part. You would typically call this function within a `OnDragListener`.

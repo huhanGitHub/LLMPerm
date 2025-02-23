@@ -1,0 +1,39 @@
+Here is an example of the method test_MediaBrowserService_onGetRoot. This method simulates the process of getting the root from the MediaBrowserService. Keep in mind, this code is only for illustrative purposes, and might not function fully in live environment:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_MediaBrowserService_onGetRoot() {
+    // Create a mock MediaBrowserService
+    MediaBrowserService mediaBrowserService = new MediaBrowserService() {
+        @Override
+        public BrowserRoot onGetRoot(String clientPackageName, int clientUid, Bundle rootHints) {
+            // Check clientPackageName, clientUid and rootHints here.
+            // Decide whether the client is allowed to browse the media content.
+
+            // If allowed, return your BrowserRoot for browsing your media content.
+            // In real application, this is the place where you decide your top hierarchy level in browsing tree.
+            return new BrowserRoot("MyMediaId", null);
+        }
+
+        @Override
+        public void onLoadChildren(String parentId, 
+                Result<List<MediaBrowserCompat.MediaItem>> result, 
+                Bundle options) {
+            // Check parentId here.
+            // Based on parentId, return the children for the parent media id.
+            // This is the place where you decide the second and lower hierarchy level in browsing tree.
+        }
+    };
+
+    // Calling onGetRoot method and printing the result
+    String clientPackageName = "com.example.app";
+    int clientUid = 1234;
+    Bundle rootHints = null; // or you can pass your own bundle
+    MediaBrowserService.BrowserRoot root = mediaBrowserService.onGetRoot(clientPackageName, clientUid, rootHints);
+    Log.d("MediaBrowserService", "Root ID: " + root.getRootId());
+}
+```
+
+This code creates an anonymous inner class from MediaBrowserService and overrides two methods: onGetRoot and onLoadChildren. The onGetRoot method is called by the system to retrieve the root id of the media browing tree from the service. This root id is deterministic to the browsing tree provided by the service. Depending upon your application, the root id and subsequent media item id's can be set accordingly.
+
+In real world applications, you would most likely have your own implementation of MediaBrowserService in which you handle and decide your browsing structure and accessibility.

@@ -1,0 +1,23 @@
+Below you can find an example of how you could develop this method. Remember that this implies that your Android Application has the necessary permissions to use Internet and SIP protocol and you have configured a SipProfile.
+
+```java
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipException;
+
+public void test_SipAudioCall_attachCall() {
+    try {
+        // Assume listener is a globally declared SipAudioCall.Listener
+        // Assume manager is a globally declared SipManager
+        // Assume incomingCallIntent is a globally declared Intent you received in the BroadcastReceiver
+
+        String incomingCallId = incomingCallIntent.getStringExtra("EXTRA_CALL_ID");
+        SipAudioCall incomingCall = manager.takeAudioCall(incomingCallIntent, null);
+        SipAudioCall currentCall = new SipAudioCall(getApplicationContext(), listener);
+        
+        currentCall.attachCall(incomingCall, incomingCallId);
+    } catch (SipException e) {
+        e.printStackTrace();
+    }
+}
+```
+This method illustrates an example how to attach an incoming call to the current call using SipAudioCall's `attachCall()` method. This can be very useful especially when you want to manage multiple calls or switch between different calls. Please replace global declarations with your actual context, SipManager and Intent instances.

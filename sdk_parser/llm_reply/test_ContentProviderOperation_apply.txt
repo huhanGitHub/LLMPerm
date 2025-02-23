@@ -1,0 +1,46 @@
+Here is an example of a method test_ContentProviderOperation_apply which demonstrates the use of the android API android/content/ContentProviderOperation.java.
+
+This example prepares and executes a batch operation on the content provider of the contacts database. The batch operation first adds a new contact with name and phone number, then updates the phone number of that contact. 
+
+```java
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentResolver;
+import android.content.OperationApplicationException;
+import android.provider.ContactsContract;
+import android.net.Uri;
+import android.os.RemoteException;
+import java.util.ArrayList;
+
+public void test_ContentProviderOperation_apply() {
+    ArrayList<ContentProviderOperation> operations = new ArrayList<>();
+    
+    // The base URI for the Contacts Provider
+    Uri uri = ContactsContract.RawContacts.CONTENT_URI;
+
+    // Prepare the operation for inserting a new contact
+    ContentProviderOperation operation1 = ContentProviderOperation.newInsert(uri)
+        .withValue(ContactsContract.RawContacts.DISPLAY_NAME, "John Doe")
+        .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+        .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, "1234567890")
+        .build();
+    operations.add(operation1);
+
+    // Prepare the operation for updating the phone number of the contact
+    ContentProviderOperation operation2 = ContentProviderOperation.newUpdate(uri)
+        .withSelection(ContactsContract.RawContacts.DISPLAY_NAME + "=?", new String[]{"John Doe"})
+        .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, "0987654321")
+        .build();
+    operations.add(operation2);
+
+    // Apply the batch of operations
+    ContentResolver contentResolver = getContentResolver();
+    try {
+        ContentProviderResult[] results = contentResolver.applyBatch(ContactsContract.AUTHORITY, operations);
+    } catch (RemoteException | OperationApplicationException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Note: This method needs to be run on a worker thread because of the extensive work of `applyBatch()` method which might not be suitable for UI thread. You need to have the `WRITE_CONTACTS` permission in your manifest file to perform the database operations. This can be done by adding `<uses-permission android:name="android.permission.WRITE_CONTACTS"/>` to the AndroidManifest.xml file.

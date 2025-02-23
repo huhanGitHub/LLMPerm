@@ -1,0 +1,64 @@
+Here is an example of a self-contained method `test_RemoteController_sendMediaKeyEvent`:
+
+```java
+public void test_RemoteController_sendMediaKeyEvent() {
+    // create a new RemoteController
+    Context context = this;
+    RemoteController remoteController = new RemoteController(context, new RemoteController.OnClientUpdateListener() {
+        @Override
+        public void onClientChange(boolean clearing) {
+            // handle the event
+        }
+
+        @Override
+        public void onClientPlaybackStateUpdate(int state) {
+            // handle the event
+        }
+
+        @Override
+        public void onClientPlaybackStateUpdate(int state, long stateChangeTimeMs, long currentPosMs, float speed) {
+            // handle the event
+        }
+
+        @Override
+        public void onClientTransportControlUpdate(int transportControlFlags) {
+            // handle the event
+        }
+
+        @Override
+        public void onClientMetadataUpdate(RemoteController.MetadataEditor metadataEditor) {
+            // handle the event
+        }
+    });
+
+    // set the remote control's media player to be the system's media player
+    AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+    audioManager.registerRemoteController(remoteController);
+
+    // send a pause key event to the media player
+    KeyEvent pauseEvent = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PAUSE);
+    remoteController.sendMediaKeyEvent(pauseEvent);
+
+    // send a play key event to the media player
+    KeyEvent playEvent = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY);
+    remoteController.sendMediaKeyEvent(playEvent);
+}
+```
+
+Please note that `RemoteController` is deprecated in API 21 and its functionality has been replaced by `MediaController` and `MediaSession`.
+
+Here's how to use `MediaController` and `MediaSession`:
+
+```java
+// to get a MediaController
+MediaSession.Token token = ...; // retrieve the token somehow, perhaps passed into your Activity
+MediaController mediaController = new MediaController(context, token);
+
+// to send a pause command
+mediaController.getTransportControls().pause();
+
+// to send a play command
+mediaController.getTransportControls().play();
+```
+
+Always ensure that you are using correct permissions and handling audio focus correctly in your app to avoid interfering with other apps' audio usage.

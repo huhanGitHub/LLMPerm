@@ -1,0 +1,35 @@
+Here is an example usage of the `getConstraints()` method of `DrmManagerClient` in a sample Android project. 
+
+Please note that you need to add the USER_PERMISSION, `com.android.vending.CHECK_LICENSE`, in the AndroidManifest.xml file. Also, you have to handle exceptions properly to make your application robust.
+
+```java
+import android.content.Context;
+import android.drm.DrmInfoRequest;
+import android.drm.DrmManagerClient;
+import android.util.Log;
+
+...
+
+public void test_DrmManagerClient_getConstraints() {
+    // Get application context
+    Context context = getApplicationContext();
+
+    // Initialize the DrmManagerClient
+    DrmManagerClient drmManagerClient = new DrmManagerClient(context);
+
+    // Build a DRM info request
+    DrmInfoRequest drmInfoRequest = new DrmInfoRequest(DrmInfoRequest.TYPE_REGISTRATION_INFO, "application/ogg");
+
+    // Get the constraints
+    try {
+        drmManagerClient.getConstraints(drmInfoRequest, DrmManagerClient.ACTION_PLAY);
+    } catch (Exception e) {
+        Log.e("test_DrmManagerClient_getConstraints", "Exception occurred while getting constraints: ", e);
+    }
+}
+```
+In this code, we're asking the DRM Manager to give us the constraints related to the playback action in relation to the content type we defined as "application/ogg".
+
+Please remember that to use above method, we suppose that we have already registered the DRM scheme we are using, typically done at the time of setting up of the application.
+
+Remember that DrmManagerClient is not to be used directly for DRM in any media playback application, it is part of the lower levels of the Android multimedia framework.

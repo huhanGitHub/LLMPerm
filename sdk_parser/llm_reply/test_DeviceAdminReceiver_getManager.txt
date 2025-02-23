@@ -1,0 +1,68 @@
+Here is the method test_DeviceAdminReceiver_getManager, which is an example of how to use the getManager method from the DeviceAdminReceiver class in Android.
+
+```java
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Call the test method
+        test_DeviceAdminReceiver_getManager();
+    }
+
+    public void test_DeviceAdminReceiver_getManager() {
+        // Set up a DeviceAdminReceiver
+        DeviceAdminReceiver dar = new DeviceAdminReceiver() {
+            @Override
+            public void onEnabled(Context context, Intent intent) {            
+                super.onEnabled(context, intent);
+            }
+        };
+
+        // Get the context
+        Context context = getApplicationContext();
+        
+        // Call the getManager method of DeviceAdminReceiver
+        DevicePolicyManager dpm = dar.getManager(context);
+
+        // Now you can use the DevicePolicyManager to manage your device policies, such as resetPassword, lockNow, etc.
+        // Ensure you have the required permissions in the manifest and the user has granted them
+        ComponentName cn = new ComponentName(context, DeviceAdminReceiver.class);
+        if (dpm.isAdminActive(cn)) {
+            dpm.resetPassword("new_password", DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY);
+            dpm.lockNow();
+        }
+    }
+}
+```
+
+Please remember to include the following permissions in your manifest file:
+
+```xml
+<application>
+    <receiver
+        android:name=".DeviceAdminExample"
+        android:permission="android.permission.BIND_DEVICE_ADMIN">
+        <intent-filter>
+            <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+        </intent-filter>
+        <meta-data
+            android:name="android.app.device_admin"
+            android:resource="@xml/device_admin" />
+     </receiver>
+</application>
+
+<uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+```
+
+And ensure you have user's consent before initiating any device policy operations.
+
+Note: We do not recommend to use hard-coded passwords and accept user passwords from secure sources only.

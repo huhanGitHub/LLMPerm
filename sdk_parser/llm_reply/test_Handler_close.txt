@@ -1,0 +1,43 @@
+Here's an example of how you might use the java.util.logging.Handler.close() method in a test within an Android activity. Please note that this is an exemplification, and you need to adapt it depending on the specific logger setup you are using:
+
+```java
+import android.util.Log;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Declare an instance of the Logger. 
+    private Logger logger;  
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // Call the test method
+        test_Handler_close();
+    }
+
+    public void test_Handler_close(){
+        try {
+            // Setup a Logger
+            logger = Logger.getLogger(MainActivity.class.getName());
+
+            // Adding a Console Handler to Logger
+            Handler consoleHandler = new ConsoleHandler();
+            logger.addHandler(consoleHandler);
+
+            // Remove Handler
+            consoleHandler.close();
+
+            logger.info("This is a test log message");
+
+        } catch (SecurityException e) {
+            Log.d("MainActivity", "SecurityException: " + e.getMessage());
+        }
+    }
+}
+```
+
+This Android activity creates a logger that can log messages. A handler is added to the logger, which closes. The handler is in charge of distributing logging messages to their intended destinations, such as console, files, or other output streams. Hence, after closing the handler, this logger would not print to the console. We are catching and logging a potential SecurityException that could be thrown if we don't have the proper permissions to perform the handler close operation.

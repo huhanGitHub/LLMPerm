@@ -1,0 +1,44 @@
+A sample code of method `test_URLSpan_onClick` can be as follows:
+
+```java
+public class MyActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        String fullText = "Visit: www.example.com";
+        SpannableString string = new SpannableString(fullText);
+
+        URLSpan urlSpan = new URLSpan("http://www.example.com") {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getURL()));
+                startActivity(i);
+            }
+        };
+
+        test_URLSpan_onClick(string, urlSpan);
+    }
+
+    public void test_URLSpan_onClick(SpannableString string, URLSpan urlSpan) {
+        int start = string.toString().indexOf("http");
+        int end = start + urlSpan.getURL().length();
+
+        string.setSpan(urlSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView textView = findViewById(R.id.your_text_view);
+        textView.setText(string);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+}
+```
+
+Please change R.id.your_text_view to your real TextView ID in the layout. The `test_URLSpan_onClick` method will apply the URLSpan to the substring of a string that matches the URL and sets the text to a TextView. URI is parsed when the URLSpan is clicked and a browser Intent is started.
+
+Remember to enable internet permission in Android Manifest:
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+This `test_URLSpan_onClick` method utilizes the `onClick` method defined in `URLSpan` to direct the user to a certain URL in their device browser when the displayed text is clicked. It is important to note that you should well format any retrieved URL before passing it as input to `URLSpan`, as badly formed URLs may make your application lose its responsiveness or even crash.

@@ -1,0 +1,34 @@
+Sure, the following is the method that takes MediaProjection, width and height. It also requires a surface name which identifies the surface to the system graphics code. Please ensure to have relevant permissions asked in your code before creating MediaProjection.
+
+```java
+import android.media.projection.MediaProjection;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.view.Surface;
+import android.content.Context;
+
+public void test_MediaProjection_createVirtualDisplay(Context context, MediaProjection mediaProjection){
+    String surfaceName = "DummySurface";
+    int screenDensity = context.getResources().getDisplayMetrics().densityDpi;
+    Surface dummySurface = null;  //Replace this with real surface
+    int width = 1080;  //Replace with real width
+    int height = 1920; //Replace with real height
+    int flags = 0; 
+
+    // create a virtual display
+    VirtualDisplay virtualDisplay = mediaProjection.createVirtualDisplay(
+        surfaceName,
+        width, 
+        height, 
+        screenDensity, 
+        flags, 
+        dummySurface, 
+        null,   //Display Callback
+        null    //Handler for Display Callback
+    );
+}
+```
+
+This method creates a virtual display on the screen, given the parameters. The surface specifies where the virtual display is drawn onto, width and height are the resolutions of the virtual display, screenDensity is the density of the virtual display screen and flags can be used to modify how the virtual display is created such as whether it's secure, etc.
+
+Please note you will need the RECORD_AUDIO and CAPTURE_VIDEO_OUTPUT permissions to use this API. Additionally, you need to replace `dummySurface` with real Surface object, typically from `SurfaceView.getHolder().getSurface()`, `SurfaceTexture` (via `TextureView.getSurfaceTexture()`, or `GLSurfaceView.getSurface()`) or similar.

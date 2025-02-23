@@ -1,0 +1,57 @@
+Here's a method that demonstrates how to use the `FileSystems` API to get a list of all the `FileStore`s in Java. Please note that this API is not available on the Android Platform, it's only for a Java application:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileStore;
+import java.nio.file.FileSystems;
+
+public void test_FileSystem_getFileStores() {
+    // Get the default FileSystem
+    java.nio.file.FileSystem fileSystem = FileSystems.getDefault();
+    
+    // Iterate over the FileStore objects 
+    for (FileStore fileStore : fileSystem.getFileStores()) {
+        // Display the name and type of file store
+        try {
+            System.out.println("name: " + fileStore.name());
+            System.out.println("type: " + fileStore.type());
+            System.out.println("total space: " + fileStore.getTotalSpace());
+            System.out.println("usable space: " + fileStore.getUsableSpace());
+        } catch (IOException e) {
+            System.out.println("An error occurred while getting the file store details.");
+            e.printStackTrace();
+        }
+    }
+}
+```
+In the method above, I'm using the `FileSystems.getDefault()` method to get a `FileSystem` instance for the default `FileSystem`. Then, I call `getFileStores()` on this instance to get all the `FileStore`s. 
+
+For each `FileStore`, I then output the name, type, total space and usable space of the `FileStore` to the console. Please keep in mind that because these methods throw IOException, they should be inside a try/catch block.
+
+But for android there is no direct API to get the `FileStore` objects. We use the `File` and the `StatFs` class to get the storage details. Here is a similar method for Android.
+
+```java
+import android.os.StatFs;
+import android.os.Environment;
+import java.io.File;
+
+public void test_FileSystem_getFileStores() {
+    File internalStorage = Environment.getDataDirectory();
+    StatFs internalStats = new StatFs(internalStorage.getPath());
+    long internalTotal = (long)internalStats.getBlockCount() * (long)internalStats.getBlockSize();
+    long internalFree = (long)internalStats.getAvailableBlocks() * (long)internalStats.getBlockSize();
+
+    System.out.println("Internal Storage Total: " + internalTotal);
+    System.out.println("Internal Storage Free: " + internalFree);
+
+    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+        File externalStorage = Environment.getExternalStorageDirectory();
+        StatFs externalStats = new StatFs(externalStorage.getPath());
+        long externalTotal = (long)externalStats.getBlockCount() * (long)externalStats.getBlockSize();
+        long externalFree = (long)externalStats.getAvailableBlocks() * (long)externalStats.getBlockSize();
+
+        System.out.println("External Storage Total: " + externalTotal);
+        System.out.println("External Storage Free: " + externalFree);
+    }
+}
+```

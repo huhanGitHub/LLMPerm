@@ -1,0 +1,22 @@
+Here's a method using the `toRealPath()` method from the Java NIO Path library which returns the real path (removes any ".." or symbolic links) of a given path:
+
+Please note that `toRealPath()` method throws an IOException if the file does not exist, or an error occurs while accessing the file. Therefore, we need to handle this exception either by using a try-catch block or by declaring this exception in the method signature.
+
+```java
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public void test_Path_toRealPath() {
+    Path path = Paths.get("/user/.././root","home","user","documents");
+    try {
+        Path realPath = path.toRealPath();
+        System.out.println("Real path: " + realPath.toString());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+In this example, it's assumed that the path "/user/.././root/home/user/documents" exists. The method converts that path into a real filesystem path by resolving any ".." or "." elements.
+
+However, remember that Android does not support java.nio.file package until Android API 26 (Android 8.0). If your application is aimed at API levels below 26, then java.nio.file package cannot be used. If you're planning to deploy on earlier Android versions, consider using `java.io.File` class in its place.

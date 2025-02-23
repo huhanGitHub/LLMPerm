@@ -1,0 +1,63 @@
+Here is a method example using SocketChannel for connecting to a server using Java:
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    // Other override methods here...
+
+    private void test_SocketChannel_connect() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SocketChannel socketChannel = null;
+                try {
+                    // replace with your server ip and port
+                    SocketAddress socketAddress = new InetSocketAddress("192.168.1.1", 8080);
+
+                    // opens a socket channel
+                    socketChannel = SocketChannel.open();
+                    // initiates a non-blocking connection operation
+                    socketChannel.configureBlocking(false);
+                    socketChannel.connect(socketAddress);
+
+                    while(!socketChannel.finishConnect()) {
+                        // wait, or do something useful here
+                        Log.i("SocketChannelExample", "connecting to the server...");
+                    }
+
+                    // sending message to server
+                    String sendText = "Hello, server!";
+                    ByteBuffer buffer = ByteBuffer.wrap(sendText.getBytes());
+                    socketChannel.write(buffer);
+
+                    buffer.clear();
+                    socketChannel.close();
+                    
+                    // log connection successful
+                    Log.i("SocketChannelExample", "connected and message sent to the server!");
+
+                } catch (IOException e) {
+                    Log.e("SocketChannelExample", "Cannot connect to the server!", e);
+                } finally {
+                    // cleaning up
+                    if (socketChannel != null) {
+                        try {
+                            socketChannel.close();
+                        } catch (IOException e) {
+                            Log.e("SocketChannelExample", "Cannot close the socketChannel", e);
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
+}
+```
+This method creates a new thread and in it opens a non-blocking SocketChannel to a specific IP and port. It sends a message to the server using the open channel and then closes it.
+
+Please remember this is a basic example, in a real-world application you would probably want to handle the threading using something like AsyncTask, or Handler/Looper to ensure you're not blocking the UI thread, and handle the IO operations better. 
+
+Also, Android requires internet permission to access the network. Please make sure to include the following line in your Android Manifest file:
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```

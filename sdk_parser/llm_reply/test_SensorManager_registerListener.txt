@@ -1,0 +1,65 @@
+Here is an example of how to use the SensorManager API's registerListener method in Android. This function is wrapped in the method test_SensorManager_registerListener. You would typically call this function in an Android activity's onResume method. 
+
+Before using this, remember to declare the uses-permission "android.permission.BODY_SENSORS" in your app's manifest file if the app runs on Android Marshmallow (API level 23) or higher.
+
+```java
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
+public class MainActivity extends AppCompatActivity {
+
+  private SensorManager sensorManager;
+  private Sensor sensor;
+  private SensorEventListener listener;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    // Get system service to interact with the sensor
+    sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+    // Get light sensor
+    if(sensorManager != null)
+      sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+      
+    listener = new SensorEventListener() {
+      @Override
+      public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+          Log.i("Sensor Changed", "onSensorChanged: Light Sensor: " + event.values[0]);
+        }
+      }
+
+      @Override
+      public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+      }
+    };
+    test_SensorManager_registerListener();
+  }
+ 
+  public void test_SensorManager_registerListener() {
+    // Register the listener for this sensor
+    if(sensorManager != null && sensor != null)
+      sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+  }
+  
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    if(sensorManager != null)
+      sensorManager.unregisterListener(listener);
+  }
+}
+```
+
+This code creates SensorManager and Sensor objects, then use these in the registerListener method, passing in a SensorEventListener to start receiving updates about the specified sensor. Here the sensor is light sensor. You can replace it with the sensor you want.  
+
+The SensorEventListener provides two callback methods, onSensorChanged and onAccuracyChanged. The onSensorChanged method will be called each time the sensor's data is updated, and onAccuracyChanged will be called if an event changes the data accuracy. 
+
+As a good practice, don't forget to unregister a sensor when it's not used or the activity is paused. You can do that in the onPause() or onDestroy() method.

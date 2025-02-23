@@ -1,0 +1,35 @@
+Below is an example of a method that checks LogManager permissions in a java or android application. Please note, this code is intended for a testing scenario. For a real application, please handle the security exception properly:
+
+```java
+import java.util.logging.LogManager;
+import java.util.logging.LoggingPermission;
+
+public void test_LogManager_checkPermission() {
+    try {
+        //get the log manager instance
+        LogManager logManager = LogManager.getLogManager();
+
+        //create a logging permission
+        LoggingPermission permission = new LoggingPermission("control", null);
+
+        // check for permission
+        logManager.checkPermission();
+
+        //permission checking is successful, print success message
+        System.out.println("Permission check passed successfully.");
+
+    } catch (SecurityException e) {
+        // Handles logging permission security exception, print error message
+        System.out.println("Permission check failed: " + e.getMessage());
+    }
+}
+```
+
+In the above code:
+
+- We are getting a LogManager instance.
+- Initializing a new LoggingPermission object (Although this step is unnecessary here, as the checkPermission method itself does not take any argument. However, it is useful to see how a LoggingPermission object can be created).
+- We are calling the checkPermission method, which throws a SecurityException if the calling thread does not have 'LoggingPermission("control")'.
+- We handle the possible SecurityException in a try-catch block to print whether permission check passed or not.
+
+Remember that android permission and the permission checked by LogManager.checkPermission() method are two different mechanisms. Nothing in java.util.logging depends directly on any particular android permission.

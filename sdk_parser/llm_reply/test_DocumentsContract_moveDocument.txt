@@ -1,0 +1,40 @@
+Sure, here is an implementation of the suggested method where we are simulating the movement of a document from one directory to another:
+
+Firstly, make sure you have necessary permissions defined in your manifest file:
+
+```
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+Here is the test_DocumentsContract_moveDocument method:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+public void test_DocumentsContract_moveDocument(Activity activity, Uri sourceUri, Uri targetDirectoryUri) {
+    ContentResolver resolver = activity.getContentResolver();
+
+    try {
+        DocumentsContract.Document result = DocumentsContract.moveDocument(resolver, sourceUri, sourceUri, targetDirectoryUri);
+
+        if (result != null) {
+            Log.d("MOVE_DOCUMENT", "Document moved successfully.");
+        } else {
+            Log.e("MOVE_DOCUMENT", "Document move failed.");
+        }
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+```
+Make sure you pass this function a source Uri and a target directory Uri. These Uris need to be obtained through system document picker for example, and make sure the target directory is a directory and not a file.
+
+You can call this method like this:
+
+```java
+Uri sourceUri = //get source Uri from somewhere, for example DocumentPicker;
+Uri targetDirectoryUri = //get target directory Uri from somewhere, for example DocumentPicker;
+
+test_DocumentsContract_moveDocument(this, sourceUri, targetDirectoryUri);
+```
+It is also important to note that the moveDocument() method doesn't move a document immediately, it schedules the document to be moved and Android will complete the operation in the background. For error checking, moveDocument() throws a FileNotFoundException if the source document does not exist or accessible, or the target directory does not exist or accessible, or the source document is not under the same root as the target directory. Other than these, you cannot determine if the move operation succeeds or not.

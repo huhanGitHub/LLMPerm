@@ -1,0 +1,43 @@
+The `MediaRoute2ProviderService` is an Android API related to Media Routing, typically used for transferring media from one device to another, like sending a movie from your phone to a TV. Do note that, these methods are primarily invoked by the system and not by application code directly. Therefore, it might not be advisable to use or test them in a standard Android Activity. 
+
+Still, if you'd like to use these in a sample method, a possible usage might look like this:
+
+```java
+import android.media.MediaRoute2ProviderService;
+import android.media.MediaRoute2Provider;
+import android.media.MediaRoute2Info;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+
+public void test_MediaRoute2ProviderService_requestCreateSession() {
+    MediaRoute2ProviderService mediaRoute2ProviderService = new MediaRoute2ProviderService() {
+        
+        // we're supposed to override its methods like below, but the method doesn't provide callbacks for apps to 
+        // intercept its operations by design, so we cannot actually requestCreateSession directly.
+        @Override 
+        public MediaRoute2Provider onCreateMediaRoute2Provider() {
+            
+            return new MediaRoute2Provider(getApplicationContext()) {
+
+                @Override
+                public void onDiscoveryRequestChanged(Bundle bundle) {
+                    // your code here
+                }
+
+                @Override
+                public void onCreateRouteController(String routeId, String routeGroupId, int controllerId) {
+                    // your code here
+                }
+
+                @Override
+                public void onSelectRoute(String routeId) {
+                    this.requestCreateSession(new MediaRoute2Info.Builder(routeId, "Default route").build(), "testControlRequestId");
+                }
+            };
+        }
+    };
+}
+```
+
+Despite this example, please remember these kind of system level APIs would normally communicated with the system service directly, and therefore frequently involve inter-process communication (IPC) that general Android app wouldn't have to deal with.

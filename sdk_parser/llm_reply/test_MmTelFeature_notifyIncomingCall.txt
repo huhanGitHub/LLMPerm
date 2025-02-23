@@ -1,0 +1,38 @@
+In order to provide an example on how you can use the `MmTelFeature` Android API, I will create a method `test_MmTelFeature_notifyIncomingCall`. However, I must clarify that it is not directly possible to generate a notifyIncomingCall event as the `MmTelFeature` class is hidden in the Android public API, and methods of this class are not available for developers to use. This could also lead to Android compatibility issues.
+
+Instead, I can demonstrate a similar example using `TelephonyManager` to register a listener for phone state. Here is a code snippet:
+
+```java
+import android.content.Context;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+
+public class MainActivity extends Activity {
+    ...
+
+    public void test_MmTelFeature_notifyIncomingCall() {
+        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+
+        PhoneStateListener phoneStateListener = new PhoneStateListener() {
+            @Override
+            public void onCallStateChanged(int state, String phoneNumber) {
+                switch(state) {
+                    case TelephonyManager.CALL_STATE_RINGING:
+                        // Incoming call
+                        Log.i("Incoming Call", phoneNumber);
+                        // TODO: take actions for incoming call
+                        break;
+                    // Consider other states if needed
+                }
+            }
+        };
+
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+    ...
+}
+```
+
+The above code demonstrates a way to listen to the events of an incoming call on Android, which is as similar we can get to a `MmTelFeature#notifyIncomingCall` example.
+
+Please note that the use of phone state listener requires the READ_PHONE_STATE permission. You must include `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>` in your Manifest file and also handle runtime permissions requests as needed.

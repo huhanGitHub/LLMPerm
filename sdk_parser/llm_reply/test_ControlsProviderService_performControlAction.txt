@@ -1,0 +1,39 @@
+Here is an example of how you might use the performControlAction method within the ControlsProviderService class. 
+
+In this example, we'll pretend that we have a control to toggle WiFi on or off. When the button is pressed, the executeCommand function is called, which toggles the state and calls the provider to reflect the change.
+
+Please replace "WifiManager" with the actual wifi manager class you are using, and replace "wifiManager" with an instance of your wifi manager.
+
+```java
+public void test_ControlsProviderService_performControlAction() {
+    final String CONTROL_ID = "wifi_toggle";
+
+    Control control = new Control.StatefulBuilder(CONTROL_ID, PendingIntent.getActivity(this, 0, new Intent(Settings.ACTION_WIFI_SETTINGS), 0))
+            .setTitle("WiFi")
+            .setSubtitle("Click to toggle")
+            .setStructure(new StructureInfo(CONTROL_ID, "WiFi", new ArrayList<>()))
+            .setDeviceType(DeviceTypes.TYPE_UNKNOWN)
+            .setStatus(Control.STATUS_OK)
+            .setControlTemplate(new ToggleTemplate(CONTROL_ID, new ControlButtonState(true, "description", Color.BLUE)))
+            .build();
+
+    Command command = new Command.RequestState(CONTROL_ID);
+
+    ControlsProviderService.performControlAction(CONTROL_ID, control, command, new Consumer<Integer>() {
+        @Override
+        public void accept(Integer integer) {
+            if (integer == ControlAction.RESPONSE_OK) {
+                WifiManager wifiManager = getWifiManagerService();
+                wifiManager.setWifiEnabled(!wifiManager.isWifiEnabled());
+            }
+        }
+    });
+}
+
+private WifiManager getWifiManagerService() {
+    return (WifiManager) getSystemService(Context.WIFI_SERVICE);
+}
+```
+This is just a simplified example, it assumes that you already have the control setup correctly. The actual implementation could be very different based on your needs.
+
+Note: this example uses ControlsProviderService.performControlAction, a made up static API. In the actual Android API, ControlsProviderService is an abstract class that you are expected to extend and implement the performControlAction method on your own. The implementation should interact with the specific Service in your app and update the control's state accordingly.

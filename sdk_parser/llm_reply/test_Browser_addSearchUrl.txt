@@ -1,0 +1,37 @@
+Sure, here's a sample method which you can use as a reference to test adding of search URL in browser:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+public void test_Browser_addSearchUrl() {
+    // Check if the WRITE_HISTORY_BOOKMARKS permission is already available.
+    if (checkSelfPermission(Manifest.permission.WRITE_HISTORY_BOOKMARKS)
+            != PackageManager.PERMISSION_GRANTED) {
+        // If not, then request permission
+        requestPermissions(new String[]{Manifest.permission.WRITE_HISTORY_BOOKMARKS}, 0);
+    } else {
+        // If permission is already granted, then add a search URL in browser history
+        try {
+            String url = "https://www.example.com";
+            String title = "Example Website";
+            // Creating a values object to store the URL details
+            ContentValues values = new ContentValues();
+            values.put(Browser.BookmarkColumns.TITLE, title);
+            values.put(Browser.BookmarkColumns.URL, url);
+            values.put(Browser.BookmarkColumns.DATE, System.currentTimeMillis());
+            // 0 = history, 1 = bookmark
+            values.put(Browser.BookmarkColumns.BOOKMARK, 0);
+            // Updating the browser history
+            getContentResolver().insert(Browser.BOOKMARKS_URI, values);
+            Log.d("Browser", "Search URL added successfully.");
+        } catch (Exception e) {
+            Log.e("Browser", "Error adding search URL.", e);
+        }
+    }
+}
+```
+
+Please note that `android.provider.Browser.java` is deprecated as of API 23: Android 6.0 (Marshmallow) and no longer exists as of API 26: Android 8.0 (Oreo). You are supposed to use `WebView` instead to add and retrieve browsing history. The usage of the API above is for the lower versions. 
+
+Before trying to do anything, be sure to check if your app has the `WRITE_HISTORY_BOOKMARKS` permission. If not, you need to request this from the user. After that, you can add the new search URL to the browser history. Since `Browser.BOOKMARKS_URI` is deprecated, use `Browser.BOOKMARKS_URI` instead, where this constant was re-introduced in API 23+ as a read-only that lists both bookmarks and visited site history (but does not differentiate between the two). 
+
+Please adapt it according to your need.

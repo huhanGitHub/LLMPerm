@@ -1,0 +1,79 @@
+Here is a simple example that creates a test method for BackupAgent.doBackup in an Android environment. However, it should be noted that the Android BackupAgent and BackupAgentHelper classes are abstract classes, which means you cannot instantiate them. You need to create a custom subclass where you provide the implementation for these methods, and then instantiate your custom class instead.
+
+Please note BackupAgent.doBackup(...) is a protected method and it requires ParcelFileDescriptor which could be obtained from a local file or a socket. Working with this method directly seems to be internal to Android system.
+
+In this example, MockBackupAgent is our custom subclass of BackupAgent, and we simply print a message in the doBackup method:
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataOutput;
+import android.os.ParcelFileDescriptor;
+import android.app.backup.BackupDataInput;
+import android.os.ParcelFileDescriptor;
+
+public class MainActivity extends AppCompatActivity {
+
+    class MockBackupAgent extends BackupAgent{
+
+        @Override
+        public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
+                             ParcelFileDescriptor newState) throws IOException {
+            // Your custom backup logic
+            System.out.println("Backing up data...");
+        }
+
+        @Override
+        public void onRestore(BackupDataInput data, int appVersionCode,
+                              ParcelFileDescriptor newState) throws IOException {
+            // Your custom restore logic
+            System.out.println("Restoring data...");
+        }
+    }
+
+    public void test_BackupAgent_doBackup(){
+        try {
+            MockBackupAgent backupAgent = new MockBackupAgent();
+            ParcelFileDescriptor oldState = ParcelFileDescriptor.open(
+                    new File(getFilesDir(), "oldState"), ParcelFileDescriptor.MODE_READ_WRITE);
+            BackupDataOutput data = new BackupDataOutput(oldState.getFd());
+            ParcelFileDescriptor newState = ParcelFileDescriptor.open(
+                    new File(getFilesDir(), "newState"), ParcelFileDescriptor.MODE_READ_WRITE);
+
+            backupAgent.onBackup(oldState, data, newState);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Test backup agent
+        test_BackupAgent_doBackup();
+    }
+}
+```
+
+Please, place the file `newState` and `oldState` in the appropriate directory before running the sample test sequence.
+
+This is only a testing scenario and not for actual use.
+
+Better way to utilize the BackupAgent is to properly register it in the manifest file and android system invoke the BackupAgent's methods on its own.
+
+```xml
+<application android:label="DemoBackup">
+    <service
+        android:name=".DemoBackupAgent"
+        android:permission="android.permission.BIND_BACKUP_AGENT">
+        <meta-data
+            android:name="android.app.backupAgent"
+            android:value=".DemoBackupAgent" />
+        <meta-data
+            android:name="android.app.backup.sharedUserId"
+            android:value="com.example.shared" />
+    </service>
+</application>
+```

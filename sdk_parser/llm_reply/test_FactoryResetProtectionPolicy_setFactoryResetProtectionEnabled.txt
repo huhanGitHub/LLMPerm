@@ -1,0 +1,55 @@
+Here's a simple usage example of the FactoryResetProtectionPolicy API in an Android Activity set the value of setFactoryResetProtectionEnabled. Please note that you need device admin permission to use this API.
+
+```java
+import android.app.admin.DevicePolicyManager;
+import android.app.admin.FactoryResetProtectionPolicy;
+import android.content.ComponentName;   
+import android.content.Context;
+import android.content.Intent;
+
+public class MainActivity extends AppCompatActivity {
+    
+    private static final int REQUEST_CODE_ENABLE_ADMIN = 1;    
+    private DevicePolicyManager mDevicePolicyManager;    
+    private ComponentName mAdminComponentName;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        mDevicePolicyManager = (DevicePolicyManager)
+                getSystemService(Context.DEVICE_POLICY_SERVICE);    
+        mAdminComponentName = YourAdminReceiver.getComponentName(this);    
+        
+        Intent intent = new Intent(DevicePolicyManager
+                .ACTION_ADD_DEVICE_ADMIN).putExtra(DevicePolicyManager
+                .EXTRA_DEVICE_ADMIN, mAdminComponentName);    
+        startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE_ENABLE_ADMIN && resultCode == RESULT_OK){
+            test_FactoryResetProtectionPolicy_setFactoryResetProtectionEnabled();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void test_FactoryResetProtectionPolicy_setFactoryResetProtectionEnabled() {
+        if (mDevicePolicyManager.isAdminActive(mAdminComponentName)) {
+            FactoryResetProtectionPolicy policy = mDevicePolicyManager.getFactoryResetProtectionPolicy(mAdminComponentName);
+            FactoryResetProtectionPolicy.Builder builder = new FactoryResetProtectionPolicy.Builder(policy);
+            builder.setFactoryResetProtectionEnabled(true);
+            mDevicePolicyManager.setFactoryResetProtectionPolicy(mAdminComponentName, builder.build());
+            Toast.makeText(this, "FactoryResetProtectionPolicy set to enabled.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Not a device admin", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+``` 
+
+This example expects a class (`YourAdminReceiver`) that extends `DeviceAdminReceiver` in your project. The `YourAdminReceiver.getComponentName(this)` method should return a `ComponentName` object, which is used to tell the system that your app is ready to be a device admin.
+
+In this code, when the Activity is created, it prompts the user to grant the app device admin permission. If the user agrees, the app enables the factory reset protection policy.

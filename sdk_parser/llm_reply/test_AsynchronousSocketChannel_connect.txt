@@ -1,0 +1,40 @@
+Here's an example of how to create a method to test usage of java.nio.channels.AsynchronousSocketChannel:
+
+```java
+public void test_AsynchronousSocketChannel_connect() {
+    final AsynchronousSocketChannel clientChannel;
+    try {
+        // Create an AsynchronousSocketChannel
+        clientChannel = AsynchronousSocketChannel.open();
+        if (!clientChannel.isOpen()) {
+            throw new RuntimeException("Unable to open AsynchronousSocketChannel");
+        }
+
+        // Connect to remote server
+        InetSocketAddress hostAddress = new InetSocketAddress("localhost", 5000);
+        Future<Void> future = clientChannel.connect(hostAddress);
+        try {
+            Void result = future.get(5, TimeUnit.SECONDS);
+            System.out.println("Connection established");
+        } catch (TimeoutException ex) {
+            System.out.println("Connection timeout");
+            future.cancel(true);
+        }
+
+        // Close the channel
+        clientChannel.close();
+    } catch (IOException | ExecutionException | InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In this code, an AsynchronousSocketChannel is opened and then connected to a server running at `localhost` on port `5000`. The connection is attempted with a timeout of 5 seconds. If the connection is successful, it prints "Connection established", and if it isn't, it prints "Connection timeout". Then, the channel is closed. 
+
+Please replace "localhost" and "5000" with the IP address and port number of the actual server you want to connect to. Also, remember to ask for the INTERNET permission in your Android app's manifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Please note that Android does not allow performing network operations on the main thread, so you should call this method from a separate thread or use AsyncTasks. For more detailed socket operations such as sending and receiving data, you may want to take advantage of the CompletionHandler callback or use AsynchronousSocketChannel's read and write methods along with the Future object for synchronous behavior. Also note that this API is part of Java NIO.2 (part of Java 7 and later), and not specific to Android.

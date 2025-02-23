@@ -1,0 +1,62 @@
+Here's an example of how you could implement the `test_SliceProvider_delete` method in an Android activity using the `SliceProvider` class (notice that it doesn't offer a direct delete method). This example assumes you're attempting to delete a slice by its URI.
+
+Assuming you have created your own SliceProvider, you can define a delete method inside of the custom provider and access it through the provider.
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    test_SliceProvider_delete();
+}
+
+public void test_SliceProvider_delete() {
+    ContentResolver resolver = getContentResolver();
+    Uri uri = new Uri.Builder().appendPath("content://your.authority").appendPath("path_to_slice").build();
+
+    int deleted;
+    try {
+        deleted = resolver.delete(uri, null, null);
+    } catch (Exception ex) {
+        Log.e("MainActivity", "Error deleting slice with URI: " + uri.toString(), ex);
+        deleted = 0;
+    }
+
+    if (deleted > 0) {
+        Toast.makeText(this, "Slice deleted successfully.", Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(this, "Slice deletion failed.", Toast.LENGTH_SHORT).show();
+    }
+}
+}
+```
+
+Remember to add your authority to the manifest:
+
+```xml
+<provider
+    android:name=".your_package.YourSliceProvider"
+    android:authorities="your.authority"
+    android:exported="false" />
+```
+
+And your SliceProvider class needs to lookup the URI in its delete method:
+
+```java
+public class YourSliceProvider extends SliceProvider {
+    // ...
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+            // Your code to delete a slice based on the URI
+            // Return the number of deleted items.
+    }
+
+    // ...
+}
+```
+
+Remember that `delete` on a `ContentResolver` returns the count of rows deleted. If the Slice you want to remove is uniquely identified by its URI, then the return would be 1 on success or 0 on failure. If your slice's URI refers to multiple slices, then it would return the count of slices deleted.

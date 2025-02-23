@@ -1,0 +1,40 @@
+Sure, here's an example that uses NfcA to communicate with an NFC A tag. It's transceiving simple data (`byte[]`) to the tag.
+
+Assuming your activity has already checked that an NFC compatible device is discovered (like an NFC A tag), and you have stored it and passed the `Tag` object, here's an example of a `test_NfcA_transceive` method in your activity:
+
+```java
+public void test_NfcA_transceive(Tag myTag) {
+    NfcA nfcA = NfcA.get(myTag);
+  
+    // Ensure you perform NFC communication on a separate thread than the UI one
+    // to avoid ANRs (Application Not Responding) 
+    new Thread(() -> {
+        try {
+            // Connect to the discovered NfcA tag
+            nfcA.connect();
+      
+            // Define a simple command (all zeros)
+            byte[] command = new byte[16];
+  
+            // Send the command and receive a response
+            byte[] response = nfcA.transceive(command);
+      
+            Log.i("NfcATest", "Command sent, response received.");
+            // Do something with the response...
+      
+            // Make sure to close the connection when done
+            nfcA.close();
+        } catch (IOException e) {
+            Log.e("NfcATest", "Error communicating with NfcA tag", e);
+        }
+    }).start();
+}
+```
+
+This example transmits a dummy command (`byte[16]`) to the NFC A tag using the `transceive(byte[])` method. The method `transceive(byte[])` performs both a write and a read in one function call - it sends the data to the tag and immediately reads the tag's response. 
+
+The `NfcA` and its `transceive(byte[])` method are blocked for long operations. Hence, in practice, you should execute them in a separate thread to avoid blocking your application's UI. 
+
+Remember to handle any errors or exceptions accordingly, NFC communication can be subject to various issues such as I/O errors or timeouts.
+
+Please note that you'd need to handle NFC permissions and device availability in your activity before using this method. Also, the actual command byte array to send would depend on the NFC A tag's specifications you're interfacing with.

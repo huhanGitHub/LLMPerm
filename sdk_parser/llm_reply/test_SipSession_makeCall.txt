@@ -1,0 +1,86 @@
+Sure, here is a usage example of the makeCall method of the SipSession class. In this function, we create a SipSession.Listener instance then we use it within a SipSession object. And then makeCall method of SipSession object is used for placing a SIP call.
+
+```java
+import android.app.Activity;
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+import android.net.sip.SipSession;
+
+public class MainActivity extends Activity {
+
+    private SipManager manager;
+    private SipProfile localProfile;
+    
+    //...
+
+    public void test_SipSession_makeCall() {
+        try {
+            // Prepare the SIP session
+            SipSession.Listener listener = new SipSession.Listener(){
+                @Override
+                public void onCalling(SipSession session) {
+                        super.onCalling(session);
+                }
+
+                @Override
+                public void onError(SipSession session, int error, String message) {
+                        super.onError(session, error, message);
+                }
+
+                @Override
+                public void onRegistered(SipSession session) {
+                        super.onRegistered(session);
+                }
+
+                @Override
+                public void onRinging(SipSession session, SipProfile caller, String sessionDescription) {
+                        super.onRinging(session, caller, sessionDescription);
+                }
+
+                @Override
+                public void onRingingBack(SipSession session) {
+                        super.onRingingBack(session);
+                }
+
+                @Override
+                public void onRegistrationFailed(SipSession session, int errorCode, String message) {
+                        super.onRegistrationFailed(session, errorCode, message);
+                }
+
+                @Override
+                public void onRegistrationTimeout(SipSession session) {
+                        super.onRegistrationTimeout(session);
+                }
+            };
+
+            manager = SipManager.newInstance(this);
+            SipSession session = manager.createSipSession(localProfile, listener);
+            
+            // Make a call
+            String targetSipAddress = "sip:username@domain.com";
+            SipProfile targetProfile = SipProfile.Builder(targetSipAddress).build();
+            int timeout = 30;
+            session.makeCall(targetProfile, null, timeout);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    //...
+}
+```
+Above mentioned activity replicates the process of registering, making a call and handling different session events using SipSession in Android.
+
+Please make sure to replace `sip:username@domain.com` with the actual SIP address you want to make a call to, and initialize `localProfile` with your own SipProfile. 
+
+You might need to add the following permissions to your app's manifest file if they are not already there:
+
+```xml
+<uses-permission android:name="android.permission.USE_SIP" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+``` 
+
+Notice: SIP API is not supported on all devices. You should check whether the device supports SIP API using `SipManager.isApiSupported(Context)` and whether SIP is enabled on the devices using `SipManager.isSipWifiOnly(Context)` and `SipManager.isVoipSupported(Context)`.

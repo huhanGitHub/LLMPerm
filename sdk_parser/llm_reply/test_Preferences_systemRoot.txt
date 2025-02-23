@@ -1,0 +1,26 @@
+The java.util.prefs.Preferences API is used for handling Preference data, but note that this API is not typically utilised in Android development much. Because of the lacking certain features that Android system requires, generally Shared Preferences API is more suitable for Android tasks. 
+
+However, here's an example of how you might use the java.util.prefs.Preferences API in a simple Java application:
+
+```java
+import java.util.prefs.Preferences;
+
+public void test_Preferences_systemRoot() {
+    // Getting system preferences
+    Preferences systemPrefs = Preferences.systemRoot();
+    
+    // Getting user preferences
+    Preferences userPrefs = Preferences.userRoot();
+
+    // Put some value in system preferences
+    systemPrefs.put("SystemKey", "SystemValue");
+    System.out.println("SystemKey: " + systemPrefs.get("SystemKey", "DefaultValue"));
+
+    // Put some value in user preferences
+    userPrefs.put("UserKey", "UserValue");
+    System.out.println("UserKey: " + userPrefs.get("UserKey", "DefaultValue"));
+}
+```
+As you can see, we use the systemRoot() and userRoot() methods to get access to the system preferences and user preferences respectively. Then we can use the put(String key, String value) method to store values in the preferences with a specific key. The get(String key, String defaultValue) method is used to retrieve the values from the preferences. If the specified key is not found, it will return the provided default value.
+
+Please note that this code will not run on Android because the java.util.prefs.Preferences library is not a part of the Android SDK, java.util.prefs package available in standard Java but it is not supported on Android. In Android, the SharedPreferences Class should be used to save simple application data.

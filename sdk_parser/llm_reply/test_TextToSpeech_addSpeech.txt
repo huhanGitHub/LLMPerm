@@ -1,0 +1,59 @@
+Here is a method test_TextToSpeech_addSpeech that shows an usage example of android API android/speech/tts/TextToSpeech.java.
+
+```Java
+public class MainActivity extends AppCompatActivity {
+
+    private TextToSpeech textToSpeech;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_TextToSpeech_addSpeech();
+    }
+
+
+    public void test_TextToSpeech_addSpeech() {
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.UK);
+                    String simpleText = "Hello, this is a test of TextToSpeech.";
+                    String utteranceId = this.hashCode() + "";
+                    textToSpeech.addSpeech(simpleText, utteranceId);
+                    textToSpeech.speak(simpleText, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+}
+```
+
+This usage example requires the code to be run in an activity.
+
+**The method test_TextToSpeech_addSpeech():**
+
+- It initializes a TextToSpeech object.
+- On successful initialization (`status != TextToSpeech.ERROR`), it sets the language to UK English.
+- Then creates a string `simpleText` with some speech text.
+- Generates a unique `utteranceId` using the `hashCode` of the current object (`this`).
+- Then it uses `addSpeech()` and `speak()` method to add the speech in the queue and start speaking the text.
+
+The `onDestroy()` method of the activity stops and releases the resources used by the TextToSpeech engine.
+
+Before using TextToSpeech functionality, remember to add the necessary permissions in the app manifest:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```

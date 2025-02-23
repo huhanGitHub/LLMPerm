@@ -1,0 +1,38 @@
+Here is a sample code for the method `test_JobParameters_getTriggeredContentUris` which demonstrates the usage of the method `getTriggeredContentUris` from `JobParameters` class.
+
+```java
+import android.app.Activity;
+import android.app.job.JobParameters;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
+import android.os.PersistableBundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+
+public class MainActivity extends Activity {
+
+    //...
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void test_JobParameters_getTriggeredContentUris(JobParameters params) {
+        Uri[] triggeredUris = params.getTriggeredContentUris();
+        if(triggeredUris != null){
+            for (Uri uri : triggeredUris) {
+                Log.i("MainActivity", "Triggered Uri: " + uri.toString());
+                Toast.makeText(this, "Triggered Uri: " + uri.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    //...
+}
+```
+
+Please note that the method `getTriggeredContentUris()` requires API level 24 or higher. This method returns the URIs that triggered the job when using `addTriggerContentUri(JobInfo.TriggerContentUri)`. This can be null if no URIs have triggered or if the triggering URIs aren't supported by the application's target API level. 
+
+So, in the `test_JobParameters_getTriggeredContentUris` method, we make sure to check that the returned value is not null before iterating over the URIs and logging them.
+
+Please modify it according to your requirements if necessary.

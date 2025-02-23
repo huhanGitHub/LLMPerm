@@ -1,0 +1,47 @@
+Here is an example of the method test_ExternalStorageStats_getTotalBytes that will be used in an Android activity. To successfully run this code, you'll need to have usage stats permission and also be targeting API 26 or higher.
+
+```java
+@TargetApi(Build.VERSION_CODES.O)
+private void test_ExternalStorageStats_getTotalBytes(){
+    // Get the app's package name
+    String myPackageName = getPackageName();
+
+    // Get the storage manager
+    StorageStatsManager storageStatsManager = (StorageStatsManager) getSystemService(Context.STORAGE_STATS_SERVICE);
+
+    // Get the storage volume 
+    StorageManager storageManager = (StorageManager) getSystemService(Context.STORAGE_SERVICE);
+    List<StorageVolume> storageVolumes =  storageManager.getStorageVolumes();
+    UUID appSpecificUUID = null;
+    for(StorageVolume volume : storageVolumes){
+        if(volume.isPrimary()){
+            appSpecificUUID = volume.getUuid();
+            break;
+        }
+    }
+
+    // Get external storage stats
+    ExternalStorageStats externalStorageStats = null;
+    try {
+        externalStorageStats = storageStatsManager.queryExternalStatsForUser(appSpecificUUID, Process.myUserHandle());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    // Get total bytes
+    long totalBytes = externalStorageStats.getTotalBytes();
+
+    // Logging total bytes
+    Log.d("MainActivity", "Total Bytes: " + totalBytes );
+}
+```
+
+This code retrieves the total bytes used on the primary external storage volume by all apps for the current user. Please note, you have to request `PACKAGE_USAGE_STATS` permission and the user has to grant it to you in settings (On Android version >= 6).
+
+```xml
+<uses-permission
+    android:name="android.permission.PACKAGE_USAGE_STATS"
+    tools:ignore="ProtectedPermissions" />
+```
+
+Also, notice that the `queryExternalStatsForUser()` method can throw an IOException, which you must handle appropriately.

@@ -1,0 +1,33 @@
+Sure, here is a sample code of the method `test_VisualVoicemailService_setSmsFilterSettings()` written in Java. Note that this method must be called within a class that extends `VisualVoicemailService`.
+
+```java
+...
+import android.telephony.VisualVoicemailService;
+import android.telephony.VisualVoicemailSmsFilterSettings;
+
+public class MyVisualVoicemailService extends VisualVoicemailService {
+    private static final String TAG = MyVisualVoicemailService.class.getSimpleName();
+
+    public void test_VisualVoicemailService_setSmsFilterSettings() {
+        VisualVoicemailSmsFilterSettings settings = new VisualVoicemailSmsFilterSettings.Builder()
+           .setClientPrefix("example") 
+           .setOriginatingNumbers(Arrays.asList("123", "456"))
+           .build();
+
+        // Use your own voicemail service
+        VisualVoicemailService visualVoicemailService = MyVisualVoicemailService.this;
+
+        visualVoicemailService.setSmsFilterSettings(settings);
+
+        // Logging
+        Log.d(TAG, "Visual voicemail SMS filter settings set: " + settings.toString());
+    }
+}
+```
+Please keep in mind that Android's Visual Voicemail APIs are meant for receiving OTA provisioning from carrier, and as such, these functions are only available to the user's current default dialer app on the Android device.
+
+Remember that your android app requires `Manifest.permission.READ_PHONE_STATE` permission to use this API. For this, declare the permission in the manifest file as shown below:
+
+```xml
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+```

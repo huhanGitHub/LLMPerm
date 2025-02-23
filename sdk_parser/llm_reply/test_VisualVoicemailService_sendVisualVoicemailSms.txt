@@ -1,0 +1,48 @@
+This example assumes that the application has the required permissions to use the Phone service, especially the `android.permission.READ_PHONE_STATE` and `android.permission.SEND_SMS`.
+
+```java
+import android.telephony.TelephonyManager;
+import android.telephony.VisualVoicemailSms;
+import android.telephony.VisualVoicemailService;
+import android.os.Bundle;
+
+public void test_VisualVoicemailService_sendVisualVoicemailSms() {
+    // Get the Telephony system service
+    TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+    // Get the package name
+    String packageName = getPackageName();
+    
+    // Check if visual voicemail is supported
+    if (telephonyManager.isVisualVoicemailSmsSupported()) {
+
+        // Create a new VisualVoicemailSms object
+        VisualVoicemailSms.Builder builder = new VisualVoicemailSms.Builder();
+        
+        // Set the required parameters
+        builder.setPackageName(packageName);
+        builder.setPrefix("testPrefix");
+        builder.setFields(new Bundle());
+        VisualVoicemailSms visualVoicemailSms = builder.build();
+
+        // Create a new VisualVoicemailService object
+        VisualVoicemailService visualVoicemailService = new VisualVoicemailService() {
+            @Override
+            public VisualVoicemailTask onCreateTask(VisualVoicemailTask.VisualVoicemailJob visualVoicemailJob) {
+                return null;
+            }
+        };
+
+        // Override the sendVisualVoicemailSms function
+        visualVoicemailService.sendVisualVoicemailSms(visualVoicemailSms);
+    } else {
+        // Visual voicemail is not supported
+        Log.w("VisualVoicemailService", "Visual voicemail not supported on this device.");
+    }
+}
+```
+Please note that this example assumes that your class has extends `Activity` or `Context` in order to use the `getSystemService` and `getPackageName` methods.
+
+Moreover, the `onCreateTask` method should be overridden accordingly in case you want to return a customized task. Bear in mind that this method runs on the visual voicemail service executor, which is a single-threaded executor concatenated per package.
+
+We should consider that the documentation specifies that the `sendVisualVoicemailSms` method is used in response to `VisualVoicemailTask.ACTION_SEND_SMS`. Depending on your use case, you may want to consider triggering this with the corresponding `VisualVoicemailTask`.

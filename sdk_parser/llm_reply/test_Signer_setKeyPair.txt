@@ -1,0 +1,51 @@
+Sure, here is a basic example on how to use the Signer class in Java:
+
+```java
+    public void test_Signer_setKeyPair() {
+        try {
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DSA");
+            keyPairGen.initialize(2048);
+            KeyPair pair = keyPairGen.generateKeyPair();
+            
+            Signer mySigner = new Signer("DSA Signer") {
+                public byte[] sign() throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+                    Signature sign = Signature.getInstance("SHA256withDSA");
+                    sign.initSign(getPrivateKey());
+                    String data = "This is a test data";
+                    sign.update(data.getBytes());
+                    byte[] signature = sign.sign();
+                    return signature;
+                }
+            };
+            
+            mySigner.setKeyPair(pair);
+            
+            byte[] signature = mySigner.sign();
+            
+            System.out.println("Signature generated successfully");
+            
+            // To verify the signature:
+            try {
+                Signature signatureForVerify = Signature.getInstance("SHA256withDSA");
+                signatureForVerify.initVerify(mySigner.getPublicKey());
+                signatureForVerify.update("This is a test data".getBytes());
+                
+                boolean isVerified = signatureForVerify.verify(signature);
+                if(isVerified) {
+                    System.out.println("Saved signature matched");
+                } else {
+                    System.out.println("Saved signature did not match");
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while verifying: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    }
+``` 
+
+This code generates a new key pair using DSA and uses this key pair to instantiate a Signer which generates a signature for a given piece of data (a string in this case). It then verifies the signature using the original data and the public key. Please update the code with your own exception handling and use cases.
+   
+Note: The `Signer` API has been deprecated in recent Java versions as of JDK 1.8. The `KeyPair`, `Signature`, `KeyPairGenerator` APIs amongst others should typically be used.

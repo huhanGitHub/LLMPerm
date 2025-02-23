@@ -1,0 +1,48 @@
+Here is an example of how you might create the `test_TextKeyListener_initPrefs` method. It's important to note that testing UI components in Android can be complex and it often requires specific testing frameworks like Espresso or Robolectric. But for simple usage example, you might do something like below:
+
+```java
+
+import android.text.method.TextKeyListener;
+import android.text.method.TextKeyListener.Capitalize;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity {
+
+    ...
+
+    private EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        EditText editText = findViewById(R.id.edit_text);
+
+        test_TextKeyListener_initPrefs();
+    }
+
+    public void test_TextKeyListener_initPrefs() {
+        // Get existing autocap and autocorrect settings.
+        int flags = 0;
+        if (android.provider.settings.System.getInt(getContentResolver(),
+                android.provider.Settings.System.TEXT_AUTO_CAPS, 0) > 0) {
+            flags |= TextKeyListener.Capitalize.IGNORE;
+        }
+        if (android.provider.settings.System.getInt(getContentResolver(),
+                android.provider.Settings.System.TEXT_AUTO_REPLACE, 0) > 0) {
+            flags |= TextKeyListener.AUTO_TEXT_FLAG;
+        }
+        TextKeyListener tkl = new TextKeyListener(Capitalize.WORDS, (flags > 0));
+        editText.setKeyListener(tkl);
+    }
+
+    ...
+}
+```
+
+This code basically creates a `TextKeyListener` with preferences based on system settings for auto-capitalisation and auto-correction, then sets the `TextKeyListener` on the `EditText` in your activity.
+
+Remember to replace `R.id.edit_text` with the id of the `EditText` element in your layout file.
+
+However, this is a basic and simple example, in real world case you might need more advanced testing strategies and consider edge cases.

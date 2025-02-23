@@ -1,0 +1,43 @@
+Here's an example of how you might use the `SliceManager.checkSlicePermission` method in an Android activity.
+
+```java
+import android.app.slice.SliceManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+
+public class MainActivity extends AppCompatActivity {
+
+    // App's slice URI.
+    private static final Uri SLICE_URI = Uri.parse("content://com.myapp/slice");
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Test the SliceManager checkSlicePermission method.
+        test_SliceManager_checkSlicePermission(this, SLICE_URI);
+    }
+
+    public void test_SliceManager_checkSlicePermission(Context context, Uri sliceUri) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            SliceManager sliceManager = context.getSystemService(SliceManager.class);
+
+            // Check if the app has permission to access the slice.
+            int permission = sliceManager.checkSlicePermission(sliceUri, android.os.Process.myPid(), android.os.Process.myUid());
+
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                Log.d("SlicePermission", "App has permission to access the slice.");
+            } else {
+                Log.d("SlicePermission", "App does not have permission to access the slice.");
+            }
+        }
+    }
+}
+```
+This code creates an `onCreate()` method for a `MainActivity` class. This example includes code for checking if the application has the necessary permissions to access a specified slice. 
+
+Please remember to deal with the slice permissions properly in a real application to avoid potential security issues. 
+
+Also, please note that `SliceManager` is available from SDK version 28 (Android 9.0, PIE) and you need to check the SDK version before using it.

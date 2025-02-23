@@ -1,0 +1,44 @@
+Below is the simple usage example of `AsynchronousFileChannel` in Java. For this particular testing method we will be writing some data to a text file asynchronously. 
+
+Please note that `AsynchronousFileChannel` is not specifically related to Android and doesn't need any special permissions. It is a standard Java NIO API that works on all platforms supporting Java. 
+
+```java
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousFileChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.concurrent.Future;
+
+public void test_AsynchronousFileChannel_write() {
+    try {
+        AsynchronousFileChannel asynchronousFileChannel = AsynchronousFileChannel.open(
+                Paths.get("sample.txt"), StandardOpenOption.WRITE);
+        
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        String data = "Testing AsynchronousFileChannel write operation";
+        buffer.clear();
+        buffer.put(data.getBytes());
+        buffer.flip();
+
+        // Start the write
+        Future<Integer> operation = asynchronousFileChannel.write(buffer, 0);
+
+        while(!operation.isDone()) {
+            // Here we can do something while the write operation is being executed asynchronously
+            System.out.println("Waiting for the write operation to complete...");
+        }
+
+        // Get the result of the operation (number of bytes written)
+        int result = operation.get();
+        System.out.println("Bytes written : " + result);
+
+        asynchronousFileChannel.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This example asynchronously writes a string to a file named `sample.txt`. The `while` loop just checks if the write operation is still pending and when it finishes, it prints the number of bytes written. In a real application, you could replace this polling method with a `CompletionHandler` to get a callback when the operation is complete. 
+
+Please ensure that the file `sample.txt` is located in the project directory or provide the absolute path to the file. Also remember that this code will replace any text already in the file. Change the `StandardOpenOption` to `APPEND` if you want to append text instead.

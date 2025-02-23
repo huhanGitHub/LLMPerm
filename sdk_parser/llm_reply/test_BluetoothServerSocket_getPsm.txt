@@ -1,0 +1,36 @@
+Here is a self-contained method `test_BluetoothServerSocket_getPsm` that provides an example of usage of the `android.bluetooth.BluetoothServerSocket` in an Android Activity. The method is used to print the PSM (Protocol/Service Multiplexer) value of the `BluetoothServerSocket`. 
+
+```java
+public void test_BluetoothServerSocket_getPsm() {
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+        BluetoothServerSocket serverSocket = null;
+        try {
+            // Create a secure incoming RFCOMM Bluetooth connection
+            serverSocket = bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("Test", UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) { 
+                // get the PSM for the L2CAP server socket
+                int psm = serverSocket.getPsm();
+                Log.d("BluetoothServerSocket", "PSM: " + psm);
+            } else {
+                Log.d("BluetoothServerSocket", "Android Q or higher is required to get PSM.");
+            }
+        } catch (IOException e) {
+            Log.e("BluetoothServerSocket", "Socket's listen() method failed", e);
+        } finally {
+            if (serverSocket != null) {
+                try {
+                    serverSocket.close();
+                } catch (IOException e) {
+                    Log.e("BluetoothServerSocket", "Could not close the connect socket", e);
+                }
+            }
+        }
+    } else {
+        Log.d("BluetoothServerSocket", "Bluetooth is not available or not enabled.");
+    }
+}
+```
+
+Note: Retrieval of the PSM value requires Android 10 (Q) or higher. Because this method uses Bluetooth, ensure you have the necessary permissions (`BLUETOOTH` and `BLUETOOTH_ADMIN`) in your app manifest. For handling Bluetooth connections and permissions efficiently and securely, make sure to employ suitable exception and permission/grant checks in actual applications.

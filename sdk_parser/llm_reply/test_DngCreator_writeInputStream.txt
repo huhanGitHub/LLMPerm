@@ -1,0 +1,46 @@
+Here is an example usage of the DngCreator API in Android. Keep in mind that this example is for demonstration only. Also, remember that the camera2 API requires the CAMERA, WRITE_EXTERNAL_STORAGE permissions.
+
+```java
+public void test_DngCreator_writeInputStream() {
+    //Initialize
+    ImageReader reader = ImageReader.newInstance(640, 480, ImageFormat.RAW_SENSOR, 2);
+    CaptureResult result = null;
+    Image image = reader.acquireNextImage();
+    
+    DngCreator dngCreator = new DngCreator(cameraCharacteristics, result);
+    FileOutputStream outputStream = null;
+
+    try {
+        //Create file
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + ".dng";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        File imageFile = File.createTempFile(imageFileName,".dng", storageDir);
+        
+        //Write to file
+        outputStream = new FileOutputStream(imageFile);
+        dngCreator.writeImage(outputStream, image);
+        
+        //Your image.dng is created.
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        //Release resources
+        if (image != null) {
+            image.close();
+        }
+        
+        if (outputStream != null) {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+This test_DngCreator_writeInputStream method demonstrates how to create a DNG image with DngCreator, starting from acquiring an image from ImageReader to writing the DNG data into a specific file through a FileOutputStream. This method should be called within an Activity where you have access to a valid ImageReader, CaptureResult and CameraCharacteristics. The DNG file is saved in the specific directory (set as storageDir), and carries a timestamp for its name.
+
+The situations when exceptions can arise are handled by try-catch blocks, such as file I/O events and closing resources.

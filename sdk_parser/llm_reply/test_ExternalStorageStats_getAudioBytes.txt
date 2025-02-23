@@ -1,0 +1,43 @@
+To generate a method for testing 'getAudioBytes' from 'ExternalStorageStats', you would first need to have a usage stats service available. Here is an example of how you might write the method in an Android Activity:
+
+```java
+import android.app.usage.ExternalStorageStats;
+import android.app.usage.StorageStatsManager;
+import android.os.Process;
+import android.os.UserHandle;
+import android.content.Context;
+import android.util.Log;
+
+import java.io.IOException;
+import androidx.annotation.RequiresApi;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_ExternalStorageStats_getAudioBytes() {
+    StorageStatsManager statsManager = (StorageStatsManager) getSystemService(Context.STORAGE_STATS_SERVICE);
+    ExternalStorageStats externalStats = null;
+
+    try {
+        externalStats = statsManager.queryExternalStatsForUser(Process.myUserHandle());
+    } catch (IOException e) {
+        Log.e("Test", "Failed to get ExternalStorageStats", e);
+        return;
+    } catch (PackageManager.NameNotFoundException e) {
+        Log.e("Test", "Failed to get ExternalStorageStats", e);
+        return;
+    }
+
+    long audioBytes = externalStats.getAudioBytes();
+    Log.i("Test", "Audio Bytes: " + audioBytes);
+}
+```
+
+Please note that the 'getAudioBytes()' method was introduced in API level 26, so you need a device running at least Android 8.0. User permission 'android.permission.PACKAGE_USAGE_STATS' must be granted in the manifest file:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.app">
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+</manifest>
+```
+
+Access to usage data is not granted to apps by the system by default and usually needs user interaction to give the permission. Also, you need to handle the exceptions properly in a production environment.

@@ -1,0 +1,28 @@
+Sure, I can provide an example for you. However, you should be aware that directly calling `getHostFromNameService()` is not available for developers as this method is private to `InetAddress`. 
+
+So we can use another public method `getByName()` which would involve resolving names with the name service implicitly:
+
+```java
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public void test_InetAddress_getHostFromNameService() {
+    try{
+        InetAddress inetAddress = InetAddress.getByName("www.google.com");
+        String hostName = inetAddress.getHostName();
+        String hostAddress = inetAddress.getHostAddress();
+        System.out.println("Host Name: " + hostName);
+        System.out.println("Host Address: " + hostAddress);
+
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In android, log messages or Toast messages can be used for outputs instead of `println`. The `getByName()` function gets the `InetAddress` instance associated with the given host name. If the host name cannot be resolved, an `UnknownHostException` will be thrown.
+
+This sample does not verify the vailidity of the host name so if you input an invalid host name, the `UnknownHostException` will be thrown. To cover this scenario, you should include validation for input host names in your actual use. 
+
+In Android, network operations should not be performed on the main thread, please consider putting the above code in an `AsyncTask` or a separate `Thread`.

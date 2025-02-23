@@ -1,0 +1,50 @@
+In order to use java.net.URL for making a network connection in Android, you need to do network operations in a separate thread. Here is the implementation of method test_URL_openConnection inside an Android Activity.
+
+```java
+class MainActivity extends AppCompatActivity {
+    
+    private static final String TAG = "MainActivity";
+    private static final String TEST_URL = "https://www.google.com";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test_URL_openConnection(TEST_URL);
+            }
+        }).start();
+    }
+
+    private void test_URL_openConnection(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            URLConnection urlConnection = url.openConnection();
+            urlConnection.connect();
+
+            Log.d(TAG, "Connection successful to URL: " + urlString);
+
+            // read and display the response body
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+
+            Log.d(TAG, "Response: " + result.toString());
+
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "Invalid URL", e);
+        } catch (IOException e) {
+            Log.e(TAG, "Error opening connection", e);
+        }
+    }
+}
+```
+This Android activity demonstrates a basic usage of java.net.URL's openConnection method. It connects to a URL (in this case, Google homepage) on a separate thread and logs the response. Remember that network operations on the main thread are discouraged, you always need to do on a separate thread.

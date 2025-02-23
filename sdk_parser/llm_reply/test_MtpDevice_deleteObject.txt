@@ -1,0 +1,49 @@
+Here is an illustrative implementation of `test_MtpDevice_deleteObject` method used in an Android Activity.
+
+```java
+import android.content.Context;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbManager;
+import android.mtp.MtpDevice;
+import android.mtp.MtpObjectInfo;
+
+// ...
+
+public void test_MtpDevice_deleteObject() {
+    // Step 1: Obtain UsbDevice instance from UsbManager using specific method e.g. getDeviceList, openDevice
+    UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+    UsbDevice usbDevice = getUsbDevice();  // getUsbDevice is a custom method to get an USB device
+
+    // Step 2: Initialize UsbDeviceConnection
+    UsbDeviceConnection connection = usbManager.openDevice(usbDevice);
+
+    // Step 3: Create an MtpDevice
+    MtpDevice mtpDevice = new MtpDevice(usbDevice);
+
+    // Step 4: Open a connection to MtpDevice
+    boolean isOpen = mtpDevice.open(connection);
+
+    if (!isOpen) {
+        Log.e("MTP", "Connection cannot be opened!");
+        return;
+    }
+
+    // Object id of the file/directory to be deleted on the MTP device, it may be obtain from MtpDevice.getObjectHandles
+    int objectId = 12345;  
+
+    // Step 5: Delete the object
+    boolean isDeleted = mtpDevice.deleteObject(objectId);
+
+    if (isDeleted) {
+        Log.d("MTP", "Successfully deleted the object");
+    } else {
+        Log.e("MTP", "Failed to delete the object");
+    }
+
+    // Step 6: Close the connection to the device
+    mtpDevice.close();
+}
+```
+
+Note: Please replace the `getUsbDevice()` function with a suitable method to acquire the desired `UsbDevice`. The object id should be replaced with the actual object id of the file or directory you wish to delete from the MTP device. This example is a simplified demonstration and does not contain error handling. Make sure to add these necessary checks to handle unexpected issues in a production environment.

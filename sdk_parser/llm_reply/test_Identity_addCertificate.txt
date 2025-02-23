@@ -1,0 +1,52 @@
+To create the test_Identity_addCerfiticate method, we first need an instance of `Identity`. However, `Identity` in `java.security` package is a deprecated class in Android, which means it's no longer recommended to be used and no further development or updates are expected for it in the future.
+
+Nevertheless, for illustrative purposes, here's what using this method might look like. Note the use of `java.security.cert.Certificate` imported class to create a certificate.
+
+```java
+import java.security.Identity;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.SSLContext;
+import java.security.Signer;
+
+public void test_Identity_addCertificate() {
+    try {
+        // Create a new identity
+        Signer signer = null;
+        Identity myIdentity = new Identity("My Identity", signer);
+
+        // Generate a dummy certificate for testing purpose
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+                }
+        };
+
+        // Add certificate to our identity
+        myIdentity.addCertificate((Certificate) trustAllCerts[0]);
+
+        // Now you can view the certificate using the certificates() method
+        System.out.println(myIdentity.certificates());
+
+    } catch (KeyManagementException e) {
+        e.printStackTrace();
+    } catch (CertificateException e) {
+        e.printStackTrace();
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Again, the `Identity` class is deprecated and the use of it is no longer recommended. Please consider using other classes or methods for handling Identity and Certificate in java security.

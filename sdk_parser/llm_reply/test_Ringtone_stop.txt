@@ -1,0 +1,26 @@
+```java
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Ringtone ringtone;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+    }
+
+    private void test_Ringtone_stop() {
+        if(ringtone.isPlaying()){
+            ringtone.stop();
+        }
+    }
+}
+```
+In this block, the method `test_Ringtone_stop` stops the ringtone if it's playing. This ringtone was initialized during the creation of the activity. The URI of default ringtone is used to get the ringtone, which could be either null or actual ringtone based on the device's settings.

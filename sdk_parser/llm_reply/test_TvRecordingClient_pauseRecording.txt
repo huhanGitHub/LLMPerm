@@ -1,0 +1,57 @@
+Below is a simplistic example of a test method for the `TvRecordingClient`'s `pauseRecording()` method. This method is part of Android's TV input framework, which allows apps to play and record live TV.
+
+Keep in mind that this method only pauses ongoing recordings that were started by the same `TvRecordingClient` instance.
+
+```java
+import android.media.tv.TvRecordingClient;
+//... other imports...
+
+public class MyActivity extends Activity {
+
+    private TvRecordingClient mTvRecordingClient;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // initialize TvRecordingClient
+        TvRecordingClient.RecordingCallback callback = new TvRecordingClient.RecordingCallback() {
+            @Override
+            public void onConnectionFailed() {
+                // handle connection failure...
+            }
+
+            @Override
+            public void onDisconnected() {
+                // handle disconnection...
+            }
+
+            // implement other callback methods as needed...
+        };
+        String inputId = "inputId"; // replace with your actual input ID
+        mTvRecordingClient = new TvRecordingClient(this, inputId, callback, null);
+    }
+
+    public void test_TvRecordingClient_pauseRecording() {
+        try {
+            mTvRecordingClient.pauseRecording();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mTvRecordingClient != null) {
+            mTvRecordingClient.release();
+            mTvRecordingClient = null;
+        }
+    }
+}
+```
+
+In this example, `test_TvRecordingClient_pauseRecording()` method tries to pause an ongoing recording.
+
+Make sure to replace `'inputId'` with the actual input ID of your channel, and to handle the disconnection and connection failure appropriately according to your needs.
+
+Remember that the TvRecordingClient requires the `android.Manifest.permission.RECORD_TV` permission, and may also need other permissions depending on the specific input service.

@@ -1,0 +1,47 @@
+Here's a basic test method of `Fragment.shouldShowRequestPermissionRationale()`. This Android method returns whether we should show UI with a rationale for requesting a permission. You typically only need to do this for permissions that are not familiar to the user. 
+
+The test method `test_Fragment_shouldShowRequestPermissionRationale` include a sample usage of shouldShowRequestPermissionRationale. The method is given below:
+
+Note: This example uses mock object based approach with Mockito, which is common in testing in Android.
+
+```java
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.os.Build;
+import androidx.test.core.app.ApplicationProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.Assert.*;
+import androidx.annotation.RequiresApi;
+
+@RunWith(MockitoJUnitRunner.class)
+public class UsagePermissionRationaleFragmentTest{
+
+  @Test
+  @RequiresApi(api = Build.VERSION_CODES.M)
+  public void test_Fragment_shouldShowRequestPermissionRationale() {
+    // create fragment manager
+    FragmentManager fragmentManager = ApplicationProvider.getApplicationContext().getFragmentManager();
+
+    // create mock fragment
+    Fragment mockFragment = mock(Fragment.class);
+
+    // return your_fragment when getCurrentFragment is called
+    when(fragmentManager.findFragmentByTag("your_fragment")).thenReturn(mockFragment);
+
+    // Fake it as if the fragment has never requested permission before
+    when(mockFragment.shouldShowRequestPermissionRationale("your_permission")).thenReturn(false);
+
+    Fragment currentFragment = fragmentManager.findFragmentByTag("your_fragment");
+
+    boolean showRationale = currentFragment.shouldShowRequestPermissionRationale("your_permission");
+
+    assertFalse("shouldShowRequestPermissionRationale returned true!", showRationale);
+  }
+}
+```
+
+Please replace the `"your_fragment"` and `"your_permission"` with your own fragment's tag and the permission your app uses. You should also check expected result according to your implementation case whether it's true or false.

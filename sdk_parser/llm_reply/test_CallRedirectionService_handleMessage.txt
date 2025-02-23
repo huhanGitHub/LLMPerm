@@ -1,0 +1,39 @@
+Here is a self-contained method `test_CallRedirectionService_handleMessage`, a usage example, for testing purposes. In this method, we are simulating a scenario where a mocked `CallRedirectionService` instance is receiving a handle message command.
+
+Please note that since `CallRedirectionService` is a system-level component for Android Telecom API, it's not generally instantiated in user apps. Therefore, it's unavailable to test it in a common Android Activity, especially considering permission checks. 
+
+The method for this test uses Mockito for creating mock objects which do not actually exist in the Android system and performs handle message. This should only be used in your testing code.
+
+```java
+import android.os.Looper;
+import android.telecom.CallRedirectionService;
+import android.telecom.PhoneAccountHandle;
+import android.test.mock.MockContext;
+
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.when;
+        
+public void test_CallRedirectionService_handleMessage() {
+    MockContext mockContext = new MockContext();
+    CallRedirectionService mockService = Mockito.mock(CallRedirectionService.class); 
+
+    PhoneAccountHandle mockHandle = Mockito.mock(PhoneAccountHandle.class); 
+    String mockCallId = "mockCallId";
+ 
+    // Here, we force the return of our mocked context and other necessary variables.
+    when(mockService.getApplicationContext()).thenReturn(mockContext); 
+    when(mockService.getSystemService()).thenReturn(mockContext.getSystemService());
+
+    doCallRealMethod().when(mockService).placeCall(Mockito.eq(mockHandle), Mockito.eq(mockCallId));
+
+    mockService.placeCall(mockHandle, mockCallId);
+    
+    // At this point, handleMessage() has been called in a test context. 
+    // The test can now check the correctness of that call by interacting with mockService, 
+    // checking if specific methods were called, etc.
+}
+```
+
+Furthermore, the Android Testing Support Library which includes AndroidJUnitRunner and Espresso has been replaced by AndroidX Test. AndroidX Test provides functionality to write different types of tests inclusive of unit tests, functional UI tests etc. It is advised to use AndroidX Test for writing tests as Android TestingSupportLibrary is deprecated.

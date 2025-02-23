@@ -1,0 +1,40 @@
+Below is a simple method that demonstrates how to use the removeHandler method of the java.util.logging.Logger class. This method can be added in any Android activity or in any Java application to test the removeHandler functionality. 
+
+This method creates a Logger instance and CustomHandler instance, adds the handler to the logger and then removes it. After doing so, it checks whether the handler is removed successfully or not.
+
+Here's the method:
+
+```java
+public void test_Logger_removeHandler() {
+    // Create a new logger instance
+    Logger logger = Logger.getLogger("TestLogger");
+    
+    // Create custom handler
+    Handler handler = new Handler() {
+        @Override
+        public void publish(LogRecord record) {
+            // custom publish logic here
+        }
+        @Override
+        public void flush() {
+            // custom flush logic here
+        }
+        @Override
+        public void close() throws SecurityException {
+            // custom close logic here
+        }
+    };
+
+    // Add the handler to the logger
+    logger.addHandler(handler);
+    
+    // Remove the handler from the logger
+    logger.removeHandler(handler);
+
+    // Check if the handler is removed successfully.
+    boolean hasHandler = Arrays.asList(logger.getHandlers()).contains(handler);
+    System.out.println("Is handler removed? : " + !hasHandler);
+}
+```
+
+Please note that this is just a skeleton method. The custom logic in the handler's publish, flush, and close method should be appropriately implemented based on your needs.

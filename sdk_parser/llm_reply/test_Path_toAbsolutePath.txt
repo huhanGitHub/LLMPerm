@@ -1,0 +1,27 @@
+Here's a method testing the usage of `java.nio.file.Path` to absolute path:
+
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public void test_Path_toAbsolutePath() {
+    try {
+        // Define a relative path
+        Path relativePath = Paths.get("test.txt");
+
+        // Convert the relative path to an absolute path
+        Path absolutePath = relativePath.toAbsolutePath();
+
+        // Print both the relative and absolute paths to console
+        System.out.println("Relative path: " + relativePath.toString());
+        System.out.println("Absolute path: " + absolutePath.toString());
+
+    } catch (Exception e) {
+        // print stack trace in case of an exception
+        e.printStackTrace();
+    }
+}
+```
+Make sure that the path you mention in `Paths.get()` method exists in your android device or emulator to successfully test this method. Also note that this method will not return any value, instead it will print the relative and absolute paths of the file on the console.
+
+Please note that `java.nio.file.Path` does not work on Android, as Android's API does not include all the java.nio.file.* APIs. For file operations on Android, use `android.os.Environment`.

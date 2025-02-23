@@ -1,0 +1,51 @@
+In your Android Activity, use the following example of method test_NfcB_transceive to use the API android/nfc/tech/NfcB.java. This method assumes that we have an active NFC Adapter.
+
+```java
+private void test_NfcB_transceive() {
+    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+    if (nfcAdapter == null) {
+        Toast.makeText(this, "NfcAdapter is not available", Toast.LENGTH_LONG).show();
+        return;
+    }
+    if (!nfcAdapter.isEnabled()) {
+        Toast.makeText(this, "Please enable your NFC", Toast.LENGTH_LONG).show();
+        return;
+    }
+    
+    // Create a new intent with action NfcAdapter.ACTION_TAG_DISCOVERED
+    Intent intent = new Intent(NfcAdapter.ACTION_TAG_DISCOVERED);
+    
+    if (intent != null && NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag != null) {
+            NfcB nfcB = NfcB.get(tag);
+        
+            if(nfcB != null){
+                try {
+                    nfcB.connect();
+                    if (nfcB.isConnected()) {
+                        byte[] command = new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
+                        byte[] response = nfcB.transceive(command);
+                        
+                        // process response here.
+                        // eg. transform the received byte array into a string
+                        
+                        String responseAsString = new String(response, StandardCharsets.UTF_8);
+                        Log.d("NFC Response", responseAsString);
+                    }
+                    nfcB.close();
+                } catch (TagLostException e) {
+                     Toast.makeText(this, "TagLostException occurred", Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    Toast.makeText(this, "IOException occurred", Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(this, "NfcB is not available", Toast.LENGTH_LONG).show();
+            } 
+        }
+    }
+}
+```
+This is a simple example of how to use the NfcB API to send a command to an NFC tag and then receive a response. Please replace the command bytes with the actual command you want to send to the NFC tag.
+
+Please handle exceptions accordingly in production code.

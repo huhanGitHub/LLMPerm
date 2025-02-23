@@ -1,0 +1,45 @@
+Assuming you have already implemented your own custom BackupAgent class, here is an example of how to test the doRestore method:
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataInput;
+import android.os.ParcelFileDescriptor;
+import android.util.Log;
+
+public class MyActivity extends AppCompatActivity {
+
+    // Test method to simulate restore process
+    public void test_BackupAgent_doRestore() {
+        MyCustomBackupAgent backupAgent = new MyCustomBackupAgent();
+        ParcelFileDescriptor oldState = null;
+        BackupDataInput data = null; //you should use real data here
+
+        try {
+            backupAgent.doRestore(data, 1, oldState, 0, 1);
+        } catch (Exception e) {
+            Log.e("BackupAgentTest", "Error while testing BackupAgent doRestore", e);
+        }
+    }
+    
+    // Your custom BackupAgent
+    static class MyCustomBackupAgent extends BackupAgent {
+        @Override
+        public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState)
+        throws IOException {
+            // Backup implementation goes here
+        }
+
+        @Override
+        public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState)
+        throws IOException {
+            // Restore implementation goes here
+        }
+    }
+}
+```
+
+Please note that this code won't run because doRestore function requires correct parameters. I just provide null and 1 to give you the idea, but in the real scenario, you should use real data which comes from the backup process to test the restore function.
+
+In addition, onRestore in your BackupAgent subclass needs the proper handling to restore data properly.
+
+Please understand that BackupAgent is not typically used directly in an Activity. It's used by the Android system to backup and restore data. Your app provides the BackupAgent that gets used.

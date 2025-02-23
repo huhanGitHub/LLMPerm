@@ -1,0 +1,42 @@
+In this example, we're using the `setNotificationUris()` method in the `AbstractCursor.java` class. `setNotificationUris()` is used to determine the URIs at which the observer should register itself for notifications of changes.
+
+Also, to handle permissions, you can use the `checkSelfPermission()` method from an Activity to verify if your app has a certain permission. You would need the `READ_EXTERNAL_STORAGE` permission to load all the files from the Gallery.
+
+However, keep in mind that you'd better not manipulate `AbstractCursor` directly in an application as it is a class designed for the developers to build upon and create their custom cursors, therefore it should be done inside a `ContentProvider` in most cases.
+
+Here is an example of how you might use setNotificationUris():
+
+```java
+private void test_AbstractCursor_setNotificationUris() {
+    // check if we have permission to read the user's gallery
+    int hasReadPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+    if (hasReadPermission != PackageManager.PERMISSION_GRANTED) {
+        // if not, ask for it
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        return;
+    }
+
+    // get the files from the gallery
+    Uri galleryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    Cursor cursor = getContentResolver().query(galleryUri, null, null, null, null);
+
+    if (cursor instanceof AbstractCursor) {
+        AbstractCursor abstractCursor = (AbstractCursor) cursor;
+        // check notifications at galleryUri and someOtherUri
+        abstractCursor.setNotificationUris(getContentResolver(),
+                new ArrayList<Uri>(Arrays.asList(galleryUri, someOtherUri)));
+
+        // check if the notifications have been properly set
+        List<Uri> uris = abstractCursor.getNotificationUris();
+        if (uris.contains(galleryUri) && uris.contains(someOtherUri)) {
+            Log.d(TAG, "URIs properly registered.");
+        } else {
+            Log.d(TAG, "Failed to register URIs.");
+        }
+    }
+}
+``` 
+
+Please replace `someOtherUri` with your own URIs.
+
+Remember, for this code to run, the method should be called from an activity that has context, and your application needs to take care of user permissions, following the best practices for user privacy.

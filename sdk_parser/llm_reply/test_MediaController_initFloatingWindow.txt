@@ -1,0 +1,49 @@
+Usage of android/widget/MediaController.java class is typically found in activities. Here's an example usage in form of the self-contained method `test_MediaController_initFloatingWindow`.
+
+Please note that you will need to handle the permissions to create a window overlay in your manifest and possibly also ask the user if you intend to draw above other applications.
+
+```java
+public void test_MediaController_initFloatingWindow() {
+    // Please replace 'this' with the context if you're not in an activity context.
+    VideoView videoView = new VideoView(this);
+
+    // Set the video path here.
+    videoView.setVideoPath("your_video_path");
+
+    MediaController mediaController = new MediaController(this);
+
+    videoView.setMediaController(mediaController);
+    mediaController.setMediaPlayer(videoView);
+
+    // Here we create a system overlay window for the video view.
+    WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+    params.gravity = Gravity.CENTER;
+    params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+    params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+    params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    params.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+
+    // Now we initialize a new WindowManager
+    WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+
+    // And finally attach the video view to the window manager.
+    wm.addView(videoView, params);
+
+    videoView.start();
+}
+```
+
+Please replace `your_video_path` with the actual path where your video resides. If you are using a video from a raw resource, then it can be modified as:
+
+```java
+String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.yourVideo;
+videoView.setVideoURI(Uri.parse(videoPath));
+```
+
+Don't forget to add the permissions in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+```
+
+And, if you're running on Android 6.0 (API level 23) and above, you'll also need to request the `SYSTEM_ALERT_WINDOW` permission at runtime.

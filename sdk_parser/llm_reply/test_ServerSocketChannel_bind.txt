@@ -1,0 +1,35 @@
+Below is a method `test_ServerSocketChannel_bind()` which is a usage example of the Java NIO `ServerSocketChannel`. Please note Android doesn't support java.nio.channels.ServerSocketChannel directly as it does not have complete support for java.nio library. Android provides NioSocketChannel in its android NIO shim package but the usage is not straightforward. The code below is best run on a standard Java environment.
+
+```java
+public void test_ServerSocketChannel_bind() {
+    ServerSocketChannel serverChannel = null;
+
+    try {
+        // Initialize a new server socket channel
+        serverChannel = ServerSocketChannel.open();
+
+        // Ensure it's non blocking
+        serverChannel.configureBlocking(false);
+
+        // Create an address object
+        InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost", 8000);
+
+        // Bind the server socket to local host and port 8000
+        serverChannel.socket().bind(inetSocketAddress);
+
+        System.out.println("Server socket channel binding is successful!");
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (serverChannel != null) {
+            try {
+                // Close the server channel
+                serverChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+In Android, to achieve the same task, you will need to use Java Socket programming or use the OkHttp library for easier network communication.

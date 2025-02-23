@@ -1,0 +1,46 @@
+Here's a basic example of how you could set up the `test_MmTelFeature_modifyImsTrafficSession` method within an Android Activity. Please replace `YOUR_PACKAGE_NAME` with the actual package name of your application.
+
+Please note that `MmTelFeature` was declared as `protected` and `abstract` as well as its method `modifyImsCallSession` in Android Source Code. This means this class/method is not designed to be called directly by developers. Therefore, this example may not work as expected.
+
+```java
+package YOUR_PACKAGE_NAME;
+
+import android.telephony.ims.feature.MmTelFeature;
+import android.telephony.ims.ImsCallSession;
+import android.telephony.ims.ImsCallProfile;
+
+public class YourActivity extends AppCompatActivity {
+
+    // This is an example. Replace MmTelFeature with your actual MmTelFeature instance.
+    private MmTelFeature mmTelFeature;
+
+    // This is an example. Replace these with your actual ImsCallSession and ImsCallProfile instances.
+    private ImsCallSession imsCallSession;
+    private ImsCallProfile imsCallProfile;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_your);
+
+        // Test Method
+        try {
+            test_MmTelFeature_modifyImsTrafficSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_MmTelFeature_modifyImsTrafficSession() throws Exception {
+        // Safety check.
+        if (mmTelFeature == null || imsCallSession == null || imsCallProfile == null) {
+            throw new Exception("MmTelFeature, ImsCallSession, and/or ImsCallProfile is null.");
+        }
+
+        // Call the method. 
+        // Note: This will probably lead to an exception as MmTelFeature and its methods are defined as protected in source code, 
+        // this usage example may violate its access control and not work as expected.
+        mmTelFeature.modifyImsCallSession(imsCallSession.getCallId(), imsCallProfile);
+    }
+}
+```

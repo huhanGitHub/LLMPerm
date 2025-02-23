@@ -1,0 +1,39 @@
+Below is the method `test_CarrierIdentifier_getImsi` which would be used in an Android activity:
+
+```java
+// don't forget to import necessary classes
+import android.telephony.TelephonyManager;
+import android.content.Context;
+
+public void test_CarrierIdentifier_getImsi() {
+
+    // Get the telephony service
+    TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+
+    // Making sure we have the required permissions
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        // If permission not granted, ask for it
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+    } else {
+        // If permission is granted, retrieve IMSI
+        getImsi(telephonyManager);
+    }
+}
+
+public void getImsi(TelephonyManager telephonyManager) {
+    try {
+        String imsi = telephonyManager.getSubscriberId();
+
+        // display imsi in logs
+        Log.d("IMSI", "IMSI: " + imsi);
+
+    } catch (SecurityException e) {
+        e.printStackTrace();
+        Toast.makeText(this, "Permission denied. Can't read phone state.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+Just make sure to replace 'this' keyword if you are not writing the method within an Activity or a Context. Also, after calling ActivityCompat.requestPermissions, you would need to implement onRequestPermissionsResult to handle the user choice, and in case of granting the permission, call getImsi(telephonyManager) again. And lastly, the Manifest.permission.READ_PHONE_STATE requires the permission <uses-permission android:name="android.permission.READ_PHONE_STATE" /> to be set in your app's manifest file.
+
+This code will have a runtime check for permissions according to Android's best practices for handling permissions. If the permission is not granted, it will request the permission from the user. Once the permission is granted, the `getImsi` method will retrieve the IMSI.

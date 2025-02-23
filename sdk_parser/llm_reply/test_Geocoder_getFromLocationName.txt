@@ -1,0 +1,41 @@
+Sure, here's a simple example of how to use the Geocoder class in Android. The method `test_Geocoder_getFromLocationName` accepts a name of a location and returns a list of possible addresses:
+
+```java
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity {
+
+    // ...
+
+    public List<Address> test_Geocoder_getFromLocationName(String locationName) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+
+        try {
+            // Attempt to get a list of 1 address for the location name
+            addresses = geocoder.getFromLocationName(locationName, 1);
+        } catch (IOException e) {
+            Log.e("MainActivity", "Error occurred while trying to get address from location name", e);
+        }
+
+        return addresses;
+    }
+}
+```
+
+Remember to always check that the returning `addresses` list is not null and not empty before attempting to use an `Address` object from it. Moreover, make sure to request the `INTERNET` permission in your `AndroidManifest.xml` file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
+Also note that the Geocoder works asynchronously, meaning you should never run it and wait for result on the main UI thread as it might block UI rendering and lead to ANR(App Not Responding) errors. Instead use it within a background thread, for e.g., by means of an `AsyncTask`, `HandlerThread` or `Executors`.
+
+Also this API may not work properly (or even at all) on all devices and in all countries, depending on whether or not the Google Map service is available or allowed. You may need to use other APIs such as Google Maps Geocoding API for more reliable results.

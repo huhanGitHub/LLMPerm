@@ -1,0 +1,26 @@
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_SliceManager_getSliceDescendants() {
+    Uri sliceUri = Uri.parse("content://com.example.android.app/slice");
+    SliceManager sliceManager = getSystemService(SliceManager.class);
+    Set<Uri> sliceDescendants = sliceManager.getSliceDescendants(sliceUri);
+
+    for (Uri uri : sliceDescendants) {
+        System.out.println("Slice Descendant URI: " + uri);
+        try {
+            Slice slice = sliceManager.bindSlice(uri);
+            System.out.println("Slice: " + slice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+In this snippet, "content://com.example.android.app/slice" is an Uri for the slice created by your app that has a hierarchical structure. The `getSliceDescendants(Uri uri)` method returns a set of Uris of all slices that are descendants of the input Uri.
+
+You need to try-catch the `bindSlice(Uri uri)` method because it might throw an `IllegalArgumentException` if the input Uri is not supported by the provider, or a `SecurityException` if the slice belongs to a different package and the calling app does not have the permission to access it. Since `bindSlice(Uri uri)` is a blocking call, it is not recommended to be called from the main thread.
+
+Since the `SliceManager` class is only available from API level 28 or above, you need to add the `@RequiresApi(api = Build.VERSION_CODES.P)` annotation before the method to make sure your app does not crash on devices with lower API levels.
+
+Please replace "com.example.android.app/slice" with your actual slice Uri, and replace `System.out.println` lines with your actual code to handle the slice descendants or handle the `Exception`.

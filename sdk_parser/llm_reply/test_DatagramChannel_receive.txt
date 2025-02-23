@@ -1,0 +1,40 @@
+Here is a simple usage example of the java.nio.channels.DatagramChannel API, specifically it's receive() method. 
+
+Please note: The following method must be called from a background thread, not from the UI thread because it includes networking operations. If you use this code from UI thread your application could crash due to NetworkOnMainThreadException.
+
+```java
+public void test_DatagramChannel_receive() {
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                DatagramChannel datagramChannel = DatagramChannel.open();
+
+                // Bind the DatagramChannel to a specific address
+                datagramChannel.bind(new InetSocketAddress("localhost", 8888));
+
+                ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+
+                // Use DatagramChannel's receive method
+                SocketAddress senderAddress = datagramChannel.receive(byteBuffer);
+                byteBuffer.flip();
+                while(byteBuffer.hasRemaining()){
+                    System.out.println((char) byteBuffer.get());
+                }
+
+                // Don't forget to close the DatagramChannel when you're done using it
+                datagramChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+}
+```
+In this example, a DatagramChannel is opened and bound to a specific address. A ByteBuffer is created to hold incoming data and then the DatagramChannel's receive() method is used to read data into the ByteBuffer from the channel. Once the data has been read, the ByteBuffer is flipped so that its data can be read, and then the data is printed out to the console.
+
+The `receive()` method blocks until a datagram is received or the channel is closed. If the buffer is smaller than the incoming datagram, then the rest of the datagram will be discarded. If you need to get the entire datagram, make sure your ByteBuffer is large enough.
+
+Remember that networking operations can throw IOException, so you should always handle them appropriately. In this example, any exceptions that are thrown will be printed to the console.
+
+After you finish by receiving datagrams, don't forget to close your DatagramChannel.

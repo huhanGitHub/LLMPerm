@@ -1,0 +1,52 @@
+Here is an example of how to use MbmsDownloadReceiver in a unit test using JUnit and Mockito libraries in Android. In this scenario, we will create `test_MbmsDownloadReceiver_onReceive` method. This method is intended to verify whether the `onReceive` method in `MbmsDownloadReceiver` correctly handles incoming intents. We will mock the dependencies using Mockito.
+
+Please note that `MbmsDownloadReceiver` is an abstract class with the `onReceive` method marked as 'final'. Therefore, it's not meant to be directly tested or mocked. Instead, it's designed to be subclassed and its callback methods implemented.
+
+```java
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.mbms.MbmsDownloadReceiver;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+@RunWith(MockitoJUnitRunner.class)
+public class MbmsDownloadReceiverTest {
+
+    @Mock
+    private Context mockContext;
+
+    @Mock
+    private Intent mockIntent;
+
+    @Test
+    public void test_MbmsDownloadReceiver_onReceive() {
+        final MyMbmsDownloadReceiver receiver = new MyMbmsDownloadReceiver();
+        receiver.onReceive(mockContext, mockIntent);
+
+        // Here you can add verification of the behavior of your own implementation of MbmsDownloadReceiver
+        // For example, if your implementation does something with the context or intent, you could check here.
+    }
+
+    /* Here we're subclassing MbmsDownloadReceiver to provide dummy implementations for testing */
+    private static class MyMbmsDownloadReceiver extends MbmsDownloadReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Do your implementation
+            super.onReceive(context, intent);
+        }
+        // Don't forget to provide implementations for the abstract method here....
+    }
+}
+```
+
+Ensure that this class has the appropriate permissions required for the MBMS APIs. A typical receiver declared in the manifest might look like the following: 
+```xml
+<receiver android:name=".MyMbmsDownloadReceiver" android:permission="android.permission.SEND_AND_RECEIVE_MBMS_DOWNLOAD">
+    <intent-filter>
+        <action android:name="android.telephony.mbms.action.DOWNLOAD_RESULT_INTERNAL"/>
+        <action android:name="android.telephony.mbms.action.FILE_DESCRIPTOR_REQUEST"/>
+    </intent-filter>
+</receiver>
+```

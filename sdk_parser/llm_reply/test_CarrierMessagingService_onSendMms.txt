@@ -1,0 +1,36 @@
+Below is a self-contained method named test_CarrierMessagingService_onSendMms. Please note that to use this method, your application must hold the correct permissions to send MMS messages. In your app's manifest file, you require the permissions SEND_SMS and READ_PHONE_STATE.
+
+```java
+public void test_CarrierMessagingService_onSendMms(){
+    if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED || 
+            ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+        // Permission is not granted, request for permission
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE},
+                1);
+    } else {
+        // Permission has already been granted
+        sendMMS();
+    }
+}
+
+private void sendMMS() {
+    SmsManager smsManager = SmsManager.getDefault();
+    String destinationAddress = "1234567890";  // Destination Phone number to send MMS
+    String scAddress = null;  // Service Center Address, null in most cases 
+    PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
+    PendingIntent deliveryIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
+ 
+    smsManager.sendMultimediaMessage(Uri.parse("file://path_to_your_mms"),
+            scAddress, null, null, sentIntent);
+    
+    // or 
+    // smsManager.sendMultipartTextMessage(destinationAddress, scAddress, parts, sentIntents, deliveryIntents);
+}
+```
+In the above example, we first check to see if we have the necessary permissions using the ContextCompat.checkSelfPermission() method. If we do not have the necessary permissions, we request them using ActivityCompat.requestPermissions(). If we already have the permissions, we call the sendMMS() function which uses the SmsManager.sendMultimediaMessage() or SmsManager.sendMultipartTextMessage() method to send the MMS.
+
+PS: The above sample doesn’t show how to handle responses which usually follow send* methods. It's only a basic demonstration. For a real-world application, you'd have to handle the broadcast intents "SMS_SENT" and "SMS_DELIVERED" in a BroadcastReceiver, and check the result code to see whether sending/delivery succeeded.

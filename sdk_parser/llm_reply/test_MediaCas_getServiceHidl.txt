@@ -1,0 +1,29 @@
+Sure, here is an example of a method:
+
+```java
+public void test_MediaCas_getServiceHidl() {
+
+    // Assume we have a CAS system id
+    int casSystemId = 0x1234;
+
+    try {
+        // Create a new MediaCas object with the specific CAS system id
+        MediaCas mCas = new MediaCas(casSystemId);
+
+        IMediaCasService mediaCasService = mCas.getService();
+
+        MediaCas.PluginDescriptor desc = mediaCasService.getPluginDescriptor(casSystemId);
+
+        Log.d("TEST", "CAS System ID: " + desc.getSystemId());
+        Log.d("TEST", "CAS System Name: " + desc.getName());
+        
+    } catch (MediaCasException e) {
+        Log.e("TEST", "MediaCasException: " + e.getMessage());
+    }
+
+}
+```
+
+Please note: This method is purely demonstrative and may not work out-of-the-box because it depends on your application context, as well as your current device or emulator. The `MediaCas` class and methods inside this class like `getService()` are usually used for controlling Conditional Access Systems (CAS) for scrambled media content, so they aren't applicable to many standard app use-cases.
+
+ since the getPluginDescriptor is not available in MediaCas.Service in the current android sdk. This method could not be fully checked.  Please adjust this to fit your needs or reach out if you want a different example.

@@ -1,0 +1,39 @@
+Here's a simple example of how one might implement `test_DocumentsContract_createDocument`. Please note that `DocumentContract.createDocument()` can be used for Content Provider operations and not recommended for direct usage inside an Android Activity.
+
+Also note that you need 'WRITE_EXTERNAL_STORAGE' permission for this.
+
+```java
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
+
+public void test_DocumentsContract_createDocument(){
+
+  if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+      Uri treeUri; 
+      String mimeType;
+      String displayName;
+       
+      // You should get the actual values for treeUri, mimeType and displayName.
+      // In this example, we just use placeholders.
+      
+      treeUri = /* the Uri of the directory you've choosen with a file manager or something similar */;
+      mimeType = /* mimeType of the file you want to create */;
+      displayName = /* name of the file you want to create */;
+
+      ContentResolver resolver = getContentResolver();
+
+      try {
+          Uri uri = android.provider.DocumentsContract.createDocument(resolver, treeUri, mimeType, displayName);
+          // Now uri points to the new document
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  } else {
+      requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+  }
+}
+```
+Please replace the commented variables with actual ones to make it work. This code will create the document and returns the Uri of the newly created document. You need to handle the permissions for write external storage properly. Below PERMISSION_REQUEST_CODE is some integer used to identify the request.
+
+This function should be invoked where you want to create a new document. The document will be created with the provided mimeType and displayName in the provided treeUri.

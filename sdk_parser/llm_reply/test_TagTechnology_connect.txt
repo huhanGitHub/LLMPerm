@@ -1,0 +1,42 @@
+Below is an example of a unit test for the connect() method of a TagTechnology object in an Android project. This method is a part of the Near Field Communication (NFC) API in Android. 
+
+We are assuming that you want a method that will work in a real application scenario and not a unit test for testing purposes, since testing Android specific classes can be quite complex and involves using a testing framework like Espresso or Robotium.
+
+Given below is a simple way of using the connect() method in a real environment:
+
+```java
+import android.nfc.Tag;
+import android.nfc.tech.NfcA;
+import android.nfc.tech.TagTechnology;
+
+public void test_TagTechnology_connect() {
+    try {
+        Tag tag = ...; //we must fetch the tag, usually it is from an Intent in the onNewIntent method of your Activity
+        if (tag != null){
+            TagTechnology tagTech = NfcA.get(tag);
+            if(!tagTech.isConnected()){
+                tagTech.connect();
+            } //You are now connected to the tag and can perform I/O operations
+            //End your work by closing the connection
+            if (tagTech.isConnected()) {
+                tagTech.close();
+            }
+        }
+    }catch (IOException ioe){
+        Log.e("TAG", ioe.getMessage());
+        //Handle IOException. This exception is thrown when I/O operation failed or your phone does not support NFC
+    }
+}
+```
+In the code snippet above, we are:
+- Fetching a Tag object; in a real application this would typically be passed in an Intent to an NFC-enabled activity (this happens when the phone is put close to an NFC tag).
+- Creating a TagTechnology (we've used NfcA here, but it could be any other technology).
+- Making a connection to the tag.
+- And finally, closing the connection. 
+
+Please note, for this code to work you need to declare the necessary NFC permissions in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+<uses-feature android:name="android.hardware.nfc" android:required="true" />
+```

@@ -1,0 +1,65 @@
+Here is an example snippet of how you could define the method `test_CarrierMessagingService_onSendMultipartTextSms`: 
+
+```java
+import android.telephony.CarrierMessagingService;
+import android.os.Bundle;
+import java.util.ArrayList;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    private final int SMS_PERMISSION_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        if(isSmsPermissionGranted()){
+            test_CarrierMessagingService_onSendMultipartTextSms();
+        }     
+    }
+
+    private boolean isSmsPermissionGranted() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == SMS_PERMISSION_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                test_CarrierMessagingService_onSendMultipartTextSms();
+            } else {
+                // Permission denied
+            }
+        }
+    }
+
+    public void test_CarrierMessagingService_onSendMultipartTextSms(){
+        CarrierMessagingService.RequestRateAdapter adapter = new CarrierMessagingService.RequestRateAdapter();
+        ArrayList<String> messageParts = new ArrayList<>();
+        messageParts.add("Hello");
+        messageParts.add("world!");
+
+        CarrierMessagingService carrierMessagingService = new CarrierMessagingService();
+        carrierMessagingService.sendMultipartTextSms(messageParts,0, null ,adapter);
+    }
+    
+}
+```
+
+Please note that the actual `CarrierMessagingService` class is abstract and should be subclassed, and extending and using the send method in the real world is more complex than illustrated here due to telephony requirements. The above is only to illustrate using the method, and does not cover potential errors in creating an instance of an abstract class.
+
+The method `test_CarrierMessagingService_onSendMultipartTextSms()` uses `CarrierMessagingService.sendMultipartTextSms()` to send SMS divided into two parts.
+
+It checks if the application has the necessary SEND_SMS permissions. If not, it requests it. If the permission is already granted, or once the user approves the permission request, the method `test_CarrierMessagingService_onSendMultipartTextSms()` is executed. This method will send a multipart message ("Hello" and "world!") to the carrier that the application's messaging service is registered with.
+
+Remember to include a SEND_SMS permission in the Android manifest file like this: `<uses-permission android:name="android.permission.SEND_SMS"/>`.

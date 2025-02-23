@@ -1,0 +1,27 @@
+Sure, here is an example of the android API Ndef isWritable method:
+
+```java
+public void test_Ndef_isWritable() {
+    NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
+    if (adapter == null) {
+        // NFC is not supported on this device.
+        return;
+    }
+    if (!adapter.isEnabled()) {
+        // NFC is disabled. 
+        return;
+    }
+    Intent intent = getIntent();
+    Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    if (tag != null) {
+        Ndef ndef = Ndef.get(tag);
+        if (ndef != null) {
+            boolean isWritable = ndef.isWritable();
+            // You can now use the isWritable variable to check if the NFC tag is writable.
+            Toast.makeText(this, "NFC Tag is " + (isWritable ? "Writable" : "Not Writable"), Toast.LENGTH_LONG).show();
+        }
+    }
+}
+``` 
+
+This checks the compatibility of the device with NFC. It then fetches any NFC tag that is attached near to the device. The method 'Ndef.isWritable()' checks if the NFC tag is writable and displays it in a Toast message.

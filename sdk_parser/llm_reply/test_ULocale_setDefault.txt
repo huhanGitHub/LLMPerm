@@ -1,0 +1,26 @@
+Here is an example method showcasing the usage of the setDefault method from the ULocale class in android/icu/util/ULocale.java.
+
+This example assumes that you're setting the default locale to Italian.
+
+```java
+public void test_ULocale_setDefault() {
+    try {
+        // Create a ULocale for Italian.
+        ULocale italianLocale = new ULocale("it_IT");
+            
+        // Set this as the default ULocale.
+        ULocale.setDefault(ULocale.Category.FORMAT, italianLocale);
+
+        // Fetch the current default ULocale.
+        ULocale currentLocale = ULocale.getDefault(ULocale.Category.FORMAT);
+
+        // Print out the result.
+        System.out.println("The default locale is now " + currentLocale.toString());
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This method creates a new ULocale for Italian, sets it as the default locale (for formatting), retrieves the current default locale, and prints it to the System console.

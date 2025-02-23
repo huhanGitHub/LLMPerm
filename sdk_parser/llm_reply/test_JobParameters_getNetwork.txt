@@ -1,0 +1,48 @@
+Here is an example of a method called `test_JobParameters_getNetwork`. 
+
+JobParameters are passed to your job service when it's executed by the system. This example assumes that your service is executing an HTTP request and requires access to the network.
+
+Your job service must override the `onStartJob` method and call `getNetwork` from the provided JobParameters.
+
+```java
+import android.app.job.JobParameters;
+import android.app.job.JobService;
+import android.content.Intent;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+
+public class MyJobService extends JobService {
+    @Override
+    public boolean onStartJob(JobParameters params) {
+        return test_JobParameters_getNetwork(params);
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return true;
+    }
+
+    private boolean test_JobParameters_getNetwork(JobParameters params) {
+        Network network = params.getNetwork();
+
+        if (network == null) {
+            return false; // No network, job can't continue
+        }
+
+        // Check if the network has the TRANSPORT_WIFI capability
+        NetworkCapabilities capabilities = getSystemService(ConnectivityManager.class).getNetworkCapabilities(network);
+
+        if (capabilities == null || !capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            return false; // Not WIFI network, job can't continue
+        }
+
+        // TODO: perform network operations...
+
+        return true; // job completed
+    }
+}
+```
+
+Remember to check for nulls when calling `getNetwork` on the params argument and `getNetworkCapabilities` on Connectivity Manager.
+
+This API is available from Android 7.0 (API level 24) according to the official documentation from Android Developers.

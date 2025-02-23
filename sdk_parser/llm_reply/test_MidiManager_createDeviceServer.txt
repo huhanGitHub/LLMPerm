@@ -1,0 +1,45 @@
+Here is a sample self-contained method `test_MidiManager_createDeviceServer()` demonstrating the usage of `createDeviceServer` method from android's `MidiManager` class.
+
+Before you start, please note that this code requires the `MIDI` feature (provided by the Android MIDI package). It is also important that you declare the necessary permissions in your application manifest (like `android.permission.BIND_MIDI_DEVICE_SERVICE`).
+
+```java
+import android.media.midi.MidiDeviceInfo;
+import android.media.midi.MidiDeviceService;
+import android.media.midi.MidiManager;
+import android.media.midi.MidiDevice.MidiConnection;
+import android.media.midi.MidiReceiver;
+import android.media.midi.MidiSender;
+import android.os.Binder;
+import android.os.IBinder;
+
+public IBinder test_MidiManager_createDeviceServer() {
+    MidiManager midiManager = (MidiManager) getSystemService(Context.MIDI_SERVICE);
+    MidiDeviceInfo midiDeviceInfo = null; // initialize it with the actual device info
+
+    MidiDeviceService.MidiDeviceServerCallback callback = new MidiDeviceService.MidiDeviceServerCallback() {
+        @Override
+        public void onDeviceStatusChanged(MidiDeviceServer server, MidiDeviceInfo deviceInfo) {
+            // Can be used to monitor changes in device state
+        }
+
+        @Override
+        public void onClientStatusChanged(MidiDeviceServer server, Client client, boolean isConnected) {
+            // Can be used to monitor changes in connection status
+        }
+    };
+
+    MidiReceiver[] receivers = new MidiReceiver[1]; // initialize it with the actual midi receivers
+
+    MidiManager.MidiDeviceServer server = midiManager.createDeviceServer(callback, receivers, new String[]{"Port1"}, midiDeviceInfo, false);
+    MidiSender midiSender = null; // initialize it with the actual midi sender
+    MidiConnection midiConnection = server.connectSenderToAllReceivers(midiSender);
+
+    return new Binder();
+}
+```
+
+Above method creates a MidiDeviceServer with a single port, connects a MidiSender to all available Receivers on that device, and returns a Binder object.
+
+This is a very simple example, in a production application you would need to handle error cases, manage device and port availability, handle user input etc. but hopefully this gives you a good spot to start. Please replace comments with actual code according to your MIDI device setup. 
+
+If there is any error in the connection, an IllegalStateException will be thrown by `createDeviceServer` method. So it is beneficial to enclose this within a try-catch block.

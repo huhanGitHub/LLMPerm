@@ -1,0 +1,62 @@
+This example uses the Android TextToSpeech API to convert a given text to speech. Keep in mind that you need to add the appropriate permissions in the AndroidManifest.xml file in order to use the TextToSpeech API. Moreover, this snippet of the code, doesn't include the necessary checks for the initialization process.
+
+```java
+import android.os.AsyncTask;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+
+public class MainActivity extends Activity {
+
+    private TextToSpeech textToSpeech;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.US);
+                    // you can check the language support using result
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
+    }
+
+    private class TextToSpeechAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if (textToSpeech != null) {
+                textToSpeech.speak(strings[0], TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+
+    public void test_TextToSpeech_doInBackground() {
+        new TextToSpeechAsyncTask().execute("Hello world");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+    }
+}
+```
+
+Please note, the function `test_TextToSpeech_doInBackground` just starts an async task that will speak the text "Hello world". You should probably refactor the async task to notify your UI code when it has completed via a callback or using other inter-thread communication methods.

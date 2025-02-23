@@ -1,0 +1,42 @@
+Below is the java method test_ProxySelector_getDefault which demonstrates how to use the getDefault method from the ProxySelector API. 
+
+This method retrieves the system-wide proxy selector. Note that in a real use case, you might replace the simple print statements with actual logic based on the returned ProxySelector.
+
+```java
+import java.net.ProxySelector;
+
+public void test_ProxySelector_getDefault() {
+    // Get the default ProxySelector
+    ProxySelector defaultProxySelector = ProxySelector.getDefault();
+
+    // If no default is set
+    if (defaultProxySelector == null) {
+        System.out.println("No default ProxySelector is set");
+    } else {
+        System.out.println("Default ProxySelector is: " + defaultProxySelector);
+    }
+}
+```
+
+Since Android is based on Java, using the ProxySelector API is just as simple in an Android Activity. However, you might want to show the ProxySelector result in the UI instead of printing it to System.out. Here's how you might adapt the above method to an Android Activity method that updates a TextView with the ProxySelector information:
+
+```java
+import java.net.ProxySelector;
+import android.widget.TextView;
+
+private void test_ProxySelector_getDefault() {
+    // Get the default ProxySelector
+    ProxySelector defaultProxySelector = ProxySelector.getDefault();
+
+    // Get reference to TextView to show result
+    TextView resultTextView = findViewById(R.id.resultTextView);
+
+    // If no default is set
+    if (defaultProxySelector == null) {
+        resultTextView.setText("No default ProxySelector is set");
+    } else {
+        resultTextView.setText("Default ProxySelector is: " + defaultProxySelector);
+    }
+}
+```
+Remember to run this code on a separate thread if you plan on making network requests or doing other time-consuming work based on the ProxySelector, as network operations on the main thread are disallowed in Android.

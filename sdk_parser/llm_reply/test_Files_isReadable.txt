@@ -1,0 +1,36 @@
+Sure, here is a working example of a method that uses the `Files.isReadable(Path path)` method from the `java.nio.file.Files` class. This method checks if a file is readable. Please note that because of certain restrictions on Android you may face issues while using java.nio.file.Files.
+
+Though java.nio.file is available from Android API Level 26, some of its functions like Files.isReadable may not work properly on Android below API Level 29:
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_Files_isReadable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_Files_isReadable() throws Exception {
+        // Define the path of the file
+        Path filePath = Paths.get("/path/to/your/file");
+
+        // Check if the file is readable
+        boolean isReadable = Files.isReadable(filePath);
+
+        // Print the result
+        System.out.println("Is file readable: " + isReadable);
+    }
+}
+```
+This method will retrieve a `Path` object by using the `Paths.get(String)` method and will subsequently check if the file at the given path is readable. The result will be printed to the console.

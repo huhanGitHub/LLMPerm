@@ -1,0 +1,33 @@
+Here is your requested method. Please note that your Android application needs the "android.permission.BLOCKED_NUMBER_STORE" permission in order to use the BlockedNumberContract API, but starting from Android 10 (Q), third-party apps aren't allowed to have this permission according to the official Android documentation.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N) 
+public void test_BlockedNumberContract_notifyEmergencyContact() { 
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLOCKED_NUMBER_STORE)
+            != PackageManager.PERMISSION_GRANTED) { 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLOCKED_NUMBER_STORE}, 0);
+    } else {
+        ContentResolver contentResolver = getContentResolver(); 
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER, "123456789");
+        contentValues.put(BlockedNumberContract.BlockedNumbers.COLUMN_E164_NUMBER, "123456789");
+
+        try { 
+            Uri uri = contentResolver.insert(BlockedNumberContract.BlockedNumbers.CONTENT_URI, contentValues); 
+            Cursor cursor = contentResolver.query(uri, null, null, null, null); 
+            
+            if (cursor != null && cursor.moveToFirst()) { 
+                int columnIndex = cursor.getColumnIndex(BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER); 
+                String number = cursor.getString(columnIndex); 
+                Log.d("Test", "Blocked number is: " + number); 
+                cursor.close(); 
+            } 
+        } catch (Exception e) { 
+            Log.e("Test", "Error inserting blocked number", e); 
+        } 
+    }
+}
+```
+
+However, as mentioned before, please remember that starting from Android 10 (Q), your app won't be able to use the BlockedNumberContract API even with the right permission. You will have to create your own workaround if you specifically need to block numbers. You should also always check and handle the security exceptions properly, as trying to access the BlockedNumberContract API could throw a security exception if the necessary permissions aren't granted.

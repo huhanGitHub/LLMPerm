@@ -1,0 +1,33 @@
+Here is a simple method that demonstrates the use of android.net.Uri class. However, please note that there is no method called getCanonicalUri() in Uri class.
+
+```java
+import android.net.Uri;
+
+public void test_Uri_getCanonicalUri() {
+    // Construct a Uri
+    Uri uri = Uri.parse("https://www.example.com/path1/path2?query=param#fragment");
+
+    // Get the different components of the Uri
+    String scheme = uri.getScheme(); // "https"
+    String host = uri.getHost(); // "www.example.com"
+    List<String> pathSegments = uri.getPathSegments(); // ["path1", "path2"]
+    String query = uri.getQuery(); // "query=param"
+    String fragment = uri.getFragment(); // "fragment"
+
+    // Reconstruct the Uri
+    Uri.Builder builder = new Uri.Builder()
+            .scheme(scheme)
+            .authority(host)
+            .fragment(fragment);
+    for (String pathSegment : pathSegments) {
+        builder.appendPath(pathSegment);
+    }
+    Uri canonicalUri = builder.build();
+
+    // Print the canonicalUri
+    Log.d("test_Uri_getCanonicalUri", canonicalUri.toString());
+}
+```
+In this method, we first construct a Uri instance by passing a string URL to Uri.parse(). Then, we get the scheme, host, path segments, query, and fragment from the Uri instance. After that, we construct a new Uri with the same components using Uri.Builder. Finally, we print the reconstructed Uri to the log.
+
+Please replace getCanonicalUri with a suitable method based on your requirements.

@@ -1,0 +1,36 @@
+Here's an example of a method "test_AudioPlaybackCaptureConfiguration_excludeUid" as requested. Please note that you need "android.permission.CAPTURE_AUDIO_OUTPUT" permission to use methods from `AudioPlaybackCaptureConfiguration`. This permission is reserved for use by system components and is not available to third-party applications. Also recording audio requires "android.permission.RECORD_AUDIO" permission.
+
+This is a hypothetical use case and may not work directly if copy-pasted into your project.
+
+Java Code:
+
+```java
+import android.media.AudioPlaybackCaptureConfiguration;
+import android.media.projection.MediaProjection;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+@RequiresApi(api = Build.VERSION_CODES.Q)
+public void test_AudioPlaybackCaptureConfiguration_excludeUid(AudioPlaybackCaptureConfiguration configuration, Integer uidToExclude) {
+    try {
+        if (checkSelfPermission(Manifest.permission.CAPTURE_AUDIO_OUTPUT) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            // Checks permissions and excludes a UID from audio capture configuration.
+            configuration = new AudioPlaybackCaptureConfiguration
+                    .Builder(mediaProjection)
+                    .excludeUid(uidToExclude)
+                    .build();
+
+        } else {
+            // If permissions are not provided, requests for necessary permissions.
+            final String[] permissions = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAPTURE_AUDIO_OUTPUT};
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}`
+```
+
+Replace `mediaProjection` with a valid `MediaProjection` instance and `REQUEST_CODE` with the integer code you are using to handle the permission request callback. Please note that `uidToExclude` is the UID of the application that you want to exclude from audio capture.

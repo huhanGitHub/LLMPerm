@@ -1,0 +1,35 @@
+The method `isHidden` in `java.nio.file.Files` checks if a file is hidden or not based, depending on the underlying operating system's rules. Here's a test method for the `isHidden` function. Please note that since Android uses the Linux-based file system, the rules for hidden files might be different when compared to other operating systems (in Linux a file is hidden if its name starts with '.').
+
+As Android is a little bit tricky with direct file handling due to its strong security, it is recommended to use the `isHidden` method on internal/external storage files or cache files.
+
+Here is the code:
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import android.util.Log;
+
+public void test_Files_isHidden() {
+    try {
+        //Use a file path from your Android system
+        Path path = Paths.get("/path/to/your/file");
+        boolean isHidden = Files.isHidden(path);
+
+        //Print out the result to Logcat console
+        Log.d("Test", "Is file hidden: " + isHidden);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+You have to replace `"/path/to/your/file"` with a real path of a file in your Android file system.
+
+Please note that Android's security model requires you to request the `READ_EXTERNAL_STORAGE` permission in your AndroidManifest.xml file if you want to access files in external storage.
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+Also, from Android 6.0 (Marshmallow), users grant permissions to apps while the app is running, not when they install the app. So, you need to handle the runtime permission in your app's code.

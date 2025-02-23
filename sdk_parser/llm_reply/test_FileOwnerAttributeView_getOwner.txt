@@ -1,0 +1,34 @@
+Here is the Java method `test_FileOwnerAttributeView_getOwner()` demonstrating usage of the `FileOwnerAttributeView.getOwner()` API. This API allows you to retrieve the owner of a given file in the file system.
+
+Please remember that to use `java.nio.file` classes and interfaces, your minimum Android API level should be 26 and `IOException` needs to be handled properly.
+
+```java
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
+
+public void test_FileOwnerAttributeView_getOwner() {
+    // Create a path object representing the file whose owner we want to retrieve
+    Path path = Paths.get("/path/to/your/file");
+
+    try {
+        // Instantiate a FileOwnerAttributeView object for the file at the given path
+        FileOwnerAttributeView fileOwnerAttributeView = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+
+        // Get the owner of the file
+        UserPrincipal ownerPrincipal = fileOwnerAttributeView.getOwner();
+
+        // Print out the name of the owner
+        String ownerName = ownerPrincipal.getName();
+        System.out.println("Owner of the file: " + ownerName);
+
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+}
+```
+
+This method prints out the owner of the file at the specified path. The `IOException` exception is caught and handled by printing the stacktrace, but in a real application you might want to handle the exception differently.

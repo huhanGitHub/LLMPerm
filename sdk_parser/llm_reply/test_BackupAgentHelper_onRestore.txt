@@ -1,0 +1,60 @@
+Here is a self-contained method for you to work with. It demonstrates the use of android/app/backup/BackupAgentHelper.java. This code is placed within an Android Activity context.
+
+This example assumes that we have created a `BackupAgentHelper` to help restore the data to the app using `SharedPreferencesBackupHelper`. It also checks for a required permission `Manifest.permission.READ_EXTERNAL_STORAGE`.
+
+In Android, you have to mention every permission that your app will use in the AndroidManifest.xml 
+
+Consider adding `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>` to your `AndroidManifest.xml` file if not already added.
+
+You should create your own `BackupAgentHelper` and replace `MyBackupAgent` in the method.
+
+```java
+import android.Manifest;
+import android.app.backup.BackupAgentHelper;
+import android.app.backup.BackupDataInput;
+import android.app.backup.SharedPreferencesBackupHelper;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.ParcelFileDescriptor;
+
+import androidx.core.content.ContextCompat;
+
+public void test_BackupAgentHelper_onRestore(Context context) {
+    int permissionCheck = ContextCompat.checkSelfPermission(context,
+            Manifest.permission.READ_EXTERNAL_STORAGE);
+
+    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        BackupAgentHelper backupAgentHelper = new MyBackupAgent();
+
+        BackupDataInput data = null; // data to be restored
+        int appVersionCode = 0; // version number of your app
+        ParcelFileDescriptor newState = null; // file descriptor for the new state file 
+
+        try {
+            backupAgentHelper.onRestore(data, appVersionCode, newState);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    } else {
+        // Show rationale and request permission.
+    }
+}
+
+
+public class MyBackupAgent extends BackupAgentHelper {
+    // The name of the SharedPreferences file
+    static final String PREFS = "user_preferences";
+
+    // A key to uniquely identify the set of backup data
+    static final String PREFS_BACKUP_KEY = "prefs";
+
+    // Allocate a helper and add it to the backup agent
+    @Override
+    public void onCreate() {
+        SharedPreferencesBackupHelper helper = new SharedPreferencesBackupHelper(this, PREFS);
+        addHelper(PREFS_BACKUP_KEY, helper);
+    }
+}
+```
+
+Note that this is merely an example. Please adjust the codes above to meet your specific requirements.

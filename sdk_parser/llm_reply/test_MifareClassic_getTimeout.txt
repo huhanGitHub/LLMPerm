@@ -1,0 +1,72 @@
+To create a test method for the `getTimeout` function of the `MifareClassic` API, it can be done in an Android activity like this. But first you need to make sure that your Android device supports NFC and also you also need to declare NFC permissions in your manifest file, like so:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+```
+Also, you need to handle the NFC intents in your activity:
+
+```xml
+<intent-filter>
+    <action android:name="android.nfc.action.TECH_DISCOVERED" />
+</intent-filter>
+<meta-data
+    android:name="android.nfc.action.TECH_DISCOVERED"
+    android:resource="@xml/nfc_tech_filter" />
+```
+And create a XML file in the `xml` directory in `res`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <tech-list>
+        <tech>android.nfc.tech.MifareClassic</tech>
+    </tech-list>
+</resources>
+```
+
+Now you can use the `MifareClassic` class in an example method named `test_MifareClassic_getTimeout`, the code to test `getTimeout` would be as follows:
+
+```java
+public void test_MifareClassic_getTimeout() {
+    NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
+    if(adapter == null){
+        // NfcAdapter is not available
+        return;
+    }
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(
+        this, 
+        0, 
+        new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 
+        0
+    );
+
+    IntentFilter[] intentFilters = new IntentFilter[] {
+        new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED),
+    };
+    
+    String[][] techLists = new String[][] {
+        new String[] {
+            MifareClassic.class.getName()
+        }
+    };
+    
+    adapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
+}
+
+@Override
+public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    final Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    try{
+        MifareClassic mifareClassic = MifareClassic.get(tagFromIntent);
+        int timeout = mifareClassic.getTimeout(MifareClassic.TIMEOUT_VALUE_TRANSCEIVE);
+        // timeout contains the current timeout value
+    } catch(Exception e) {
+        e.printStackTrace();
+        // To handle exceptions
+    }
+}
+```
+
+In this example, we first check if the device supports NFC. We only get the `Timeout` value if the NFC tech discovered is `MifreClassic` tech. This value is returned once we call the method `getTimeout` in the `MifareClassic` instance.

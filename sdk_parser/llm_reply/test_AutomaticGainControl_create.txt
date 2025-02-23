@@ -1,0 +1,32 @@
+Assuming you have the necessary permissions to access the microphone and have added them in your Manifest file (RECORD_AUDIO), here is an example:
+
+```java
+public void test_AutomaticGainControl_create() {
+    final int audioSessionId = 0; // Replace with the audio session ID you need.
+    if (AutomaticGainControl.isAvailable()) {
+        AutomaticGainControl agc = AutomaticGainControl.create(audioSessionId);
+        if (agc != null) {
+            boolean enabled = agc.getEnabled();
+            int status = agc.setEnabled(!enabled); // toggle it
+            if (status == AudioEffect.SUCCESS) {
+                Log.d("AGC_Test", enabled ? "AGC disabled" : "AGC enabled");
+            } else {
+                Log.w("AGC_Test", "Failed to change AGC status");
+            }
+            agc.release(); // release after use
+        } else {
+            Log.e("AGC_Test", "Failed to create AutomaticGainControl");
+        }
+    } else {
+        Log.w("AGC_Test", "AutomaticGainControl is not available on this device");
+    }
+}
+```
+
+This method creates an `AutomaticGainControl` for a given audio session id, and toggles its enabled state (enabling it if it's disabled, or disabling it if it's enabled).
+
+Please note the audio session id should be obtained from an instance of `AudioRecord` or `MediaPlayer` which is currently used to process audio.
+
+Please also note that `AutomaticGainControl` is part of the audio pre-processing effects, this means you need to have an audio input to adjust the gain, typically from the device's microphone, so you would need the `android.Manifest.permission.RECORD_AUDIO` permission.
+
+It's also important to release the effect when you're finished using it, as the number of simultaneous instances can be limited by the device's capabilities.

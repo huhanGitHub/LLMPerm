@@ -1,0 +1,36 @@
+Here is a method `test_File_setReadOnly` that you would use inside an Android Activity. This is an usage example of Java API java.io.File.java. 
+
+```Java
+public boolean test_File_setReadOnly() {
+    try {
+        // Creating a new File instance
+        File myFile = new File("/sdcard/myfile.txt");
+
+        // Check if the file exists
+        if (myFile.exists()) {
+            // Set the file to read only
+            boolean isReadOnly = myFile.setReadOnly();
+
+            // If the operation was successful
+            if (isReadOnly) {
+                return true;                
+            } else {
+                // If the operation was not successful
+                Toast.makeText(MainActivity.this, "Failed to set file to read-only", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "File does not exist", Toast.LENGTH_SHORT).show();
+            return false;               
+        }             
+    } catch (Exception e) {
+        Toast.makeText(MainActivity.this, "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        return false;   
+    }
+}
+```
+Make sure to add `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>` to your AndroidManifest.xml to get the write access to external storage. Similarly, for API level 23 and above, you will need to check permissions at runtime. 
+
+Please note that this method attempts to set the file at path "/sdcard/myfile.txt" as read-only. If the file does not exist or an error occurs during the operation, it shows a `Toast` message indicating the same. If the operation is successful, it returns `true`, else `false`. 
+
+You may want to change the file path to one that suits your needs.

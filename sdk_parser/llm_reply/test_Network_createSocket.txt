@@ -1,0 +1,56 @@
+I am going to demonstrate a self-contained method to test the usage of creating a socket from an android.net.Network instance in Android. It is important to note that the Network object is mostly used in multi-networking cases where apps have a need to explicitly select a network for their data traffic. 
+
+Below is a self-contained method for illustrating socket creation:
+
+```java
+public void test_Network_createSocket() {
+    final ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager != null) {
+        Network[] networks = connectivityManager.getAllNetworks();
+        for (Network network : networks) {
+            NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
+            // Here we choose a network that has internet (Usually, it should be your decision)
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Socket socket = network.getSocketFactory().createSocket("example.com", 80);
+                            if(socket.isConnected()) {
+                                Log.d("Network Test", "Socket successfully connected on network: "+ network);
+                            } else {
+                                Log.d("Network Test", "Socket connection failed on network: "+ network);
+                            }
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+                break; 
+            }
+        } 
+    }
+}
+```
+
+Note:
+
+1. This method first obtains an instance of ConnectivityManager, through which it receives all the currently available networks.
+
+2. It then iterates over these networks, checks if the network is a WIFI and is connected.
+
+3. Once a suitable network is found, it spawns a new thread to create a socket using the selected network's SocketFactory. The domain used here is "example.com" and the port is 80, change it according to real case.
+
+4. Check if socket has successfully connected and log the status of the connection. Always remember to close the socket after work has done to avoid resource leak.
+
+5. This example assumes the presence of network permissions in your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+
+6. Remember that network operations should be performed off the UI thread, hence the creation of a new Thread for the socket connection. Please consider handling this in a more sophisticated way in a production app, possibly with AsyncTask, HandlerThread, or RxJava.

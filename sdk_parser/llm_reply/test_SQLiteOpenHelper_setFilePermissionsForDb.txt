@@ -1,0 +1,55 @@
+SQLiteOpenHelper does not directly provide a method to set file permissions for the database. However, you can set up the file permissions using Android’s `Context.MODE_PRIVATE` after opening the database. 
+
+Here is an example of SQLiteOpenHelper usage, as well as how you might set file permissions within an Android activity:
+
+```java
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "testDb";
+    private static final int DATABASE_VERSION = 1;
+    
+    DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS test");
+        onCreate(db);
+    }
+}
+
+public class MainActivity extends AppCompatActivity {
+
+    private DatabaseHelper dbHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_SQLiteOpenHelper_setFilePermissionsForDb();
+    }
+    
+    private void test_SQLiteOpenHelper_setFilePermissionsForDb(){
+        dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        File databasePath = getDatabasePath(DatabaseHelper.DATABASE_NAME);
+        databasePath.setReadable(true, true);
+        databasePath.setWritable(true, true);
+        
+        db.close();
+    }
+}
+```
+
+Please note that setting the file permissions to globally readable and writable (`MODE_WORLD_READABLE` and `MODE_WORLD_WRITABLE`) as shown in this example can expose your application's data to other applications and is generally discouraged unless necessary. Therefore, instead use `Context.MODE_PRIVATE` for the most secure approach. These methods are deprecated from API level 17. The preferable alternative is to use the FileProvider API. Permission settings should be done very carefully considering the security aspects.

@@ -1,0 +1,65 @@
+Here's an example of how you might create a method named "test_CarrierMessagingService_sendTextSms" in Android:
+
+```java
+import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.widget.Toast;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        } else {
+            test_CarrierMessagingService_sendTextSms();
+        }
+    }
+
+    public void test_CarrierMessagingService_sendTextSms(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+            try{
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage("PHONE_NUMBER_HERE", null, "TEST MESSAGE", null, null);
+                Toast.makeText(getApplicationContext(), "SMS Sent.", Toast.LENGTH_LONG).show();
+            } catch (Exception e){
+                Toast.makeText(getApplicationContext(), "SMS sending failed...", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        } else{
+            Toast.makeText(this, "SMS Permission is not granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case SEND_SMS_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "SMS Permission granted", Toast.LENGTH_LONG).show();
+                    test_CarrierMessagingService_sendTextSms();
+                } else {
+                    Toast.makeText(getApplicationContext(), "SMS Permission denied", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }
+}
+```
+
+This entire code example shows how to request for permission to send SMS at runtime and then send an SMS if the permission was granted. If the permission was denied, the `test_CarrierMessagingService_sendTextSms` method simply shows a toast notifying the user. 
+
+Remember, you will have to replace the placeholder "PHONE_NUMBER_HERE" with a valid phone number, and “TEST MESSAGE” with your intended message. Also, don't forget to declare the "SEND_SMS" permission in your app manifest file as below:
+
+```xml
+<uses-permission android:name="android.permission.SEND_SMS" />
+```

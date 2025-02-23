@@ -1,0 +1,42 @@
+Here is a self-contained method that provides a usage example of the SSLContext.setDefault() method from javax.net.ssl.* packages in JAVA. 
+
+For Android, you would need to adapt the code to work as intended as Android doesn't support the 'default' SSLContext.
+
+```java
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.KeyManagementException;
+import java.security.SecureRandom;
+
+public void test_SSLContext_setDefault() {
+    SSLContext sslContext;
+    try {
+        // Create SSLContext
+        sslContext = SSLContext.getInstance("TLS");
+
+        // Initialize SSLContext
+        sslContext.init(null, null, new SecureRandom());
+
+        // Set it as default
+        SSLContext.setDefault(sslContext);
+
+        // Test that the default is correctly set
+        SSLSocketFactory defaultSSLSocketFactory = HttpsURLConnection.getDefaultSSLSocketFactory();
+                        
+        if (defaultSSLSocketFactory.equals(sslContext.getSocketFactory())) {
+            System.out.println("Successfully set default SSLContext");
+        } else {
+            System.out.println("Failed to set default SSLContext");
+        }
+    } catch (NoSuchAlgorithmException | KeyManagementException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This method simply gets an instance of SSLContext, assigns it as the default SSLContext, then checks if it was set correctly by comparing it with the default SSLSocketFactory.
+
+Please be aware that Android usage of SSLContext and SSL defaults may require the application to have appropriate permissions and can vary based on Android API levels. 
+
+It is also suggested to use more advanced options when initializing the SSLContext for a full production application. SSLContext.init(KeyManager[] km, TrustManager[] tm, SecureRandom random) method is intended to provide full control over the creation of the SSLContext, where you can specify your own implementations of the variety of required parameters. These can include trust managers / key managers (which can determine trust material or client credentials) and a secure random number generator (which can specify a source of randomness).

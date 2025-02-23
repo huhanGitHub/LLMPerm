@@ -1,0 +1,40 @@
+Below is an example usage of `DocumentsContract.getDocumentThumbnail` method.
+
+```java
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.util.Log;
+
+public void test_DocumentsContract_getDocumentThumbnail(Context context, Uri uri) {
+    try {
+        // Define thumbnail size
+        final int THUMBNAIL_SIZE = 64;
+        
+        // Obtain Document ID
+        String documentId = DocumentsContract.getDocumentId(uri);
+        
+        // Get bitmap thumbnail
+        Bitmap thumbnail = DocumentsContract.getDocumentThumbnail(context.getContentResolver(), uri, 
+            new android.graphics.Point(THUMBNAIL_SIZE, THUMBNAIL_SIZE), null);
+
+        // Log the success
+        if(thumbnail != null) {
+            Log.i("test_DocumentThumbnail","Thumbnail Successfully Created");
+        } else {
+            Log.e("test_DocumentThumbnail","Failed to create thumbnail");
+        }
+
+    } catch (Exception e) {
+        // Catch exceptions like FileNotFoundException
+        throw new RuntimeException("Failed to create thumbnail", e);
+    }
+}
+```
+
+This method is intended to be used in an Android Activity class and demonstrates the use of `DocumentsContract.getDocumentThumbnail` to retrieve a bitmap thumbnail of a file at the given `Uri`. In a real-world scenario, this method could be expanded to do something with the thumbnail, such as display it in an `ImageView` or save it to disk.
+
+Remember that this API requires the `READ_EXTERNAL_STORAGE` permission. You need to check for the permission or request for the permission if it is not granted before the method call.
+
+Also, this method will block the UI thread because it performs disk I/O operations. These operations should be done in a background thread, for instance, using `AsyncTask` or `HandlerThread`.

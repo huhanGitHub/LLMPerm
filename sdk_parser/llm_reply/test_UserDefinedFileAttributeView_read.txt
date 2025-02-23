@@ -1,0 +1,43 @@
+Below is an example usage of the `UserDefinedFileAttributeView` Java NIO API, wrapped in a method called `test_UserDefinedFileAttributeView_read`.
+
+```java
+@SuppressLint("NewApi")
+public void test_UserDefinedFileAttributeView_read() {
+    Path file = Paths.get("/path/to/your/file");
+    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
+
+    if(view != null) {
+        try {
+            // List user-defined attributes
+            List<String> attributes = view.list();
+            for(String attribute : attributes) {
+                // Allocate a ByteBuffer
+                ByteBuffer buffer = ByteBuffer.allocate(view.size(attribute));
+
+                // Read the value of the attribute into the buffer
+                view.read(attribute, buffer);
+
+                // Prepare the buffer for reading
+                buffer.flip();
+
+                // Convert to string (assuming the attribute value is a string)
+                String value = StandardCharsets.UTF_8.decode(buffer).toString();
+
+                Log.d("Attribute_Value", "Attribute: " + attribute + ", Value: " + value);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } else {
+        Log.d("UDFAV_Test", "UserDefinedFileAttributeView is not supported on this file system.");
+    }
+}
+```
+
+IMPORTANT! Please note that the `UserDefinedFileAttributeView` is not supported by all file systems. 
+
+It will likely return null for Android's default file system, which does not support extended attributes as of the time of this response (NTFS and ext4, for instance, support this). 
+
+This code would rather work in a regular Java application when working with suitable file systems. You should always check if the view is null before attempting to use it. 
+
+Also, the path specified is just a placeholder. You'll need to replace the `"/path/to/your/file"` with the actual path to the file you wish to read attributes from.

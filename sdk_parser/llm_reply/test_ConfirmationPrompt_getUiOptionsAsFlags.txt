@@ -1,0 +1,69 @@
+Below is an example of a self-contained method `test_ConfirmationPrompt_getUiOptionsAsFlags()` which makes use of the android `ConfirmationPrompt` API. 
+
+This method is written in Java and is intended to be part of an Android activity:
+
+```java
+import android.security.ConfirmationPrompt;
+import android.security.ConfirmationPrompt.Builder;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_BIOMETRIC) 
+            != PackageManager.PERMISSION_GRANTED) {
+            // Request Permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.USE_BIOMETRIC}, PERMISSIONS_REQUEST_CODE);
+        } else {
+            test_ConfirmationPrompt_getUiOptionsAsFlags();
+        }
+    }
+
+    private void test_ConfirmationPrompt_getUiOptionsAsFlags() {
+        ConfirmationPrompt.Builder confirmationPromptBuilder = new ConfirmationPrompt.Builder(this);
+        ConfirmationPrompt confirmationPrompt = confirmationPromptBuilder.setPromptText("Test Confirmation Prompt").build();
+
+        try {
+            int uiOptions = confirmationPrompt.getUiOptionsAsFlags();
+            Log.d("MainActivity", "The UI options flags are: " + uiOptions);
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error getting UI options flags", e);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    test_ConfirmationPrompt_getUiOptionsAsFlags();
+                } else {
+                    // Permission denied
+                    Log.e("MainActivity", "USE_BIOMETRIC permission denied");
+                }
+                return;
+            }
+        }
+    }
+}
+```
+
+The `test_ConfirmationPrompt_getUiOptionsAsFlags()` method first builds a `ConfirmationPrompt` object, then it calls the method `getUiOptionsAsFlags()` on that object.
+
+It's necessary to ask for permission to use `ConfirmationPrompt`. In this example, it's asked in the `onCreate()` method of the Android activity, before calling `test_ConfirmationPrompt_getUiOptionsAsFlags()`. If the permission is not granted, a request for permission is made.

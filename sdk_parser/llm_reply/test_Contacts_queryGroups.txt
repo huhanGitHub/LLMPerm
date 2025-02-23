@@ -1,0 +1,59 @@
+Here's an example how to use Contacts provider in Android for querying groups. As per guidelines, I'll assume you have already requested required permissions in your AndroidManifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.READ_CONTACTS"/>
+<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+```
+
+Now we create our method `test_Contacts_queryGroups()` to query contact groups:
+
+```java
+public void test_Contacts_queryGroups() {
+    // Check if we have the permission to read contacts.
+    if (checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        // If not, request the permission
+        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
+        return;
+    }
+
+    // Android data content URI (contacts)
+    Uri uri = ContactsContract.Groups.CONTENT_URI;
+
+    // The columns we are interested in.
+    String[] projection = new String[]{
+            ContactsContract.Groups._ID,
+            ContactsContract.Groups.TITLE
+    };
+
+    // Query the table
+    Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+    // Validate cursor
+    if (cursor == null) {
+        Log.d("test_Contacts_queryGroups", "Error querying Contacts. Cursor is null.");
+        return;
+    }
+
+    // Loop over the cursor
+    while (cursor.moveToNext()) {
+        // Get the fields we need
+        long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Groups._ID));
+        String title = cursor.getString(cursor.getColumnIndex(ContactsContract.Groups.TITLE));
+
+        // Do something with the data
+        Log.d("test_Contacts_queryGroups", "Group Id: " + id + ", Title: " + title);
+    }
+
+    cursor.close();
+}
+```
+
+Before querying the contacts, it is important to check if we have the required permission to do so. If not, we have to request it.
+
+The `getContentResolver().query()` method is used to retrieve the contact groups from the provider. The returned `Cursor` object allows us to navigate over the results.
+
+In our loop, we get the values of the group's ID and title for each row in the cursor, and then log them.
+
+Finally, don't forget to close the cursor when you're done.
+
+This is relatively a simple looking function, but it communicates with one of Android's content providers, which can sometimes be nontrivial to use due to the asynchronous nature of the providers.

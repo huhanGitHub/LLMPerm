@@ -1,0 +1,34 @@
+Sure, here is a simple example method which you can add to your Android Activity that represents a usage example of the `Ndef` class in Android's NFC package. This method writes an `NdefMessage` to an `Ndef` tag.
+
+```java
+public void test_Ndef_writeNdefMessage() {
+    // create new NDEF message
+    NdefMessage message = new NdefMessage(new NdefRecord[]{NdefRecord.createUri(Uri.parse("https://www.example.com"))});
+
+    // get a reference to the NFC adapter
+    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+    // get an intent for NFC tag discovered action
+    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+    // create intent filter for all NDEF discovered intents
+    IntentFilter ndefIntentFilter = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+
+    try {
+        // catch all NDEF discovery intents
+        ndefIntentFilter.addDataType("*/*");
+    } catch (IntentFilter.MalformedMimeTypeException e) {
+        throw new RuntimeException("could not add MIME type", e);
+    }
+
+    // set up NDEF message to be written when a tag is discovered
+    nfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{ndefIntentFilter}, null);
+    nfcAdapter.setNdefPushMessage(message, this);
+}
+```
+
+This `test_Ndef_writeNdefMessage` method creates an `NdefMessage` with a URI record that points to "https://www.example.com". Then it sets up the NFC adapter to send this message when an NFC tag comes into the vicinity of the device.
+
+Note that this code won't actually write anything because it doesn't have a reference to an actual `Ndef` tag object to write the message to. This is because typically the NFC tag would be discovered dynamically at run time, and the OS would handle writing the message to the tag. 
+
+In reality, you need to test this method providing it an NFC tag and try writing a NdefMessage into it. At the moment of running, the phone must be close to the NFC tag.

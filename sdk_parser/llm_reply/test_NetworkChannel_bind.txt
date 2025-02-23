@@ -1,0 +1,30 @@
+Sure, here is an example of a method that uses NetworkChannel's bind() method. In this example, a ServerSocketChannel, that implements NetworkChannel interface, is being used :
+
+```java
+public void test_NetworkChannel_bind() {
+    ServerSocketChannel serverSocketChannel = null;
+    SocketAddress socketAddress = null;
+
+    try {
+        serverSocketChannel = ServerSocketChannel.open();
+        socketAddress = new InetSocketAddress("localhost", 8080);  // specifies the IP address and port 
+
+        serverSocketChannel.bind(socketAddress);
+
+        Toast.makeText(this, "Server Socket Channel bound to " + socketAddress.toString(), Toast.LENGTH_LONG).show();
+    } catch (IOException e) {
+        Toast.makeText(this, "IOException occurred while binding", Toast.LENGTH_LONG).show();
+    } finally {
+        if (serverSocketChannel != null) {
+            try {
+                serverSocketChannel.close();
+            } catch (IOException e) {
+                Toast.makeText(this, "IOException occurred while closing channel", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+}
+```
+This method attempts to bind a ServerSocketChannel to an IP address and port. It's contained within a try-catch block to handle the possible IOException that calling the bind() method might throw.
+
+Please note that the above code assumes that it is part of an Activity where "this" refers to the context. Replace "this" with the appropriate context if you're using from a different context. Also, remember that network operations should not be done on main thread in android, so use it accordingly.

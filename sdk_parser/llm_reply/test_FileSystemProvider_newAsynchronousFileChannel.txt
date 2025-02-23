@@ -1,0 +1,42 @@
+In this example, I'm assuming we're working on a simple Android app that has access to the external storage permission, as it's necessary to work with files.
+
+The method test_FileSystemProvider_newAsynchronousFileChannel will establish an asynchronous file channel with a test file on the external storage.
+
+Here is how it should look:
+
+```java
+import android.os.Environment;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.spi.FileSystemProvider;
+import java.nio.channels.AsynchronousFileChannel;
+
+public void test_FileSystemProvider_newAsynchronousFileChannel() {
+    FileSystemProvider provider = FileSystemProvider.installedProviders().get(0);
+    AsynchronousFileChannel fileChannel = null;
+    try {
+        String testFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testfile.txt";
+        fileChannel = provider.newAsynchronousFileChannel(Paths.get(testFilePath), new HashSet<StandardOpenOption>(Arrays.asList(StandardOpenOption.CREATE, 
+        StandardOpenOption.READ, StandardOpenOption.WRITE)), null);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (fileChannel != null) {
+            try {
+                fileChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+Remember to add `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />` and `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />` in the manifest file of your Android app.
+
+Also, starting from Android 6.0 (API level 23), users grant permissions to apps while the app is running, not when they install the app. This approach simplifies the process for users to get up and running with apps. So you will also need to handle the runtime permissions.
+
+Please note, this only works for Android versions below 10. Android Q (API level 29 and above) has limited support for java.nio.file APIs. 
+
+As an additional step, you should always check if the external storage is available and writable before trying to open a channel to a file. Use `Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)` to check this.

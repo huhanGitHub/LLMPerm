@@ -1,0 +1,31 @@
+Sure, here is a simple example of a method which uses the shouldProcessCall method of the MmTelFeature class.
+
+This method will be used to check whether the current call should be processed or not.
+
+```java
+import android.telephony.ims.feature.MmTelFeature;
+import android.telephony.ims.ImsCallProfile;
+import android.util.Log;
+
+public class MyActivity extends AppCompatActivity {
+    private static final String TAG = "MyActivity";
+
+    public void test_MmTelFeature_shouldProcessCall() {
+        // Create a new instance of MmTelFeature
+        MmTelFeature mmtelFeature = new MmTelFeature();
+
+        // Assume we are creating a new video call
+        ImsCallProfile callProfile = new ImsCallProfile(ImsCallProfile.SERVICE_TYPE_NORMAL, ImsCallProfile.CALL_TYPE_VT);
+
+        try {
+            // Test the MmTelFeature's shouldProcessCall method with the call profile 
+            boolean shouldProcessCall = mmtelFeature.shouldProcessCall(callProfile);
+            Log.d(TAG, "Result of shouldProcessCall: " + shouldProcessCall);
+        } catch (Exception e) {
+            Log.d(TAG, "Exception in shouldProcessCall: " + e.toString());
+        }
+    }
+}
+```
+
+Please note that MmTelFeature class in abstract class, so you can't directly instantiate it. You would have to use some sort of subclass in real implementation. This is illustrative example for demonstration purpose. In real scenario, you would retrieve instance of MmTelFeature according to your need.

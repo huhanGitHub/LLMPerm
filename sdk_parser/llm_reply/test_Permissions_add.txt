@@ -1,0 +1,36 @@
+Here is an example of a method that demonstrates the usage of the `java/security/Permissions.java` API. Note that this sample code is a simple setUp test; please modify it to fit your own needs.
+
+For this method, we're adding a pair of permissions to a Permissions object, then checking if the permissions have been correctly added.
+
+Please add the required import statements at the start of your file while implementing this in your application 
+
+``` java
+import java.security.Permission;
+import java.security.Permissions;
+import java.io.FilePermission;
+
+public void test_Permissions_add()  {
+    // Create a new Permissions object
+    Permissions permissions = new Permissions();
+
+    // Create two new FilePermission objects
+    FilePermission readPerm = new FilePermission("/home/nobody/","read");
+    FilePermission writePerm = new FilePermission("/home/nobody/","write");
+
+    // Add the FilePermission objects to the Permissions object
+    permissions.add(readPerm);
+    permissions.add(writePerm);
+
+    // Verifying permissions
+    if(!permissions.implies(new FilePermission("/home/nobody/","read"))){
+        System.out.println("Read permission not correctly added.");
+    }
+    if(!permissions.implies(new FilePermission("/home/nobody/","write"))){
+        System.out.println("Write permission not correctly added.");
+    }
+}
+``` 
+
+Side notes:
+1. In Android, you don't have to manage Permissions yourself; Android has its own permission system.
+2. java.security.permissions are for the JVM and are not related to Android permissions in any way.

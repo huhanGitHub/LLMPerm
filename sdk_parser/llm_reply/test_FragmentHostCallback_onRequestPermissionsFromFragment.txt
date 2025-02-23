@@ -1,0 +1,43 @@
+The `onRequestPermissionsFromFragment` is a protected method in `FragmentHostCallback` of android which is generally used by a fragment to let its host know a permissions needs to be requested. Below is an example of the method, however, you can't directly test this method without extending `FragmentHostCallback` class and making changes accordingly. So, the given code snippet is a basic idea not the exact implementation.
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    FragmentHostCallback fragmentHostCallback;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // initialize fragmentHostCallback here
+        fragmentHostCallback = new FragmentHostCallback(this, getLoaderManager(), R.id.container) {
+                @Override
+                public void onRequestPermissionsFromFragment(@NonNull Fragment fragment, @NonNull String[] permissions, int requestCode) {
+                    //Handle the permission request here
+                    ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
+                }
+            };
+    }
+
+    public void test_FragmentHostCallback_onRequestPermissionsFromFragment() {
+        //Test the method here.
+        String[] permissions = {Manifest.permission.CAMERA};
+        fragmentHostCallback.onRequestPermissionsFromFragment(null, permissions, 123);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //Handle the permission request result here
+        if (requestCode == 123) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+}
+```
+The `test_FragmentHostCallback_onRequestPermissionsFromFragment` method basically is calling `onRequestPermissionsFromFragment` of `fragmentHostCallback` which is an instance of an `FragmentHostCallback` anonymous class. The `onRequestPermissionsResult` method is where you could handle the permissions whether it is granted or not.

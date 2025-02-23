@@ -1,0 +1,35 @@
+Sure! Here's a simple example of how you can test the getFileSystem and getRootDirectories methods from the FileSystems class in Java. 
+
+```java
+import java.nio.file.FileStore;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Set;
+
+public void test_FileSystems_getFileSystem() {
+    // Get the default FileSystem
+    FileSystem fs = FileSystems.getDefault();
+    
+    // Get the FileStore attributes
+    Iterable<FileStore> fsa = fs.getFileStores();
+    for (FileStore fileStore : fsa) {
+        System.out.println("File Store: " + fileStore);
+    }
+    
+    // Get the set of the installed file type detectors
+    Iterable<Path> rootDirectories = fs.getRootDirectories();
+    for (Path path : rootDirectories) {
+        System.out.println("Root Directory: " + path);
+    }
+    
+    // Get the set of the available file attribute views
+    Set<String> fileAttrViews = fs.supportedFileAttributeViews();
+    for (String view : fileAttrViews) {
+        System.out.println("Supported File Attribute View: " + view);
+    }
+}
+```
+In this method, we're using the getDefault() method of the FileSystems class to get a reference to the default FileSystem. Then we're using the getFileStores(), getRootDirectories(), and supportedFileAttributeViews() methods of the FileSystem object to print file stores, root directories, and supported file attribute views.
+
+Please note that this method is not specifically meant for an Android Activity, as the java.nio.file API used here is not part of the Android public SDK API, but is more used in Java applications. Please adjust as per your requirements.

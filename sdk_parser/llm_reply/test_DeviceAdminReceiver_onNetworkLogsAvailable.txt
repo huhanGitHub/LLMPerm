@@ -1,0 +1,53 @@
+Here is the sample method that tests the onNetworkLogsAvailable in an Android app using DeviceAdminReceiver class. Please note that this method is introduced from API level 29.
+
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+
+public class MainActivity extends AppCompatActivity {
+    DeviceAdminReceiver deviceAdminReceiver;
+    DevicePolicyManager devicePolicyManager;
+    ComponentName adminComponent;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        //initialize DevicePolicyManager
+        devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+    
+        //setup the device admin
+        adminComponent = new ComponentName(MainActivity.this, DeviceAdminReceiver.class);
+        devicePolicyManager.setActiveAdmin(adminComponent);
+        
+        //test method
+        test_DeviceAdminReceiver_onNetworkLogsAvailable();
+    }
+    
+    //test method
+    public void test_DeviceAdminReceiver_onNetworkLogsAvailable() { 
+        
+        deviceAdminReceiver = new DeviceAdminReceiver() {
+            @Override
+            public void onNetworkLogsAvailable(Context context, Intent intent, long batchToken, int networkLogsCount) {
+    
+                devicePolicyManager.retrieveNetworkLogs(adminComponent, batchToken);
+    
+                //additional code to handle the network logs
+                //...
+            }
+        };
+        
+        Intent intent = new Intent();
+        long batchToken = 1L; //sample batchToken, usually comes from the OS
+        int networkLogsCount = 0; //networkLogsCount, usually comes from the OS
+        
+        //call method
+        deviceAdminReceiver.onNetworkLogsAvailable(this, intent, batchToken, networkLogsCount);
+    }
+}
+
+Please note again, you can't just use this code as it is and get the network logs of a device. You need user's permission and your app should have the capability to act as a "Profile Owner" or "Device Owner" app, which requires additional configurations. Be sure to check the official Android documentation on "Managed Profiles and Device Owner".

@@ -1,0 +1,33 @@
+Unfortunately, the `SecureDirectoryStream` is not widely available in Android API, and it is specifically not recommended for use in Android development. It also can't be used in Activity directly. Hence, it would be more appropriate to use standard `java.nio.file` package offerings when working in an Android development environment. However, for a general usage in Java API, here's how a test/example would look like using `SecureDirectoryStream`:
+
+```java
+import java.nio.file.*;
+import java.io.IOException;
+
+public void test_SecureDirectoryStream_deleteFile() {
+    Path dir = Paths.get("your/directory/path");
+    Path fileToDelete = Paths.get("filetodelete.extension"); // filename with extension
+
+    try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(dir)) {
+        if(directoryStream instanceof SecureDirectoryStream) {
+            SecureDirectoryStream<Path> secureDirectoryStream = (SecureDirectoryStream<Path>) directoryStream;
+            secureDirectoryStream.deleteFile(fileToDelete);
+            System.out.println("File has been successfully deleted from the secure directory.");
+        } else {
+            System.out.println("Not a secure directory.");
+        }
+    } catch (NoSuchFileException noFileEx) {
+        System.err.println("No such file or directory exists: " + noFileEx.getFile());
+    } catch (DirectoryNotEmptyException dirNotEmptyEx) {
+        System.err.println("Directory is not empty: " + dir);
+    } catch (IOException ioEx) {
+        System.err.println("Error while processing directory/file: " + ioEx.getMessage());
+    } catch (UnsupportedOperationException uoEx) {
+        System.err.println("Operation is not supported by the file system: " + uoEx.getMessage());
+    }
+}
+```
+
+This function (`test_SecureDirectoryStream_deleteFile`) attempts to delete a file from a secure directory. 
+
+Please replace `"your/directory/path"` and `"filetodelete.extension"` with appropriate directory path and file name. Also, check for the correct exception to handle the scenario where a file or directory does not exist at the specified path.

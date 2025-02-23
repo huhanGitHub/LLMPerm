@@ -1,0 +1,41 @@
+Here is an example usage for the android.net.sip.SipAudioCall API. This example includes error handling, but assumes that a SipProfile and SipManager have already been created and properly set up. 
+
+```java
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipException;
+
+public void test_SipAudioCall_answerCall() {
+    final int timeout = 30;
+    try {
+        SipAudioCall.Listener listener = new SipAudioCall.Listener() {
+            @Override
+            public void onRinging(SipAudioCall call, SipProfile caller) {
+                try {
+                    call.answerCall(timeout);
+                } catch (SipException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        if (sipManager != null) {
+            sipAudioCall = sipManager.takeAudioCall(intent, listener);
+        }
+
+    } catch (Exception e) {
+        if (sipAudioCall != null) {
+            sipAudioCall.close();
+        }
+    }
+}
+```
+
+Please keep in mind that a lot of parameters depend on the state of your application, the permissions, and the network connectivity. Always check the documentation for more scenarios and options.
+
+This code is developed for an Android Activity that received an incoming SIP call from the Intent provided to it, and the call when received will be answered automatically and put on speaker mode.
+
+Don't forget to include proper permissions in your AndroidManifest.xml:
+
+- `<uses-permission android:name="android.permission.USE_SIP" />`
+- `<uses-permission android:name="android.permission.INTERNET" />`
+- `<uses-permission android:name="android.permission.RECORD_AUDIO" />`

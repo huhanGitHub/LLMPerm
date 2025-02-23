@@ -1,0 +1,29 @@
+Here is a method test_Logger_setParent which is an usage example of the Android or Java API java/util/logging/Logger.java. Please note that Android uses its logging system called Logcat, and java Logger might not work as expected in Android.
+
+```java
+import android.util.Log;
+import java.util.logging.Logger;
+
+public void test_Logger_setParent() {
+    try {
+        // Create two logger instances
+        Logger logger1 = Logger.getLogger("logger1");
+        Logger logger2 = Logger.getLogger("logger2");
+
+        // Set logger1 as parent of logger2
+        logger2.setParent(logger1);
+
+        // Get parent of logger2 and check if it is logger1
+        if(logger2.getParent() == logger1) {
+            Log.d("LoggerTest", "test_Logger_setParent PASSED");
+        } else {
+            Log.d("LoggerTest", "test_Logger_setParent FAILED");
+        }
+    } catch (Exception e) {
+        Log.e("LoggerTest", "Exception in test_Logger_setParent", e);
+    }
+}
+```
+This code creates two Logger objects, logger1 and logger2. It then sets logger1 to be the parent of logger2. After that, it checks if the parent of logger2 is indeed logger1. If it is, then it logs a success message. If it's not, then it logs a failed message. If an exception occurs, it logs the exception. This method is an example on how to use the setParent method of the Logger class in Java. 
+
+Remember to call this test method from your Activity or other Android component in order to see the logs. Please note that in a real-world scenario, you should use a testing framework like JUnit for your tests, instead of just logging them.

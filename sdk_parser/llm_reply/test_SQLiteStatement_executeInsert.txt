@@ -1,0 +1,49 @@
+To demonstrate the usage of SQLiteStatement.executeInsert() method, I'm going to insert a new row into a hypothetical 'users' table which has two columns 'username' and 'email'.
+
+```java
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+import android.content.ContentValues;
+
+public long test_SQLiteStatement_executeInsert() {
+    SQLiteDatabase db = null;
+    SQLiteStatement stmt = null;
+    long result = -1;
+
+    try {
+        // Assuming you have 'MyDBHelper' that extends 'SQLiteOpenHelper'
+        MyDBHelper dbHelper = new MyDBHelper(this);
+
+        // Get a writable database
+        db = dbHelper.getWritableDatabase();
+
+        // Define an insert statement
+        String sql = "INSERT INTO users (username, email) VALUES (?, ?)";
+
+        // Prepare the statement
+        stmt = db.compileStatement(sql);
+
+        // Bind the values
+        stmt.bindString(1, "JohnDoe");
+        stmt.bindString(2, "johndoe@mail.com");
+
+        // Execute insert statement
+        result = stmt.executeInsert();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        // Clean up
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (db != null) {
+            db.close();
+        }
+    }
+
+    // Return the ID of the new record
+    return result;
+}
+```
+
+This example compiles an SQL INSERT statement, binds values to its arguments and executes it using SQLiteStatement.executeInsert(). The method returns the row ID of the newly inserted row, or -1 if the query did not insert any row.

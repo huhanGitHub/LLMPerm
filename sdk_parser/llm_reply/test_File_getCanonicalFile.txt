@@ -1,0 +1,28 @@
+In this example, `java.io.File` API is used. The `getCanonicalFile()` method belongs to `java.io.File` class of Java. This method returns the canonical form of the abstract file pathname. 
+
+Here is the Android Activity method usage:
+
+```java
+import android.util.Log;
+import java.io.File;
+import java.io.IOException;
+
+public void test_File_getCanonicalFile() {
+    String path = "/data/user/0/com.example.myapp/files/original.txt";
+    File file = new File(path);
+
+    try {
+        File canonicalFile = file.getCanonicalFile();
+        Log.d("Canonical File Test", "Canonical File Path : " + canonicalFile.getPath());
+    } catch (IOException e) {
+        e.printStackTrace();
+        Log.e("Canonical File Test", "Error getting canonical file", e);
+    }
+}
+```
+
+Make sure to call the method `test_File_getCanonicalFile()` in your Android Activity lifecycle (for instance, inside `onCreate` method). 
+
+Also, note that you should have proper permission to access the files. If the files are in external storage, don't forget to add the external storage permissions in your AndroidManifest.xml.
+
+This method uses Android Log class for output. You might want to handle IOException in your application specific way.

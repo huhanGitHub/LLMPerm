@@ -1,0 +1,42 @@
+```java
+/**
+* This is a usage example of how to use the joinGroup method from the MulticastSocket API.
+*/
+public void test_MulticastSocket_joinGroup() {
+    MulticastSocket multicastSocket = null;
+    InetAddress groupAddress = null;
+    
+    try {
+        // Initialize MulticastSocket on port 1234
+        multicastSocket = new MulticastSocket(1234);
+        
+        // Provide the IP address of the group you want to join
+        groupAddress = InetAddress.getByName("230.0.0.1");
+        
+        // Join Group on given IP
+        multicastSocket.joinGroup(groupAddress);
+        
+        Log.d("MulticastTest", "Successfully joined the multicast group");
+        
+        //code here to handle socket data
+        
+        // Always remember to leave the group when you are done
+        multicastSocket.leaveGroup(groupAddress);
+        Log.d("MulticastTest", "Successfully left the multicast group");
+        
+    } catch (IOException exception) {
+        Log.e("MulticastTest", "Error occurred when joining or leaving a multicast group");
+        exception.printStackTrace();
+    } finally {
+        if (multicastSocket != null) {
+            multicastSocket.close();
+        }
+    }
+}
+```
+
+In the above example, we are creating a `MulticastSocket` and attempting to join a multicast group using the `joinGroup` method. In case of an error, the exception will be caught and logged. Finally, we ensure to close the socket to avoid any memory leaks or other issues. 
+
+Please note that you should replace "230.0.0.1" with the IP address of the multicast group you want to join or leave. Also keep in mind that Android requires the uses-permission `android.permission.CHANGE_WIFI_MULTICAST_STATE` to use MulticastSocket, therefore make sure to add `<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />` in your AndroidManifest.xml file. 
+
+For the port number, replace "1234" with the port you need to listen on for multicast packets.

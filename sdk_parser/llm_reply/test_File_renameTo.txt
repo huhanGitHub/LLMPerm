@@ -1,0 +1,38 @@
+Here's the code for the `test_File_renameTo` method:
+
+```java
+public boolean test_File_renameTo() {
+    // Create an old file object
+    File oldFile = new File("/path/to/oldfile.txt");
+    
+    // Check if the file exists
+    if(!oldFile.exists()) {
+        Log.e("FileRenameTest", "Old file doesn't exist");
+        return false;
+    }
+    
+    // Create a new file object with a new name
+    File newFile = new File("/path/to/newfile.txt");
+    
+    // Check if file with new name already exists
+    if(newFile.exists()) {
+        Log.e("FileRenameTest", "File with new name already exists");
+        return false;
+    }
+    
+    // Rename the old file
+    boolean renameSuccessful = oldFile.renameTo(newFile);
+    
+    if(renameSuccessful) {
+        Log.i("FileRenameTest", "File renamed successfully");
+    } else {
+        Log.e("FileRenameTest", "File rename failed");
+    }
+    
+    return renameSuccessful;
+}
+```
+
+This method tries to rename a file from `oldfile.txt` to `newfile.txt`. It first checks if the `oldfile.txt` exists and if `newfile.txt` doesn't already exist. Then it uses the `File.renameTo` method to rename the file. If rename is successful, it logs a success message and returns true. If rename fails, it logs an error message and returns false. Note that the method assumes that you have the necessary permissions to access the file system.
+
+As this is a file operation that includes file read/write operations, you should have the `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` permissions in your app.

@@ -1,0 +1,45 @@
+Here is an example usage of NFC `Tag.java` using the `NfcAdapter` and `Tag` class in a method called `test_Tag_getTagService`:
+
+```Java
+import android.content.Context;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.content.Intent;
+import android.os.Bundle;
+
+public void test_Tag_getTagService(Context context) {
+  // Create an intent with the ACTION_NDEF_DISCOVERED action
+  Intent intent = new Intent(NfcAdapter.ACTION_NDEF_DISCOVERED);
+
+  // Create a new Tag object from the intent
+  if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+    Tag tagFromIntent = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+    // Now we can use the tag obtained from the intent to get the NfcAdapter instance
+    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(context);
+
+    if(nfcAdapter != null && nfcAdapter.isEnabled()){
+      // Get the Tag Service from the nfcAdapter
+      String[] techList = tagFromIntent.getTechList();
+      for (String tech : techList) {
+        System.out.println("Detected tech = " + tech);
+      }
+
+    } else {
+      System.out.println("NFC feature is not enabled on your device");
+    }
+
+  } else {
+    System.out.println("NDEF not discovered");
+  }
+}
+```
+This method will obtain a `Tag` from an `Intent`, use this `Tag` to get a `NfcAdapter` instance, use this `NfcAdapter` to then get the NFC technology supported by the `Tag`. It will print out the list of supported NFC technologies to the console, or print an error message if NFC is not enabled on the user's device or if NDEF was not discovered.
+
+Please note that this method should be called within the appropriate context such as within `onCreate` or `onResume` of your activity or any other appropriate event call. `Context` has to be provided to get the `NfcAdapter` instance. 
+
+Also, don't forget to add the necessary NFC permissions in your manifest file.
+```XML
+<uses-permission android:name="android.permission.NFC" />
+<uses-feature android:name="android.hardware.nfc" android:required="true" />
+```

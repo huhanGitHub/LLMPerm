@@ -1,0 +1,33 @@
+Since `MediaRoute2ProviderService` doesn't directly have a method named `setSessionVolume()`, it seems sensible to create a `MediaRoute2Provider` instance within which we can set the session volume. Here is a simple method:
+
+```java
+public void test_MediaRoute2ProviderService_setSessionVolume() {
+    MediaRoute2Provider mediaRoute2Provider = new MediaRoute2Provider(
+            new MediaRoute2Provider.Callback() {
+                @Override
+                public void onSetSessionVolume(String sessionId, int volume) {
+                    super.onSetSessionVolume(sessionId, volume);
+                    // set the session volume
+                }
+
+                @Override
+                public void onSetSessionVolumeBy(String sessionId, int delta) {
+                    super.onSetSessionVolumeBy(sessionId, delta);
+                    // modify the session volume
+                }
+            },
+            new MediaRoute2ServiceDescriptor.Builder("media_route_service").build(), this /* context */
+    ) {
+        @Override
+        public MediaRoute2ProviderService onCreateBinder() {
+            return super.onCreateBinder();
+        }
+    };
+}
+```
+
+Note: As `MediaRoute2Provider` class is used to expose the capabilities of a media route provider within the system as a service, the method `onSetSessionVolume()` and `onSetSessionVolumeBy()` within the `MediaRoute2Provider.Callback` are supposed to be implemented by MediaRoute2Provider itself, instead of being directly Called.
+
+Above code might not work due to Android ecosystem. The correct approach is to create a implementation of `MediaRoute2Provider` and use it inside `MediaRoute2ProviderService`. The service class will notify the implementation object when a specific event happens.
+
+This is an advanced feature and needs understanding of android media routing. You're advised to read about media routing in Android and how `MediaRoute2ProviderService` works. Also you're advised to learn about creating Android services.

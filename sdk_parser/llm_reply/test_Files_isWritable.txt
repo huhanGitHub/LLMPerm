@@ -1,0 +1,30 @@
+Sure, here is an example of a method that uses the `Files.isWritable` API from `java.nio.file.Files.java` in a way that might fit into an Android activity. The main objective of this method is to check if a particular file is writable or not. 
+
+Please note that due to Android's file system permissions, you might not have write-access to certain directories especially on latter Android versions, hence choose the directory/file path wisely.
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public boolean test_Files_isWritable() {
+    // Define your file directory here. 
+    Path path = Paths.get("/path/to/your/file");
+
+    boolean isWritable = false;
+
+    try {
+        // Check if the file path is writable
+        isWritable = Files.isWritable(path);
+    } catch (SecurityException e) {
+        // Handle exception if you do not have the permissions to access the file.
+        e.printStackTrace();
+    }
+
+    return isWritable;
+}
+```
+
+This function returns `true` if the file is writable; `false` otherwise. Make sure you replace `"/path/to/your/file"` with the path to the file you want to check.
+
+Remember, file system operations require the `android.permission.WRITE_EXTERNAL_STORAGE` permission in your app's manifest file. And you also need to request this permission at runtime for Android 6.0 (API level 23) and higher.

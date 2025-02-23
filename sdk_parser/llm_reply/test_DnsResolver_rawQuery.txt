@@ -1,0 +1,43 @@
+In the Android framework, the DnsResolver class allows applications to perform DNS resolutions, including DNS over TLS. However, please note that the rawQuery method you mentioned above is hidden and is not intended to be used by apps. This means that in normal situations, you should not access this method. Even if you use reflection to access it, it will not work. 
+
+It's better to use the public method resolve, but for the sake of the assignment, below is a hypothetical example of how rawQuery might work. It also includes a stub of a non-existent "ResponseCallback" for completeness' sake - the real API may have a similar callback.
+
+```java
+private void test_DnsResolver_rawQuery() {
+    String domainName = "example.com";
+
+    // Assuming DnsResolver.rawQuery method accepts domain name and callback
+    DnsResolver instance = DnsResolver.getInstance();
+    try {
+        Method method = DnsResolver.class.getDeclaredMethod("rawQuery", String.class, ResponseCallback.class);
+        method.setAccessible(true);
+        method.invoke(instance, domainName, new ResponseCallback() {
+            @Override
+            public void onAnswer(ByteBuffer answer) {
+                // Handle the ByteBuffer answer here
+            }
+        });
+    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        e.printStackTrace();
+    }
+}
+
+public interface ResponseCallback {
+    void onAnswer(ByteBuffer answer);
+}
+```
+Again, the above usage is unlikely to work in a real application because "rawQuery" is a hidden method. You're encouraged to use public methods to perform DNS resolutions.
+
+In case you wonder how to use public methods in DnsResolver class, here's an example, it should be used with "Network" object which is not included but you need to pass to "resolve" method, exact usage depends on your specific case:
+```java
+private void test_DnsResolver(Network network) {
+    DnsResolver resolver = DnsResolver.getInstance();
+
+    String domainName = "example.com";
+    InetAddress[] addresses = resolver.resolve(network, domainName);
+
+    for (InetAddress address : addresses) {
+        Log.d("DNS", "Address: " + address.toString());
+    }
+}
+```

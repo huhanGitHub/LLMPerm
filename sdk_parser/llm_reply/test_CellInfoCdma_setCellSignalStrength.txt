@@ -1,0 +1,39 @@
+Here is the example code for the `test_CellInfoCdma_setCellSignalStrength` method. 
+
+Please note that directly setting the `CellSignalStrength` is not possible as Android does not provide setter methods for these objects. They are immutable and their values are managed solely by the operating system. However, you can retrieve these values. Here is an example:
+
+```java
+public void test_CellInfoCdma_setCellSignalStrength() {
+    // Check if the permission has been granted 
+    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        // Initialize the telephony manager 
+        TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        
+        if (telephonyManager != null) {
+            // Get all the cell info objects
+            List<CellInfo> cellInfos = telephonyManager.getAllCellInfo();
+            // Iterate through the cell info objects 
+            for (CellInfo cellInfo : cellInfos) {
+                // Check if the cell info object is of type CellInfoCdma 
+                if (cellInfo instanceof CellInfoCdma) {
+                    CellInfoCdma cellInfoCdma = (CellInfoCdma) cellInfo;
+                    // Get the cell signal strength 
+                    CellSignalStrengthCdma cellSignalStrengthCdma = cellInfoCdma.getCellSignalStrength();
+                    // Now you can do something with cellSignalStrengthCdma
+                    // But, remember, you can't set it
+                }
+            }
+        }
+    } else {
+        // Request for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, YOUR_REQUEST_CODE);
+    }
+}
+```
+Remember to replace `YOUR_REQUEST_CODE` with a unique request code to handle permission request results. You also need the following permission located in your `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+Please note that this code might not work on devices with Android Q and above. Cellular information is now protected by a higher user-granted permission. The `ACCESS_FINE_LOCATION` is necessary for these Android versions.

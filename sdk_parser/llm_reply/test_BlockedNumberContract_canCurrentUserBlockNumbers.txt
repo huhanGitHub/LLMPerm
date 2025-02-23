@@ -1,0 +1,40 @@
+Below is an example of a method you could use in an Android activity to test the permissions needed for the current user to block numbers. This method checks if the application has the necessary permissions to access the BlockedNumberContract API, and if not, it requests those permissions from the user.
+
+You have to insert this method inside an android activity.
+
+```Java
+@Test
+public void test_BlockedNumberContract_canCurrentUserBlockNumbers() {
+    // The request code used in ActivityCompat.requestPermissions()
+    // and returned in the Activity's onRequestPermissionsResult()
+    int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+
+    // Check for READ_BLOCKED_NUMBERS permission
+    int permissionCheck = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_BLOCKED_NUMBERS);
+
+    if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_BLOCKED_NUMBERS)) {
+            // Show an explanation to the user of why your app needs this permission
+            // After the explanation, try requesting the permission again
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "This app requires READ_BLOCKED_NUMBERS permission to function correctly.",
+                    Snackbar.LENGTH_INDEFINITE).setAction("OK", view -> 
+                    ActivityCompat.requestPermissions(Main2Activity.this,
+                    new String[]{Manifest.permission.READ_BLOCKED_NUMBERS},
+                    PERMISSIONS_REQUEST_READ_CONTACTS)).show();
+        } else {
+            // No explanation needed; request the permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_BLOCKED_NUMBERS},
+                    PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
+    } else {
+        // Permission already granted
+        // You can perform your function here that needs this permission
+    }
+}
+```
+
+Please note that `READ_BLOCKED_NUMBERS` permission cannot be granted to third-party apps according to android documentation. This is used as an example to understand how permissions work in android. Replace the `READ_BLOCKED_NUMBERS` with the actual permission your application needs.

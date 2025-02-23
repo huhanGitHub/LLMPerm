@@ -1,0 +1,49 @@
+Here is an example of a method usage of the ControlsProviderService's createPublisherFor method. As it is Android API, this method cannot be directly used in an Android Activity due to service's lifecycle and interaction with the system.
+
+This method is part of Android's IoT (Internet of Things) framework for creating a custom control service that provides controls for structures such as buildings or device controls for IoT devices and have these controls surfaced throughout the system. Keep in mind you should understand service's lifecycle to manage registration and interaction with this service.
+
+```Java
+
+import android.content.Intent;
+import android.os.IBinder;
+import android.service.controls.ControlsProviderService;
+import android.service.controls.Control;
+
+public class TestControlsProviderService extends ControlsProviderService {
+
+    @Override
+    public Control.PipeDataPublisher onCreatePublisherForAllAvailable() {
+        // TODO: Implementatio- to create a publisher for all available 
+        // controls
+    }
+
+    @Override
+    public Control.PipeDataPublisher onCreatePublisherFor(List<String> controlIds) {
+        // TODO: Implementation to create a publisher for the specified 
+        // control IDs
+    }
+
+    public static void test_ControlsProviderService_createPublisherFor() {
+        // Prepare creation
+        List<String> controlIds = new ArrayList<>();
+        controlIds.add("control1");
+        controlIds.add("control2");
+        
+        // Start service
+        Intent intent = new Intent(context, TestControlsProviderService.class);
+        context.startService(intent);
+
+        // Usage example
+        TestControlsProviderService testService = new TestControlsProviderService();
+        Control.PipeDataPublisher publisher = testService.onCreatePublisherFor(controlIds);
+
+        if (publisher != null) {
+            Log.i("ControlsProviderService", "Publisher created successfully!");
+        } else {
+            Log.e("ControlsProviderService", "Failed to create publisher");
+        }
+    }
+
+}
+```
+But remember, your activity should never call the service method directly, instead it should interact with the service via Intents, broadcast receivers, etc. That is, a bound service offers a client-server interface that allows components to interact with the service, send requests, receive results, and even do so across processes with interprocess communication (IPC). The client component calls methods on the service using a binding. This example is for explanatory purposes only.

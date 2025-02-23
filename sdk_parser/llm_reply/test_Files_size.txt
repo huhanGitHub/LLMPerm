@@ -1,0 +1,35 @@
+Here is an example of how you can implement the method test_Files_size which uses java.nio.file.Files.size() API in Android or Java. Please note that android does not, by default, support the use of java.nio.file APIs (used in Java 7 and above). You will have a min API level of 26 to use java.nio file APIs with android.
+
+Please be sure to include proper permissions in your AndroidManifest.xml and handle runtime permissions appropriately if targeting Android 6.0 (API level 23) or higher.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+private static void test_Files_size() {
+    // Set path to a file
+    File file = new File(Environment.getExternalStorageDirectory(), "myFile.txt");
+
+    try {
+        // Convert the file to Path object
+        Path path = Paths.get(file.getAbsolutePath());
+
+        // Use Files.size() method to get size of the file
+        long filesize = Files.size(path);
+
+        // Print the file size
+        System.out.println("Size of the file is: " + filesize + " bytes");
+    } catch (IOException e) {
+        // Handle exception
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+    }
+}
+```
+The size is expressed in units of bytes returned by the Files.size() method. 
+
+**Please be aware of the following points:**
+
+- The file needs to be present with the provided name in the provided path otherwise IOException will be thrown.
+- If the file size is bigger than Long.MAX_VALUE, then Files.size() will throw an ArithmeticException.
+- This example uses the Java 8 java.nio.file API, which is not available on all Android API levels.
+  
+Make sure to catch or declare the IOException that Files.size() may throw during execution.

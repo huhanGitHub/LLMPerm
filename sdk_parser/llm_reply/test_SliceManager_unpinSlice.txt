@@ -1,0 +1,35 @@
+Here's an example of a method that uses the `unpinSlice` from the `SliceManager`.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_SliceManager_unpinSlice() {
+    // Initialize Uri
+    Uri sliceUri = Uri.parse("content://com.example.app/slice");
+
+    // Get the slice manager
+    SliceManager sliceManager = getSystemService(SliceManager.class);
+
+    // Check whether SliceProvider was already pinned or not
+    if (sliceManager.isSlicePinned(sliceUri)) {
+        // Unpin the slice
+        sliceManager.unpinSlice(sliceUri);
+        
+        // Check if unpinning was successful
+        if (!sliceManager.isSlicePinned(sliceUri)) {
+            Toast.makeText(this, "Slice unpin successful", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to unpin", Toast.LENGTH_SHORT).show();
+        }
+    } else {
+        Toast.makeText(this, "Slice was not pinned", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+In this example, We create a `Uri` that points to the desired Slice. Next, we retrieve a `SliceManager` instance by calling `getSystemService(SliceManager.class)`. 
+
+Before unpinning, we check whether the Uri was already pinned or not using `isSlicePinned`. If it is pinned, we use `unpinSlice` to remove the Slice. 
+
+We again check using `isSlicePinned` whether unpinning operation was successful or not. If the Uri is still pinned, then unpinning has failed; otherwise it was successful. We use `Toast` to display whether unpinning operation was successful or not.
+
+Please note that `@RequiresApi` annotation is important to ensure that this method only runs on Android devices with APIs that support Slices (API 28 or later). Also make sure the activity has the appropriate permissions (`BIND_SLICE`) in order to interact with the SliceManager API.

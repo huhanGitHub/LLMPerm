@@ -1,0 +1,35 @@
+Given below is a general example of how you might use the MediaDrm API. This method however mocks the MediaDrm class as it's almost impossible to create a MediaDrm instance for a unit test without a real device:
+
+```java
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+public void test_MediaDrm_getNewestAvailablePackageCertificateRawBytes() {
+    byte[] sessionId = null;
+    byte[] expected = new byte[0];
+    MediaDrm.KeyRequest keyRequest = null;
+    
+    MediaDrm mediaDrm = Mockito.mock(MediaDrm.class);
+    UUID uuid = new UUID(-0x121074568629b532L, -0x5c37d8232ae2de13L);
+    
+    try {
+        sessionId = mediaDrm.openSession();
+        expected = mediaDrm.getPropertyByteArray(MediaDrm.PROPERTY_DEVICE_UNIQUE_ID);
+        keyRequest = mediaDrm.getKeyRequest(sessionId, expected, "video/mp4", MediaDrm.KEY_TYPE_OFFLINE, null);
+        byte[] actual = mediaDrm.provideKeyResponse(sessionId, keyRequest.getData());
+        
+        // assert the expected and actual values
+        Assert.assertArrayEquals(expected, actual);
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (sessionId != null) {
+            mediaDrm.closeSession(sessionId);
+        }
+    }
+}
+```
+
+Please verify that the method is called as you will likely need to adjust the parameters of the `getPropertyByteArray`, `getKeyRequest` and `provideKeyResponse` methods to suit your use case.
+
+Remember, to use this examples you need to add Mockito in your project dependencies. Also, the `provideKeyResponse` method requires the DES key response data from the license server. Ensure you have the right implementation for interacting with the Widevine license server to generate keys.
+
+Note: The specific functionality "getNewestAvailablePackageCertificateRawBytes" as requested doesn't seem to correspond to a specific function in the MediaDrm API. The above example test should serve you as a guideline for how to use this API and you can adjust according to your specific needs.

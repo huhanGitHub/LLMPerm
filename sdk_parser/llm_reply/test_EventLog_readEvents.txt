@@ -1,0 +1,53 @@
+Unfortunately, currently, Android doesn't provide a public API to directly access the EventLog mentioned which includes system level logs. Directly trying to access the Event log may result in a 'SecurityException' as it requires READ_LOGS permission which is not granted to apps on devices running Android 4.1 and later.
+
+However, you can access these logs using Android Debug Bridge (ADB).
+
+Example:
+```shell
+adb logcat -b events
+```
+In case you wish to process your application-specific log records, you still can use Log API to create own logging system. The sample below demonstrates a simple usage of this API.
+
+```java
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MyApp";
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_EventLog_readEvents();
+    }
+
+    public void test_EventLog_readEvents() {
+        Log.d(TAG, "Debug log message");
+        Log.i(TAG, "Info log message");
+        Log.w(TAG, "Warning log message");
+        Log.e(TAG, "Error log message");
+
+        try {
+            Process process = Runtime.getRuntime().exec("logcat -d");
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            StringBuilder log=new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if(line.contains(TAG)){ // Filter by your tag
+                    log.append(line);
+                    // Process log data
+                }
+            }    
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+Please note, reading the log programmatically in this way requires the READ_LOGS permission:
+
+```xml
+<uses-permission android:name="android.permission.READ_LOGS" />
+```
+This permission is not granted for ordinary Android applications and you can't make use of it to read other app's logs as a security measure from Android 4.1 onwards.

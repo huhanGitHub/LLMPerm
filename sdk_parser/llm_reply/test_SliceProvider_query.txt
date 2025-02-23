@@ -1,0 +1,44 @@
+Below is an example of a method called 'test_SliceProvider_query'. This method tests the SliceProvider.query function. Note that this is a simplified example, and might need to be adjusted according to your actual application.
+
+Also, this is a restricted API and requires the app to have the `android.permission.BIND_SLICE_PROVIDER` permission in order to use it, which normal apps won't be able to get as per Android 10. 
+
+However in a general sense, the code will look like this:
+
+```java
+public class TestActivity extends Activity {
+
+    public void test_SliceProvider_query() {
+        Uri uri = Uri.parse("content://com.example.slice/content_path");
+        SliceProvider sliceProvider = new SliceProvider() {
+
+            @Override
+            public Slice onBindSlice(Uri sliceUri) {
+                ListBuilder listBuilder = new ListBuilder(getContext(), sliceUri);
+                // approach to building Slices
+                listBuilder.addRow(new ListBuilder.RowBuilder()
+                        .setTitle("Row title")
+                        .setSubtitle("Row subtitle")
+                        .setPrimaryAction(
+                                new SliceAction(null, IconCompat.createWithResource(getContext(),
+                                        R.drawable.ic_launcher), SliceAction.MODE_PERFORM,
+                                        "Primary action")));
+                return listBuilder.build();
+            }
+
+            @Override
+            public Uri onMapIntentToUri(Intent intent) {
+                return uri;
+            }
+        };
+
+        SliceProvider.setSpecs(Set.of(SliceSpecs.LIST, SliceSpecs.BASIC));
+        Slice slice = sliceProvider.onBindSlice(uri);
+
+        // Do something with the slice
+    }
+}
+```
+
+The 'test_SliceProvider_query' method creates a SliceProvider instance, builds a Slice with ListBuilder, and then binds the Slice using 'onBindSlice' method. Then it fetches the Slice using 'onBindSlice' method, and you can do further operations with this fetched Slice.
+
+The content path, Slice content, and other options require further adjustment based on your needs.

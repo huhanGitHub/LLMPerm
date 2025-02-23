@@ -1,0 +1,48 @@
+Here's a simple example of using `setLastModified(long time)` method from the java.io.File API in an Android activity. This method sets the last-modified time of the file or directory.
+
+Please keep in mind that changing the last-modified time of a file or directory might not be allowed on some file systems, and should only be used when necessary.
+
+This function takes in one parameter of type long which represents the new last-modified time measured in milliseconds since epoch (00:00:00 GMT, January 1, 1970).
+
+```java
+import java.io.File;
+
+public void test_File_setLastModified() {
+    try {
+        // Creating a new file
+        File file = new File("/path/to/your/file");
+
+        // Checking if the file exists
+        if (!file.exists()) {
+            boolean isCreated = file.createNewFile();
+            if (!isCreated) {
+                Log.e("Test", "Failed to create new file");
+                return;
+            }
+        }
+
+        // Get the current system time
+        long currentTime = System.currentTimeMillis();
+
+        // Set the last-modified time to the current system time
+        boolean isModified = file.setLastModified(currentTime);
+
+        // Checking if the last-modified time was successfully set
+        if (!isModified) {
+            Log.e("Test", "Failed to set the last-modified time");
+        } else {
+            Log.d("Test", "The last-modified time was set successfully");
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+Please replace `"/path/to/your/file"` with the actual path of your file. Also, permissions for reading and writing to external storage should be included in the Android Manifest file:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
+
+You will also need to request runtime permissions for devices running Android 6.0 or higher.

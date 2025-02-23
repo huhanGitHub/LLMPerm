@@ -1,0 +1,65 @@
+Here is an example of a method that uses the Browser provider in Android to get visited history. This method assumes that the required permissions have been granted earlier in your application. 
+
+Please note that this requires READ_HISTORY_BOOKMARKS permission which is no longer available from Android 6.0 (API level 23).
+
+```java
+private static final int MY_PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS = 99; // Use a unique request code
+
+public void test_Browser_getVisitedHistory() {
+
+    // Check whether the app has permission to read browser's history
+    if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.READ_HISTORY_BOOKMARKS)
+        != PackageManager.PERMISSION_GRANTED) {
+
+        ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_HISTORY_BOOKMARKS},
+                    MY_PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS);
+
+    } else {
+    
+        // Get the Browser's history
+        String[] projection = new String[] {
+            Browser.BookmarkColumns.TITLE, 
+            Browser.BookmarkColumns.URL
+        };
+
+        String selection = Browser.BookmarkColumns.BOOKMARK + " = 0"; // 0 = history item, 1 = bookmark item
+
+        Cursor cursor = getContentResolver().query(Browser.BOOKMARKS_URI, projection, selection, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String bookmarkTitle = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns.TITLE));
+                String url = cursor.getString(cursor.getColumnIndex(Browser.BookmarkColumns.URL));
+
+                // Do something with the history item...
+            }
+            
+            cursor.close();
+        }
+    }
+}
+```
+
+When the permission request is made, the system shows a dialog to the user, asking for permission. Once the user makes a decision, the system calls the app's onRequestPermissionsResult() method, passing the decision back to the app. You need to override this method in your activity to handle the permission request:
+
+```java
+@Override
+public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    switch (requestCode) {
+        case MY_PERMISSIONS_REQUEST_READ_HISTORY_BOOKMARKS: {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // If permission granted, get the browser history
+                test_Browser_getVisitedHistory();
+            } else {
+                // Permission denied. Disabling the functionality that depends on this permission.
+                // Let the user know the feature is disabled due to the denial of permission.
+            }
+            return;
+        }
+    }
+}
+```
+
+However, it's important to note that since this method uses the deprecated android.provider.Browser API, it will not provide any browsing history on devices running Android 6.0 (Marshmallow) or newer. Unfortunately, it is not possible to access browsing history on newer versions of Android for privacy reasons.

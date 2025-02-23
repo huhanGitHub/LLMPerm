@@ -1,0 +1,31 @@
+I'm afraid there may be a little misunderstanding. `SecureDirectoryStream` in Java NIO File API is an interface, not a class, so it cannot be instantiated using a constructor or other new methods. However, while Android does not offer `SecureDirectoryStream` directly, a `SecureDirectoryStream` can be obtained by using `Files.newDirectoryStream` in vanilla Java, given you have the required permission to access the file system where the directory lies.
+
+Here's an example code. Please convert it into a compatible method with your application as `SecureDirectoryStream` may not be supported directly.
+
+```java
+import java.nio.file.*;
+import java.io.IOException;
+
+public void test_SecureDirectoryStream_newDirectoryStream() {
+
+    Path dir = Paths.get("YourDirectoryPath");
+
+    try (SecureDirectoryStream<Path> stream = (SecureDirectoryStream<Path>) Files.newDirectoryStream(dir)) {
+        for (Path path : stream) {
+            System.out.println(path.getFileName());
+        }
+    } catch (IOException ex) {
+        System.err.println("Error occurred while reading the directory: " + ex.getMessage());
+    }
+}
+```
+
+Replace "YourDirectoryPath" with your actual directory path. If an exception is caught, that means there is either an issue with accessing the file (permissions etc.) or the directory does not exist.
+
+Remember, `SecureDirectoryStream` extends `DirectoryStream`, so wherever a `DirectoryStream` is needed and you have a `SecureDirectoryStream`, you can use it.
+
+Also, the `SecureDirectoryStream` is `AutoCloseable`, which means it will automatically be closed after you are done with it by exiting the try-catch-resources block. So, you even do not need to call `close()` explicitly.
+
+NOTE: Android java SDK does not have full support for java.nio.file.* until API version 26. Use with care if you're targeting earlier platforms.
+
+And finally, `SecureDirectoryStream` specifically works with the file systems that support 'sun.nio.fs.UnixSecureDirectoryStream', which means it may not work on non-unix or non-Posix file systems.

@@ -1,0 +1,48 @@
+Here's an example of how you can use the Authenticator.setDefault() method of the java.net.Authenticator class. This example assumes that your Authenticator implementation is in a class named MyAuthenticator. 
+
+Please note that although this code is written in Java, the Authenticator class isn't specifically an Android or Java API. Instead, it's part of the java.net package and can be used in any Java environment.
+
+The setDefault() method of the Authenticator class is a static method. It sets the system-wide default Authenticator that will be used when no other is provided.
+
+This test does not involve Android permissions, Protocol networks require an Authenticator for specified protocols specific connections that request authentication.
+
+Check out the code below.
+
+```java
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_Authenticator_setDefault();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_Authenticator_setDefault() {
+        // replace "username" and "password" with actual username and password.
+        String userName = "username";
+        String password = "password";
+
+        // Create an Authenticator instance which returns a PasswordAuthentication instance with your username and password
+        Authenticator myAuth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(userName, password.toCharArray());
+            }
+        };
+
+        // Set the system-wide default Authenticator
+        Authenticator.setDefault(myAuth);
+    }
+}
+```
+
+Please remember that this code only sets the system-wide default Authenticator instance. It doesn't establish a network connection or do any network I/O. Depending on your use case, you might need to do more work to actually use this Authenticator instance.

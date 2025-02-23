@@ -1,0 +1,39 @@
+In Android, to get information about a UICC card, you would use the class android.telephony.UiccCardInfo. However, please note that this feature is only available from API version 29 (Android 10.0) onwards. Below is an example of a test method using that:
+
+```java
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
+import android.telephony.UiccCardInfo;
+
+public void test_UiccCardInfo_getEid(Activity activity) {
+    // Check if app has permissions to read phone state
+    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) 
+            != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        return;
+    }
+
+    // Acquire a reference to the system Telephony Manager
+    TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+
+    // Use the telephonyManager to get the Uicc Card information.
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+        List<UiccCardInfo> uiccCardInfoList = telephonyManager.getUiccCardsInfo();
+
+        // Loop through each available card
+        for (UiccCardInfo uiccCardInfo : uiccCardInfoList) {
+            // Retrieve the EID of each card
+            String eid = uiccCardInfo.getEid();
+
+            // Print EID to logs
+            Log.i("UiccCardInfo", "Card EID: " + eid);
+        }
+    } else {
+        Log.i("UiccCardInfo", "UiccCardInfo not supported on this device/version");
+    }
+}
+```
+This code checks and asks for READ_PHONE_STATE permission, obtains the system Telephony Manager, and uses it to get a list of UiccCardInfo objects. For each UiccCardInfo object, it calls the getEid() method to retrieve the EID of the card and then logs that string.
+
+Notice that this code will work only on Android version 10 and higher. This is a limitation of the Android API, not the code itself, as the UiccCardInfo class is only available in Android 10 and later. Furthermore, ensure your app has the required READ_PHONE_STATE permission.

@@ -1,0 +1,49 @@
+Below is an example of how a `test_SliceProvider_call` could be implemented in an Android Activity. In this example, I have not yet provided an exact implementation because `SliceProvider` is an abstract class in Android that you must implement to handle sliceable content in your app.
+
+Generally, `SliceProvider` is used in conjunction with Assistant and Search to show app content in different places. For this naturally, you will have to implement `SliceProvider` and create a `Slice` in it, which is not exactly callable in your Activity. Instead, your Activity needs to handle Intent which corresponds to URI you've set for your `Slice`.
+
+```
+import android.app.slice.Slice;
+import android.app.slice.SliceProvider;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class YourActivity extends AppCompatActivity {
+
+    private static final String YOUR_SLICE_PROVIDER_AUTHORITY = "com.your.package.YourSliceProvider";
+    private static final String YOUR_SLICE_PATH = "path_to_your_slice";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            this.test_SliceProvider_call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_SliceProvider_call() throws Exception {
+        ContentResolver resolver = getContentResolver();
+        Uri sliceUri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_CONTENT)
+                .authority(YOUR_SLICE_PROVIDER_AUTHORITY)
+                .appendPath(YOUR_SLICE_PATH)
+                .build();
+
+        Slice slice = resolver.acquireSlice(sliceUri);
+        // Now you can use your 'slice' object to interact with sliceable content
+        // However, remember that actual implementation of Slice is done in SliceProvider
+    }
+}
+```
+
+This is a simplified scenario and actual implementation may significantly differ based on how you've implemented your `SliceProvider` and also on format and content of slices it provides.
+
+Remember to turn off SliceProvider's autoGrantUriPermissions to false and grant permissions manually.
+Please update `YOUR_SLICE_PROVIDER_AUTHORITY` and `YOUR_SLICE_PATH` with values specific to your app. This code should be placed in Activity you want to test `SliceProvider` from.

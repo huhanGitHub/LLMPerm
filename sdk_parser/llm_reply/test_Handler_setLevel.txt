@@ -1,0 +1,48 @@
+Here is an example of how you can use the setLevel method of the java.util.logging.Handler class in a self-contained method within an Android activity:
+
+```java
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Logger logger;
+    private ConsoleHandler handler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_Handler_setLevel();
+    }
+
+    public void test_Handler_setLevel() {
+
+        try {
+            // create a Logger instance
+            logger = Logger.getLogger(MainActivity.class.getName());
+
+            // create a ConsoleHandler instance
+            handler = new ConsoleHandler();
+
+            // set the level of the ConsoleHandler to the desired level
+            handler.setLevel(Level.INFO);
+
+            // add the handler to the logger
+            logger.addHandler(handler);
+
+            // log a message to test
+            logger.info("This is an info message for testing ");
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+In this example, I have created a logger instance and then created a ConsoleHandler instance. Then, I set the level of the ConsoleHandler instance to INFO using the setLevel method. After which I add the handler to the logger. Finally, I log a message to test if the level has been set correctly.
+
+The Level class in java.util.logging package is used to define the level of logging. "INFO" is a constant in the Level class signifying that this level of logging should include informational messages. 
+
+Please note that this is a basic example and does not include some of the other setup and configuration that you might need in a full-fledged Android application, for instance, permissions in your AndroidManifest.xml file etc.

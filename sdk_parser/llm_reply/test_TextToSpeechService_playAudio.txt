@@ -1,0 +1,44 @@
+Sure, here is a simple example of a method that includes the usage of TextToSpeech API in an Android Activity:
+
+```java
+import android.app.Activity;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import java.util.Locale;
+
+public class MainActivity extends Activity {
+    TextToSpeech tts;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.UK);
+                }
+            }
+        });
+
+        test_TextToSpeechService_playAudio("Hello, welcome to our application!");
+    }
+
+    private void test_TextToSpeechService_playAudio(String text) {
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(tts != null){
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+}
+```
+
+In this example, the `TextToSpeech.OnInitListener()` is implemented in the `onCreate()` to initialize the `TextToSpeech` field and to set the language. The `test_TextToSpeechService_playAudio` is then called with sample text. The text is spoken when the function `tts.speak()` is called with the sample text as an argument. The `TextToSpeech` service is stopped and shut down in the `onDestroy()` to free up resources when the activity is destroyed.

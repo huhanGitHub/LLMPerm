@@ -1,0 +1,50 @@
+Here is a sample method to illustrate how you might use TvInteractiveAppManager's method onRequestStartRecording:
+
+```java
+import android.media.tv.interactive.TvInteractiveAppManager;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+@RequiresApi(api = Build.VERSION_CODES.R)
+public void test_TvInteractiveAppManager_onRequestStartRecording() {
+    // Creating an instance of the TvInteractiveAppManager
+    TvInteractiveAppManager tvInteractiveAppManager = TvInteractiveAppManager.getInstance(this);
+
+    // Start the Recording
+    TvInteractiveAppManager.RecordingRequest recordingRequest = new TvInteractiveAppManager.RecordingRequest(
+            "content://media/external/tv/program/1",
+            "Recording Test",
+            "Test Description",
+            System.currentTimeMillis(),
+            3600000); // For recording duration, 3600000 milliseconds = 1 hour
+
+    try {
+        tvInteractiveAppManager.onRequestStartRecording(recordingRequest);
+        Toast.makeText(this, "Recording started successfully.", Toast.LENGTH_SHORT).show();
+
+        // Wait for a few seconds
+        Thread.sleep(3000);
+
+        // Check if the recording is still running
+        if (tvInteractiveAppManager.isRecordingInProgress()) {
+            Toast.makeText(this, "Recording is in progress.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Recording is not in progress.", Toast.LENGTH_SHORT).show();
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Toast.makeText(this, "Error starting recording: " + e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+}
+```
+Please note that you must handle exceptions properly in production applications. The above example shows how to use `onRequestStartRecording()`, then checks if the recording is running after a delay. Requirement of API level must be R or above.
+
+Before you use TvInteractiveAppManager API, make sure to include the Android media TV libraries in your app module's build.gradle file:
+
+```gradle
+dependencies {
+    implementation 'androidx.media2:media2-tv:1.0.0-alpha02'
+}
+```
+Note: You should replace '1.0.0-alpha02' with the latest available version. This class is subject to the permissions declared in your app's manifest file (RECORD_AUDIO, WRITE_EXTERNAL_STORAGE).

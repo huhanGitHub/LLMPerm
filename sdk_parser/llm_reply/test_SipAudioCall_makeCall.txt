@@ -1,0 +1,57 @@
+Here is a method which makes a SIP Audio Call using the Android's SIP API:
+
+```java
+private SipAudioCall.Listener listener;
+
+public void test_SipAudioCall_makeCall() {
+    if (SipManager.isVoipSupported(this)) {
+      try {
+           SipManager sipManager = SipManager.newInstance(this);
+           SipProfile sipProfile = new SipProfile.Builder("username", "domain.com").setPort(5060).setPassword("password").build();
+           sipManager.open(sipProfile);
+           
+           listener = new SipAudioCall.Listener() {
+                  @Override
+                  public void onCallEstablished(SipAudioCall call) {
+                         call.startAudio();
+                         call.setSpeakerMode(true);// here
+                         if (call.isMuted()) {
+                               call.toggleMute();
+                        }
+                        super.onCallEstablished(call);
+                  }
+
+                  @Override
+                  public void onCallEnded(SipAudioCall call) {
+                        // Do something when call ends
+                        super.onCallEnded(call);
+                  }
+            };
+             
+            SipAudioCall sipAudioCall = sipManager.makeAudioCall(sipProfile.getUriString(), "sip:destination@domain.com", listener, 30);
+            
+         } catch (SipException e) {
+             e.printStackTrace();
+         } catch (ParseException e) {
+             e.printStackTrace();
+         }
+    } else {
+         Toast.makeText(this, "VOIP is not supported", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+This method uses the `SipManager` class to make an audio call. Before making a call, it checks if the device supports VOIP calls, initializes `SipManager` and opens a `SipProfile`. The `SipAudioCall.Listener` is used to handle call events such as when the call is established or ended.
+
+Then it attempts to make an audio call using `SipManager.makeAudioCall()`.
+
+Please note that for this code snippet to work, the following permissions are required in your Android manifest file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.USE_SIP" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-feature android:name="android.hardware.sip.voip" android:required="true" />
+<uses-feature android:name="android.hardware.wifi" android:required="true" />
+<uses-feature android:name="android.hardware.microphone" android:required="true" />
+```

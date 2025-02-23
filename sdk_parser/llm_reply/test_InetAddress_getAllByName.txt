@@ -1,0 +1,22 @@
+Here's the method `test_InetAddress_getAllByName` which demonstrates usage of `java.net.InetAddress.getAllByName(String hostname)`. This method is used to get the array of `InetAddress` objects associated to a particular host:
+
+```java
+public void test_InetAddress_getAllByName() {
+    String hostName = "www.google.com"; // Specify the hostname you want to lookup
+    try {
+        // Get all IP addresses associated to the given hostname
+        InetAddress[] addresses = InetAddress.getAllByName(hostName);
+        for(InetAddress address : addresses) {
+            Log.d("IP Address", address.getHostAddress()); //Log will print the IP addresses in Android Studio Logcat
+        }
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This method can be called inside an Android Activity's methods (like `onCreate`, `onClick` etc.). Make sure you have the permission `android.permission.INTERNET` in your AndroidManifest.xml as it involves network operation.
+
+This code restricts network operation on the Ui Thread (it's a restriction imposed by Android to prevent UI blocking tasks), so the above method should ideally be called from a separate thread or as a part of an `AsyncTask`.
+
+Please remember that this method will only provide the IP addresses of the hostname. The real world use of `InetAddress.getAllByName(String hostname)` can be much broader and complex.

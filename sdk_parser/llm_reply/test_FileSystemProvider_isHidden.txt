@@ -1,0 +1,28 @@
+Here is one example of how the `java.nio.file.spi.FileSystemProvider.isHidden(Path path)` method can be used. This code is only compatible with the Android Q (API level 29) or higher.
+
+The `FixedSizeInputStream` class is used to provide a fixed size input stream from 2 points (offset and length), and the `ByteBuffer` class is used as a wrapper for native ByteBuffer.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.Q)
+public boolean test_FileSystemProvider_isHidden(Context context) {
+    try {
+        // Get the FileSystemProvider
+        FileSystemProvider provider = FileSystems.getDefault().provider();
+        
+        // Create a Path object
+        Uri uri = Uri.parse("file://" + context.getExternalCacheDir().getAbsolutePath() + "/test.txt");
+        Path path = Paths.get(uri.getPath());
+        
+        // Use isHidden method and return its value
+        return provider.isHidden(path);
+    } catch (IOException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+```
+This method will return true if the file `test.txt` is hidden in the external cache directory of current context; otherwise, it will return false.
+
+Please keep in mind that the file system behaviors may not be consistent across all Android devices, because different manufacturers might use different file system technologies in their devices. Also, the `isHidden` method may throw an `IOException` if an I/O error occurs. Depending on your application requirement, you may need to handle this exception accordingly.
+
+Just a quick side note: The `@RequiresApi` annotation is used to signal that the annotated element should only be called on the specified API level or higher. This is not a guarantee that the code will run on earlier versions of Android, it's just a way for Android Studio to stop showing a warning that you're using APIs that were not available in earlier versions of Android.

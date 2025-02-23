@@ -1,0 +1,49 @@
+Below is an example of a method named "test_SipManager_getSessionFor." The purpose of this method is to interact with the Android SipManager API for the usage of SIP (Session Initiation Protocol) communication.
+
+First, make sure your Android Manifest includes the necessary uses permissions for SIP API:
+
+```xml
+<uses-permission android:name="android.permission.USE_SIP" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Then, define the test method like this:
+
+```java
+public void test_SipManager_getSessionFor() {
+    // 1. Initialize the SipManager
+    SipManager sipManager = SipManager.newInstance(this);
+    
+    // 2. Create a SipProfile
+    SipProfile.Builder builder;
+    try {
+        builder = new SipProfile.Builder("username", "domain");
+        builder.setPassword("password");
+    } catch (ParseException e) {
+        e.printStackTrace();
+        return;
+    }
+    
+    SipProfile sipProfile = builder.build();
+    
+    // 3. Open a SIP session
+    try {
+        sipManager.open(sipProfile);
+    } catch (SipException e) {
+        e.printStackTrace();
+        return;
+    }
+
+    // 4. Get the session
+    try {
+        SipSession sipSession = sipManager.getSessionFor(sipProfile);
+        // Here you can do something with the session.
+    } catch (SipException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This code shows a simple usage of the SipManager, SipProfile, and SipSession. The actual SipManager API application may be more complicated depending on your needs.
+
+Also, remember to include the necessary try / catch code for the exception handling, because these SIP operations could throw exceptions.

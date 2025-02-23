@@ -1,0 +1,36 @@
+```
+public void test_DocumentsContract_renameDocument() {
+    // The URI of the document to rename, obtained when the document was created or opened
+    Uri documentUri = null; // replace with actual URI
+
+    // Check if the URI is not null
+    if(documentUri != null) {
+        ContentResolver contentResolver = getContentResolver();
+
+        // Get a DocumentFile instance that represents the existing document
+        DocumentFile documentFile = DocumentFile.fromSingleUri(this, documentUri);
+
+        // Check if the document an be renamed
+        if(documentFile != null && documentFile.canWrite()) {
+            try {
+                String newDocumentName = "newDocumentName"; // The new name for the document
+
+                // Use DocumentsContract to rename the document
+                documentUri = DocumentsContract.renameDocument(
+                        contentResolver,
+                        documentFile.getUri(),
+                        newDocumentName);
+                
+                Toast.makeText(this, "Document renamed successfully", Toast.LENGTH_LONG).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Document not found", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, "Document cannot be renamed", Toast.LENGTH_LONG).show();
+        }
+    } else {
+        Toast.makeText(this, "Document URI is not valid", Toast.LENGTH_LONG).show();
+    }
+}
+```

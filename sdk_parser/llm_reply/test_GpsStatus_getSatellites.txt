@@ -1,0 +1,55 @@
+Sure, here's an example of how you could write a method to test `GpsStatus.getSatellites`. Assume that you already have permissions to access location services:
+
+```java
+
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
+
+//...
+
+private void test_GpsStatus_getSatellites() {
+    LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+    if (locationManager != null) {
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+                Iterable<GpsSatellite> satellites = gpsStatus.getSatellites();
+                int satCount = 0;
+                for (GpsSatellite satellite : satellites) {
+                    if (satellite.usedInFix()) {
+                        satCount++;
+                    }
+                }
+                Log.v("GpsStatus","Number of used satellites: " + satCount);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                // not used
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                // not used
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                // not used
+            }
+        });
+    } else {
+        Log.e("GpsStatus", "Location manager is null.");
+    }
+}
+```
+In this code, we request location updates from the GPS provider in 3-second intervals. In the `onLocationChanged` callback, we get the `GpsStatus`, then get the list of satellites from the status, and count the number of satellites used in the current fix. The count is then logged.
+
+Please note, this is only for demonstration purposes. Be sure to check if your app has the appropriate permissions to access location services or permission checks should be added before you request for location updates. `onLocationChanged` may not be called if the device GPS is turned off. `getGpsStatus` method was deprecated in API level 24, use `registerGnssStatusCallback(android.location.GnssStatus.Callback)` instead, for API level 24 and higher.

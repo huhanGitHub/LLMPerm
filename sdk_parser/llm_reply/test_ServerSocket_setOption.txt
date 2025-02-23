@@ -1,0 +1,53 @@
+Here is a method "test_ServerSocket_setOption" which is illustrating the usage of the java.net.ServerSocket class and setting the SO_TIMEOUT option for a ServerSocket.
+
+Please note that the method below should be used in a separate thread, not in the main UI thread, as network operations can't be performed in main UI thread in Android.
+
+```java
+public void test_ServerSocket_setOption() {
+    // Create a new thread to avoid NetworkOnMainThreadException
+    Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            ServerSocket serverSocket = null;
+            try {
+                // Create a new ServerSocket on port 1234
+                serverSocket = new ServerSocket(1234);
+
+                // Set the SO_TIMEOUT option for the ServerSocket
+                // The subsequent call to accept() will block for maximum of 5000ms (5 secs)
+                serverSocket.setSoTimeout(5000);
+
+                // Use the serverSocket
+                // ...
+
+            } catch (IOException e) {
+                // Handle exceptions
+                e.printStackTrace();
+            } finally {
+                if(serverSocket != null) {
+                    try {
+                        serverSocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    });
+
+    // Start the thread
+    thread.start();
+
+    try {
+        // Wait for the thread to finish
+        thread.join();
+    } catch (InterruptedException e) {
+        e.printStackTrace(); 
+    }
+}
+```
+Remember that you need to handle the necessary permissions for the network operations in Android. This includes adding the INTERNET permission in your AndroidManifest.xml.
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```

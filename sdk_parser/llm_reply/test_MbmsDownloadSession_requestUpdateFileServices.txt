@@ -1,0 +1,45 @@
+Sure, here is a method that you can use in your Android Activity that uses the `requestUpdateFileServices()` method of `MbmsDownloadSession`. This method requests an update of the list of services that end users can immediately download for the given service classes.
+
+Please make sure that your app has the `DOWNLOAD_WITHOUT_NOTIFICATION` permission and you add the necessary null checks and error handling for a production level code. 
+
+```java
+public void test_MbmsDownloadSession_requestUpdateFileServices() {
+    MbmsDownloadSession session = null;
+    try {
+        session = MbmsDownloadSession.create(this,
+            new MbmsDownloadSession.SessionStateCallback() {
+                @Override
+                public void onSessionStateUpdated(int state) {
+                    // handle state update here
+                }
+
+                @Override
+                public void onError(int errorCode, String message) {
+                    // handle session error here
+                }
+            }, "test_MbmsDownloadSession_requestUpdateFileServices");
+
+        List<String> serviceClasses = new ArrayList<>();
+        serviceClasses.add("serviceClass1");
+        serviceClasses.add("serviceClass2");
+        serviceClasses.add("serviceClass3");
+        
+        session.requestUpdateFileServices(serviceClasses);
+              
+    } catch (IllegalArgumentException e) {
+        // handle exception here
+    } catch (IllegalStateException e) {
+        // handle exception here
+    } finally {
+        if (session != null) {
+            session.close();
+        }
+    }
+}
+```
+
+In this sample, `MbmsDownloadSession.create()` is called to create a new download session, The call is synchronous and will not return until the middleware has been updated with the request. Service class names are added to a list and passed to `requestUpdateFileServices()`.
+
+Finally, `session.close()` is used to deallocate all middleware resources for this download session. Note that after calling this method, other instance methods of download session objects will fail with an `IllegalStateException`. 
+
+Also, remember that you must have the necessary `uses-permission` declarations (`DOWNLOAD_WITHOUT_NOTIFICATION`) in your AndroidManifest.xml file.

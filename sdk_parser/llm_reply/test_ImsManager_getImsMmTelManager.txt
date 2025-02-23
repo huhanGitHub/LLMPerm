@@ -1,0 +1,48 @@
+Below is an example of a test method for getImsMmTelManager() in the ImsManager class using Android/Java API.
+
+This method creates an instance of ImsManager and uses it to get an ImsMmTelManager instance. This method also checks if the device supports the MultiMediaTelephony(MMTel) feature, and prints relevant messages into logs. Note that the method functionality depends on the phone's support for MMTel.
+
+```java
+import android.content.Context;
+import android.telephony.ims.ImsManager;
+import android.telephony.ims.ImsMmTelManager;
+import android.telephony.ims.feature.MmTelFeature;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_ImsManager_getImsMmTelManager(this);
+    }
+
+    private void test_ImsManager_getImsMmTelManager(Context context) {
+        try {
+            ImsManager imsManager = context.getSystemService(ImsManager.class);
+            if (imsManager != null) {
+                if (imsManager.isMmTelFeatureSupported()) {
+                    ImsMmTelManager imsMmTelManager = imsManager.getImsMmTelManager();
+                    Log.i(TAG, "Successfully got the ImsMmTelManager.");
+                } else {
+                    Log.i(TAG, "This device does not support MmTel Feature.");
+                }
+            } else {
+                Log.e(TAG, "Could not retrieve ImsManager, it was null.");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error while trying to get ImsMmTelManager: ", e);
+        }
+    }
+}
+```
+
+Remember to declare the necessary permissions and feature in the AndroidManifest file for IMS services to function correctly. For instance:
+
+```xml
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-feature android:name="android.hardware.telephony.ims" android:required="false" />
+```

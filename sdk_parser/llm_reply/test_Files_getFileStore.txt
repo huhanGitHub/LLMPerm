@@ -1,0 +1,29 @@
+Unfortunately, the getFileStore(Path) method from java.nio.file.Files isn't applicable for Android programming, as it's targeted only for Java SE, not Java ME or Android. It's part of Java SDK, used mostly on server/desktop side programming and their file systems, while mobile Android doesn't have the exact file system structure, so some java.nio APIs are not supported.
+
+The getFileStore(Path) returns an object to interrogate the store about file storage such as disk space, but Android doesn't easily allow direct access to internal storage file system in the same way.
+
+Nevertheless, I can show the use of this method in a basic Java context:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileStore;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Test{
+    public void test_Files_getFileStore() {
+        Path path = Paths.get(System.getProperty("user.home"));
+
+        try {
+            // Retrieve file store details
+            FileStore store = Files.getFileStore(path);
+            System.out.println("File store: " + store);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This method `test_Files_getFileStore` is designed to fetch the file store where the user's home directory resides. Remember, it's used in standard desktop/server Java programming and isn't applicable for Android programming.

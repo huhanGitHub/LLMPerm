@@ -1,0 +1,40 @@
+Here is the example of how you can use `java.nio.channels.DatagramChannel` class for implementation of `bind()` method. This method is used to bind the channel's socket to a local address for DatagramChannel.
+
+```java
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.DatagramChannel;
+
+public void test_DatagramChannel_bind(){
+    DatagramChannel datagramChannel = null;
+
+    try {
+        // Create a new datagram channel
+        datagramChannel = DatagramChannel.open();
+
+        // Bind the datagram channel to local address
+        InetSocketAddress address = new InetSocketAddress("localhost", 8000);
+        datagramChannel.bind(address);
+        
+        // Print the statement for check whether it is bound or not
+        System.out.println("DatagramChannel is bound to: " + datagramChannel.getLocalAddress());
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if(datagramChannel != null){
+            try {
+                // Close the datagram channel
+                datagramChannel.close();
+                System.out.println("DatagramChannel is closed");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+Remember that this method call will bind the datagram channel's socket to a specific address and/or port. For a datagram channel, this means that the channel is known to the underlying operating system's networking subsystem and will receive datagrams destined for that address or port and the combination of address(or IP) and port. In this example, we're binding to local host at port number 8000. 
+
+Please note that the use of DatagramChannel requires the `android.permission.INTERNET` permission in the AndroidManifest.xml file.

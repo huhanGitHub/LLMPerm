@@ -1,0 +1,59 @@
+Sure, below is a self-contained method that you can use as a unit test for the setOwnAddressType method in AdvertiseSettings.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+@TargetApi(Build.VERSION_CODES.O)
+public void test_AdvertiseSettings_setOwnAddressType() {
+    /* The BluetoothLeAdvertiser is a system service, which is managed by calling getSystemService.
+    We don't have a context in a unit test, so we cannot call this method. 
+    Instead, we will mock it. */
+    Context context = mock(Context.class);
+    BluetoothManager bluetoothManager = mock(BluetoothManager.class);
+    BluetoothAdapter bluetoothAdapter = mock(BluetoothAdapter.class);
+    BluetoothLeAdvertiser bluetoothLeAdvertiser = mock(BluetoothLeAdvertiser.class);
+
+    when(context.getSystemService(Context.BLUETOOTH_SERVICE)).thenReturn(bluetoothManager);
+    when(bluetoothManager.getAdapter()).thenReturn(bluetoothAdapter);
+    when(bluetoothAdapter.getBluetoothLeAdvertiser()).thenReturn(bluetoothLeAdvertiser);
+
+    // Ensure that the device does support advertising.
+    if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isMultipleAdvertisementSupported()) {
+            // The device does not support advertising.
+            return;
+        }
+    }
+
+    int ownAddressType = AdvertiseSettings.ADVERTISE_TX_POWER_HIGH;
+    AdvertiseSettings advertiseSettings = new AdvertiseSettings.Builder()
+            .setOwnAddressType(ownAddressType)
+            .build();
+
+    // Utilize the Bluetooth LE Advertiser to start advertising.
+    bluetoothLeAdvertiser.startAdvertising(advertiseSettings, new AdvertiseData.Builder().build(),
+            new AdvertiseCallback() {
+                @Override
+                public void onStartSuccess(AdvertiseSettings settingsInEffect) {
+                    System.out.println("Successfully started advertising.");
+                }
+
+                @Override
+                public void onStartFailure(int errorCode) {
+                    System.out.println("Failed to start advertising with error code: " + errorCode);
+                }
+            }
+    );
+}
+```
+
+This method first sets up a mock BluetoothLeAdvertiser that can be used to test the behavior of the AdvertiseSettings object. It then creates an AdvertiseSettings object and sets the own address type. Finally, it uses the BluetoothLeAdvertiser to start advertising, at which point you can validate that the AdvertiseSettings object is behaving as expected.
+
+It does this by checking to see if the device actually supports advertising. If it doesn't, the method exits early. If it does support advertising, it bypasses the "setOwnAddressType" method and starts advertising.
+
+Note: You would require to have the Mockito library in Build.Gradle(Module:app). The system services cannot be used in unit tests hence they need to be mocked. Add the dependency in the file as:
+
+```gradle
+dependencies {
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+}
+```

@@ -1,0 +1,44 @@
+Here is a simple example of a method named test_Files_walkFileTree. This example is not specific to Android, as the java.nio.file package is part of standard Java and not Android-specific. Please note that the Files.walkFileTree method is used to walk a file tree, which means to go through all directories and subdirectories starting from a root directory.
+
+```java
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+public void test_Files_walkFileTree() {
+
+    Path rootPath = Paths.get("/path/to/your/directory");
+    
+    try {
+        Files.walkFileTree(rootPath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                System.out.println(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                System.out.println(dir);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                System.out.println("Error visiting " + file);
+                return FileVisitResult.CONTINUE;
+            }
+
+        });
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+This test_Files_walkFileTree function will walk the file tree starting from the root directory specified and print the path of each file/directory it visits.
+
+Please replace "/path/to/your/directory" with the actual directory path in your system where you want to start visiting. If you are going to use this in android, please be aware of the needed permissions for reading the file system.

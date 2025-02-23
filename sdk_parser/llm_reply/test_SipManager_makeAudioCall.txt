@@ -1,0 +1,71 @@
+Here is an example of how to use SipManager for making an audio call using SIP protocol:
+
+```java
+import androidx.appcompat.app.AppCompatActivity;
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipProfile;
+import android.net.sip.SipManager;
+import android.net.sip.SipException;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+    // Initializing the SipManager
+    SipManager manager = null;
+    SipAudioCall call = null;
+    SipProfile profile = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        // Call the test method
+        test_SipManager_makeAudioCall();
+    }
+    
+    public void test_SipManager_makeAudioCall() {
+
+        try {
+            manager = SipManager.newInstance(this);
+
+            SipProfile.Builder builder = new SipProfile.Builder("USERNAME", "DOMAIN");
+            builder.setPassword("PASSWORD");
+            profile = builder.build();
+
+            manager.open(profile);
+
+            SipAudioCall.Listener listener = new SipAudioCall.Listener() {
+                @Override
+                public void onCallEstablished(SipAudioCall call) {
+                    call.startAudio();
+                    call.setSpeakerMode(true);
+                }
+
+                @Override
+                public void onCallEnded(SipAudioCall call) {
+                    // Do something after call ends...
+                }
+            };
+
+            // You can replace "sipAddressToCall" with the actual SIP address you want to call
+            call = manager.makeAudioCall(profile.getUriString(), "sipAddressToCall", listener, 30);
+
+        } catch (Exception e) {
+            if (profile != null) {
+                try {
+                    manager.close(profile.getUriString());
+                } catch (Exception ee) {
+                    ee.printStackTrace();
+                }
+            }
+
+            if (call != null) {
+                call.close();
+            }
+        }
+    } 
+}
+```
+Please replace "USERNAME", "DOMAIN", "PASSWORD" and "sipAddressToCall" with the actual values. Make sure you have asked for the necessary Permissions (INTERNET, USE_SIP) in your app's manifest file. 
+
+Also note that SIP API is not supported on all Android devices.

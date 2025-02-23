@@ -1,0 +1,47 @@
+Below is an example usage of the java.util.logging.StreamHandler#setOutputStream method in Android. StreamHandler is a Handler that writes log messages to an OutputStream stream.
+
+```java
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
+import java.util.logging.SimpleFormatter;
+
+public void test_StreamHandler_setOutputStream() {
+    try {
+        // Create a ByteArrayOutputStream stream
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        // Create a StreamHandler
+        StreamHandler streamHandler = new StreamHandler();
+        
+        // Set the OutputStream of the StreamHandler
+        streamHandler.setOutputStream(outputStream);
+        
+        // Create a SimpleFormatter
+        SimpleFormatter formatter = new SimpleFormatter();
+
+        // Set the Formatter of the StreamHandler
+        streamHandler.setFormatter(formatter);
+
+        // Create a Logger
+        Logger logger = Logger.getAnonymousLogger();
+
+        // Add the StreamHandler to the Logger
+        logger.addHandler(streamHandler);
+        
+        // Log some message
+        logger.info("This is a test message");
+
+        // Flush the StreamHandler to ensure the log message is sent to the OutputStream
+        streamHandler.flush();
+        
+        // Convert the OutputStream to String and print it
+        String logMessage = outputStream.toString();
+        System.out.println(logMessage);
+    } catch (SecurityException e) {
+        e.printStackTrace();
+    }
+}
+```
+In this code, we create an OutputStream and a StreamHandler. We set the OutputStream to the StreamHandler. Then, we create a Logger and add the StreamHandler to it. Finally, we log a test message and print the log message from the OutputStream.

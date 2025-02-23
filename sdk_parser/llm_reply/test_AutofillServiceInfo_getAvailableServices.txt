@@ -1,0 +1,40 @@
+Here is the method `test_AutofillServiceInfo_getAvailableServices` which shows how to use the `AutofillServiceInfo` API in Android. To test permissions, it also includes a sample code to check if the `WRITE_SECURE_SETTINGS` permission is granted or not.
+
+Please note, to use this code, you need to add the necessary imports to your project file.
+
+```java
+public void test_AutofillServiceInfo_getAvailableServices(Context context){
+
+    // Permission check for WRITE_SECURE_SETTINGS.
+    if (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) 
+        == PackageManager.PERMISSION_GRANTED) {
+         // Permission is given, continue.
+
+    } else {
+        // If permission is not granted, display message.
+        Toast.makeText(context, "WRITE_SECURE_SETTINGS permission is not granted", 
+                       Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    final AutofillManager autofillManager = context.getSystemService(AutofillManager.class);
+
+    if (autofillManager != null && autofillManager.isEnabled()) {
+        // If Autofill service is enabled
+
+        // Get the list of available Autofill services
+        List<AutofillServiceInfo> servicesList = autofillManager.getEnabledAutofillServices();
+
+        // Print a message for each Autofill service available (enabled).
+        for (AutofillServiceInfo serviceInfo : servicesList) {
+            System.out.println("Service: " + serviceInfo.getServiceInfo().name +
+                               ", package: " + serviceInfo.getServiceInfo().packageName);
+        }
+    } else {
+        // Autofill service is not enabled or autofillManager is null.
+        System.out.println("Autofill service is not enabled.");
+    }
+}
+```
+
+Keep in mind that obtaining a list of enabled autofill services with `getEnabledAutofillServices()` requires the `WRITE_SECURE_SETTINGS` permission, hence the permission check in the code which, by the way, is a system-level permission and not normally granted to third-party apps. To grant this permission your device needs to be rooted or your app needs to be a system app.

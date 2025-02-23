@@ -1,0 +1,28 @@
+Here is a method that demonstrates how to use the `Files.createDirectories` function from the `java.nio.file` package in Java. Please note that this function may not work on all Android versions as it needs the java.nio.file package that is available only on Android API 26 and above.
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
+
+public void test_Files_createDirectories() {
+    // Define the path to the directories
+    Path pathToDirectories = Paths.get("/path/to/directories");
+
+    try {
+        // Use Files.createDirectories() function to create the directories
+        Files.createDirectories(pathToDirectories);
+
+        // Print a success message
+        System.out.println("Directories were created successfully.");
+    } catch (IOException e) {
+        // Print an error message if there is any problem while creating the directories
+        System.err.println("An error occurred while trying to create directories: " + e.getMessage());
+    }
+}
+```
+
+Place this method into your Android `Activity` or any class you're using. Replace `"/path/to/directories"` with a real path where you want to create directories.
+
+This is a simple and straightforward function, but keep in mind that it requires the `WRITE_EXTERNAL_STORAGE` permission if you're using it in an Android application to create directories in external storage. Also, make sure your directory path does not violate Android's scoped storage rules on Android 10 (API level 29) and higher.

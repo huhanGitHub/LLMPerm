@@ -1,0 +1,32 @@
+In order to use Logger class and its 'setUseParentHandlers' method, you will need to import the 'java.util.logging' package. This method is designed to specify whether or not the logger should send its output to its parent logger.
+
+Here's the method 'test_Logger_setUseParentHandlers' which could be used in an android activity:
+
+```java
+import java.util.logging.Logger;
+
+public void test_Logger_setUseParentHandlers() {
+    // Create a Logger instance
+    Logger logger = Logger.getLogger("MyApp");
+
+    // Log a simple INFO message
+    logger.info("This is a simple log message.");
+
+    // By default, a Logger sends its output to its parent Logger
+    // This behaviour can be changed using the setUseParentHandlers method.
+
+    // Now, let's disable sending output to the parent logger.
+    logger.setUseParentHandlers(false);
+
+    // Log another message. After calling 'setUseParentHandlers(false)', this won't be sent to the parent logger.
+    logger.info("This message won't be sent to the parent logger.");
+
+    // If you want to revert this, and allow the logger to send its output to its parent, call 'setUseParentHandlers(true)'.
+    logger.setUseParentHandlers(true);
+
+    // Log yet another message. This time it will be passed to the parent logger as well.
+    logger.info("This will be sent to the parent logger.");
+}
+```
+
+This test method creates a logger, then logs messages before and after calling 'setUseParentHandlers' with false. Then, it reverts the setting and logs another message. Please note that, the logger instance created 'MyApp' doesn't have any parent, so there would usually be no difference visible in this situation. Use this in a proper context where logger instances have parent loggers for differences to be observed.

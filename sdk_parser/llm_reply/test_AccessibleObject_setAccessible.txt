@@ -1,0 +1,37 @@
+Here is the example of using java/lang/reflect/AccessibleObject.java API in a method "test_AccessibleObject_setAccessible". Since AccessibleObjects primarily deal with reflection of methods or classes and not Android permissions directly, this example shows how to use the method to test access to private methods.
+
+```java
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Method;
+
+public class TestAccessibleObject {
+    private void privateMethod(){
+        System.out.println("Private method executed!");
+    }
+    
+    public void testAccessibleObject_setAccessible(){
+        try {
+            //Get the private method from this class
+            Method privateMethod = TestAccessibleObject.class.getDeclaredMethod("privateMethod");
+            
+            //Creating AccessibleObject instance from the private Method
+            AccessibleObject accessibleObject = (AccessibleObject) privateMethod;
+            
+            //Setting the access to the private method
+            accessibleObject.setAccessible(true); 
+            
+            //Executing the private method
+            privateMethod.invoke(this, null);
+            
+            //Resetting the access to the private method
+            accessibleObject.setAccessible(false);
+            
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Exception occurred while testing AccessibleObject's setAccessible method!");
+        }
+    }
+}
+```
+
+In an Android context, you might use setAccessible to access private methods of a class you don't control (like an Android system class), in order to conduct some kind of test. Be aware, however, that this goes against principles of encapsulation and can lead to undefined behavior, therefore it should only be used wisely and carefully, mostly for debugging and testing conditions.

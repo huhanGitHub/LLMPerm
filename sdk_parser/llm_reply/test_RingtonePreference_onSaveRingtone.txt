@@ -1,0 +1,46 @@
+Here is an example of how you might implement a method called test_RingtonePreference_onSaveRingtone:
+
+```java
+public void test_RingtonePreference_onSaveRingtone() {
+
+    RingtonePreference ringtonePreference = new RingtonePreference(this);
+    ringtonePreference.setKey("my_ringtone_preference");
+    ringtonePreference.setTitle("Select Ringtone");
+
+    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    String ringtonePath = sharedPrefs.getString("my_ringtone_preference", null);
+
+    // Save the ringtone
+    Uri ringtoneUri;
+    if (ringtonePath != null) {
+        ringtoneUri = Uri.parse(ringtonePath);
+    } else {
+        // Use default ringtone
+        ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+    }
+
+    SharedPreferences.Editor editor = sharedPrefs.edit();
+    editor.putString("my_ringtone_preference", ringtoneUri.toString());
+    editor.commit();  // apply asynchronously
+
+    // Validate
+    String savedRingtonePath = sharedPrefs.getString("my_ringtone_preference", null);
+    Uri savedRingtoneUri = Uri.parse(savedRingtonePath);
+    
+    Ringtone savedRingtone = RingtoneManager.getRingtone(this, savedRingtoneUri);
+    
+    // Check the saved ringtone
+    if (savedRingtone != null) {
+        Toast.makeText(this, "Saved ringtone: " + savedRingtone.getTitle(this), 
+            Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(this, "Failed to save ringtone", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+This is a simple activity method that first creates a RingtonePreference object, sets its key and title attributes, and then gets the current default shared preferences. After getting shared preferences, it retrieves the ringtone path and saves it as a uri string in the shared preferences.
+
+If the ringtone path was not saved previously, it uses the default alarm ringtone. The ringtone preference is then saved onto the shared preferences by calling editor.putString() and editor.commit().
+
+After saving the ringtone, it validates the ringtone by retrieving it from the shared preferences, and creating a Ringtone object from the uri. If a ringtone object could be created, it displays a Toast message showing the saved ringtone's title. If not, it displays a Toast message with a failure notice.

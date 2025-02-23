@@ -1,0 +1,28 @@
+Here is a code snippet for a method test_FileSystemProvider_checkAccess, which checks whether a file can be accessed or not using the FileSystemProvider in Java NIO. However, note that this code is not specific to Android as Android doesn't fully support Java NIO's File Systems functionality. You will likely be better off with java.io.File:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_FileSystemProvider_checkAccess() {
+    try {
+        Path path = Paths.get("/example/path/to/file.txt");
+        FileSystemProvider provider = path.getFileSystem().provider();
+
+        // Check whether the file is readable, writable, and executable
+        provider.checkAccess(path, AccessMode.READ, AccessMode.WRITE, AccessMode.EXECUTE);
+        Toast.makeText(this, "File can be accessed!", Toast.LENGTH_SHORT).show();
+    } catch (IOException | UnsupportedOperationException e) {
+        Toast.makeText(this, "Cannot access the file! " + e.getMessage(),
+                Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+In the above code snippet:
+
+- `Paths.get("/example/path/to/file.txt")` : Gets the path of the file that you want to check.
+- `path.getFileSystem().provider();` : Gets the FileSystemProvider of the file.
+- `provider.checkAccess(path, AccessMode.READ, AccessMode.WRITE, AccessMode.EXECUTE);` : Checks whether the file at the path can be read, write, and execute.
+- If the `checkAccess` method does not throw an exception, that means the file at the path can be accessed. Then, a toast message "File can be accessed!" is shown.
+- If the `checkAccess` method throws an exception, that means the file at the path cannot be accessed. In that case, a toast message "Cannot access the file!" and the exception message is shown.
+
+This code will probably not run without modification on Android, since Android's support for java.nio.file is not complete (it was added in API level 26 and the functionality is slightly different from the standard JDK's). It's advised to use java.io.File or androidx's DocumentFile class if you are working on Android.

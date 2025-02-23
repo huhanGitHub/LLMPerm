@@ -1,0 +1,36 @@
+To create a usage example of the `ChooserTargetService`, there is a need to override `onBind()` method from the `ChooserTargetService` in an Android activity. This is due to the fact that `ChooserTargetService.onBind()` is a callback method that gets invoked by the Android system to bind an `IntentService` with your `Activity`. 
+
+Unfortunately, the `ChooserTargetService` is not designed to test Android permissions. It's a service that's used to provide custom targets for the chooser dialog in Android, this allows you to customize the share UI that opens up when you call `startActivity(Intent.createChooser(yourIntent, "Share with"))`.
+
+However, I can provide you a test method that verifies if binder is connected with `ChooserTargetService`. Please remember, for this code to work your activity needs to be bound by at least one `ChooserTargetService` instance.
+
+```java
+public void test_ChooserTargetService_onBind() {
+    
+    Intent intent = new Intent(this, ChooserTargetService.class);
+    ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d("Test", "Service successfully bound");
+            assertNotNull(iBinder); // If iBinder is not null, it means Bind was successful.
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            Log.d("Test", "Service disconnected");
+        }
+    };
+
+    // Use bindService method
+    boolean isBound = bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    if(isBound) {
+        Log.d("Test", "Service is bound, now you can check onBind in your ChooserTargetService");
+    } else {
+        Log.d("Test", "Service not bound, check your ChooserTargetService onBind method.");
+    }
+}
+```
+
+This method, `test_ChooserTargetService_onBind()`, is creating a `ServiceConnection` and through calling `bindService` with the intent, we're checking whether it was successful in binding to the `ChooserTargetService` or not. However this is just a basic test without any details on what's happening inside `onBind` of your `ChooserTargetService`. 
+
+The service itself would need to have been properly implemented with the `onBind` method returning valid `IBinder` for a successful connection. If not, then bindService would return false signaling unsuccessful bind.

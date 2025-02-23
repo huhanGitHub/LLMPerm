@@ -1,0 +1,32 @@
+Here is an example of using the pinSlice() method with the android.app.slice.SliceManager class. Please, keep in mind about requirements for permission to use slices.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_SliceManager_pinSlice() {
+    String sliceUriString = "content://com.example.android.app/slice";
+    Uri sliceUri = Uri.parse(sliceUriString);
+
+    SliceManager sliceManager = getSystemService(SliceManager.class);
+    boolean slicePinned = false;
+
+    // Check if the slice has already been pinned.
+    if (sliceManager.getPinnedSpecs(sliceUri).isEmpty()) {
+        try {
+            // Request the app to pin the slice.
+            sliceManager.pinSlice(sliceUri, new Set<SliceSpec>());
+            slicePinned = true;
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to pin slice.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    if (slicePinned) {
+        Toast.makeText(this, "Successfully pinned slice.", Toast.LENGTH_LONG).show();
+    }
+}
+```
+
+Invoke this method in your activity when you want to pin a slice. This code tries to pin a Slice. If successful, it shows a toast message confirming successful operation otherwise it shows a failure message. 
+
+SliceManager is available in android P or higher (API 28). We should consider this point when using this class. Remember to have the URI for your Slice available, in this particular case, that would be `content://com.example.android.app/slice`.

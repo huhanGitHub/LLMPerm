@@ -1,0 +1,48 @@
+Here's a sample method `test_BackupAgent_onRestore`, it is a method stub that you can modify to suit your needs, based on the requirements you have.
+
+```java
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataInput;
+import android.os.ParcelFileDescriptor;
+import java.io.IOException;
+import android.app.backup.BackupDataOutput;
+import android.os.ParcelFileDescriptor;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            test_BackupAgent_onRestore();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void test_BackupAgent_onRestore() throws IOException {
+        // i.e. it's not actually doing anything yet
+        new BackupAgent() {
+            @Override
+            public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
+                // implement your logic here, this function will be called when the data needs to be restored
+                // data: the data to restore
+                // appVersionCode: the version code of the application
+                // newState: a read/write file descriptor pointing to the restored data
+            }
+
+            @Override
+            public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+                // onBackup is not called in this case, you may need to implement it if you have a separate backup routine
+            }
+        };
+    }
+}
+```
+
+This example creates a new `BackupAgent` and overrides its `onRestore` method. The `onRestore` method is public in `BackupAgent` and takes `BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState` as parameters. These parameters represent the data that needs to be restored and the file descriptors pointing to the new state.
+
+Please note, `BackupAgent` is an abstract base class. So, you can't instantiate it directly but rather meant to be subclassed with you providing your own implementation of `onRestore` and `onBackup`. So, the sample provided is test scenario structure. You could create a subclass named like `MyBackupAgent` extends `BackupAgent` to realize.
+
+Note: `BackupAgent` was deprecated in API level 28. For new applications Google advices using `AutoBackup` and `Key/Value Backup`.

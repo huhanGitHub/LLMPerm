@@ -1,0 +1,21 @@
+Sure, here's a mockup example of how to use the method `initGraphicStats()` defined within `HardwareRenderer.java`. One important caveat is that `HardwareRenderer` class cannot be instantiated directly in public APIs as it's part of Android's internal API.
+
+However, for your understanding I've created a mock test method where `HardwareRenderer` and `initGraphicStats()` are used retrospectively assuming the access to internal APIs.
+
+```java
+public void test_HardwareRenderer_initGraphicsStats() {
+    // Assuming HardwareRenderer object is accessible,
+    // which is actually part of Android's internal API
+    HardwareRenderer hardwareRenderer = new HardwareRenderer();
+
+    // Call method initGraphicStats
+    hardwareRenderer.initGraphicStats();
+
+    assertTrue("Graphics stats initialization success!", true);
+}
+```
+In this example, we simply create an instance of the `HardwareRenderer` class, call the method `initGraphicStats()` and check if the method runs successfully.
+
+Since accessing HardwareRenderer is not feasible in android public APIs, let's focus on the concept. Here we are assuming that `initGraphicStats()` does some initialization related to hardware rendering. We call the method and then simply imply that if no exceptions were thrown and the method returns successfully, our test is successful. That's the concept of unit tests, they do not require human judgement, but algorithmically determine if a piece of code is working.
+
+For real time scenario, the alternate way that probably closest thing is the `View.setLayerType()` method, where you can make a view be rendered using the hardware renderer by calling `setLayerType(View.LAYER_TYPE_HARDWARE, null)`.

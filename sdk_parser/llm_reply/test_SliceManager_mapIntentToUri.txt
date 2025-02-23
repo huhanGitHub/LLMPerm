@@ -1,0 +1,52 @@
+Here is an example of how you can implement the `test_SliceManager_mapIntentToUri` method to get an usage of the Android API `SliceManager`.
+
+Please note that `SliceManager` is a part of Android Slices feature that was introduced in Android Pie (API level 28). So ensure you are using the correct sdk version.
+
+```java
+import android.app.slice.SliceManager;
+import android.content.Intent;
+import android.net.Uri;
+import androidx.core.graphics.drawable.IconCompat;
+import android.app.slice.Slice;
+import android.app.slice.SliceSpec;
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+import android.content.Context;
+
+//Your Activity Class
+public class MainActivity extends AppCompatActivity {
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
+    public void test_SliceManager_mapIntentToUri() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("content://com.example.app/"));
+        SliceManager sliceManager = getSystemService(SliceManager.class);
+        Uri uri = sliceManager.mapIntentToUri(intent);
+
+        //Get the slice
+        Slice slice = sliceManager.bindSlice(uri, new HashSet<>(Arrays.asList(SliceSpecs.BASIC)));
+        
+        // The actions you want to create and add to the ListBuilder
+        ListBuilder listBuilder = new ListBuilder(getContext(), uri, ListBuilder.INFINITY);
+        listBuilder.addRow(new ListBuilder.RowBuilder()
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setPrimaryAction(new SliceAction(pendingIntent, IconCompat.createWithResource(getContext(), R.drawable.ic_launcher), ListBuilder.ICON_IMAGE, "text")));
+
+        // Set the slice content
+        slice = listBuilder.build();
+
+        //Do something with the slice
+    }
+
+    @Nullable
+    @Override
+    public SliceManager getSystemService(@NonNull String name) {
+        if (Context.SLICE_SERVICE.equals(name))
+            return (SliceManager) super.getSystemService(name);
+        return null;
+    }
+}
+```
+In this method `bindSlice` binds the `Slice` pointed to by this Uri and returns it. `getSystemService` is where we get the SliceManager system level service.
+
+Remember to add the `android.permission.BIND_SLICE` permission to your app's manifest file.

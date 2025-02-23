@@ -1,0 +1,42 @@
+SliceProvider is an abstract class in Android, which provides slice data from your app to other apps, using the Slice protocol. Here is an example of usage of `onCreatePermissionRequest` method which is part of `SliceProvider` class.
+
+```java
+import android.app.slice.SliceProvider;
+import android.net.Uri;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+
+public class MySliceProvider extends SliceProvider {
+
+    @Override
+    public boolean onCreateSliceProvider() {
+        // Initialization code here
+        return true;
+    }
+
+    public void test_SliceProvider_onCreatePermissionRequest() {
+        // Assuming that the uri is hardcoded. In real life it should be dynamically generated
+        Uri uri = Uri.parse("content://com.myapp.myslice/some_path");
+
+        try {
+            // Getting the calling package
+            String callingPackage = getCallingPackage();
+
+            // Creating intent for permission request
+            Intent intent = SliceProvider.createPermissionRequest(getContext(), uri, callingPackage);
+
+            // Start activity for result could be used to prompt the user to grant permissions
+            startActivity(intent, null);
+        } catch (PackageManager.NameNotFoundException e) {
+            // Exception handling code here
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+The `test_SliceProvider_onCreatePermissionRequest` function creation of a permission request intent for the calling package and the specified uri. If the calling package couldn't be determined, an exception would be thrown. 
+
+Please note this code should be run within a class that extends `SliceProvider` and hence has the associated slice provider lifecycle and context.
+
+Also ensure your AndroidManifest includes the necessary permissions and intent filters required to use the slice provider functionality.

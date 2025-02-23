@@ -1,0 +1,39 @@
+Please note Android does NOT support `MulticastChannel` directly, due to power and radio resource concerns on a mobile device. However, Java does support `MulticastChannel` and below is a sample of how to test joining a `MulticastChannel` using Java, not on Android:
+
+```java
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.nio.channels.MulticastChannel;
+import java.nio.channels.DatagramChannel;
+import java.nio.channels.MembershipKey;
+
+public class TestMulticastChannel {
+    public void test_MulticastChannel_join() {
+        InetAddress group = null;
+        NetworkInterface ni = null;
+        try {
+            group = InetAddress.getByName("225.4.5.6");
+            ni = NetworkInterface.getByName("wlan0");
+        } catch (IOException e) {
+            System.out.println("Error setting up MulticastChannel: " + e.getMessage());
+        }
+    
+        try (DatagramChannel dc = DatagramChannel.open()){
+            dc.bind(null);
+            dc.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+            MulticastChannel mc = (MulticastChannel) dc;
+            if (group != null && ni != null) {
+                MembershipKey key = mc.join(group, ni);
+                System.out.println("Joined group " + group + " on interface " + ni);
+                key.drop();
+                System.out.println("Dropped group " + group + " on interface " + ni);
+            }
+        } catch (IOException e) {
+            System.out.println("Error joining or dropping multicast group: " + e.getMessage());
+        }
+    }
+}
+```
+
+In the above code, we are creating a `MulticastChannel` and joining a multicast group with IP address "225.4.5.6" on the network interface "wlan0", then dropping the membership. The actual network interface will vary based on the computer and network setup. This is a simple example to illustrate the method usage, in a real-world application you would want to choose appropriate group addresses and handle errors more thoroughly.

@@ -1,0 +1,43 @@
+Here is a self-contained method `test_Logger_setFilter` demonstrating the usage of `java/util/logging/Logger`'s `setFilter` method in an Android Activity. This creates a custom logger and sets a filter that only logs messages of a specific level.
+
+```java
+import android.app.Activity;
+import android.os.Bundle;
+
+import java.util.logging.Filter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_Logger_setFilter();
+    }
+
+    public void test_Logger_setFilter() {
+        // Create a new Logger
+        Logger logger = Logger.getLogger("MyLogger");
+
+        // Set a Filter that only passes SEVERE LogRecords
+        logger.setFilter(new Filter() {
+            @Override
+            public boolean isLoggable(LogRecord record) {
+                if (record.getLevel() == Level.SEVERE) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        // Try to log on different levels
+        logger.log(Level.INFO, "This INFO message will be filtered out");
+        logger.log(Level.SEVERE, "This SEVERE message will pass the filter");
+    }
+}
+```
+This example creates a new `Logger` named "MyLogger", and sets a `Filter` on it that only passes `LogRecord` objects with a level of `SEVERE`. When we try to log messages with `INFO` and `SEVERE` levels, only the latter will actually get logged because of our filter.

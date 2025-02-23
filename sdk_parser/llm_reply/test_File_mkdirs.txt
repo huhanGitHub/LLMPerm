@@ -1,0 +1,33 @@
+Here is a simple example of a test_File_mkdirs method which makes use of java.io.File API in Java to create directories.
+
+```java
+public boolean test_File_mkdirs() {
+    // Set the directory path that you want to create.
+    // This path is a directory inside app's private storage.
+    String dirPath = getApplicationContext().getFilesDir().getAbsolutePath() + "/testDir/subDir";
+
+    // Create a File object.
+    File newDir = new File(dirPath);
+
+    // Call mkdirs() method to create the directory, including any 
+    // necessary but nonexistent parent directories.
+    // Returns true if the directories were created, false otherwise.
+    boolean result = newDir.mkdirs();
+
+    // Log the result.
+    if(result) {
+        Log.d("Directory Create", "Directory created successfully at " + dirPath);
+    } else {
+        Log.d("Directory Create", "Directory creation failed at " + dirPath);
+    }
+
+    // Return the result.
+    return result;
+}
+```
+   
+This method would create the necessary directories (testDir and subDir if they don't exist) in the app's private storage space. Make sure to call this method in the thread other than the main thread in android or else it would throw NetworkOnMainThreadException.
+
+This piece of Java code is ready to use on any Android Activity by calling the test_File_mkdirs method. 
+
+Note: Beginning with Android 10 (API level 29), the platform offers enhanced security and privacy, tightening restrictions on directories that apps can access outside their app-specific directories and external storage directories. Therefore, it's recommended to use app-specific directories.

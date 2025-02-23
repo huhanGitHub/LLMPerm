@@ -1,0 +1,47 @@
+The method test_SipManager_isOpened tries to instantiate a SipManager object and check if the SipService is ready and the SipManager is open to make/receive SIP calls.
+
+```java
+import android.content.Context;
+import android.net.sip.SipManager;
+import android.net.sip.SipException;
+import android.net.sip.SipProfile;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    public void test_SipManager_isOpened() {
+        // Check if device supports SIP connectivity
+        if (!SipManager.isApiSupported(this)) {
+            return;
+        }
+        if (!SipManager.isVoipSupported(this)) {
+            return;
+        }
+        // If SIP API is supported, try to create a SIP Manager
+        SipManager sipManager = SipManager.newInstance(this);
+        try {
+            // Create SIP profile
+            SipProfile.Builder builder = new SipProfile.Builder("username", "domain");
+            builder.setPassword("password");
+            SipProfile sipProfile = builder.build();
+
+            // Try to open an SIP Profile
+            sipManager.open(sipProfile);
+            if(sipManager.isOpened(sipProfile.getUriString())) {
+                // SipManager is open and ready to make SIP calls
+                //TODO: perform your action here
+            }
+        } catch (SipException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+Please replace `"username"`, `"domain"` and `"password"` with your actual SIP account information. SIP profiles define the endpoints for SIP communication sessions and are typically used for SIP registration.
+
+In the code, we first check whether the API and VoIP are supported on the device. If yes, we then create and open a SipProfile. The isOpened() method returns true if the specified profile has an active SIP connection, false otherwise.
+Please remember that to use `SipManager`, you need to add these permissions in your `AndroidManifest.xml` file:
+```java
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.USE_SIP" />
+```

@@ -1,0 +1,26 @@
+The following method demonstrates how to use the `isOverrideDeadlineExpired()` method from the `JobParameters` class in the Android JobScheduler API. This method returns true if the job's deadline has expired.
+
+Please note that you'll need to create a job for this method and the handling for it in a JobService before using this method. 
+
+Also note that this code needs to be placed inside a class that extends `JobService`.
+
+```Java
+import android.app.job.JobParameters;
+import android.app.job.JobService;
+import android.util.Log;
+
+//...
+
+public void test_JobParameters_isUserInitiatedJob(JobParameters params) {
+    // Check if the job was initiated by user
+    boolean isUserInitiatedJob = params.isOverrideDeadlineExpired();
+    
+    if(isUserInitiatedJob){
+        Log.d("JobParametersTest", "Job was initiated by user");
+    }
+    else{
+        Log.d("JobParametersTest", "Job wasn't initiated by user");
+    }
+}
+```
+Here, `params` is an instance of JobParameters that you get from the job's execute method. `isOverrideDeadlineExpired()` is a method available in the `JobParameters` class that returns true if job's deadline expired before the job got a chance to run.

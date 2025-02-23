@@ -1,0 +1,31 @@
+Here is the implementation of the method `test_Security_getProperty`:
+
+```java
+public void test_Security_getProperty() {
+    // Getting a security property with name "ssl.KeyManagerFactory.algorithm"
+    String property = java.security.Security.getProperty("ssl.KeyManagerFactory.algorithm");
+
+    // This will print the value of property "ssl.KeyManagerFactory.algorithm" to the console.
+    // The default value is usually "SunX509".
+    System.out.println("Value of property ssl.KeyManagerFactory.algorithm : " + property);
+    
+    // if you are inside an Android Activity class you can show this in a Toast:
+    // Toast.makeText(this, "Value of property 'ssl.KeyManagerFactory.algorithm': " + property, Toast.LENGTH_LONG).show();
+}
+```
+This code fetches the value of the property name "ssl.KeyManagerFactory.algorithm". The 'Security.getProperty' method used here is a part of 'java.security' API. It is used to get the value of a certain security property. If the property value is not set, this method will return null.
+
+In Android, you can show the property value in a toast message to see it on device's screen. Just uncomment the last line in the method to use toast.
+
+Please remember to call this method either from a background thread or asyncTask because performing network operations on main thread can cause Application Not Responding (ANR) errors.
+
+A sensible place to call this method would be in `onCreate()`. For example:
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    test_Security_getProperty();
+}
+```

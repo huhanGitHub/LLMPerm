@@ -1,0 +1,33 @@
+Here is the Java method that demonstrates the usage of `TransformerException.getLocationAsString()` method from Java's `javax.xml.transform.TransformerException` class.
+
+This method is part of the Java API for XML Processing (JAXP) used for handling transformations of XML data. The `TransformerException` class is a specific exception thrown on any transformation-related errors. The `getLocationAsString()` method is used to retrieve a string describing the location of an error within the XML document that caused the exception.
+
+```java
+public void test_TransformerException_getLocationAsString() {
+    try {
+        // Create a new transformer factory
+        TransformerFactory factory = TransformerFactory.newInstance();
+
+        // Create a transformer for the stylesheet.
+        Transformer transformer = factory.newTransformer();
+
+        // create Source instance from XML file using StreamSource class
+        Source src = new StreamSource(new File("input.xml"));
+
+        // create Result instance to output the transformed content
+        Result res = new StreamResult(new File("output.xml"));
+
+        // Perform the transformation. This will throw a TransformerException if there's any issue
+        transformer.transform(src, res);
+
+    } catch (TransformerException e) {
+        // Get the location of error in the XML file which caused the exception
+        String errorLocation = e.getLocationAsString();
+
+        // Print the error location
+        System.out.println(errorLocation);
+    }
+}
+```
+This method tries to perform an XML transformation and whenever a `TransformerException` happens, it uses `getLocationAsString()` to retrieve a string describing the location of an error within the XML document that caused the exception. In real-world Android applications, you would typically replace the `System.out.println` with logging or show the error to the user through the UI.
+Also please note that this code cannot be used directly in an Android activity because Android does not support the native Java Transformer APIs. Android has its own XML handling libraries (such as XmlPullParser).

@@ -1,0 +1,42 @@
+Below is a simple example of how you can use EventLog in Android. However, please note that EventLog is part of the internal Android API meaning it is not intended for developers to directly use in their applications. It is hidden in the SDK and is only available if you build Android from the source.
+
+Here's an example for the test_EventLog_readEventsOnWrapping method:
+
+```java
+import android.util.EventLog;
+import android.util.Log;
+import java.io.IOException;
+
+public void test_EventLog_readEventsOnWrapping()  {
+    
+    // create a new array list
+    List<EventLog.Event> events = new ArrayList<>();
+
+    try {
+        
+        // read events
+        int logBuffer = EventLog.readEvents(new int[] { EventLogTags.SOME_TAG }, events);
+
+        // iterate through events and process
+        for (EventLog.Event event : events) {
+            
+            // retrieve the data in the event
+            Object[] data = (Object[]) event.getData();
+            
+            // process the data (just a printout in this case)
+            for (Object o : data) {
+                Log.i("EventLogReadEvents", "Data: " + o);
+            }
+        }
+
+    } catch (IOException e) {
+        
+        // print any error messages
+        Log.e("EventLogReadEvents", "Error reading events", e);
+    }
+}
+```
+
+Please replace `EventLogTags.SOME_TAG` with the actual tag number you are interested in. Back in 2011, the whole `android.util.EventLogTags` class was deprecated and removed.
+
+Once again, it is not recommended to use internal APIs, as they aren't guaranteed to be kept consistent across different android versions and can break your app with system updates.

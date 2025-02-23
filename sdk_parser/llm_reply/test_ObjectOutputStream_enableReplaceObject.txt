@@ -1,0 +1,56 @@
+Sure, here's a simple example of a method that uses ObjectOutputStream and invokes the enableReplaceObject method. In this example, we are serializing an object into a file.
+
+```java
+import android.util.Log;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public void test_ObjectOutputStream_enableReplaceObject() {
+    String filename = "testfile.ser";
+
+    // Create an object to serialize
+    MyClass myObject = new MyClass();
+    myObject.name = "Test Object";
+
+    ObjectOutputStream outStream = null;
+
+    try {
+        // Open a file output stream
+        FileOutputStream fileOut = openFileOutput(filename, MODE_PRIVATE);
+
+        // Create an ObjectOutputStream
+        outStream = new ObjectOutputStream(fileOut);
+
+        // Enable the replacement of objects
+        outStream.enableReplaceObject(true);
+
+        // Write the object to the file
+        outStream.writeObject(myObject);
+        Log.d("Test", "Object has been serialized to " + filename);
+    } catch (IOException e) {
+        Log.e("Test", "Failed to serialize object", e);
+    } finally {
+        if (outStream != null) {
+            try {
+                outStream.close();
+            } catch (IOException e) {
+                Log.e("Test", "Failed to close ObjectOutputStream", e);
+            }
+        }
+    }
+}
+
+private static class MyClass implements Serializable {
+    String name;
+}
+```
+In this example, we also use a custom Serializable class named 'MyClass'. This class has a single member 'name'. The object myObject of this class is what's being serialized using ObjectOutputStream. The enableReplaceObject is invoked on the ObjectOutputStream instance to allow for the replacement of objects to be serialized.
+
+Remember to add the necessary permissions in your AndroidManifest.xml to write to external storage:
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+And also handle runtime permissions as necessary if your target API level is 23 (Marshmallow) or above.

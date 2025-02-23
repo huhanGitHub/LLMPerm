@@ -1,0 +1,21 @@
+Here is an example of a usage of the `Security.removeProvider` method in `java.security.Security`. This method is used to remove a security provider by its name. The provided name must match exactly with the name of the security provider that needs to be removed.
+
+Please note that using this method to remove security providers is generally not recommended because it can potentially make your application vulnerable to security attacks.
+
+```java
+public void test_Security_removeProvider() {
+    //The name of the security provider to remove
+    String providerName = "BC"; //For example, Bouncy Castle provider
+
+    if (Security.getProvider(providerName) != null) {
+        //The removeProvider method returns void
+        Security.removeProvider(providerName);
+        System.out.println("Security provider removed.");
+    } else {
+        System.out.println("Provider not found. Unable to remove.");
+    }
+}
+```
+This self-contained method checks if a security provider with name `'BC'` exists. If it exists, the method removes it and prints `'Security provider removed.'`. If it doesn't exist, it prints `'Provider not found. Unable to remove.'`.
+
+Remember to replace `'BC'` with the exact name of the security provider that you want to remove.

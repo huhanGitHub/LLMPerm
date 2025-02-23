@@ -1,0 +1,37 @@
+Below is an example of a method test_GeolocationPermissions_invoke in an Android Activity. This method shows how you can use GeolocationPermissions API to get the geolocation permissions.
+
+```java
+import android.webkit.GeolocationPermissions;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+
+public void test_GeolocationPermissions_invoke() {
+    WebView myWebView = new WebView(this);
+    myWebView.setWebChromeClient(new WebChromeClient() {
+        @Override
+        public void onGeolocationPermissionsShowPrompt(String origin, 
+                               GeolocationPermissions.Callback callback) {
+            if (origin.equals("https://example.com")) {
+                callback.invoke(origin, true, true);
+            } else {
+                callback.invoke(origin, false, false);
+            }
+        }
+    });
+    myWebView.loadUrl("https://example.com");
+}
+```
+
+In this example, the WebView object is set with a custom WebChromeClient to handle the geolocation permission prompt. When a site inside the WebView requests for geolocation permission (with the Geolocation API), the onGeolocationPermissionsShowPrompt() method will be called. 
+
+Depending on the origin of the request, the callback.invoke() method is called with different parameters to allow or deny the site's access to the user's location. If the origin of the request matches "https://example.com", access is granted; for all other origins, access is denied.
+
+Remember to add necessary permissions to the Android Manifest if you plan on using geolocation services:
+```xml
+<manifest ...>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+</manifest>
+```
+Also considering the website's origin, you need to set it to the actual website asking for permission. I set it to "https://example.com" purely for demonstration purposes.
+
+As this API involves a user permission (and potentially sensitive data), be sure to handle it carefully and communicate clearly with your users about why you need the permission and how you will use the data.

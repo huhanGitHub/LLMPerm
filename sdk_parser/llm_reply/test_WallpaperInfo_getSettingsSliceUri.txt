@@ -1,0 +1,38 @@
+Here's an example usage of `getSettingsSliceUri` from `WallpaperInfo`. This method will be included inside an Android Activity and will create a `WallpaperInfo` object, then it will get its settings slice URI.
+
+Please note that we use Mock objects in this snippet for demonstration purposes since real data needs user interaction or system resources:
+
+```java
+import android.app.WallpaperInfo;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import org.mockito.Mockito;
+
+public void test_WallpaperInfo_getSettingsSliceUri() {
+    // Create a mock ResolveInfo for creating WallpaperInfo object
+    ResolveInfo resolveInfo = Mockito.mock(ResolveInfo.class);
+    resolveInfo.serviceInfo = Mockito.mock(ServiceInfo.class);
+    resolveInfo.serviceInfo.packageName = "com.example.somepackage";
+    resolveInfo.serviceInfo.name = "SomeService";
+
+    // Create a mock PackageManager for creating WallpaperInfo object
+    PackageManager packageManager = Mockito.mock(PackageManager.class);
+    Mockito.when(packageManager.resolveContentProvider(Mockito.anyString(), Mockito.anyInt()))
+            .thenReturn(Mockito.mock(ProviderInfo.class));
+
+    // Create WallpaperInfo object
+    WallpaperInfo wallpaperInfo = new WallpaperInfo(getApplicationContext(), resolveInfo);
+
+    // Get the settings slice URI
+    Uri uri = wallpaperInfo.getSettingsSliceUri();
+
+    // Now you have the URI. You can perform various operations.
+    // e.g. let's just print it
+    System.out.println(uri);
+}
+```
+Remember to run this method from a thread other than the main one as some steps are long running operations which will freeze your app if executed on the main/ui thread.

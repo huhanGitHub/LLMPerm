@@ -1,0 +1,64 @@
+Here is a basic example of how you can unit test the onReceiveTextSms method in the CarrierMessagingService class. This example uses Mockito to provide a mock implementation of the CarrierMessagingService and a mock Context.
+
+```java
+import android.content.Context;
+import android.os.Bundle;
+import android.service.carrier.CarrierMessagingService;
+import android.service.carrier.CarrierMessagingService.ReceiveOptions;
+import android.service.carrier.CarrierMessagingService.ResultCallback;
+import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+public class CarrierMessagingServiceTest {
+
+    @Mock
+    private Context mContext;
+    @Mock
+    private CarrierMessagingService mCarrierMessagingService;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mCarrierMessagingService = new CarrierMessagingService() {
+            @Override
+            public void onReceiveTextSms(android.telephony.SmsMessage message, android.os.Bundle bundle, ReceiveOptions options, ResultCallback<Bundle> callback) {
+                // Do whatever you need to test here
+            }
+
+            @Override
+            public void onSendDataSms(byte[] pdu, int subId, String destAddr, int destPort, int options, ResultCallback<Integer> callback) {
+                // Leave empty as we are not testing this
+            }
+        };
+    }
+
+    @Test
+    public void test_CarrierMessagingService_onReceiveTextSms() {
+        // Create a mock SMS message
+        SmsMessage smsMessage = mock(SmsMessage.class);
+        ReceiveOptions receiveOptions = new ReceiveOptions(TelephonyManager.PHONE_TYPE_NONE);
+        ResultCallback<Bundle> callback = new ResultCallback<Bundle>() {
+            @Override
+            public void onReceiveResult(Bundle result) {
+                // Test what you want to happen when the result is received
+            }
+        };
+
+        // Call the method to test
+        mCarrierMessagingService.onReceiveTextSms(smsMessage, new Bundle(), receiveOptions, callback);
+
+        // Verify that the method was called with the correct parameters
+        verify(mCarrierMessagingService).onReceiveTextSms(smsMessage, new Bundle(), receiveOptions, callback);
+    }
+}
+```
+
+Please note that this example won't work by itself. You would need to have the Mockito library set up in your project and this test should be part of a larger suite of unit tests.
+
+Also, note that this code snippet does not test Android permissions, that usually involves testing classes such as ContextCompat and ActivityCompat and calling the checkSelfPermission and/or requestPermissions methods, but the provided API (CarrierMessagingService) does not interact with Android permissions, it only allows an application to interact with carrier services.

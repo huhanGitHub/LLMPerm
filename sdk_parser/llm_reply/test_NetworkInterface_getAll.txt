@@ -1,0 +1,31 @@
+Sure! Here's an example of how you might use the `NetworkInterface.getAll` method in a method for testing. This is a blocked method that will return a list of network interfaces on the device. 
+
+```java
+
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.List;
+
+public void test_NetworkInterface_getAll() {
+    try {
+        List<NetworkInterface> allNetworkInterfaces = Collections
+                .list(NetworkInterface.getNetworkInterfaces());
+
+        for (NetworkInterface ni : allNetworkInterfaces) {
+            if (ni.isUp()) {
+                System.out.println("Network Interface Name: " + ni.getName());
+                System.out.println("Network Interface Display Name: " + ni.getDisplayName());
+            }
+        }
+    } catch (SocketException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Please note that you need to handle the `SocketException` that may occur during the method execution. Also, don't forget about necessary network permissions in your Android project.
+
+This method will print the names and display names of all active network interfaces on the device if called in your activity. 
+
+Please note that is isn't particularly advisable to use System.out.println in Android (you should use Android's logging classes instead), I used it here only for simplicity and for showcasing the usage of the method.

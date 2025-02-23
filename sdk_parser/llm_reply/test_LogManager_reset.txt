@@ -1,0 +1,38 @@
+Here is a sample code snippet of a simple test method 'test_LogManager_reset'. This method resets the LogManager by creating a new LogManager and setting it as the default one.
+
+```java
+public void test_LogManager_reset() {
+    try {
+        // Save the original LogManager
+        LogManager original = LogManager.getLogManager();
+
+        // Substitute LogManager with a new instance
+        LogManager newLogManager = LogManager.getLogManager().getClass().newInstance();
+        System.setProperty("java.util.logging.manager", newLogManager.getClass().getName());
+        Field field = LogManager.class.getDeclaredField("manager");
+        field.setAccessible(true);
+        field.set(null, newLogManager);
+
+        // Check if LogManager is the new instance
+        if (!LogManager.getLogManager().equals(newLogManager)) {
+            throw new RuntimeException("Failed to substitute LogManager");
+        }
+
+        // Resetting LogManager 
+        newLogManager.reset();
+
+        // Restore original LogManager
+        System.setProperty("java.util.logging.manager", original.getClass().getName());
+        field.set(null, original);
+
+    } catch (InstantiationException | IllegalAccessException | NoSuchFieldException e) {
+        throw new RuntimeException("Failed to reset LogManager", e);
+    }
+}
+```
+This method first backs up the original LogManager, and then creates a new LogManager instance to replace it. After checking if the replacement was successful, it calls the reset method on the new LogManager instance. Finally, it restores the original LogManager.
+
+NOTE:
+1. Make sure the appropriate permissions are set in the AndroidManifest.xml file if your method is calling APIs that need such permissions. 
+2. Be aware that Log Manager operations affect all log-related functionality, which could result in unintended consequences in a real-world application.
+3. Also, keep in mind that manipulating system properties or using reflection (as in this example) may not be allowed in certain environments due to security restrictions. This is just an example, and approach may vary depending upon the exact requirements.

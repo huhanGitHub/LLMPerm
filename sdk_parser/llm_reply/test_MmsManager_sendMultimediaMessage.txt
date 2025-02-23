@@ -1,0 +1,24 @@
+```
+@Test
+public void test_MmsManager_sendMultimediaMessage() {
+    // Create a new instance of MmsManager
+    MmsManager mmsManager = (MmsManager) context.getSystemService(Context.MMS_SERVICE);
+    // Prepare a mock Uri for testing
+    Uri contentUri = Uri.parse("content://mms-sms/conversations/");
+    // Create a pending intent to perform the MMS operation
+    PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0, new Intent("android.provider.Telephony.MMS_SENT"), 0);
+    // Create a mock MMS config
+    Bundle configOverrides = new Bundle();
+
+    // Try to send the MMS message
+    if (mmsManager != null) {
+        mmsManager.sendMultimediaMessage(context, contentUri, "application/vnd.wap.mms-message", configOverrides, sentIntent);
+    }
+}
+```
+
+Please note:
+1- This is how you would use the MmsManager class in general. The API `sendMultimediaMessage` of `MmsManager` doesn't exist directly according to the official Android documentation and it may change depending on the Android version.
+2- This test case is meant to be placed in an Android Test Project.
+3- It would be recommended to create a mock context, which is not covered here.
+4- The application manifest requires the `android.permission.SEND_SMS` permission.

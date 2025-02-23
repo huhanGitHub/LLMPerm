@@ -1,0 +1,56 @@
+```java
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
+    // Test Network openConnection
+    public void test_Network_openConnection() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                ConnectivityManager connMgr = 
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                Network[] networks = connMgr.getAllNetworks();
+                for (Network network : networks) {
+                    try {
+                        NetworkCapabilities networkCapabilities = connMgr.getNetworkCapabilities(network);
+                        if (networkCapabilities != null && 
+                           (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))) {
+                            URL url = new URL("http://example.com");
+                            HttpURLConnection conn = (HttpURLConnection) network.openConnection(url);
+                            if (conn.getResponseCode() == 200) {
+                                Log.d(TAG, "Network openConnection Test Successful");
+                            }
+                            conn.disconnect();
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Network openConnection Test Failed", e);
+                    }
+                }
+                return null;
+            }
+        }.execute();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_Network_openConnection();
+    }
+}
+```
+This is an example of testing the method openConnection in a Network class. This assumes your activity uses the INTERNET and ACCESS_NETWORK_STATE permission. Note that AsyncTask is there to run network operations on a thread separate from the UI thread, as required by Android. You probably shouldn't use AsyncTask in production code, but it's okay for a simple test like this.

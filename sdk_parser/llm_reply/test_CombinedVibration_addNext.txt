@@ -1,0 +1,40 @@
+Here's an example of how you could implement the `test_CombinedVibration_addNext` method. Please note there's no direct relationship between android permissions and CombinedVibration, but we've added a permission check for Vibrator service. 
+
+```java
+// Include the necessary import statements
+import android.os.CombinedVibration;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.content.Context;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.util.Log;
+
+public void test_CombinedVibration_addNext() {
+    Context context = this;
+    
+    // Check for vibration permission
+    if (context.checkSelfPermission(Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        
+        if(vibrator != null) {
+            if (vibrator.hasVibrator()) {
+              VibrationEffect vibrationEffect1 = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE);
+              VibrationEffect vibrationEffect2 = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE);
+                
+              CombinedVibration combinedVibration = CombinedVibration.startParallel().addNext(vibrationEffect1).addNext(vibrationEffect2).combine();
+
+              // requires minimum API of 29.
+              vibrator.vibrate(combinedVibration);
+            } else {
+                Log.v("Vibrator_Service", "This device does not support vibration");
+            }
+        } else {
+            Log.v("Vibrator_Service", "Vibrator service is not available");
+        }
+    } else {
+        Log.v("Vibrator_Service", "Vibration permission is not granted");
+    }
+}
+```
+You will need to add `<uses-permission android:name="android.permission.VIBRATE" />` inside `<manifest>` in the AndroidManifest.xml to request vibration permission.

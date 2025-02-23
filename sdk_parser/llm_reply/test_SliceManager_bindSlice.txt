@@ -1,0 +1,33 @@
+Here is an example usage of the "bindSlice" method of the "SliceManager" API in an Android activity:
+
+Please make sure the app has the necessary permissions (BIND_SLICE) to use the SliceManager API.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_SliceManager_bindSlice() {
+    //Get the SliceManager instance
+    SliceManager sliceManager = getSystemService(SliceManager.class);
+    
+    //The URI for the slice provider
+    Uri sliceUri = Uri.parse("content://com.example.app/slice");
+
+    try {
+        Slice slice = sliceManager.bindSlice(sliceUri);
+        if (slice == null) {
+            Log.e("bindSliceTest", "Failed to bind to slice.");
+            return;
+        }
+        
+        // Print or use the slice's primary action.
+        SliceAction primaryAction = slice.getPrimaryAction();
+        Log.d("bindSliceTest", "Primary action: " + primaryAction.getTitle());
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In this example, the "sliceUri" is a URI that refers to a specific slice. Make sure to replace "content://com.example.app/slice" with the actual Uri of your slice. The bindSlice method will return a Slice object that you can use in your app.
+
+Keep in mind that using slices requires your application to have the necessary permissions and your activity to be able to handle potential slice exceptions. In addition, as of Android 10, only system and preinstalled apps can bind to slices directly.

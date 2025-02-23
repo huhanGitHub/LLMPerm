@@ -1,0 +1,51 @@
+In this example, I am going to demonstrate how to use `TvRecordingClient` class to start a channel recording. Before that, please make sure your app has required permissions to access TV recording client.
+
+```java
+public void test_TvRecordingClient_startRecording() {
+    // Get reference to the system service
+    TvInputManager tvInputManager = (TvInputManager) getSystemService(Context.TV_INPUT_SERVICE);
+
+    // Create RecordingCallback and listener to get response
+    TvInputManager.RecordingCallback callback = new TvInputManager.RecordingCallback() {
+        @Override
+        public void onStartRecordingFailed(@Nullable Uri channelUri, int reason) {
+            super.onStartRecordingFailed(channelUri, reason);
+
+            // Handle error here
+            Log.e("TvRecordingClient", "Start recording failed with reason: " + reason);
+        }
+
+        @Override
+        public void onRecordingStopped(@Nullable Uri recordedProgramUri) {
+            super.onRecordingStopped(recordedProgramUri);
+
+            // Handle the event here
+            Log.i("TvRecordingClient", "Recording stopped for program: " + recordedProgramUri);
+        }
+
+        @Override
+        public void onTuned(@Nullable Uri channelUri) {
+            super.onTuned(channelUri);
+
+            // Handle the event here
+            Log.i("TvRecordingClient", "Tuned to channel: " + channelUri);
+        }
+    };
+
+    // Instantiate TvRecordingClient
+    TvInputManager.TvRecordingClient recordingClient = 
+        new TvInputManager.TvRecordingClient(
+            this, tvInputManager, ComponentName.unflattenFromString("yourTvInputService"), 
+            callback, Handler.createAsync(Looper.getMainLooper())
+        );
+
+    // Start recording
+    Uri channelUri = Uri.parse("content://android.media.tv/channel/1");  // Put your channel uri here
+    recordingClient.tune(channelUri);
+    recordingClient.startRecording(channelUri);
+}
+```
+
+Before you call `startRecording()` as shown in the example above, you need to make sure your `TvRecordingClient` is tuned to the correct channel first. So that's why `tune()` is called before `startRecording()`. The channel URI can be obtained from `TvContract.Channels.CONTENT_URI`, typically by querying databases of channels.
+
+Note: Your application must be a system app and request the android.permission.RECORD_TV in order to use this API. Otherwise, it will throw a SecurityException. This usage example is limited, because the actual TV Input Service must be implemented by manufacturers and the recording service must be declared in AndroidManifest.xml. TV Recording is not generally available for all third-party applications.

@@ -1,0 +1,47 @@
+Below is an example code snippet for creating an Allocation from a Bitmap in RenderScript. This example does not check Firebase or Android permissions as these are not required for this basic usage. 
+
+Please add your permissions check as required for your specific use case. Note that this code assumes you have a valid Bitmap object, and it simplifies things by running in a dummy Activity.
+
+```java
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.renderscript.Allocation;
+import android.renderscript.RenderScript;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Make sure to have a valid bitmap, just for the example we are creating a dummy bitmap
+    private Bitmap mBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_Allocation_createFromBitmap();
+        } catch (Exception e) {
+            Toast.makeText(this, "Failure: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void test_Allocation_createFromBitmap() {
+        // Initialize RenderScript
+        RenderScript rs = RenderScript.create(this);
+
+        // Create an Allocation from the Bitmap
+        Allocation allocation = Allocation.createFromBitmap(rs, mBitmap);
+
+        // Perform other operations on 'allocation' as needed. For this simple test, we don't actually do anything special.
+
+        // Clean up
+        allocation.destroy();
+        rs.destroy();
+
+        // Show a toast showing Allocation creation was successful
+        Toast.makeText(this, "Allocation created from Bitmap successfully", Toast.LENGTH_LONG).show();
+    }
+}
+```
+This code first creates a RenderScript context, then creates an Allocation from a Bitmap. After this, it cleans up the Allocation and RenderScript context, and shows a toast to indicate success.

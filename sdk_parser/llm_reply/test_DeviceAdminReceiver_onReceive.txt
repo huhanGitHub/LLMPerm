@@ -1,0 +1,61 @@
+Below is an example method of `DeviceAdminReceiver.onReceive` usage. Please note that this method is an abstract method and is usually overridden in a subclass.
+
+```java
+import android.app.admin.DeviceAdminReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
+public class TestDeviceAdminReceiver extends DeviceAdminReceiver {
+
+    public static ComponentName getComponentName(Context context) {
+        return new ComponentName(context.getApplicationContext(), TestDeviceAdminReceiver.class);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        String action = intent.getAction();
+
+        if (ACTION_DEVICE_ADMIN_DISABLE_REQUESTED.equals(action)) {
+            Toast.makeText(context, "Device Admin Disabled", Toast.LENGTH_SHORT).show();
+        } else if (ACTION_DEVICE_ADMIN_ENABLED.equals(action)) {
+            Toast.makeText(context, "Device Admin Enabled", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
+
+You can use this sample method in your android activity as follows:
+
+```java
+public class MyActivity extends AppCompatActivity {
+
+    private TestDeviceAdminReceiver mDeviceAdminReceiver;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mDeviceAdminReceiver = new TestDeviceAdminReceiver();
+
+        //To Enable TestDeviceAdminReceiver
+        Intent intent = new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED);
+        intent.setComponent(TestDeviceAdminReceiver.getComponentName(this));
+        sendBroadcast(intent);
+
+        //To Disable TestDeviceAdminReceiver
+        Intent intentDisable = new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_DISABLE_REQUESTED);
+        intentDisable.setComponent(TestDeviceAdminReceiver.getComponentName(this));
+        sendBroadcast(intentDisable);
+    }
+}
+```
+
+The above code sends a broadcast event to enable and disable `TestDeviceAdminReceiver`. This results in calling `TestDeviceAdminReceiver.onReceive` method which displays a toast message based on the received action.
+
+Please do note that you will need proper permissions and steps to use `DeviceAdminReceiver` which involves declaring receiver in XML file and requesting activation from settings. Also security implications should be taken into account while using Device Admin APIs.
+
+Also, the `onReceive` method is loaded into every receiver class but it's an abstract class so if you don't want to use, you just don't override, but if you want to use, you have to override `onReceive` method on your `DeviceAdminReceiver` implementation.

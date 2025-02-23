@@ -1,0 +1,56 @@
+Here's a basic example of a method named `test_Contacts_addToGroup` being used. This method adds a contact to a specific group. And as requested, we've also implemented the Android Permissions necessary.
+
+```java
+    import android.Manifest;
+    import android.content.pm.PackageManager;
+    import androidx.core.app.ActivityCompat;
+    import androidx.core.content.ContextCompat;
+
+    ... //Other imports 
+
+    public class MainActivity extends AppCompatActivity {
+
+        //Request code for READ_CONTACTS. It can be any number > 0.
+        private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+
+            // Check the SDK version and request the permissions if necessary
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            } else {
+                // Calling the method to add contact to a group.
+                test_Contacts_addToGroup();
+            }
+        }    
+
+        // By default this function is marked private. If you'd like it to be accessible from more classes, adjust the accessibility as needed.
+        private void test_Contacts_addToGroup() {
+            ContactsContract.Groups _Group = new ContactsContract.Groups(ContactsContract.Groups.CONTENT_URI, getContentResolver());
+            Long _GroupId = 1L; // replace this with actual group id
+            Long _ContactId = 1L; // replace this with actual contact id
+
+            if (!_Group.AddToGroup(_ContactId, _GroupId))
+                Toast.makeText(this, "Add to group operation failed", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(this, "Contact added successfully to group", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+            if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission is granted
+                    test_Contacts_addToGroup();
+                } else {
+                    Toast.makeText(this, "Until you grant the permission, we cannot display the contacts", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+```
+
+Please note that `ContactsContract.Groups` in Android API is a helper class for manipulating group list and you might not find the class/function `AddToGroup()`. You may need to use the APIs provided by the Android system to achieve your needs. This code is only an indicative example.

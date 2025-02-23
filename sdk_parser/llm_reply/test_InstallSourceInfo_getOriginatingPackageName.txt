@@ -1,0 +1,28 @@
+The InstallSourceInfo API is available in API level 26 and onwards, providing information about the package that initiated the installation of an application.
+
+Here is the usage example of the method 'getOriginatingPackageName':
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_InstallSourceInfo_getOriginatingPackageName(){
+    PackageManager packageManager = getPackageManager();     //Get the PackageManager reference
+    String packageName = this.getPackageName();              //Get the current app's package name
+
+    try {
+        PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_META_DATA);
+        String originatingPackage = packageInfo.installSourceInfo.getOriginatingPackageName();
+
+        if (originatingPackage != null) {
+            Log.d("SourceInfo", "The app was installed by: " + originatingPackage);
+        } else {
+            Log.d("SourceInfo", "The app was installed from an unknown source.");
+        }
+    } catch (PackageManager.NameNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+In the above code, we are trying to find out which package initiated the installation of our application. We retrieve this by calling `getOriginatingPackageName` on the `installSourceInfo` instance of the current package information. If the installation was initiated by a package, the method will return the package name, otherwise, the method will return null. This method is useful when you want to know where your application was installed from, for example, which store, or by which installer.
+
+Remember, this method requires the Android SDK version to be at least 26 (Android 8.0).

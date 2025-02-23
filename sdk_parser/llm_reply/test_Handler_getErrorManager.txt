@@ -1,0 +1,47 @@
+Sure, here is an example of the usage of getErrorManager method from java.util.logging.Handler in an Android activity:
+
+```java
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.ErrorManager;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        test_Handler_getErrorManager();
+    }
+
+    public void test_Handler_getErrorManager(){
+        try {
+            // Create a Logger
+            Logger logger = Logger.getLogger(MainActivity.class.getName());
+
+            // Create a Handler
+            Handler handler = new ConsoleHandler();
+
+            // Assign handler to the logger
+            logger.addHandler(handler);
+
+            // Get the ErrorManager from the Handler
+            ErrorManager errorManager = handler.getErrorManager();
+
+            // If errorManager is null, handler doesn't have an errorManager
+            if(errorManager == null)
+                Log.d("HandlerTest", "Handler doesn't have an ErrorManager");
+            else
+                Log.d("HandlerTest", "Handler has an ErrorManager: " + errorManager.toString());
+        } catch (Exception e) {
+            Log.e("HandlerTest", "Error occurred: " + e.getMessage());
+        }
+    }
+}
+```
+
+In the above code, a `Logger` and a `Handler` are created. `Handler` is then assigned to `Logger`. After that, the `getErrorManager()` method is called to get the `ErrorManager` of the `Handler`. If the `ErrorManager` is not null, it is logged in the logcat(debug console), otherwise, a message is logged indicating that the `Handler` does not have an `ErrorManager`.

@@ -1,0 +1,38 @@
+Here is a self-contained example method called `test_Files_getAttribute`. This uses the `java.nio.file.Files` API from Java and it tests getting a file's last modification time attribute.
+
+Due to Android's restricted access to certain files and directories, it would be wise to use this within the directory returned by `context.getFilesDir()` in Android environments or a directory where you have certain read-write access.
+
+Please note that `java.nio.file` is supported from Android API level 26+.
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Other code goes here
+
+    public void test_Files_getAttribute() {
+        try {
+            // Create a Path instance from file path
+            Path filePath = Paths.get(getFilesDir().getAbsolutePath() + "/testfile.txt"); // use your file path
+
+            // Use Files.getAttribute to get last modification time
+            FileTime lastModifiedTime = (FileTime) Files.getAttribute(filePath, "lastModifiedTime");
+
+            // Log the output
+            Log.d("File Attribute", "Last modified time: " + lastModifiedTime.toString());
+        } catch (Exception e) {
+            // Handle the exception
+            Log.e("Error", "Error occurred while getting attribute: " + e.getMessage());
+        }
+    }
+}
+```
+
+This `test_Files_getAttribute` method will attempt to fetch the last modification time of the specified file within the application's internal storage, and log the output. 
+
+However, you must remember to replace "testfile.txt" with the name of an actual file present on your application's internal storage or a path you have access to. It would be a good practice to first check if the file actually exists or not before trying to access its attributes.

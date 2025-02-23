@@ -1,0 +1,30 @@
+Below is an example of a method that uses the mkdir() function from java.io.File. This method is useful for creating a new directory. In this case, it attempts to create a directory at a specified path.
+
+```java
+public boolean test_File_mkdir() {
+    // Specify the path of the directory.
+    String dirPath = "/sdcard/NewDirectory";
+
+    // Create an instance of file.
+    File newDirectory = new File(dirPath);
+
+    // Check if the directory already exists.
+    if (!newDirectory.exists()) {
+        // Attempt to create the directory.
+        return newDirectory.mkdir(); // Returns true if creation was successful.
+    }
+
+    // If the directory already exists, return false.
+    return false;
+}
+```
+
+Please note: When running this on an actual Android device, you need to ensure your app has the necessary permissions to write to external storage. You can add these permissions to your AndroidManifest.xml file:
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Also, starting from Android 6.0 (API level 23), users grant permissions to apps while the app is running, not when they install the app. You need to check and request these permissions at runtime using ActivityCompat.requestPermissions(). 
+
+Finally, bear in mind that the "/sdcard/" directory may not be the correct path to the external storage for all devices or versions of Android. Consider using methods such as getExternalStorageDirectory() for getting the appropriate path.

@@ -1,0 +1,56 @@
+Here is an example of a method that uses the TextToSpeech synthesizer and writes the synthesized speech to a file descriptor. Please note that this is a simplified example:
+
+```java
+import android.os.ParcelFileDescriptor;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeechService;
+
+public class MainActivity extends AppCompatActivity {
+    private TextToSpeech textToSpeech;
+
+    @SuppressLint("NewApi")
+    public void test_TextToSpeechService_synthesizeToFileDescriptor() {
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.UK);
+
+                    String myText1 = "Hello World. I'm your Text To Speech Engine.";
+                    File file = new File(getExternalFilesDir("tts"), "myText1.wav");
+
+                    try {
+                        file.createNewFile();
+                        ParcelFileDescriptor fileDescriptor =
+                                ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_WRITE);
+
+                        textToSpeech.synthesizeToFile(myText1, null, fileDescriptor.getFileDescriptor(), "tts_1");
+                        fileDescriptor.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+
+        super.onDestroy();
+    }
+}
+```
+What this method does:
+
+1. Initializes the TextToSpeech engine (with a UK accent).
+2. Prepares a string to be synthesized.
+3. Create and open a file descriptor in write mode.
+4. The TextToSpeech engine then synthesizes the string to the file using the file descriptor.
+5. Finally, it catches any potential IOExceptions and also ensures to stop and shutdown the TextToSpeech in onDestroy method of the activity. 
+
+Please note that this is a bare-bone example and does not deal with exceptions that may occur during the usage of TextToSpeech or file operations. In a production app, these exceptions should be properly handled for a robust application. Also, be sure to check that your app has the necessary permissions on the user's device to write to external storage.

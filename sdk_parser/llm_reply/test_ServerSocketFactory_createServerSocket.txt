@@ -1,0 +1,24 @@
+Here is a simple implementation of a method `test_ServerSocketFactory_createServerSocket`. Please note that this method should ideally be placed in your Android activity and also don't forget to handle the exceptions when integrating into your real world application.
+
+```java
+
+public void test_ServerSocketFactory_createServerSocket() {
+    try {
+        // Get the ServerSocketFactory
+        ServerSocketFactory factory = ServerSocketFactory.getDefault();
+
+        // Create a server socket bound to a specific port
+        ServerSocket serverSocket = factory.createServerSocket(8000);
+
+        System.out.println("Server socket created and listening on port 8000");
+
+        // It's important to close the server socket when it's no longer needed
+        serverSocket.close();
+
+    } catch (IOException e) {
+        System.out.println("Error creating the server socket: " + e.getMessage());
+    }
+}
+```
+
+This method uses the default `ServerSocketFactory` to create a new `ServerSocket` that's bound to port 8000. Note that port numbers below 1024 are reserved for privileged services and port numbers above 49151 are dynamic and/or private. Also, remember to always close `ServerSocket` after use.

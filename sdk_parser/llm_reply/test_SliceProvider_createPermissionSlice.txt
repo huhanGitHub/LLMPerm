@@ -1,0 +1,46 @@
+Here is your requested method:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.P)
+public void test_SliceProvider_createPermissionSlice() {
+    SliceProvider sliceProvider = new SliceProvider() {
+        @Override
+        public boolean onCreateSliceProvider() {
+            return false;
+        }
+
+        @Override
+        public Slice onBindSlice(Uri sliceUri) {
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public Uri onMapIntentToUri(@Nullable Intent intent) {
+            return super.onMapIntentToUri(intent);
+        }
+    };
+
+    Uri testUri =  Uri.parse("content://com.example.app");
+    Slice s = sliceProvider.createPermissionSlice(getContext(), testUri);
+
+    if(s == null){
+        Log.d("SLICE_PROVIDER_TEST", "Slice not created");
+    }else{
+        Log.d("SLICE_PROVIDER_TEST", "Slice created");
+    }
+}
+```
+
+There are a few things to note in this code snippet:
+
+- It has a `sliceProvider` instance which is a subclass of `SliceProvider` class.
+- The method `createPermissionSlice` is used from the `sliceProvider` instance. It returns a slice that represents a permission request to the user.
+- The `onCreateSliceProvider` and `onBindSlice` are required to be overridden when you extend from the `SliceProvider`, if you're just testing or using the `SliceProvider` in your code, you may return either `false` or `null` respectively.
+- The `onMapIntentToUri` method is optional to override, it's meant to convert an `Intent` into a `Uri` that represents slice data.
+- `createPermissionSlice` method requires two parameters: a `Context` and a `Uri`. The `Context` used here is `getContext()` (if you call this from an activity you can use `this` or `getApplicationContext()` instead) and a `Uri` which you will have to provide.
+- The returned Slice `s` is checked if it is `null` or not.
+
+Please modify the example to meet your use case!
+
+This is just a test and usage example, make sure you cater it according to your needs.

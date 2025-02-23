@@ -1,0 +1,35 @@
+In order to demonstrate usage of ExternalStorageStats class, it's necessary to get an instance of this class first. You can obtain it via the StorageStatsManager. For the sake of this example, let's assume we're calculating storage stats for our own application.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public long test_ExternalStorageStats_getAppBytes() {
+    StorageStatsManager storageStatsManager = (StorageStatsManager) this.getSystemService(Context.STORAGE_STATS_SERVICE);
+    try {
+        // Retrieving storage stats for our application
+        // package name can be retrieved by getPackageName() in context of Activity
+        ExternalStorageStats externalStorageStats = 
+                  storageStatsManager.queryExternalStatsForUser(Process.myUserHandle(), getPackageName());
+
+        // Retrieving amount of bytes used by the app
+        return externalStorageStats.getAppBytes();
+    } catch (IOException | PackageManager.NameNotFoundException e) {
+        e.printStackTrace();
+    }
+    return -1;
+}
+```
+
+This method returns the amount of bytes used by the application in external storage. Make sure to run this code on Android 8.0 (API level 26) or higher, due to `StorageStatsManager` and `ExternalStorageStats` have been added in API level 26. 
+
+Also, don't forget to grant `android.permission.PACKAGE_USAGE_STATS` permission in your manifest and ask user to grant it at runtime if it's not yet granted. 
+
+NB! Before calling this method make sure that user granted `PACKAGE_USAGE_STATS` permission. This could be checked with the following method:
+
+```Java
+public boolean hasPermission() {
+    AppOpsManager appOps = (AppOpsManager) this.getSystemService(Context.APP_OPS_SERVICE);
+    int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, 
+                   android.os.Process.myUid(), this.getPackageName());
+    return mode == AppOpsManager.MODE_ALLOWED;
+}
+```

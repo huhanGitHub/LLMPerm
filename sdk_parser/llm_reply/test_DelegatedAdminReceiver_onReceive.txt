@@ -1,0 +1,59 @@
+Here is an exemplary implementation of the method test_DelegatedAdminReceiver_onReceive where we simulate a scenario of receiving a broadcast in DelegatedAdminReceiver:
+
+```java
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.app.admin.DelegatedAdminReceiver;
+
+public void test_DelegatedAdminReceiver_onReceive() {
+
+       Context context = this;
+
+       DelegatedAdminReceiver delegatedAdminReceiver = new DelegatedAdminReceiver() {
+           @Override
+           public void onReceive(Context context, Intent intent) {
+               super.onReceive(context, intent);
+           }
+
+           @Override
+           public String onChoosePrivateKeyAlias(Context context, Intent intent, int uid, Uri uri, String alias) {
+               return super.onChoosePrivateKeyAlias(context, intent, uid, uri, alias);
+           }
+
+           @Override
+           public List<String> onChoosePrivateKeyOids(Context context, Intent intent, int uid, Uri uri) {
+               return super.onChoosePrivateKeyOids(context, intent, uid, uri);
+           }
+
+           @Override
+           public byte[] onDecrypt(Context context, Intent intent, byte[] data) {
+               return super.onDecrypt(context, intent, data);
+           }
+
+           @Override
+           public byte[] onEncrypt(Context context, Intent intent, byte[] data) {
+               return super.onEncrypt(context, intent, data);
+           }
+
+
+           @Override
+           public CharSequence onGenerateCertificateRequest(Context context, Intent intent, int uid, String alias, X500Principal subjectDN, BigInteger serialNumber, Date notBefore, Date notAfter, List<String> flags) {
+               return super.onGenerateCertificateRequest(context, intent, uid, alias, subjectDN, serialNumber, notBefore, notAfter, flags);
+           }
+
+       };
+
+       Intent intent = new Intent(DevicePolicyManager.ACTION_DEVICE_ADMIN_DISABLE_REQUESTED);
+       intent.setComponent(new ComponentName(context, DelegatedAdminReceiver.class));
+       delegatedAdminReceiver.onReceive(context, intent);
+
+}
+```
+
+In the code, we are creating a new anonymous DelegatedAdminReceiver object and overriding its onReceive method to add our own custom behaviour. Then we are sending an Intent to this receiver, simulating the scenario of system broadcasting the event that corresponds to the sent intent.
+
+Note that in a real application context will be obtained differently, not like " Context context = this". 
+
+Same as various callbacks occur based upon which intent is broadcasted it's not necessary to override all of them but based upon what action we are performing.

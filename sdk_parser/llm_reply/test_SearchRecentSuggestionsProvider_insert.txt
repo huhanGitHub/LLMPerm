@@ -1,0 +1,54 @@
+Here you go:
+
+```java
+public void test_SearchRecentSuggestionsProvider_insert() {
+    // initialize and declare the instance of ContentResolver
+    ContentResolver contentResolver = getContentResolver();
+
+    // set the URI which you want to refer
+    Uri uri = Uri.parse("content://searchRoute");
+
+    ContentValues contentValues = new ContentValues();
+
+    // put some test values
+    contentValues.put(SearchManager.QUERY, "test");
+    contentValues.put(SearchManager.SUGGEST_COLUMN_TEXT_1, "test1");
+
+    // call insert method through contentResolver to insert
+    // this fake data to SearchRecentSuggestionsProvider 
+    contentResolver.insert(uri, contentValues);
+
+    // read data from the URI
+    Cursor cursor = contentResolver.query(uri, null, null,
+                                          null, SearchManager.SUGGEST_COLUMN_TEXT_1 
+                                          + " ASC");
+    
+    // test whether the cursor is null or not
+    if (cursor != null) {
+        // loop through all data and check the inserted value
+        while (cursor.moveToNext()) {
+            // getting the values stored in the column "query"
+            String columnValue = cursor.getString(
+                                        cursor.getColumnIndex(SearchManager.QUERY));
+            // check if the inserted data "test" is retrieved properly
+            assertTrue(columnValue.equals("test"));
+        }
+
+        // close the cursor
+        cursor.close();
+    }
+}
+```
+
+This method is showing how you can insert data using `SearchRecentSuggestionsProvider` into Android SQLite Database and then fetch the inserted data to validate if it's correctly inserted or not.
+
+We are assuming that you have already set your `SearchRecentSuggestionsProvider` in android manifest xml.
+
+Example :
+```java
+<provider
+    android:name="yourpackage.yourimplementation"
+    android:authorities="yourauthorities" />
+```
+
+Also make sure to replace `ContentResolver contentResolver = getContentResolver();` with `ContentResolver contentResolver = getApplicationContext().getContentResolver();` if you are inside an inner class.

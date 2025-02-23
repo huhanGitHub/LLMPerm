@@ -1,0 +1,49 @@
+In this example, I am assuming that you are creating an Android app which treats your device like a Google Pay wallet.
+
+Please note that QuickAccessWalletServiceInfo API is related to the NFC payment methods. This API is used to show relevant card information at the bottom of the screen when a device is tapped on a payment terminal.
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_QuickAccessWalletServiceInfo_tryCreate();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_QuickAccessWalletServiceInfo_tryCreate() throws PackageManager.NameNotFoundException {
+        PackageManager packageManager = getPackageManager();
+		
+        // Define the specific service you're interested in
+        String service = "com.example.MyWalletService";  // Replace with actual service name
+		
+        // Get info for that service
+        ServiceInfo si = packageManager.getServiceInfo(new ComponentName(getPackageName(), service), PackageManager.GET_SERVICES);
+		
+        // Create a QuickAccessWalletServiceInfo using ServiceInfo
+        QuickAccessWalletServiceInfo quickAccessWalletServiceInfo = QuickAccessWalletServiceInfo.tryCreate(si);
+		
+        if (quickAccessWalletServiceInfo != null) {
+            // Now you can get information related to the service
+            String label = quickAccessWalletServiceInfo.loadLabel(packageManager).toString(); 
+            Log.d("WalletServiceInfo", "Label: "+label);
+            // Similarly, you can get other information like Settings Activity Name, etc.
+        } else {
+            Log.d("WalletServiceInfo", "Unable to retrieve QuickAccessWalletServiceInfo.");
+        }
+    }
+
+}
+```
+
+Remember to replace `com.example.MyWalletService` with the absolute name of your WalletService.
+
+In addition, make sure that you add necessary QuickAccessWalletService in you AndroidManifest.xml and perform necessary implementations as this code will only work in that case.
+
+This example is for development only and is not very useful in a real-world app. You must implement `QuickAccessWalletService` in a meaningful way based on your app's use cases.

@@ -1,0 +1,31 @@
+In order to use the UsbDevice API in Android, you need to first add the necessary permissions in your manifest file. Here is an example of how you might write a method to get the serial number of a USB device. Keep in mind that the ability to get the serial number is dependent on the version of Android that's being used, and that the serial number may not always be available or accessible.
+
+First of all, you need to add permission to you app's AndroidManifest.xml file:
+
+```xml
+<uses-feature android:name="android.hardware.usb.host" android:required="true" />
+<uses-permission android:name="android.permission.USB_PERMISSION"/>
+```
+Here is the function to get USB's serial number:
+
+```java
+import android.content.Context;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
+import android.os.Build;
+
+import java.util.HashMap;
+
+public void test_UsbDevice_getSerialNumber(Context context) {
+    UsbManager manager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+    
+    HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+    for (UsbDevice device : deviceList.values()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String serialNumber = device.getSerialNumber();
+            // Use your serial number here
+        } 
+    }
+}
+```
+Remember that this method will only work for Android Oreo (API Level 26) and above because the getSerialNumber() method was introduced in API Level 26. If your app is targeted for devices below API Level 26, you need to add additional checks or an alternative way to get the serial number.

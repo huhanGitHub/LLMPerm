@@ -1,0 +1,52 @@
+Here's a simple code snippet depicting how the UsbRequest.queue() function can be utilized within an Android activity. The function `test_UsbRequest_queueIfConnectionOpen()` is designed to send a data packet through a USB connection if the connection is open.
+
+```Java
+public void test_UsbRequest_queueIfConnectionOpen() {
+    UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+    // This is a sample permission intent necessary to open a connection with a USB device.
+    PendingIntent permissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
+
+    // Assuming that usbDevice is an instance of UsbDevice representing a connected device.
+    UsbDevice usbDevice; // must be initialized
+
+    if (usbManager.hasPermission(usbDevice)) {
+
+        // Assuming that usbInterface is an instance of UsbInterface representing an interface of usbDevice.
+        UsbInterface usbInterface; // must be initialized
+
+        // Open the device's connection
+        UsbDeviceConnection connection = usbManager.openDevice(usbDevice);
+
+        // Assuming a target endpoint within the device
+        UsbEndpoint endpoint = usbInterface.getEndpoint(0); // must be properly initialized to a valid endpoint
+
+        // Create a new UsbRequest instance
+        UsbRequest usbRequest = new UsbRequest();
+
+        // Initialize the UsbRequest to send and receive data on a specific endpoint
+        usbRequest.initialize(connection, endpoint);
+
+        // This is an example data buffer to send
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+        // Queue the request
+        boolean requestQueued = usbRequest.queue(buffer, buffer.capacity());
+
+        if(requestQueued)
+            Toast.makeText(this, "USB connection open and data queued successfully", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Failed to queue data over USB connection", Toast.LENGTH_SHORT).show();
+
+        connection.close();
+    } else {
+        Toast.makeText(this, "Cannot open USB connection without permission", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+You will need to replace the placeholder variables `usbDevice`, `usbInterface`, and `endpoint` with valid instances.
+
+Please note that this code will not run by itself and it is only for demonstrating the usage of UsbRequest.java API. Make sure that you handle USB permissions prompt correctly in a broadcast receiver listening for `ACTION_USB_PERMISSION`.
+
+For more information, please refer to the official documentation: [https://developer.android.com/reference/android/hardware/usb/UsbRequest](https://developer.android.com/reference/android/hardware/usb/UsbRequest)

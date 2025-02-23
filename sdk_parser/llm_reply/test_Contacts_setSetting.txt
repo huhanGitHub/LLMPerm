@@ -1,0 +1,42 @@
+Here is a test for a method that uses the Contacts provider in Android. Please note that Android now recommends the use of ContactContract instead of the deprecated Contcts provider.
+
+The Contacts provider requires the `READ_CONTACTS` or `WRITE_CONTACTS` permissions so this is also being checked in this example. 
+
+I considered most common case like setting a particular setting to a contact like setting ringtone of a specific contact.
+
+```java
+public void test_Contacts_setSetting() {
+   // check if permission for contacts is granted
+   if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+      // if permission is not granted, request it
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, 1);
+   } else {
+      // since permission is granted, we can change settings
+      try {
+         // retrieve in writable mode
+         Uri contactUri = ContactsContract.Contacts.CONTENT_URI; 
+         ContentValues contentValues = new ContentValues();
+         // set Ringtone for a contact
+         contentValues.put(ContactsContract.Contacts.CUSTOM_RINGTONE, "content://media/internal/audio/media/30"); // you should put actual url to the audio file here
+         // here CONTACT_ID should be replaced with actual id of the contact
+         int update = getContentResolver().update(contactUri, contentValues, ContactsContract.Contacts._ID + " = ?", new String[] {CONTACT_ID});
+         if (update > 0) {
+            Log.d("test", "Contact setting updated successfully");
+         } else {
+            Log.d("test", "Update failed");
+         }
+      } catch (Exception e) {
+         Log.d("test", "Error in setting contact setting", e);
+      }
+   }
+}
+```
+
+Remember to update `Uri` with the actual audio file path. Also, replace `CONTACT_ID` with correct Contact ID. 
+
+Make sure to have `READ_CONTACTS` or `WRITE_CONTACTS` permission in your `AndroidManifest.xml` file.
+
+```xml
+<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+```

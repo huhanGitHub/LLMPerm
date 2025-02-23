@@ -1,0 +1,37 @@
+Here is a self-contained method `test_NfcA_setTimeout` which is a usage example of the Android API `android.nfc.tech.NfcA.java`. In this method, I am assuming that you have a valid `Tag` object from an NFC detection Intent. The `setTimeout` method sets the timeout for transceive(byte[]) to a value beyond the default timeout of the NFC controller. 
+
+```java
+public void test_NfcA_setTimeout() {
+    // Necessary permissions required in AndroidManifest.xml
+    // <uses-permission android:name="android.permission.NFC" />
+
+    // A Tag object instance supposedly obtained from action detection
+    // Intent like ACTION_TAG_DISCOVERED, ACTION_TECH_DISCOVERED or
+    // ACTION_NDEF_DISCOVERED.
+    // Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+    Tag tag = null;    // Initialized as null for here, /In a real scenario, get it from a detection Intent./
+
+    if (tag != null) {
+        NfcA nfcA = NfcA.get(tag);
+        if (nfcA != null) {
+            try {
+                nfcA.connect();
+                // Default is typically about 100ms, here we're setting it to 500ms.
+                nfcA.setTimeout(500);
+
+                // After setting the timeout, you could try to send a command
+                // byte[] response = nfcA.transceive(new byte[] {...});
+
+                // Don't forget to close connection
+                nfcA.close();
+
+            } catch (IOException e) {
+                // Handle exception for NFC communication
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+Please make sure to replace the `null` tag with a valid one, and also handle the `IOException` properly in your application. In a real world application, you would typically want to run this method in a background thread to avoid blocking the UI thread which may cause ANR(Application Not Responding) problem. I strongly suggest to use `AsyncTask` or `HandlerThread` to perform such operations.

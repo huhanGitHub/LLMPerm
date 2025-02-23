@@ -1,0 +1,42 @@
+The NfcFCardEmulation class is not directly used, therefore attempting to getInstance() of this class won't work and writing test_NfcFCardEmulation_getInstance isn't feasible. 
+
+However, we can exemplify a case of usage for NfcAdapter, which is related to Near Field Communication, and check for NFC permissions:
+
+(NfcFCardEmulation is a hidden Class, however, it can be used indirectly by CardEmulation class methods)
+
+```java
+public void test_GetNfcAdapterInstance() {
+    // Check if the device supports NFC
+    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+    // Check if NFC is turned on, if not, navigate to NFC settings
+    if (nfcAdapter != null && !nfcAdapter.isEnabled()) {
+        Toast.makeText(this, "Please enable NFC to test", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+    }
+    // If NFC is available and enabled
+    else if (nfcAdapter != null && nfcAdapter.isEnabled()) {
+        // Now we can use the NfcAdapter instance here:
+        // nfcAdapter.xxx();
+        Toast.makeText(this, "NFC is available on your device", Toast.LENGTH_SHORT).show();
+    }
+    else {
+        Toast.makeText(this, "NFC not available on your device", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+Please include the necessary permissions in Android manifest file:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+```
+
+If requirement is to use Card Emulation Mode, Android requires devices to be desegregated using host-based Card Emulation Mode (HCE). Hence, you need the below permissions in manifest file:
+
+```xml
+<uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
+<uses-permission android:name="android.permission.BIND_NFC_SERVICE" />
+```
+
+For this, an android Service that extends `HostApduService` is to be created. `HostApduService` callbacks like `processCommandApdu(byte[] commandApdu, Bundle extras)` handles APDU commands sent from reader mode NFC devices. This is how `NfcCardEmulation` instances are commonly used.

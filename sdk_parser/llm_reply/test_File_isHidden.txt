@@ -1,0 +1,40 @@
+Here's a simple method that uses the `isHidden` method from the `File` class in Java. In this example, the `isHidden` method is used to check if a particular file is hidden or not.
+
+```
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Call the test method
+        try {
+            boolean result = test_File_isHidden("/path/to/your/file");
+            // Output the result
+            Log.d("TestFileIsHidden", "Is the file hidden? " + result);
+        } catch (Exception e) {
+            Log.e("TestFileIsHidden", "An error occurred: " + e.getMessage());
+        }
+
+    }
+
+    /**
+     * Test if a file is hidden.
+     *
+     * @param filePath Absolute path to the file
+     * @return true if the file is hidden, false otherwise
+     * @throws IOException If an I/O error occurs
+     */
+    private boolean test_File_isHidden(String filePath) throws IOException {
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            throw new FileNotFoundException("File " + filePath + " does not exist");
+        }
+
+        return file.isHidden();
+    }
+}
+```
+In this example, you need to replace `"/path/to/your/file"` with the actual path to your file. If the path is wrong or the file does not exist, `FileNotFoundException` will be thrown.

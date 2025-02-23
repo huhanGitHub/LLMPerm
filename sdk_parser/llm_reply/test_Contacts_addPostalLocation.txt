@@ -1,0 +1,27 @@
+Here's a method that can be used in your Android Activity class to demonstrate how to add a postal address for a specific contact using Android's ContactsContract API:
+
+```java
+public void test_Contacts_addPostalLocation() {
+    // ID of the contact to which we want to add the address
+    long contactId = 1234;
+    String newAddress = "123 Main St, Jeffersonville, IN 47130";
+
+    Uri uri = ContactsContract.Data.CONTENT_URI;
+
+    // Setup the values to be inserted
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, contactId);
+    contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE);
+    contentValues.put(ContactsContract.CommonDataKinds.StructuredPostal.STREET, newAddress);
+    contentValues.put(ContactsContract.CommonDataKinds.StructuredPostal.TYPE, ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME);
+
+    try {
+        getContentResolver().insert(uri, contentValues);
+        Toast.makeText(this, "Postal address inserted successfully.", Toast.LENGTH_SHORT).show();
+    } catch (Exception e) {
+        Toast.makeText(this, "There was a problem adding the Postal location.", Toast.LENGTH_SHORT).show();
+        Log.e("Insert Postal Location", e.getMessage(), e);
+    }
+}
+```
+You will need to replace the `contactId` and `newAddress` variable values with actual data. For instance, you can get you `contactId` by querying ContactsContract.Contacts.CONTENT_URI and the user may provide the `newAddress` through a form in your app. Also, please note that Android 6.0 (API level 23) introduced run-time permissions, so you will need to make sure that your app requests and handles the appropriate permissions for writing contacts data.

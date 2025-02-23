@@ -1,0 +1,47 @@
+Here is an example of a method that tests the `onGnssMeasurementsReceived` event from `GnssMeasurementsEvent`. 
+
+This method will be based in an Activity which implements `GnssMeasurementsEvent.Callback` and requires access to the `LocationManager` service.
+
+```java
+    private class MockActivity extends AppCompatActivity implements GnssMeasurementsEvent.Callback {
+        final LocationManager locationManager;
+
+        MockActivity() {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+
+        public void test_GnssMeasurementsEvent_onGnssMeasurementsReceived() {
+            // Check if the device supports the GNSS Measurements.
+            boolean isGnssMeasurementsSupported = locationManager.isGnssMeasurementsEnabled();
+
+            // If supported then register the callback.
+            if (isGnssMeasurementsSupported) {
+                locationManager.registerGnssMeasurementsCallback(new Executor() {
+                    @Override
+                    public void execute(Runnable command) {
+                        command.run();
+                    }
+                }, this);
+            }
+        }
+
+        @Override
+        public void onGnssMeasurementsReceived(GnssMeasurementsEvent eventArgs) {
+            // Log or use the GNSS Measurements results here
+            System.out.println("GnssMeasurements received: " + eventArgs.toString());
+        }
+
+        @Override
+        public void onStatusChanged(int status) {
+            // Handle status change
+            System.out.println("GnssMeasurements status changed: " + status);
+        }
+    }
+``` 
+
+This code requires the appropriate permissions to access location services. Add the following lines to the Android Manifest file as well.
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-feature android:name="android.hardware.location.gps" />
+```

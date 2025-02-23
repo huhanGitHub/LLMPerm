@@ -1,0 +1,36 @@
+Here is an example of how to use `updateMessageOnIcc` function from `SmsManager` in Android:
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    private static final int SMS_INDEX_ON_SIM = 1; // replace with actual index of SMS on the SIM
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_SmsManager_updateMessageOnSim();
+    }
+    
+    public void test_SmsManager_updateMessageOnSim() {
+        // Get the default instance of the SmsManager
+        SmsManager smsManager = SmsManager.getDefault();
+
+        // Data of the new SMS in PDU format
+        byte[] pduData = new byte[]{}; // replace with real PDU data here
+
+        // Update the SMS at the given index on SIM
+        boolean updated = smsManager.updateMessageOnIcc(SMS_INDEX_ON_SIM, SmsManager.STATUS_ON_ICC_READ, pduData);
+
+        if (updated) {
+            Log.d("SMS Update", "SMS updated successfully");
+        } else {
+            Log.d("SMS Update", "SMS update failed");
+        }
+    }
+}
+```
+This method is tasked to update a specific SMS on the SIM card, the SMS is specified by the its index on SIM. The updated SMS content should be provided in PDU format. Please note that the actual PDU data bytes needs to be provided for PDU (Protocol Data Unit).
+
+The result of the operation is indicated by the return value of `updateMessageOnIcc` function, `true` for success and `false` for failure.

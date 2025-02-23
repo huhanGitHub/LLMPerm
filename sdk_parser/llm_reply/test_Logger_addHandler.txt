@@ -1,0 +1,47 @@
+Here is the example method that demonstrates the usage of "Logger.addHandler" in Java:
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_Logger_addHandler();
+    }
+
+    public void test_Logger_addHandler() {
+        Logger logger = Logger.getLogger(MainActivity.class.getName());
+
+        Handler handler = new Handler() {
+            @Override
+            public void publish(LogRecord record) {
+                if(getFormatter() == null){
+                    setFormatter(new SimpleFormatter());
+                }
+
+                try {
+                    String message = getFormatter().format(record);
+                    if (record.getLevel().intValue() >= getLevel().intValue()) {
+                        System.out.println(message);
+                    }
+                } catch (Exception exception) {
+                    System.out.println("Error occurred while logging message");
+                }
+            }
+
+            @Override
+            public void flush() {}
+
+            @Override
+            public void close() throws SecurityException {}
+        };
+
+        logger.addHandler(handler);
+        logger.log(Level.INFO, "This is a test message");
+    }
+}
+```
+
+In this example, a Logger and a simple Handler are created. The Handler simply formats each log message and writes it to System.out, but only if the logger's level is high enough to be logged. The Handler is then added to the Logger using addHandler(). The logger is then used to log an INFO message, which is then processed by the Handler.

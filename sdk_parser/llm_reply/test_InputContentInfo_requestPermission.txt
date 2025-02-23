@@ -1,0 +1,66 @@
+Below is an example usage of the android.view.inputmethod.InputContentInfo API where requestPermission() method is used. This code should be placed inside an Android Activity:
+
+```java
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.inputmethod.InputContentInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.content.ClipDescription;
+import androidx.annotation.NonNull;
+import androidx.core.view.inputmethod.EditorInfoCompat;
+import androidx.core.view.inputmethod.InputConnectionCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        editText = findViewById(R.id.edit_text);
+
+        InputConnectionCompat.OnCommitContentListener callback =
+                new InputConnectionCompat.OnCommitContentListener() {
+                    @Override
+                    public boolean onCommitContent(@NonNull InputContentInfo inputContentInfo,
+                                                   int flags, @NonNull Bundle opts) {
+                        if (EditorInfoCompat.getContentMimeTypes(editText)
+                                .length <= 0) {
+                            return false;
+                        }
+
+                        try {
+                            test_InputContentInfo_requestPermission(inputContentInfo, flags);
+                            return true;
+                        } catch (Exception e) {
+                            return false;
+                        }
+                    }
+                };
+
+        EditorInfoCompat.setContentMimeTypes(editText, new String [] {"image/png"});
+
+        InputConnectionCompat.createWrapper(editText.onCreateInputConnection(new EditorInfo()),
+                editText, callback);
+    }
+
+    private void test_InputContentInfo_requestPermission(InputContentInfo inputContentInfo, int flags) {
+        try {
+            inputContentInfo.requestPermission();
+            Uri contentUri = inputContentInfo.getContentUri();
+            // Handle the contentUri as needed
+            // e.g. you can create an ImageView and display the contentUri as an image
+        } catch (Exception e) {
+            if ((flags & InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
+                inputContentInfo.releasePermission();
+            }
+            Toast.makeText(this, "Permission request failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
+This code creates an `EditText` with a custom input connection to use `InputContentInfo`. Then it overrides the `onCommitContent()` callback method to call a method `test_InputContentInfo_requestPermission()`. The `test_InputContentInfo_requestPermission()` method tries to obtain permission to the content URI , if it fails to obtain the permission, it releases it and shows a Toast message. BitmapFactory is used to decode this URI into a Bitmap+

@@ -1,0 +1,25 @@
+Here's how you can write a method named 'test_UserPrincipalLookupService_lookupPrincipalByName' to utilize the 'lookupPrincipalByName' method from UserPrincipalLookupService class in Java. Please note that this API is not available for Android. Hence, the following example is for Java only.
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
+
+public class MainActivity {
+    
+    public void test_UserPrincipalLookupService_lookupPrincipalByName() {
+        UserPrincipalLookupService lookupService = FileSystems.getDefault().getUserPrincipalLookupService();
+
+        String principalName = "user";
+        try {
+            UserPrincipal principal = lookupService.lookupPrincipalByName(principalName);
+            System.out.println(principal.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+In this method, a UserPrincipalLookupService object is created by calling 'FileSystems.getDefault().getUserPrincipalLookupService()'. The 'lookupPrincipalByName' method is then used to get a UserPrincipal object for the given principal name. If the given principal name is valid and a UserPrincipal object is successfully retrieved, its name is printed out. If an exception occurs during the process (i.e. if the principal name is not valid), it will be caught and the stack trace will be printed out.

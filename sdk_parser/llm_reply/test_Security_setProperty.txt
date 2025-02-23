@@ -1,0 +1,39 @@
+Here is the method `test_Security_setProperty` which you can use as a usage example:
+
+```java
+public void test_Security_setProperty() {
+    try {
+        // set the property
+        Security.setProperty("securerandom.source", "SHA1PRNG");
+        
+        // get the property
+        String property = Security.getProperty("securerandom.source");
+        
+        // print the property value
+        Log.d("SecurityTest", "securerandom.source: " + property);
+        
+        // check if the property is set correctly
+        if (!"SHA1PRNG".equals(property)) {
+            throw new Exception("Failed to set security property");
+        }
+        
+    } catch (Exception e) {
+        // handle exception
+        Log.e("SecurityTest", "Exception", e);
+    }
+}
+```
+
+This method modifies the default SecureRandom algorithm used by the `Security` class, then retrieves the value of the just set property, logs it and checks if it was actually set correctly. If the property was not set correctly, it throws an exception.
+
+Keep in mind that modifying security properties might have an impact on the entire application and should be done carefully. Also, you should replace the exception handling with your own error handling code or propagate the exception depending on your application's needs. 
+
+This method should be called inside an Android Activity or any class, depending upon the requirement. The output will be shown in Logcat (Android Studio's console).
+
+Note that you'll need the following imports in your Activity class:
+
+```java
+import java.security.Security;
+import android.util.Log;
+```
+Also, keep in mind that different versions of Android and different device manufacturers may impose their own restrictions on security properties that may modify the behavior of the `Security` class. Therefore, the operation may work on one device or version of Android but not on another.

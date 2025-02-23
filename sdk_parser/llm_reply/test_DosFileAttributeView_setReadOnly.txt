@@ -1,0 +1,42 @@
+Here's a sample usage of the `DosFileAttributeView` API in a method `test_DosFileAttributeView_setReadOnly` to set a file attribute to read-only in Java. For Android, it may not work properly as file permissions are dealt differently on Android.
+
+Please note that this API is not directly available on Android. It's base API `java.nio.file.*` was added in API level 26 and the complete support is not available yet. Also, DosFileAttributeView isn't applicable to Android system as it's used for DOS file attributes which is a Windows thing.
+
+```java
+import java.nio.file.attribute.DosFileAttributeView;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_DosFileAttributeView_setReadOnly();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_DosFileAttributeView_setReadOnly() throws IOException {
+        // Path of the file
+        Path path = Paths.get("/path/to/your/file");
+
+        // Get the DosFileAttributeView
+        DosFileAttributeView dosView = Files.getFileAttributeView(path, DosFileAttributeView.class);
+
+        // Use the view to setReadOnly
+        if (dosView != null) {
+            dosView.setReadOnly(true);
+        } else {
+            throw new UnsupportedOperationException("DosFileAttributeView not supported.");
+        }
+    }
+}
+```
+
+Please replace `"/path/to/your/file"` with your actual file path. Also, make sure the file system supports the `DosFileAttributeView`.

@@ -1,0 +1,40 @@
+Below is an example of a method `test_SipManager_takeAudioCall` which uses `SipManager` class from the `android.net.sip` package to take an incoming SIP audio call. Note that this code should be part of a larger system which properly takes care of Exception handling and displays user appropriate messages.
+
+```java
+import android.net.sip.SipAudioCall;
+import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
+
+public void test_SipManager_takeAudioCall() {
+    // Instantiate SIP Manager
+    SipManager manager = SipManager.newInstance(this.getActivity());
+    
+    try {
+        // Create a listener for incoming calls
+        SipAudioCall.Listener listener = new SipAudioCall.Listener() {
+
+            @Override
+            public void onRinging(SipAudioCall call, SipProfile caller) {
+                try {
+                    // When receiving a call, answer it.
+                    call.answerCall(30);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        // Take an incoming SIP audio call. The session in the incoming SIP INVITE request
+        // is defined in the session description protocol (SDP) in the request and is parsed
+        // into a session that is retrievable by {@link SipAudioCall#getSession}.
+        SipProfile profile = SipProfile.Builder.buildFrom("user@domain.com");
+        manager.takeAudioCall(profile.getUriString(), listener);
+        
+    } catch (Exception e) {
+        Log.e("SIP_TEST", "Error taking audio call", e);
+    }
+}
+```
+This method assumes that you have the necessary permissions to use the `SIP` service and also a valid `SipProfile` to assign to this `SipManager`. 
+
+Please handle the exceptions properly in production code.

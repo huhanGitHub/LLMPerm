@@ -1,0 +1,27 @@
+Below is a sample method `test_File_setWritable` which makes use of the `setWritable` method from the `java.io.File` class in Java. The method creates a new file and tries to set it as writable. It prints a success message if the operation was successful, otherwise it prints an error message. Note that it handles `IOException` which may occur when creating a new file. 
+
+In Android, these operations should be done with the necessary permissions. To write on an external storage, you should request the `WRITE_EXTERNAL_STORAGE` permission in your `AndroidManifest.xml` file.
+
+```Java
+void test_File_setWritable() {
+    //creating a new file
+    File file = new File("/path/to/your/file.txt");
+    try {
+        if (file.createNewFile()) {
+            // set the file to be writable
+            boolean isWritable = file.setWritable(true);
+            if(isWritable){
+                System.out.println("File is set to be writable!");
+            }else{
+                System.out.println("Failed to set the file as writable!");
+            }
+        } else {
+            System.out.println("File already exists!");
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Remember to replace `/path/to/your/file.txt` with the actual file path where you want to create the file. It could be in the internal or external storage, depending on your application needs.

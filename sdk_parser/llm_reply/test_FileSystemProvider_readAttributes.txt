@@ -1,0 +1,34 @@
+Sure, here's the code for method test_FileSystemProvider_readAttributes used inside an android activity:
+
+Please note that using java.nio.file API requires minimum API level 26 (Android 8.0, Oreo).
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.O)
+public void test_FileSystemProvider_readAttributes() {
+    try {
+        // Get the default FileSystem
+        FileSystem fs = FileSystems.getDefault();
+
+        // Get the FileSystemProvider
+        FileSystemProvider provider = fs.provider();
+
+        // Create a Path object
+        Path path = Paths.get("/sdcard/photos");
+
+        // Read all attributes as a bulk operation
+        BasicFileAttributes attr = provider.readAttributes(path, BasicFileAttributes.class);
+
+        // Print file attributes
+        System.out.println("Creation time: " + attr.creationTime());
+        System.out.println("Last modified time: " + attr.lastModifiedTime());
+        System.out.println("Size: " + attr.size());
+        System.out.println("Is directory: " + attr.isDirectory());
+        System.out.println("Is regular file: " + attr.isRegularFile());
+
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+}
+```
+
+This method reads the all the attributes of a directory in the file system using the FileSystemProvider java.nio.file.spi API. Replace "/sdcard/photos" with the directory you're interested in. The method retrieves bulk file attributes and prints them on the console. Catch the IOException it might throw if the file doesn't exist or the filesystem is not available.

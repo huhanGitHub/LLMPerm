@@ -1,0 +1,41 @@
+Here is a simple example of a self-contained method, `test_Files_createSymbolicLink()` that can be used in an Android activity:
+
+```java
+private static void test_Files_createSymbolicLink()  {
+    // Specify the file path
+    Path newLink = Paths.get("/tmp/mySymbolicLink") ;
+    Path existingFile = Paths.get("/tmp/myExistingFile");
+
+    try {
+        // Check if the symbolic link exists or not
+        if (Files.exists(newLink)) {
+            // Delete if exists
+            Files.delete(newLink);
+        }
+
+        // Create the symbolic link
+        Files.createSymbolicLink(newLink, existingFile);
+        
+        // Check if the link 
+        if (Files.isSymbolicLink(newLink)) {
+            System.out.println("The symbolic link was created successfully!");
+        } else {
+            System.out.println("Failed to create the symbolic link...");
+        }
+        
+    } catch (IOException e ) {
+        e.printStackTrace();
+    } catch (UnsupportedOperationException e) {
+        // Some file systems do not support symbolic links.
+        System.err.println(e);
+    }
+}
+```
+
+_Note:_
+
+This will only work if the file exists on the device with the specified file path. Also, creating a symbolic link is a sensitive operation, which, in most cases, requires the application to hold special system-level permissions. On Android, this operation may not work due to the underlying system's security considerations. Android (especially from Android 4.4 KitKat onwards) has significantly restricted the access to certain directories and the creation of symbolic links in certain directories. Therefore, the `createSymbolicLink` method may not work as expected on Android.
+
+For Android, you might need to consider using other methods to achieve your goals that align with Android's security measures and filesystem structure.
+
+It's also important to note that the `java.nio.file` package is only available on Android API level 26 and higher.

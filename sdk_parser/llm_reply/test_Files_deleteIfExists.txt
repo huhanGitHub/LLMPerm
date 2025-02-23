@@ -1,0 +1,29 @@
+Here is an example of a method that uses the java.nio.file.Files.deleteIfExists API in an Android activity. Please note that this API is not available for Android versions lower than 26 (Android 8.0 - Oreo) and it requires Storage permission for accessing the file.
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+// ...
+
+public void test_Files_deleteIfExists() {
+    try {
+        // Define the path to the file on the local file system that needs to be deleted
+        Path filePath = FileSystems.getDefault().getPath("/path/to/file.txt");
+
+        // Try to delete the file at the specified path, if it exists
+        boolean isDeleted = Files.deleteIfExists(filePath);
+        if (isDeleted) {
+            System.out.println("The file was successfully deleted.");
+        } else {
+            System.out.println("The file does not exist, so it cannot be deleted.");
+        }
+    } catch (IOException ex) {
+        System.out.println("An error occurred while attempting to delete the file: " + ex.getMessage());
+    }
+}
+```
+
+This code first tries to get a Path that represents the location of the file on the file system. Then it uses the Files.deleteIfExists API to try and delete the file at the specified path, if it exists. If the file is successfully deleted, it prints a success message, otherwise, it prints an appropriate message. If an IOException occurs during the process, the exception message is printed.

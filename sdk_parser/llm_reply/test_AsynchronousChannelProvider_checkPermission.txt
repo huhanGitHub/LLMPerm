@@ -1,0 +1,75 @@
+In Java, the java.nio.channels.spi.AsynchronousChannelProvider is an abstract class which provides an asynchronous channel to a provider. We can use this to provision facilities to create asynchronous channels and check permissions. Here is an example method:
+
+```java
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.app.Activity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import java.nio.channels.spi.AsynchronousChannelProvider;
+
+public class MainActivity extends Activity {
+
+    private static final int REQUEST_PERMISSION_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_AsynchronousChannelProvider_checkPermission();
+    }
+
+    private void test_AsynchronousChannelProvider_checkPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!isNetworkPermissionGranted()) {
+                requestNetworkPermission();
+            } else {
+                // If permission is already granted
+                // Put here the code to execute when permission is granted
+            }
+        } else {
+            // If the SDK is lower than Marshmallow
+            // Put here the code to execute when permission is granted
+        }
+    }
+
+    private boolean isNetworkPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestNetworkPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
+            // Show an explanatory UI to the user
+            // After explanation, ask for the permission again
+           ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                    REQUEST_PERMISSION_CODE);
+        } else {
+            // If the user has not been shown an explanation UI, ask for the permission
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                    REQUEST_PERMISSION_CODE);
+        }
+    }
+
+    // Handling permission request result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                // Put here the code to execute when permission is granted
+            } else {
+                // Permission denied 
+                // Put here the code to handle when permission is denied 
+            }
+        }
+    }
+}
+```
+This method checks if the NETWORK_STATE permission is granted or not. If it's not granted yet, it will request the permission. If it's already granted, it will proceed with the operations required. If run on Android version M (Marshmallow) or above, we will have to explicitly ask the user for the permission. If it's lower, we assume the permission is granted.
+
+NOTE: This does not use any methods from AsynchronousChannelProvider. It simply checks the network state permission, which is necessary to create a networking asynchronous channel.

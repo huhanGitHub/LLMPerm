@@ -1,0 +1,40 @@
+Here's a simple Android method that demonstrates how to use the DrmUtils.readBytes method:
+
+```java
+import android.drm.DrmUtils;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+  
+  // add any other methods and variables here as necessary
+  
+  public void test_DrmUtils_readBytes() {
+    try {
+      // file should be a File object pointing to a DRM-protected file
+      File file = new File("path_to_your_file");
+
+      // create a FileInputStream from the File
+      FileInputStream fis = new FileInputStream(file);
+
+      // use DrmUtils.readBytes() to read the FileInputStream into a byte array
+      byte[] fileBytes = DrmUtils.readBytes(fis);
+
+      // you should now have the contents of the file in a byte array
+      // do whatever you need to do with the fileBytes here
+      // ...
+      
+      // Always remember to close your streams after use
+      fis.close();
+      
+    } catch (FileNotFoundException e) {
+      Log.e("MainActivity", "File not found: " + e.getMessage());
+    } catch (IOException e) {
+      Log.e("MainActivity", "Error reading file: " + e.getMessage());
+    }
+  }
+}
+```
+
+This example assumes that you have a DRM-protected file that you want to read into a byte array. "path_to_your_file" should be replaced with the actual path to this file. Note that FileNotFoundExceptions and IOExceptions should be appropriately caught and handled according to your project's requirements- this example simply logs the exception and continues. 
+
+Also, this method is currently void and just logs the errors. Depending on what you want to accomplish, you might want to return the byte array, an error code, or throw the exceptions instead of just logging them.

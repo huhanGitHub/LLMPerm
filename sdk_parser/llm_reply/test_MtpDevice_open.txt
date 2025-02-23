@@ -1,0 +1,43 @@
+Here is a basic example of how you may use the `MtpDevice.open` method within a test method named `test_MtpDevice_open` in an Android activity:
+
+```java
+import android.mtp.MtpDevice;
+import android.mtp.MtpDeviceInfo;
+import android.mtp.MtpObjectInfo;
+import android.mtp.MtpStorageInfo;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
+import android.os.Environment;
+
+public void test_MtpDevice_open() {
+    // In real usage, this should be the collected UsbDevice from Android's USB APIs, not null.
+    UsbDevice usbDevice = null;
+    MtpDevice mtpDevice = new MtpDevice(usbDevice);
+    
+    // Before you can use the device, you must open it.
+    boolean isOpen = mtpDevice.open();
+
+    // If the device has been successfully opened, proceed to use it.
+    if (isOpen) {
+        // Get device info.
+        MtpDeviceInfo deviceInfo = mtpDevice.getDeviceInfo();
+
+        // Use the device. For instance, get all storage IDs.
+        int[] storageIds = mtpDevice.getStorageIds();
+
+        // Further operations...
+
+        // Remember to close the device when you are done.
+        mtpDevice.close();
+    } else {
+        // Handle the error. The device could not be opened.
+        throw new IllegalStateException("Could not open MTP device.");
+    }
+}
+```
+
+IMPORTANT: This code snippet is a simple representation of using `MtpDevice.open()` method. In a real application setup, you need to handle USB connections by implementing `USB Host` APIs to collect the `UsbDevice` instance. And you always have to take into account user permissions for accessing USB devices.
+
+This example assumes that `UsbDevice` is available. Then it opens the MTP device, gets device info, and storage's IDs as a simple operation. After the operations, the device is closed. If the device cannot be opened for any reason, an exception is simply thrown.
+
+Remember to handle possible `null` on `usbDevice` in any production code.

@@ -1,0 +1,37 @@
+Sure, here is an example of a method named "test_File_getFreeSpace" for checking the free space of a File object in Java/Android. 
+
+```java
+private void test_File_getFreeSpace() {
+    // Create a File object. In this case, referring to the external storage directory
+    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+
+    // Check if the file/directory exists
+    if (file.exists()) {
+        // Get the free space in bytes
+        long freeBytes = file.getFreeSpace();
+
+        // Convert the free space to megabytes
+        long freeMegabytes = freeBytes / (1024 * 1024);
+
+        // Display the free space
+        Toast.makeText(getApplicationContext(),
+                "Free space: " + freeMegabytes + "MB",
+                Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(getApplicationContext(),
+                "File or Directory does not exist",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+Please make sure that your app has the necessary permissions to access the external storage. You can add the permission to your manifest file like this:
+
+```xml
+<manifest ...>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    ...
+</manifest>
+```
+
+Also, starting from Android 6.0 (API level 23), users grant permissions to apps while the app is running, not when they install the app. You need to check the permission at runtime and request for it if not granted yet.

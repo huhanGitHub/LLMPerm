@@ -1,0 +1,41 @@
+Below is a sample usage of Identity class and its `setInfo` method from `java.security` package in Android or JAVA API. Please note that Identity class, as well as whole `java.security.IdentityScope` is practically deprecated in Android and you should use KeyStore or other appropriate classes for identity management. 
+
+However, for the sake of your question, I'm still providing a sample:
+
+```java
+import java.security.Identity;
+import java.security.IdentityScope;
+import java.security.KeyManagementException;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_Identity_setInfo();
+    }
+
+    public void test_Identity_setInfo() {
+        try{
+            // Create identity
+            Identity identity = new Identity("TestIdentity", new IdentityScope("TestScope"));
+
+            // Set Info
+            identity.setInfo("Additional Info for this Identity");
+
+            Log.d("MainActivity ", "Identity Info: " + identity.getInfo());
+
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This code creates an instance of the deprecated `Identity` class, sets some information on it and then logs that information.
+
+Please note that the creation of an `Identity` instance with an `IdentityScope` is only for illustrative purposes and should not be used in a real application, especially considering the deprecation status of these classes.
+
+The use of `Identity` and related classes concerned with "system identity" has been superseded by the `java.security.Principal` interface and its subclasses such as `java.security.cert.X509Certificate` and `javax.security.auth.x500.X500Principal`.

@@ -1,0 +1,71 @@
+In the following example, we'll demonstrate how to use the `register()` function from the `java.nio.file.Path` API to monitor a directory for changes.
+
+Please note that the `register()` function is not supported on Android. FileSystem is read-only on Android because it's an embedded system. On Android, you could use FileObserver to monitor changes in a directory.
+
+Here's the usage example for `java.nio.file.Path.register()`:
+
+```java
+import android.util.Log;
+import java.io.IOException;
+import java.nio.file.*;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            test_Path_register();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_Path_register() throws IOException, InterruptedException {
+        // Convert the string path to a Path object
+        Path path = Paths.get("/path/to/your/directory");
+        
+        // Get the file system's watch service
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        
+        // Register the path with the watch service for CREATE, DELETE and MODIFY events
+        path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, 
+                      StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+        
+        // Start an infinite loop
+        while (true) {
+            // Retrieve and remove the next watch key
+            WatchKey key = watchService.take();
+            
+            // Get the list of pending events for the watch key
+            for (WatchEvent<?> watchEvent : key.pollEvents()) {
+                // Get the kind of event
+                WatchEvent.Kind<?> kind = watchEvent.kind();
+                
+                if (kind == StandardWatchEventKinds.OVERFLOW) {
+                    continue;
+                }
+                
+                // Get the filename for the event
+                WatchEvent<Path> watchEventPath = (WatchEvent<Path>) watchEvent;
+                Path filename = watchEventPath.context();
+                
+                // Print out the kind of event and the filename
+                Log.d("MainActivity", kind + ": " + filename);
+            }
+            
+            // Reset the watch key
+            boolean valid = key.reset();
+            
+            // If the watch key is no longer valid, then exit the loop
+            if (!valid) {
+                break;
+            }
+        }    
+    }
+}
+```
+
+Change the `/path/to/your/directory` with the actual directory path you want to monitor. The above code will output log message whenever a file is CREATED, DELETED, or MODIFIED inside the monitored directory. 
+
+Remember to add the appropriate permissions in your AndroidManifest.xml to access and modify the file system.

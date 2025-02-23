@@ -1,0 +1,39 @@
+Here is the example of a method that uses java/io/File.java API's createNewFile method. This method is used to create a new file, given a certain path. 
+
+Please note that due to the nature of File I/O operations, they can throw an IOException, so we have to handle or declare that in our method:
+
+```java
+private void test_File_createNewFile(){
+    //creating a new file instance
+    File file = new File("/path/to/file.txt");
+
+    //checks if the file exists
+    if(!file.exists()){
+        try {
+            //trying to create a new file
+            if(file.createNewFile()){
+                Log.d("File Operations", "File created : " + file);
+            }else{
+                Log.d("File Operations", "File not created");
+            }
+        }catch (IOException e){
+            Log.d("File Operations", "Error while creating file " + e.getMessage());
+        }
+    }else{
+        Log.d("File Operations", "File already exists: " + file);
+    }
+}
+```
+In this example, a new file instance is created linking to a file located at "/path/to/file.txt". Then it checks if the file already exists. If it doesn't exists, it tries to create a new file. If the file is created successfully It logs a message that the file was created. 
+
+If there is an error while creating a file (for example, due to lack of permissions), it logs an error message.
+
+Finally, if the file already exists, it simply logs a message that the file already exists.
+
+You would need to import the following packages at the top of your file:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import android.util.Log;
+```

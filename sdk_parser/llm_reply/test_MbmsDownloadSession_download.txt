@@ -1,0 +1,53 @@
+Sure, here is an example of usage android.telephony.MbmsDownloadSession API.
+
+```java
+import android.content.Context;
+import android.os.Build.P;
+import android.telephony.MbmsDownloadSession;
+import android.telephony.mbms.DownloadProgressListener;
+import android.telephony.mbms.DownloadRequest;
+import android.telephony.mbms.MbmsDownloadSessionCallback;
+
+@RequiresApi(api = P)
+public void test_MbmsDownloadSession_download() {
+    Context appContext = getApplicationContext();
+   
+    MbmsDownloadSessionCallback sessionCallback = new MbmsDownloadSessionCallback() {
+        @Override
+        public void onError(int errorCode, String message) {
+            // Handle errors in creating a download session here
+        }
+     
+        @Override
+        public void onFileServicesUpdated(List<String> ervices) {
+            // Handle updates to the list of available file services here, if necessary
+        }
+    };
+   
+    MbmsDownloadSession downloadSession = MbmsDownloadSession.create(appContext, sessionCallback,
+            new Handler(Looper.getMainLooper()));
+
+    // Assuming that we've already asked the middleware for a list of available files and the
+    // user has selected one or more files to download
+    String serviceId = "FileService"; // ID of the file service to download from
+    Uri fileUri = Uri.parse("file:///tmp/downloaded_file");
+
+    DownloadRequest request = new DownloadRequest.Builder()
+            .setServiceId(serviceId)
+            .setDestination(fileUri)
+            .build();
+
+    downloadSession.download(request);
+    downloadSession.setDownloadProgressListener(request, new DownloadProgressListener() {
+        @Override
+        public void onProgressUpdated(DownloadRequest downloadRequest, FileInfo fileInfo,
+                int currentDownloadSize, int fullDownloadSize, int currentDecodedSize,
+                int fullDecodedSize) {
+            // Handle your download progress updates here
+        }
+    });
+}
+```
+
+Please note, usage of MbmsDownloadSession requires `android.permission.ACCESS_MBMS_DOWNLOAD_RECEPTION` permission and Api Level should be greater than or equals 28.
+Take into account that the above code just simulates a download test process and won't work with an actual file download if you do not specify right parameters such as serviceId and fileUri. The `DownloadRequest` builder requires a valid instance of your `FileService` in order to work properly.

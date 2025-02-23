@@ -1,0 +1,49 @@
+Sure, below is an example usage of the `ExifInterface`'s `saveAttributes()` method, which allows you to save changes to image metadata back to an image file.
+
+```java
+import android.content.Context;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+public void test_ExifInterface_saveAttributes(Context context, Uri imageUri) {
+    InputStream in = null;
+    try {
+        in = context.getContentResolver().openInputStream(imageUri);
+        if (in == null) {
+            Log.e("test_Exif", "Unable to open input stream for " + imageUri);
+            return;
+        }
+
+        String pathToFile = imageUri.getPath();
+        ExifInterface exifInterface = new ExifInterface(pathToFile); 
+        exifInterface.setAttribute(ExifInterface.TAG_GPS_LATITUDE, "12.9715987");
+        exifInterface.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, "77.5945627");
+
+        // Save the changes
+        exifInterface.saveAttributes();
+
+        // Verify the changes
+        String latitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+        String longitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+        Log.d("test_Exif", "Latitude: " + latitude + "Longitude: " + longitude);
+    } catch (IOException e) {
+        Log.e("test_Exif", "Error processing exif data: " + e.getMessage());
+    } finally {
+        if (in != null) {
+            try {
+                in.close();
+            } catch (IOException e) {
+                Log.e("test_Exif", "Error closing input stream: " + e.getMessage());
+            }
+        }
+    }
+}
+```
+
+Here we first open an `InputStream` to the file, then use `ExifInterface` to access the metadata of the file. We then set new values for the `TAG_GPS_LATITUDE` and `TAG_GPS_LONGITUDE` attributes and call `saveAttributes()` to write these changes back to the file. The changes are then verified by re-reading the values. 
+
+Note: Not all Android devices permit write access to external files or the file path may be null, so in real-world scenarios, ensure to check for nullability and write permissions before attempting to manipulate or save the file.

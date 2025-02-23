@@ -1,0 +1,47 @@
+Below is the example usage of the `ImsManager.getSipDelegateManager()` method in an Android activity. This method is used to get the instance of the `SipDelegateManager` to make the SipDelegateConnection.
+
+```java
+import android.content.Context;
+import android.os.Bundle;
+import android.telephony.ims.ImsException;
+import android.telephony.ims.ImsManager;
+import android.telephony.ims.SipDelegateManager;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    test_ImsManager_getSipDelegateManager(this);
+  }
+
+  public void test_ImsManager_getSipDelegateManager(Context context) {
+    ImsManager imsManager = context.getSystemService(ImsManager.class);
+    if (imsManager != null) {
+      try {
+        SipDelegateManager sipDelegateManager = imsManager.getSipDelegateManager();
+
+        if (sipDelegateManager != null) {
+          // Successfully retrieved SipDelegateManager
+          Toast.makeText(context, "Successfully retrieved SipDelegateManager", Toast.LENGTH_SHORT).show();
+        } else {
+          // Failed to retrieve SipDelegateManager
+          Toast.makeText(context, "Failed to retrieve SipDelegateManager", Toast.LENGTH_SHORT).show();
+        }
+
+      } catch (ImsException e) {
+        e.printStackTrace();
+        Toast.makeText(context, "Exception occurred while getting SipDelegateManager", Toast.LENGTH_SHORT).show();
+      }
+    } else {
+      Toast.makeText(context, "ImsManager is not available", Toast.LENGTH_SHORT).show();
+    }
+  }
+}
+```
+
+In this code, we get the instance of the `ImsManager` class using the `getSystemService()` method. Later we call the `getSipDelegateManager()` method which returns an instance of the `SipDelegateManager` class.

@@ -1,0 +1,32 @@
+Sure, here's a simple usage of the Ringtone class in android.media package.
+
+```java
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.content.Context;
+
+public void test_Ringtone_playFallbackRingtone() {
+    try {
+        // Obtain a Uri for our fallback ringtone
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // If the user has a different preference, attempt to obtain that
+        if (notification == null) {
+            notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        }
+
+        // If we've correctly obtained a Uri, try to play it as a fallback
+        if (notification != null) {
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            r.play();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+This method fetches the user's default notification sound and attempts to play it as a fallback if the original ringtone isn't available. If a notification sound isn't set, it attempts to fetch the user's default ringtone instead. It then creates a Ringtone object out of the obtained Uri and calls its `play` method to play it.
+
+This API will require the `android.permission.READ_EXTERNAL_STORAGE` permission if the URI points to data that is not owned by the calling application, the `android.permission.WRITE_SETTINGS` if the ringtone type is TYPE_RINGTONE and the application is not system or the default ringtone provider, or `android.permission.ACCESS_NOTIFICATION_POLICY` if the ringtone is being used for a notification policy.
+
+Please remember to make sure you have the right permissions to access and play the ringtones.

@@ -1,0 +1,27 @@
+Here is an example in Java code demonstrating a simple usage of the `getDeviceId` method from the `android.hardware.usb.UsbDevice` class within Android.
+
+```java
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
+import android.content.Context;
+import java.util.HashMap;
+
+public void test_UsbDevice_getDeviceId(Context context) {
+    UsbManager usbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
+    HashMap<String, UsbDevice> deviceList = usbManager.getDeviceList();
+    
+    // Iterate over each device in the list
+    for(UsbDevice device : deviceList.values()) {
+        // Print device ID
+        int deviceId = device.getDeviceId();
+        System.out.println("Device ID: " + deviceId);
+    }
+}
+```
+
+Please note:
+
+1. You need to add required permission `<uses-permission android:name="android.permission.USB_PERMISSION" />` in your Android Manifest.xml file.
+2. In order to use this method, the `context` parameter is required which can generally be obtained from within an Activity or a Service. However, it is recommended to call this method within the thread (without UI blocking) due to USB permission dialog handling.
+3. This example prints the device ID using `System.out.println()`. In a real application, you would probably want to act on the ID, store it or display it in some other way.
+4. It's necessary to handle permissions and the fact that the USB device could be disconnected at any time so it is better to have USB state broadcast receiver and USB permission intent receiver.

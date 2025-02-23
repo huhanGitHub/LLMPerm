@@ -1,0 +1,69 @@
+Here is the example usage of the `makeReadOnly()` of `Ndef` class within a test method in an Android activity.
+
+```java    
+import android.app.Activity;
+import android.nfc.NdefMessage;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.nfc.tech.NdefFormatable;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+    // Call this method for testing Ndef makeReadOnly function
+    public void test_Ndef_makeReadOnly() {
+        try {
+            // Assuming you already have the NFC tag
+            Tag tag = getTag();
+
+            Ndef ndef = Ndef.get(tag);
+            if (ndef != null) {
+                ndef.connect();
+
+                if (ndef.isWritable()) {
+                    ndef.makeReadOnly();
+
+                    if (ndef.isWritable()) {
+                        Toast.makeText(this, "Failed to make tag read-only", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Tag is now read-only", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(this, "Tag is already read-only", Toast.LENGTH_SHORT).show();
+                }
+
+                ndef.close();
+                
+            } else {
+                Toast.makeText(this, "Ndef is null", Toast.LENGTH_SHORT).show();
+            }
+            
+        } catch (Exception e) {
+            Log.e("Test", "Error: " + e.getMessage());
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Tag getTag() {
+        // This method needs to be implemented to provide a real Tag object
+        return null;
+    }
+  
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Setup your Activity
+
+        // Test the method 
+        test_Ndef_makeReadOnly();
+    }
+}
+```
+Please note that this is a test method and you are required to provide a real NFC `Tag` object inside the `getTag()` method for it to work. 
+
+This will attempt to make the tag read-only, and it will give a toast message whether the operation succeeded or not (or if the tag was already read-only to begin with). 
+
+Make sure to catch all exceptions, as NFC operations can often fail for various reasons like I/O errors, unsupported tag technologies, etc.

@@ -1,0 +1,64 @@
+This is a simple method example that demonstrates the usage of the RtpStream class in Android. But please note that Android's RtpStream class has been deprecated since API 29.
+
+```java
+import android.annotation.SuppressLint;
+import android.net.rtp.RtpStream;
+import android.os.Build;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class MainActivity extends AppCompatActivity {
+
+    @SuppressLint("ObsoleteSdkInt")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                test_RtpStream_associate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void test_RtpStream_associate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        RtpStream rtpStream = createDummyRtpStream();
+        
+        Method associateMethod = rtpStream.getClass().getDeclaredMethod("associate", String.class, int.class);
+        associateMethod.setAccessible(true);
+        
+        String ipAddress = "192.168.1.2"; // Replace this with your desired IP address 
+        int port = 9090; // Replace this with your desired port number
+        
+        // This code will try to invoke the `associate` method, but the real implementation is not available.
+        associateMethod.invoke(rtpStream, ipAddress, port);
+    }
+    
+    // This is a dummy method to mock the RtpStream object
+    @SuppressLint("ObsoleteSdkInt")
+    private RtpStream createDummyRtpStream() {
+        return new RtpStream() {
+            @Override
+            public void associate(InetAddress address, int port) {
+            }
+
+            @Override
+            public int getTimeToLive() {
+                return 0;
+            }
+
+            @Override
+            public void setTimeToLive(int ttl) {
+            }
+        };
+    }
+}
+```
+
+Please note that since RtpStream.java is not a public android API, then you can't use this class directly. The associate() method is also deprecated and not publicly accessible.
+
+This code is for reference on how you would have used it if it was publicly available. In real life scenarios, please use alternatives or libraries for dealing with RTP streams.

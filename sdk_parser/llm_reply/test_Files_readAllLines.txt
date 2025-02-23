@@ -1,0 +1,30 @@
+Sure, Here is an example:
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+public void test_Files_readAllLines() {
+    // Specify the file path here. It should exist in Android's file system.
+    String filePath = "/path/to/your/file.txt"; 
+
+    try {
+        List<String> allLines = Files.readAllLines(Paths.get(filePath));
+        for (String line : allLines) { 
+            System.out.println(line); 
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Please take note that Files.readLine() needs the API 26 which is Android 8.0 (Oreo) and above. Also, ensure that you have the right permissions to read a file.
+
+The permission can be added in AndroidManifest.xml like below:
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```

@@ -1,0 +1,24 @@
+Sure, `checkAccess` method of LogManager checks if the calling code has the necessary permissions to alter the logging configuration. This can be used to prevent unauthorized components from changing the logging configuration.
+
+The helper method `test_LogManager_checkAccess` given below demonstrates an example of LogManager's checkAccess() method. It checks if the current code context has permission to alter the LogManager configuration. If it doesn't, an exception will be thrown.
+
+You would usually call `checkAccess` before executing critical pieces of code that you don't want unauthorized components to access.
+
+```java
+public void test_LogManager_checkAccess() {
+    LogManager logManager = LogManager.getLogManager();
+    try {
+        // call checkAccess
+        logManager.checkAccess();
+
+        // Proceed with the function as usual
+        // Your code here
+
+    } catch (SecurityException e) {
+        // handle SecurityException - this means the code doesn't have permission 
+        Log.d("ActivityLog", "Insufficient permissions to alter logging configuration " + e.getMessage());
+    }
+}
+```
+
+The `SecurityException` is caught and logged to the Android debugger. In a production app, you might want to show an error message to the user or log the error to your app's specific logging framework.

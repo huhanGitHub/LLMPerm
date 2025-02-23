@@ -1,0 +1,45 @@
+Here's an example demonstration of how a method like `test_AppWidgetHost_bindService` could look like:
+
+```java
+private void test_AppWidgetHost_bindService() {
+    // Instantiating the AppWidgetHost
+    AppWidgetHost host = new AppWidgetHost(this, R.id.appwidget_host);
+
+    // Obtaining AppWidgetManager instance
+    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+
+    // Choose the widget ID
+    int widgetId = host.allocateAppWidgetId();
+
+    // Create a bounded intent to Widget service
+    Intent intent = new Intent(this, AppWidgetService.class);
+
+    // Check Permission for binding AppWidget
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (appWidgetManager.bindAppWidgetIdIfAllowed(widgetId,
+                new ComponentName(this, MyWidgetProvider.class))) {
+            // Successfully bounded
+            Toast.makeText(this, "AppWidgetHost successfully bound to the AppWidgetService", Toast.LENGTH_LONG).show();
+        } else {
+            // Permission not granted
+            Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+        }
+    } else {
+        // BIND_WIDGET Permission required for API < 29
+        if (appWidgetManager.bindAppWidgetId(widgetId,
+                new ComponentName(this, MyWidgetProvider.class))) {
+            // Successfully bounded
+            Toast.makeText(this, "AppWidgetHost successfully bound to the AppWidgetService", Toast.LENGTH_LONG).show();
+        } else {
+            // Permission not granted
+            Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+```
+
+Here, it is assumed that `AppWidgetService` and `MyWidgetProvider` are your classes. Please replace them with your actual service and app widget provider classes. The `AppWidgetService` is assumed to be a service handling your widget. And `MyWidgetProvider` is assumed to be the class inheriting from `AppWidgetProvider`.
+
+Also, note that you have to handle the permissions via manifest or runtime permissions request for < API 29. Replace `R.id.appwidget_host` with your actual `AppWidgetHost`'s ID.
+
+Please note this sample is for demonstrating the usage of `AppWidgetHost` and may not cover all edge cases for a live app scenario.

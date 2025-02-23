@@ -1,0 +1,65 @@
+Here is a basic example of a method using the MifareUltralight API from Android. This method tries to read 4 pages from a MIFARE Ultralight card.
+
+```java
+public void test_MifareUltralight_readPages(Tag tag) {
+    MifareUltralight mifare = MifareUltralight.get(tag);
+    try {
+        mifare.connect();
+        byte[] payload = mifare.readPages(4);
+        
+        // Print out the payload in hex format
+        StringBuilder sb = new StringBuilder();
+        for(byte b : payload) {
+            sb.append(String.format("%02X ", b));
+        }
+        Log.i("Payload", "Data: " + sb.toString());
+    } catch (IOException e) {
+        Log.e("MifareUltralight", "IOException while reading MifareUltralight message...", e);
+    } finally {
+        if (mifare != null) {
+            try {
+                mifare.close();
+            } catch (IOException e) {
+                Log.e("MifareUltralight", "Error closing MifareUltralight...", e);
+            }
+        }
+    }
+}
+```
+
+Remember to add the appropriate NFC permissions to your Android manifest:
+
+```xml
+<uses-permission android:name="android.permission.NFC" />
+<uses-feature android:name="android.hardware.nfc" android:required="true" />
+```
+You would usually call this method from the onNewIntent method of your activity, passing the tag you received:
+
+```java
+@Override
+public void onNewIntent(Intent intent){
+    super.onNewIntent(intent);
+    if(NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())){
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        test_MifareUltralight_readPages(tag);
+    }
+}
+```
+Make sure your activity filters for the correct intent in its manifest entry:
+
+```xml
+<intent-filter>
+    <action android:name="android.nfc.action.TECH_DISCOVERED" />
+</intent-filter>
+<meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+           android:resource="@xml/nfc_tech_filter" />
+```
+And your `nfc_tech_filter.xml` should look like this:
+
+```xml
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <tech-list>
+        <tech>android.nfc.tech.MifareUltralight</tech>
+    </tech-list>
+</resources>
+```

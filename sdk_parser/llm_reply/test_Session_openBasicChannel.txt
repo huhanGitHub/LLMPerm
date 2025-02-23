@@ -1,0 +1,52 @@
+Below is a self-contained `test_Session_openBasicChannel` method.
+
+```java
+import android.se.omapi.Session;
+import android.se.omapi.Channel;
+import android.se.omapi.Reader;
+import android.se.omapi.SEService;
+import java.io.IOException;
+
+public class MainActivity extends Activity {
+   
+    private SEService seService;
+    //...
+   
+    public void test_Session_openBasicChannel() {
+        try {
+            // Obtain the first reader instance available
+            Reader reader = seService.getReaders()[0]; 
+            if (reader != null){
+                // Open a session with the reader
+                Session session = reader.openSession();
+
+                // To establish communication with the smart card, select the ISO/IEC 7816-4 card application
+                byte[] aid = {0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+
+                // Open a basic channel to the card using its AID
+                Channel channel = session.openBasicChannel(aid);
+
+                // If the card does not support basic channels it returns null
+                if(channel != null){
+                    // You can now perform I/O operations on the channel.
+                    // For example, to send a command to an applet, call "channel.transmit(commandApdu);"
+                } else {
+                    // The card does not support basic channels
+                }
+            }
+        } catch (IOException e) {
+            // Catch IO exceptions.
+            e.printStackTrace();
+        }
+    }
+    //...
+
+}
+```
+In the code example above, remember to replace theses bytes: `{0xA, 0xB, 0xC, 0xD, 0xE, 0xF}` by your actual Application Identifier (AID). The AID is a sequence of bytes that identifies an applet in a Java Card.
+
+Also, replace `//...` by suitable parts of the rest implementation.
+
+Ensure to properly initialize `SEService` object and check if there is at least one reader available.
+
+This code exemplifies how to open a basic channel using the OMNI API Session class in Android. Please adjust this piece of code according to your context.

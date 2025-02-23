@@ -1,0 +1,48 @@
+Here is a general idea of how you could implement this method. Please adjust this according to your specific scenario and context.
+
+This code assumes you are using the Android's AudioRecordingConfiguration API which uses the MicrophoneDirection. This is a simple basic not-fully-implementable code in an android activity that's depicting the usage of setting preferred microphone direction.
+
+Please make sure to handle permissions and other necessary checks before using this.
+
+```java
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
+import android.media.MicrophoneDirection;
+import android.media.MicrophoneInfo;
+import android.util.Log;
+
+public void test_MicrophoneDirection_setPreferredMicrophoneDirection() {
+    final int sampleRate = 8000; 
+    final int channelConfig = AudioFormat.CHANNEL_IN_MONO;
+    final int encodingFormat = AudioFormat.ENCODING_PCM_16BIT;
+
+    // Getting minimum buffer size
+    int bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, encodingFormat);
+
+    AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, encodingFormat, bufferSize);
+    audioRecord.startRecording();
+    
+    MicrophoneDirection microphoneDirection = null;
+    List<MicrophoneInfo> microphones = null;
+    try {
+        microphones = audioRecord.getActiveMicrophones();
+        if (!microphones.isEmpty()) {
+            // Assuming here we just take first microphone
+            microphoneDirection = microphones.get(0).getDirectionality();
+            microphoneDirection.setPreferredMicrophoneDirection(MicrophoneDirection.MIC_DIRECTION_OMNI);
+        }
+    } catch (Exception exception) {
+        Log.e("MicrophoneDirection", "Error setting preferred microphone direction", exception);
+    }
+
+    // Further sound recording process
+
+    // Remember to release resources
+    audioRecord.stop();
+    audioRecord.release();
+}
+```
+Remember, the setPreferredMicrophoneDirection() method might not be applied immediately. It depends on the type of audio session and audio source of your device's microphone. Also, Android documentation states that "It could also be ignored depending on the audio policy implemented in the platform handling non-standard audio sources". Therefore, getting the preferred microphone direction could return a value different from the one set if the policy does not support it. 
+
+Anyway, in future, it might be quite useful to check your microphone direction right after setting it and handle the cases when your preference was not applied.

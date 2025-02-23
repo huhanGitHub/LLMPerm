@@ -1,0 +1,31 @@
+Here is a method that utilizes the Files.exists() method from java.nio.file API. This method checks if a file exists at a given path. Please remember that accessing file system is a critical permission and you might need to ask user's consent at runtime if you're using it on Android versions 6.0 and above.
+
+Also, bear in mind that due to Android's Sandbox restrictions, you may not have access to all file paths unless the device is rooted. The provided code can be used for valid and accessible paths.
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public void test_Files_exists() {
+    String filePath = "/path/to/your/file"; 
+    //Path should be accessible, you might want to use getExternalFilesDir() or getFilesDir() methods
+    // to access files in Android which are in Application's Sandbox.
+    
+    Path path = Paths.get(filePath);
+    
+    //Checking file existence
+    boolean fileExists = Files.exists(path);
+
+    if(fileExists) {
+        System.out.println("File exists at path: " + filePath);
+    } else {
+        System.out.println("File does not exist at path: " + filePath);
+    }
+}
+```
+
+Please replace "`/path/to/your/file`" with your actual file path. This method will print whether the file existence status to the console. 
+
+In Android, you need to run I/O operations in background thread to avoid "NetworkOnMainThread" exception, and you should use something like AsyncTask or RxJava to achieve that.

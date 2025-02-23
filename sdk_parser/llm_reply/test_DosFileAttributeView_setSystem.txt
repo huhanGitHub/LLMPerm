@@ -1,0 +1,40 @@
+Since Android does not support the DosFileAttributeView class from java.nio.file.attribute package, here is an example usage in a standard Java application instead:
+
+```java
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.DosFileAttributeView;
+
+public class MainActivity {
+    
+    public static void test_DosFileAttributeView_setSystem() {
+        Path filePath = FileSystems.getDefault().getPath("test_file.txt");
+
+        DosFileAttributeView dosView = Files.getFileAttributeView(filePath, DosFileAttributeView.class);
+
+        try {
+            boolean isSystem = dosView.readAttributes().isSystem();
+            System.out.println("Before operation, isSystem: " + isSystem);
+
+            // Set the 'system' flag of the file.
+            dosView.setSystem(true);
+            isSystem = dosView.readAttributes().isSystem();
+            System.out.println("After operation, isSystem: " + isSystem);
+
+        } catch (IOException exception) {
+            System.out.println("Error while reading/writing file attributes: " + exception.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        // Your falling code here, e.g:
+        test_DosFileAttributeView_setSystem();
+    }
+}
+```
+
+This method `test_DosFileAttributeView_setSystem` describes usage of `DosFileAttributeView`. It first creates a `DosFileAttributeView` from a file object. Then, it reads the 'system' attribute of the file, and prints out the initial value. Finally, it sets this attribute to true, and prints out the updated value. This method will only work on systems that have DOS file attributes, such as Windows.
+
+Please replace `"test_file.txt"` with a real file's path on your local system while testing.

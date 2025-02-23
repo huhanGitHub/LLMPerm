@@ -1,0 +1,48 @@
+Sure, here's an example of how you can create a self-contained method `test_DatagramSocket_connect` which demonstrates the usage of  `java.net.DatagramSocket.connect()` in Android:
+
+```java
+public void test_DatagramSocket_connect() {
+    Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            DatagramSocket socket = null;
+            try {
+                // Initialize a DatagramSocket
+                socket = new DatagramSocket();
+
+                // Connect to a remote address
+                InetAddress serverAddr = InetAddress.getByName("8.8.8.8");
+                int serverPort = 53;
+                socket.connect(serverAddr, serverPort);
+
+                // The socket is now connected and can be used for sending and receiving data
+                byte[] data = "test data".getBytes(Charset.defaultCharset());
+                DatagramPacket packet = new DatagramPacket(data, data.length);
+                socket.send(packet);
+
+            } catch (Exception e) {
+                 // Handle exceptions
+                e.printStackTrace();
+            } finally {
+                if (socket != null) {
+                    socket.close();
+                }
+            }
+        }
+    });
+
+    thread.start();
+}
+```
+
+This method is going to connect to a server, send a string as data, then closes the socket.
+
+Please note that network operations usually require internet permissions to be defined in your manifest file like this:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Also, be aware that doing lengthy operations such as network operations on the main thread can lock the UI and result in an ANR error. This is why, in this example, a new thread is created to handle the network operations. 
+
+You may want to replace `"8.8.8.8"` and `53` with your own server address and port.

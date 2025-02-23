@@ -1,0 +1,75 @@
+Below is a sample usage of Android's TextToSpeech Service.
+
+In this example, we are obtaining Secure.Settings for TextToSpeech such as 'tts_default_rate' and 'tts_default_pitch'.
+
+```java
+import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
+import android.content.Context;
+
+public class TestActivity extends AppCompatActivity {
+
+  private TextToSpeech tts = null;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    test_TextToSpeechService_getSecureSettingInt(this);
+    //...
+  }
+
+  public void test_TextToSpeechService_getSecureSettingInt(Context context) {
+    tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+      @Override
+      public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+          int result = tts.setLanguage(Locale.UK);
+
+          if (result == TextToSpeech.LANG_MISSING_DATA
+              || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            Log.e("TTS", "This Language is not supported");
+          } else {
+            int defaultPitch = Settings.Secure.getInt(
+                context.getContentResolver(),
+                Settings.Secure.TTS_DEFAULT_PITCH, 
+                100);
+            int defaultRate = Settings.Secure.getInt(
+                context.getContentResolver(), 
+                Settings.Secure.TTS_DEFAULT_RATE, 
+                100);
+
+            tts.setPitch(defaultPitch/100.0f);
+            tts.setSpeechRate(defaultRate/100.0f);
+
+            speakOut("Testing TextToSpeech service");
+          }
+
+        } else {
+          Log.e("TTS", "Initialization Failed!");
+        }
+      }
+    });
+  }
+
+  private void speakOut(String text) {
+    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "");
+  }
+
+  @Override
+  public void onDestroy() {
+    // Shut down TTS Engine when you are done 
+    if (tts != null) {
+        tts.stop();
+        tts.shutdown();
+    }
+    super.onDestroy();
+  }
+}
+```
+This example sets up the TextToSpeech (TTS) engine and retrieves the user's specific settings for the default speech rate and pitch (both are 100 by default, if not set) from Android's secure settings.
+
+Note: The user's default speech rate and pitch can be changed in the device's accessibility settings.
+
+These settings are then used to set the pitch and speech rate of the TTS engine. Then the TTS engine is used to synthetically speak out "Testing TextToSpeech service".

@@ -1,0 +1,59 @@
+Firstly, please note that BackupAgent is an abstract class, and we need to subclass it by creating a new class that extends BackupAgent in order to test its method, in this case the onBackup() method. Moreover, testing permissions is done through the checkSelfPermission() method from an instance of an Activity or Context object. 
+
+This code below samples how to use the BackupAgent class in an Android Activity and how to test Android permissions:
+
+```java
+import android.app.Activity;
+import android.app.backup.BackupAgent;
+import android.app.backup.BackupDataInput;
+import android.app.backup.BackupDataOutput;
+import android.os.ParcelFileDescriptor;
+import android.content.pm.PackageManager;
+
+public class MainActivity extends Activity {
+
+    private class MyBackupAgent extends BackupAgent {
+        @Override
+        public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
+                                  ParcelFileDescriptor newState) {
+            // Code for the backup operation goes here...
+            // This is a placeholder.  
+        }
+
+        @Override
+        public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) {
+            // Code for restore operation goes here...
+            // This is a placeholder.
+        }
+    }
+
+    public void test_BackupAgent_onBackup() {
+        MyBackupAgent myBackupAgent = new MyBackupAgent();
+
+        // Checking for Read/Write External Storage permissions
+        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) 
+                  == PackageManager.PERMISSION_GRANTED) {
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) 
+                      == PackageManager.PERMISSION_GRANTED) {
+                ParcelFileDescriptor oldState = null;
+                ParcelFileDescriptor newState = null;
+                BackupDataOutput data = null;
+                myBackupAgent.onBackup(oldState, data, newState);
+            } else {
+                // Request Write External Storage permission if not granted
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 
+                            REQUEST_WRITE_EXTERNAL_STORAGE);
+            }
+        } else {
+            // Request Read External Storage permission if not granted
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 
+                        REQUEST_READ_EXTERNAL_STORAGE);
+        }
+    }
+
+    final int REQUEST_READ_EXTERNAL_STORAGE = 1;
+    final int REQUEST_WRITE_EXTERNAL_STORAGE = 2;
+}
+```
+
+In the code snippet above, if the necessary permissions are in place, the `onBackup()` method is called. This `onBackup()` method is of MyBackupAgent instance which is an inner class of MainActivity extending BackupAgent. If permissions are not granted, it explicitly asks user for the permissions. This can serve as a starting point to get an idea of using BackupAgent and testing permissions in Android.

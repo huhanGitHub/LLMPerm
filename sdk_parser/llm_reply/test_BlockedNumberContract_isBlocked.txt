@@ -1,0 +1,41 @@
+Here's a method example on how to use BlockedNumberContract#isBlocked in Java Android:
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N)
+public static void test_BlockedNumberContract_isBlocked(Context context) {
+    if (ContextCompat.checkSelfPermission(context, 
+        Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+
+        // Content Resolver
+        ContentResolver contentResolver = context.getContentResolver();
+
+        try {
+            // Uri
+            Uri uri = BlockedNumberContract.BlockedNumbers.CONTENT_URI;
+
+            // Query
+            Cursor cursor = contentResolver.query(uri, null, null, null, null);
+
+            // Iterate through all blocked numbers
+            while (cursor.moveToNext()) {
+                // Is blocked
+                boolean isBlocked = (cursor.getInt(cursor.getColumnIndex(
+                    BlockedNumberContract.BlockedNumbers.COLUMN_ORIGINAL_NUMBER)) == 1);
+                Log.d("BlockedNumberContract", "Is blocked: " + isBlocked);
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("BlockedNumberContract", "Error: " + e.getMessage());
+        }
+    }
+    else {
+        Log.e("BlockedNumberContract", 
+            "Permission not granted! Request READ_CONTACTS permission to get blocked numbers.");
+    }
+}
+```
+
+You need to check if the `READ_CONTACTS` permission is granted before the query. If not, you would need to request that permission from the user. Also note that blocked number functionality is only available on API 24 and later (Android 7.0 and later). Hence, we must check if the device is running this API or not. 
+
+Also, you can further extend the code to verify whether a specific number is blocked or not, by adding another query or filter based on your requirement.

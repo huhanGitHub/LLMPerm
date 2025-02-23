@@ -1,0 +1,27 @@
+Below is a sample test method for the `onScanResult` method of Android's `ScanCallback` class. This example is making use of Junit for testing with Mockito for mocking objects. We mock the inputs and assert that the method was called.
+
+```java
+@Test
+public void test_ScanCallback_onScanResult() {
+    // Create the objects needed for the test
+    BluetoothDevice testDevice = Mockito.mock(BluetoothDevice.class);
+    ScanRecord testRecord = Mockito.mock(ScanRecord.class);
+    ScanResult testResult = new ScanResult(testDevice, testRecord, -30, ScanResult.PERIODIC_INTERVAL_NOT_PRESENT, SystemClock.elapsedRealtimeNanos(), ScanCallback.TYPESCANNER_UNDETERMINED, (int)SystemClock.elapsedRealtimeNanos(), 0);
+
+    // Create a spy of your ScanCallback
+    ScanCallback testScanCallback = Mockito.spy(new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+        }
+    });
+
+    // Call method of ScanCallback
+    testScanCallback.onScanResult(ScanSettings.CALLBACK_TYPE_ALL_MATCHES, testResult);
+
+    // Verify that the onScanResult method has been called with the correct parameters
+    Mockito.verify(testScanCallback).onScanResult(ScanSettings.CALLBACK_TYPE_ALL_MATCHES, testResult);
+ }
+```
+
+Please note that in a real use case, you would likely do something with the `ScanResult` in the `onScanResult` method. For simplicity, this test just verifies that the method is called and doesn't do anything else with the result. Be sure that specificities of your implementation might require additional testing or different approach.

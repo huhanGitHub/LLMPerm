@@ -1,0 +1,29 @@
+Below is the example of a method using the `SmsManager.deleteMessageFromIcc` method. Please note that `deleteMessageFromIcc` is the official method according to the Android Documentation and not `deleteMessageFromSim`. 
+
+```java
+public void test_SmsManager_deleteMessageFromSim() {
+    // Normally, you would get this from a list of all SMS messages on the SIM card
+    int messageIndex = 0;
+    SmsManager smsManager = SmsManager.getDefault();
+    boolean isSuccess = smsManager.deleteMessageFromIcc(messageIndex);
+
+    if (isSuccess) {
+        Toast.makeText(getApplicationContext(), 
+                       "Message deleted from SIM successfully", 
+                       Toast.LENGTH_LONG).show();
+    } else {
+        Toast.makeText(getApplicationContext(), 
+                       "Failed to delete the message from SIM", 
+                       Toast.LENGTH_LONG).show();
+    }
+}
+```
+
+This method gets a default instance of SmsManager and tries to delete the message at index 0 on the SIM card using `deleteMessageFromIcc` function. If the operation is successful, a Toast message is shown indicating success, otherwise, it shows a failure message.
+
+Keep in mind that this code should be run from an `Activity` or `Context` and the application needs to have permission to read SMS Messages.
+
+Add the following line to your Android Manifest file to request the required permission:
+```xml
+<uses-permission android:name="android.permission.WRITE_SMS"/>
+```

@@ -1,0 +1,45 @@
+Sure, here is an example usage of the DatagramSocket API in Java. Please note that this API is not specific to Android and can be used in traditional Java applications as well:
+
+```java
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+
+public void test_DatagramSocket_send() {
+    DatagramSocket socket = null;
+    try {
+        // Create a DatagramSocket
+        socket = new DatagramSocket();
+
+        // Define a server host and port number
+        InetAddress serverIP = InetAddress.getByName("your_server_address_here");
+        int serverPort = 8888;
+
+        // The message to send
+        String message = "Test message";
+        byte[] messageBytes = message.getBytes(StandardCharsets.UTF_8);
+
+        // Create a DatagramPacket to send
+        DatagramPacket packet = new DatagramPacket(
+                messageBytes,
+                messageBytes.length,
+                serverIP,
+                serverPort);
+
+        // Send the packet
+        socket.send(packet);
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (socket != null) {
+            socket.close();
+        }
+    }
+}
+```
+Please replace `"your_server_address_here"` with your actual UDP server address.
+
+This code creates a DatagramSocket, defines the server address and port number, and sends a simple test message. Please note that the server must be set up to accept the UDP protocol.
+
+Also, be aware carrying out network operations on the main or UI thread in Android could lead to NetworkOnMainThreadException, so these tasks should be performed on a separate thread or using the AsyncTask class.

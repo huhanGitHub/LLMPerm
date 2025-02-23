@@ -1,0 +1,32 @@
+Here is a simple usage example of the InetAddress getByName method in an Android context, using an AsyncTask to do the network operation in the background:
+
+```java
+public static void test_InetAddress_getByNameOnNet() {
+    new AsyncTask<Void, Void, InetAddress>() {
+        @Override
+        protected InetAddress doInBackground(Void... params) {
+            InetAddress address = null;
+            try {
+                address = InetAddress.getByName("www.google.com");
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            return address;
+        }
+
+        @Override
+        protected void onPostExecute(InetAddress inetAddress) {
+            super.onPostExecute(inetAddress);
+            if (inetAddress != null) {
+                Log.d("test_InetAddress", "IP Address: " + inetAddress.getHostAddress());
+            }
+        }
+    }.execute();
+}
+```
+This function runs an AsyncTask that tries to retrieve the InetAddress of `"www.google.com"`. If the host is known (that is, can be reached on the network), it will print the IP address of the host in the Android logcat. Make sure you added the Internet permission in the manifest file:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+Please note, don't forget to call test_InetAddress_getByNameOnNet() method on Android Main thread and perform InetAddress.getByName on a separate thread to avoid NetworkOnMainThreadException.

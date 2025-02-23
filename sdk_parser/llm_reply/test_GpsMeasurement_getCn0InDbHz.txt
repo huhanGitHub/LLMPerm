@@ -1,0 +1,48 @@
+Here is the sample usage of `GpsMeasurement.getCn0InDbHz()` in the form of a method named `test_GpsMeasurement_getCn0InDbHz`.
+
+The method `getCn0InDbHz()` returns the carrier-to-noise density in dB-Hz. This can be used to measure the strength of the GPS signal which can indicate the quality of the GPS fix or its accuracy.
+
+```java
+import android.location.GpsMeasurement;
+import android.location.GpsStatus;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    private LocationManager locationManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        test_GpsMeasurement_getCn0InDbHz();
+    }
+
+    public void test_GpsMeasurement_getCn0InDbHz() {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.addGpsStatusListener(new GpsStatus.Listener() {
+                @Override
+                public void onGpsStatusChanged(int event) {
+                    if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {
+                        GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+                        Iterable<GpsMeasurement> measurements = gpsStatus.getSatelliteStatus().getMeasurements();
+
+                        for (GpsMeasurement measurement : measurements) {
+                            Log.d(TAG, "Cn0InDbHz: " + measurement.getCn0InDbHz());
+                        }
+                    }
+                }
+            });
+        } else {
+            Log.d(TAG, "GPS is not enabled");
+        }
+    }
+}
+```
+
+Kindly note that this code won't run on android devices with API level 24 and above because Google has deprecated GpsStatus from API level 24. You would have to use GnssStatus.Callback for these devices.

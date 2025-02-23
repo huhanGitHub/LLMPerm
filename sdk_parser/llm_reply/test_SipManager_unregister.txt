@@ -1,0 +1,74 @@
+Sure, I'll provide a simple usage sample of the `unregister` feature in SipManager. This code sample will unregister a SIP profile from the SIP service.
+
+The method below will be written in `MainActivity.java`:
+
+```java
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import android.net.sip.SipProfile;
+import android.net.sip.SipManager;
+import android.net.sip.SipRegistrationListener;
+import android.app.Activity;
+
+public class MainActivity extends Activity implements SipRegistrationListener {
+
+    private SipManager mSipManager;
+    private SipProfile mSipProfile;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        Button unregisterButton = (Button)this.findViewById(R.id.unregister);
+        unregisterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                test_SipManager_unregister();
+            }
+        });
+    }
+
+    public void test_SipManager_unregister() {
+        if (mSipManager == null) {
+            mSipManager = SipManager.newInstance(this);
+        }
+        try {
+            if (mSipProfile != null) {
+                mSipManager.unregister(mSipProfile, this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to unregister SIP account", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRegistering(String localProfileUri) {
+        Toast.makeText(this, "Registering with SIP Server...", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRegistrationDone(String localProfileUri, long expiryTime) {
+        Toast.makeText(this, "Successfully registered SIP account", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRegistrationFailed(String localProfileUri, int errorCode, String errorMessage) {
+        Toast.makeText(this, "Failed to register SIP account", Toast.LENGTH_SHORT).show();
+    }    
+}
+```
+
+In this example, `test_SipManager_unregister()` is a method in your `MainActivity` that unregisters your SIP account by using SipManager's `unregister` method. 
+
+Please note that `SipManager` and `SipProfile` are part of the `android.net.sip` package, which is used for SIP protocol. SIP (Session Initiation Protocol) is a communications protocol for signaling and controlling multimedia communication sessions. To use this code, your device must support SIP API and have an Internet connection. 
+
+Also, to use SIP API, you need to add the following uses-permission in your AndroidManifest.xml:
+```xml
+<uses-permission android:name="android.permission.USE_SIP" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Please adapt this code according to your needs, this is just a simple example.

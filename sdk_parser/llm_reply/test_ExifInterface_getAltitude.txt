@@ -1,0 +1,26 @@
+```java
+import android.media.ExifInterface;
+import java.io.IOException;
+
+public void test_ExifInterface_getAltitude() {
+    try {
+        // Specify the path to the photo
+        String photoPath = "/sdcard/DCIM/Camera/IMG_20210512_000123.jpg";
+        ExifInterface exifInterface = new ExifInterface(photoPath);
+
+        // Get altitude data from EXIF information
+        double altitude = exifInterface.getAltitude(0);
+
+        // Output the altitude to the console. In real world app, you can use it as per your requirement instead of logging it to console.
+        Log.d("Altitude", "Altitude: " + altitude);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+A few important notes:
+1. Altitude is typically included only on photos taken from devices with a GPS chip, such as smartphones.
+2. The ExifInterface constructor takes the full path to a photo file. Now it is hardcoded, in real world app, you would get it from camera or gallery.
+3. In case the photo has no GPS altitude data, a default value (in this case, 0) will be used.
+4. Make sure android app has required permissions to read the storage.
+5. This code uses Log.d() for debugging; if errors arise, these messages will be output in Android Studio's logcat.

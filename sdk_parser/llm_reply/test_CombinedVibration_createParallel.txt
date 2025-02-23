@@ -1,0 +1,35 @@
+Unfortunately, android/os/CombinedVibration.java doesn't directly provide functions for permission testing. However, it does provide a createParallel() method which is used to create 'CombinedVibration' instances.
+
+The CombinedVibration class is part of the Android platform's vibration system. The createParallel method is used to create a new CombinedVibration that plays several vibrations at the same time.
+
+Here's an example of how you might use it in an Android application:
+
+```java
+import android.os.CombinedVibration;
+import android.os.VibrationEffect;
+import android.os.VibrationEffect.Composition;
+
+public void test_CombinedVibration_createParallel() {
+    // Create multiple vibration effects.
+    VibrationEffect effect1 = VibrationEffect.createOneShot(1000L, VibrationEffect.DEFAULT_AMPLITUDE);
+    VibrationEffect effect2 = VibrationEffect.createOneShot(2000L, VibrationEffect.DEFAULT_AMPLITUDE);
+    VibrationEffect effect3 = VibrationEffect.createOneShot(3000L, VibrationEffect.DEFAULT_AMPLITUDE);
+
+    // Combine them into an array.
+    VibrationEffect[] effects = new VibrationEffect[]{effect1, effect2, effect3};
+
+    // Call createParallel() to create a new CombinedVibration instance that plays the effects together.
+    CombinedVibration combinedVibration = CombinedVibration.createParallel(effects, new int[]{0,0,0});
+
+    // Then you would typically use this combined vibration with a Vibration service.
+    // Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+    // vibrator.vibrate(combinedVibration);
+}
+``` 
+
+This example isn't testing a permission directly, but depending on your target API level and whether or not your app has the VIBRATE permission, you might need it to use the Vibrator service. You should test this permission with a separate method. This permission is requested in the Manifest file like this:
+
+```xml
+<uses-permission android:name="android.permission.VIBRATE"/>
+```
+Since Android Marshmallow, you also need to request this permission at runtime before using it, depending on your target audience and their specific Android versions.

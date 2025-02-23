@@ -1,0 +1,49 @@
+Here is an example of a method `test_IntentSender_sendIntent` which illustrates the usage of `IntentSender` in an Android app. Here we're setting up a simple `PendingIntent` to be used with the `IntentSender`:
+
+```java
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.os.Bundle;
+
+public class MainActivity extends Activity {
+
+    private static final int REQUEST_CODE = 1000;
+    private static final String ACTION = "com.example.ACTION_DO_SOMETHING";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        try {
+            test_IntentSender_sendIntent();
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test_IntentSender_sendIntent() throws IntentSender.SendIntentException {
+        Intent intent = new Intent(ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, REQUEST_CODE, intent, 0);
+        IntentSender intentSender = pendingIntent.getIntentSender();
+        startIntentSenderForResult(intentSender, REQUEST_CODE, new Intent(), 0, 0, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Handle successful operation
+            } else {
+                // Handle failed operation
+            }
+        }
+    }
+}
+```
+
+Here, we send the intent for result by calling `startIntentSenderForResult()`. The intent gets executed and sends back a result, which can be received in `onActivityResult()`.

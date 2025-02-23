@@ -1,0 +1,27 @@
+The `SearchRecentSuggestions` class provides a method named `clearHistory` which is utilized to clear the search suggestions history. Below is a code snippet for the `test_SearchRecentSuggestions_clearHistory` method, which will be used to demonstrate the usage of `clearHistory` method.
+
+The code will be used in an Android activity:
+
+```java
+import android.app.Activity;
+import android.content.Context;
+import android.provider.SearchRecentSuggestions;
+
+public class TestActivity extends Activity {
+
+    private final String AUTHORITY = "com.example.yourapplication";
+    private final int MODE = 0;
+
+    public void test_SearchRecentSuggestions_clearHistory() {
+        SearchRecentSuggestions searchRecentSuggestions = new SearchRecentSuggestions(this, AUTHORITY, MODE);
+        
+        //Clearing the search suggestions history
+        searchRecentSuggestions.clearHistory();
+    }
+
+    // Rest of your Activity code...
+}
+```
+In this code snippet, note that you will need to replace `"com.example.yourapplication"` with your application's actual authority string. The `MODE` is usually set to `0` for private mode (this is the most common), although other modes exist. You can read more about these modes in the official Android documentation. 
+
+After creating `SearchRecentSuggestions` instance with the authority and the mode, calling `clearHistory()` on this instance will clear all search input records from the suggestions history.

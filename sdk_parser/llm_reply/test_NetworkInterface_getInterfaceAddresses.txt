@@ -1,0 +1,41 @@
+Here's a sample method of how you can generate the `test_NetworkInterface_getInterfaceAddresses` method. This method assumes that you have proper permissions to access network state in your Android Manifest. Without these permissions, retrieval of network interface details will fail.
+
+Please add below permission in your Android Manifest: 
+```java
+<manifest ... >
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    ...
+</manifest>
+```
+
+Now here's the code for `test_NetworkInterface_getInterfaceAddresses` method:
+
+```java
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import android.util.Log;
+
+public void test_NetworkInterface_getInterfaceAddresses() {
+    try {
+        for (NetworkInterface networkInterface : 
+                 Collections.list(NetworkInterface.getNetworkInterfaces())) {
+            Log.i("NetworkTest", networkInterface + "\n");
+            Log.i("NetworkTest", "Name: " + networkInterface.getName() + "\n");
+            Log.i("NetworkTest", "Addresses: 
+                  " + networkInterface.getInterfaceAddresses() + "\n");
+        }
+    } catch (SocketException e) {
+        Log.e("NetworkTest", "Error getting network interfaces", e);
+    }
+}
+```
+
+This example method retrieves all the network interfaces available on the device and prints their details (name and addresses) to the log. If any `SocketException` occurs during this process, it is caught and an error message is printed to the Log.
+
+Notes:
+
+- `"NetworkTest"` is the tag for the log messages - it can be changed to anything relevant to your application. 
+- This approach is OK for a simple example. For real applications, it might be preferable to handle the network interfaces and any exceptions in a more sophisticated manner. 
+- Use this information responsibly and respect user's privacy.
+- Remember that accessing network interfaces might not be available on all devices or versions of Android. Always check the API level and feature availability on the device your app is running on.

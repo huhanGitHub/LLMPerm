@@ -1,0 +1,44 @@
+In order to use BlockedNumberContract API, the app must be granted with the "READ_BLOCKED_NUMBERS" and "WRITE_BLOCKED_NUMBERS" permissions.
+
+Below is an example of an Android API using BlockedNumberContract to get Enhanced Block Setting in Java.
+
+```java
+@RequiresApi(api = Build.VERSION_CODES.N)
+public void test_BlockedNumberContract_getEnhancedBlockSetting () {
+
+    // Check if permissions are granted
+    if (checkSelfPermission(Manifest.permission.READ_BLOCKED_NUMBERS) != PackageManager.PERMISSION_GRANTED ||
+            checkSelfPermission(Manifest.permission.WRITE_BLOCKED_NUMBERS) != PackageManager.PERMISSION_GRANTED) {
+
+        // Request permissions
+        requestPermissions(new String[] {Manifest.permission.READ_BLOCKED_NUMBERS, Manifest.permission.WRITE_BLOCKED_NUMBERS}, 1);
+    } else {
+
+        // Get Content Resolver
+        ContentResolver contentResolver = getContentResolver();
+        
+        Uri enhancedBlockUri = BlockedNumberContract.BlockedNumbers.ENHANCED_SETTING_CONTENT_URI;
+
+        try {
+            Cursor cursor = contentResolver.query(enhancedBlockUri, new String[]{BlockedNumberContract.BlockedNumbers.COLUMN_ID}, 
+            null, null, null);
+
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    int enhancedBlockingEnabled = cursor.getInt(cursor.getColumnIndex(BlockedNumberContract.BlockedNumbers.COLUMN_E164_NUMBER));
+                    Toast.makeText(this, "Enhanced Blocking Enabled : " + enhancedBlockingEnabled, Toast.LENGTH_LONG).show();
+                }
+                cursor.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Please remember, starting from Android 10, the APIs for call blocking are not available to third-party apps. An app that's not a default phone handler cannot read the call log and the Blocked Numbers Provider. So make sure your app is the default phone handler or use this in a system or carrier app.
+
+Also to test the method above, your app must be signed with the same signature as the system dialer app. Otherwise, a SecurityException will be thrown. This makes it difficult to run this test on an actual device.
+
+Refer [BlockedNumberContract Documentation](https://developer.android.com/reference/android/provider/BlockedNumberContract) for more details on this.

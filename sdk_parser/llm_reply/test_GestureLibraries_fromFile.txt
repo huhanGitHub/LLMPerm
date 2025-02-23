@@ -1,0 +1,26 @@
+Here's an example of a test method named test_GestureLibraries_fromFile for utilizing android.gesture.GestureLibraries class. This method assumes that there is a gesture library file named "gestures" stored in the assets folder of your android application.
+
+Please note, to use this method effectively, you would require a real "Gesture" file in your project. In this method we are loading the file, checking whether it loads correctly and then printing the count of the gestures in the loaded notes.
+
+```java
+public void test_GestureLibraries_fromFile() {
+    // Specify the path of the gesture file in the app's assets folder
+    String gestureFilePath = "file:///android_asset/gestures";
+
+    // Load the gesture library from the specified file
+    GestureLibrary gestureLibrary = GestureLibraries.fromFile(gestureFilePath);
+
+    // Load the gesture library
+    if (gestureLibrary.load()) {
+        // If the library loads successfully, print the count of the gestures
+        int gestureCount = gestureLibrary.getGestureEntries().size();
+        Log.d("Gesture_Test", "Gesture library loaded successfully with " 
+            + gestureCount + " gestures.");
+
+    } else {
+        // If the library fails to load, print an error message
+        Log.d("Gesture_Test", "Failed to load gesture library from file.");
+    }
+}
+```
+Please note this code would require appropriate exception handling, right now it assumes the best-case scenario without any possible exceptions.

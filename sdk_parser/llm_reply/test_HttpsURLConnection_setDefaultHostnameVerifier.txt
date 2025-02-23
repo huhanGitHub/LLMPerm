@@ -1,0 +1,30 @@
+Here's an example for it:
+
+```java
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
+public void test_HttpsURLConnection_setDefaultHostnameVerifier() {
+    // create a custom HostnameVerifier
+    HostnameVerifier myHostnameVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            // it's a good practice to check host validity
+            if (hostname.equals("www.google.com")) {
+                return true;
+            }
+            return false;
+        }
+    };
+
+    // set the default Hostname Verifier
+    HttpsURLConnection.setDefaultHostnameVerifier(myHostnameVerifier);
+
+    // Now when you initiate an https connection, the provided HostnameVerifier will be used to check the hostname validity.
+}
+```
+The purpose of Hostname Verifier is to validate the certificate to ensure that it is not self-signed or from untrusted issuers, and to ensure that the hostname matches what's in the certificate to prevent man-in-the-middle attacks.
+To test out this method, you can make a request to `https://www.google.com` somewhere else in your code, the verify method in the HostnameVerifier should return true.
+If you want to make request to different endpoint, replace `www.google.com` with the endpoint you're trying to request. However, remember that this is an over simplified version and shouldn't be used in production code where secure connection is required.
+Always follow the best practices when it comes to security.

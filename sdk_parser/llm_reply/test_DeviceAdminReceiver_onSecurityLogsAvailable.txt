@@ -1,0 +1,42 @@
+Here is a usage example of DeviceAdminReceiver.onSecurityLogsAvailable() method encapsulated within an android activity. Please note that the method onSecurityLogsAvailable() will be called by the system when new security logs are available, thus it is unusual to explicitly test or call this from an activity. But, for the purpose of this example, lets consider that we simulate a simple test case.
+
+The method test_DeviceAdminReceiver_onSecurityLogsAvailable's intention is to check if the onSecurityLogsAvailable method is implemented properly. 
+
+In order to conduct this test, we will have to create our own subclass of DeviceAdminReceiver and override its onSecurityLogsAvailable method.
+
+```java
+public class MyActivity extends AppCompatActivity {
+
+    // Implement your subclass of DeviceAdminReceiver
+    public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
+        @Override
+        public void onSecurityLogsAvailable(@NonNull Context context, @NonNull Intent intent, boolean logsAvailable) {
+            // Implement your logic here
+            Log.i("DeviceAdminReceiver", "Security Logs Available: " + logsAvailable);
+        }
+    }
+
+    public void test_DeviceAdminReceiver_onSecurityLogsAvailable() {
+        Context context = getApplicationContext(); // Get application context
+        Intent intent = new Intent(); // Create an intent (this would usually be passed by the system)
+
+        MyDeviceAdminReceiver myDeviceAdminReceiver = new MyDeviceAdminReceiver(); // Create an instance of your subclass
+
+        // Simulate a call to onSecurityLogsAvailable
+        myDeviceAdminReceiver.onSecurityLogsAvailable(context, intent, true);
+
+        // After the above line, you should see your Log message in logcat
+    }
+
+    // Somewhere else in your code, like in onCreate method, call your test method
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        test_DeviceAdminReceiver_onSecurityLogsAvailable();
+    }
+}
+```
+
+This is not a practical/real-world use case but intended for demonstration. In an actual application, you would not directly call onSecurityLogsAvailable(). Instead, the Android system does it when there are new security logs.

@@ -1,0 +1,26 @@
+In the Address API, there is no getPhone() method we can call, because Address API is used to handle Geographic Addresses. But we can simulate the data using the method getAddressLine(). Here's how you can use this :
+
+```java
+    public String test_Address_getPhone() {
+        String phoneNumber = "";
+        try {
+            //Create a new address
+            Address address = new Address(Locale.getDefault());
+            address.setAddressLine(0, "My Street, 123");
+            address.setAddressLine(1, "City, Country");
+            
+            //Mocking phone method
+            if(address != null){
+                phoneNumber = "1234567890"; // Add phone number
+            }
+        } catch (Exception ex) {
+            Log.e("AddressGetPhone", "Unable to get phone from address", ex);
+        }
+        return phoneNumber;
+    }
+```
+Do note that it's not a real way to get a phone number from an address object because the Address class in Android API doesn't have a method called getPhone() or something similar.
+
+Permissions are usually required when dealing with certain APIs like accessing user's location and contacts. But it is not necessary-in your case as Address object will not ask for such permissions. The mocked method above won't need android permissions to run as it's just dealing with creating and filling data in an Address object.
+
+However, if you are dealing with APIs that do need permissions, always remember to check if the permission has been granted before accessing any sensitive data. You can make a permission request by calling 'requestPermissions()' method from an Activity. Then, handle the user's response in 'onRequestPermissionsResult()' callback.
