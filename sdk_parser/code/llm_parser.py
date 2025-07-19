@@ -7,7 +7,7 @@ import json
 
 
 def contact_chatGPT(model, prompt):
-    key = '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'
+    key = 'key'
     client = OpenAI(api_key=key)
     response = ''
     try:
