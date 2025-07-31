@@ -45,13 +45,147 @@ def unit_test():
     print(reply)
 
 
+def get_demonstration_cases():
+    """
+    Get demonstration cases with dynamic extension capability
+    Returns the base cases plus any dynamically added cases
+    """
+    base_cases = """
+Examples of Permission-Required and Permission-Free APIs:
+
+Example 1 (Permission-Free):
+public int addNumbers(int a, int b) {
+  // Simple arithmetic method with no permissions involved
+  return a + b;
+}
+Result: No
+
+Example 2 (Explicit Permission Check):
+public boolean hasLocationPermission(Context context) {
+  // Check for location permission
+  int permissionCheck = ContextCompat.checkSelfPermission(context,
+    Manifest.permission.ACCESS_FINE_LOCATION);
+  return permissionCheck == PackageManager.PERMISSION_GRANTED;
+}
+Result: Yes, requires ACCESS_FINE_LOCATION permission
+
+Example 3 (GPS Status Check):
+public boolean isGPSEnabled(Context context) {
+  // Checks if GPS is enabled on the device
+  LocationManager locationManager =
+    (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+  return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+}
+Result: Yes, requires location access permissions
+
+Example 4 (Network Status Check):
+public static boolean isInternetConnected(Context context) {
+  ConnectivityManager cm =
+    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+  return networkInfo != null && networkInfo.isConnected();
+}
+Result: Yes, requires network access permissions
+
+"""
+    
+    # Load dynamic cases if they exist
+    dynamic_cases = load_dynamic_demonstration_cases()
+    
+    return base_cases + dynamic_cases
+
+
+def load_dynamic_demonstration_cases():
+    """Load dynamically added demonstration cases from file"""
+    dynamic_cases_file = "dynamic_demonstration_cases.txt"
+    if os.path.exists(dynamic_cases_file):
+        try:
+            with open(dynamic_cases_file, 'r', encoding='utf-8') as f:
+                return f.read()
+        except Exception as e:
+            print(f"Error loading dynamic demonstration cases: {e}")
+    return ""
+
+
+def add_demonstration_case(example_code, result, description=""):
+    """
+    Add a new demonstration case dynamically
+    Args:
+        example_code: The Java code example
+        result: The expected result (Yes/No + reason)
+        description: Optional description of the example
+    """
+    dynamic_cases_file = "dynamic_demonstration_cases.txt"
+    
+    new_case = f"""
+Example {get_next_example_number()} ({description}):
+{example_code}
+Result: {result}
+
+"""
+    
+    try:
+        with open(dynamic_cases_file, 'a', encoding='utf-8') as f:
+            f.write(new_case)
+        print(f"Successfully added new demonstration case: {description}")
+    except Exception as e:
+        print(f"Error adding demonstration case: {e}")
+
+
+def get_next_example_number():
+    """Get the next example number for dynamic cases"""
+    dynamic_cases_file = "dynamic_demonstration_cases.txt"
+    if not os.path.exists(dynamic_cases_file):
+        return 5  # Start after base cases
+    
+    try:
+        with open(dynamic_cases_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # Count existing examples
+            example_count = content.count("Example ")
+            return 5 + example_count
+    except:
+        return 5
+
+
 def method_permission_check(method_code):
     model_id = "gpt-4o-mini"
-    prompt_text = ("This is a Java method code of Android SDK, please infer if this method requires any permissions. "
-                   "Reply simple, if yes, reply 'Yes' + very short reasons. If no, reply 'No'")
-    prompt = prompt_text + '\n' + method_code
-    reply = contact_chatGPT(model_id, prompt)
-    return reply
+    
+    # Get demonstration cases with dynamic extension
+    demonstration_cases = get_demonstration_cases()
+    
+    # Dual-role prompting strategy as described in the paper
+    permission_detector_prompt = (
+        "Acts as a Permission Detector, identifying permission usages in the Java method by checking for invoked API calls that involve permissions.\n\n"
+        f"{demonstration_cases}\n"
+        "Now analyze the following Java method code and determine if it requires any permissions:\n"
+        f"{method_code}\n\n"
+        "Reply format: 'Yes' + very short reasons if permissions are required, or 'No' if no permissions are needed."
+    )
+    
+    permission_analyst_prompt = (
+        "Act as a Permission Analyst, analyzing Java method functions to infer necessary permissions based on their operational characteristics.\n"
+        "Android permissions are more likely involved in functions like Hardware Access, Network Access, Storage Access, Location Access, Media Access, and System Tools.\n\n"
+        f"{demonstration_cases}\n"
+        "Now analyze the following Java method code and determine if it requires any permissions:\n"
+        f"{method_code}\n\n"
+        "Reply format: 'Yes' + very short reasons if permissions are required, or 'No' if no permissions are needed."
+    )
+    
+    # Get responses from both roles
+    detector_reply = contact_chatGPT(model_id, permission_detector_prompt)
+    analyst_reply = contact_chatGPT(model_id, permission_analyst_prompt)
+    
+    # Combine results - if either role detects permissions, return Yes
+    if detector_reply and 'Yes' in detector_reply:
+        return detector_reply
+    elif analyst_reply and 'Yes' in analyst_reply:
+        return analyst_reply
+    elif detector_reply and 'No' in detector_reply and analyst_reply and 'No' in analyst_reply:
+        return "No"
+    else:
+        # If responses are unclear, return the detector's response as primary
+        return detector_reply if detector_reply else analyst_reply
 
 
 def batch_test():
@@ -416,6 +550,152 @@ def compareBaselinse():
 
     print(len(results))
     # print(results)
+
+
+def advanced_dual_role_permission_check(method_code):
+    """
+    Advanced dual-role permission checking with cross-validation and detailed analysis
+    as described in the paper methodology section.
+    """
+    model_id = "gpt-4o-mini"
+    
+    # Pre-demonstration cases as described in the paper
+    demonstration_cases = """
+Examples of Permission-Required and Permission-Free APIs:
+
+Example 1 (Permission-Free):
+public int addNumbers(int a, int b) {
+  // Simple arithmetic method with no permissions involved
+  return a + b;
+}
+Result: No
+
+Example 2 (Explicit Permission Check):
+public boolean hasLocationPermission(Context context) {
+  // Check for location permission
+  int permissionCheck = ContextCompat.checkSelfPermission(context,
+    Manifest.permission.ACCESS_FINE_LOCATION);
+  return permissionCheck == PackageManager.PERMISSION_GRANTED;
+}
+Result: Yes, requires ACCESS_FINE_LOCATION permission
+
+Example 3 (GPS Status Check):
+public boolean isGPSEnabled(Context context) {
+  // Checks if GPS is enabled on the device
+  LocationManager locationManager =
+    (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+  return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+}
+Result: Yes, requires location access permissions
+
+Example 4 (Network Status Check):
+public static boolean isInternetConnected(Context context) {
+  ConnectivityManager cm =
+    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+  return networkInfo != null && networkInfo.isConnected();
+}
+Result: Yes, requires network access permissions
+
+"""
+    
+    # Permission Detector Role - focuses on explicit permission indicators
+    permission_detector_prompt = (
+        "Acts as a Permission Detector, identifying permission usages in the Java method by checking for invoked API calls that involve permissions.\n\n"
+        f"{demonstration_cases}\n"
+        "Now analyze the following Java method code and determine if it requires any permissions:\n"
+        f"{method_code}\n\n"
+        "Reply format: 'Yes' + very short reasons if permissions are required, or 'No' if no permissions are needed."
+    )
+    
+    # Permission Analyst Role - focuses on functional characteristics
+    permission_analyst_prompt = (
+        "Act as a Permission Analyst, analyzing Java method functions to infer necessary permissions based on their operational characteristics.\n"
+        "Android permissions are more likely involved in functions like Hardware Access, Network Access, Storage Access, Location Access, Media Access, and System Tools.\n\n"
+        f"{demonstration_cases}\n"
+        "Now analyze the following Java method code and determine if it requires any permissions:\n"
+        f"{method_code}\n\n"
+        "Reply format: 'Yes' + very short reasons if permissions are required, or 'No' if no permissions are needed."
+    )
+    
+    # Get responses from both roles
+    detector_reply = contact_chatGPT(model_id, permission_detector_prompt)
+    analyst_reply = contact_chatGPT(model_id, permission_analyst_prompt)
+    
+    # Cross-validation logic
+    result = {
+        'detector_response': detector_reply,
+        'analyst_response': analyst_reply,
+        'final_decision': None,
+        'confidence': 'low',
+        'reasoning': ''
+    }
+    
+    # Determine final decision based on both responses
+    detector_yes = detector_reply and 'Yes' in detector_reply
+    analyst_yes = analyst_reply and 'Yes' in analyst_reply
+    detector_no = detector_reply and 'No' in detector_reply
+    analyst_no = analyst_reply and 'No' in analyst_reply
+    
+    if detector_yes and analyst_yes:
+        result['final_decision'] = detector_reply
+        result['confidence'] = 'high'
+        result['reasoning'] = 'Both roles detected permission requirements'
+    elif detector_yes:
+        result['final_decision'] = detector_reply
+        result['confidence'] = 'medium'
+        result['reasoning'] = 'Only detector role detected permission requirements'
+    elif analyst_yes:
+        result['final_decision'] = analyst_reply
+        result['confidence'] = 'medium'
+        result['reasoning'] = 'Only analyst role detected permission requirements'
+    elif detector_no and analyst_no:
+        result['final_decision'] = "No"
+        result['confidence'] = 'high'
+        result['reasoning'] = 'Both roles confirmed no permission requirements'
+    else:
+        # Ambiguous case - use detector as primary
+        result['final_decision'] = detector_reply if detector_reply else analyst_reply
+        result['confidence'] = 'low'
+        result['reasoning'] = 'Ambiguous responses, using detector as primary'
+    
+    return result
+
+
+def batch_dual_role_permission_check(file_path, output_path):
+    """
+    Batch processing with dual-role permission checking
+    """
+    import json
+    
+    with open(file_path, 'r') as file:
+        methods_data = json.load(file)
+    
+    results = []
+    for index, java_file in enumerate(methods_data):
+        java_file_path = java_file['java_file_path']
+        methods_info = java_file['methods_info']
+        
+        if methods_info:
+            for method_info in methods_info:
+                method_name = method_info['method_name']
+                result = advanced_dual_role_permission_check(str(method_info))
+                
+                results.append({
+                    'java_file_path': java_file_path,
+                    'method_name': method_name,
+                    'detector_response': result['detector_response'],
+                    'analyst_response': result['analyst_response'],
+                    'final_decision': result['final_decision'],
+                    'confidence': result['confidence'],
+                    'reasoning': result['reasoning']
+                })
+    
+    # Save detailed results
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
+    
+    return results
 
 
 if __name__ == '__main__':
