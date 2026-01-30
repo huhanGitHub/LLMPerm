@@ -1,0 +1,87 @@
+{
+  "apk_name": "com.vortexdevelopmentgroup.digitalbunker_017312eb.apk",
+  "package_name": "com.vortexdevelopmentgroup.digitalbunker",
+  "is_malware": false,
+  "total_api_calls": 9770,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 9770,
+      "sensitive_api_calls": 8,
+      "unique_sensitive_apis": 6,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.content.IntentSender.sendIntent",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.renameDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 9770,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 9770,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

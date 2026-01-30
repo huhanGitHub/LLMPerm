@@ -1,0 +1,49 @@
+{
+  "apk_name": "com.itxinke.Beauty_00057c2d.apk",
+  "package_name": "com.itxinke.Beauty",
+  "is_malware": true,
+  "total_api_calls": 579,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 579,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.provider.Browser.getAllVisitedUrls",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.LocationListener.onLocationChanged",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 579,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 579,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

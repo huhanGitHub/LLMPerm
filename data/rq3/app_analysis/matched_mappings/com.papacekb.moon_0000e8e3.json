@@ -1,0 +1,83 @@
+{
+  "apk_name": "com.papacekb.moon_0000e8e3.apk",
+  "package_name": "com.papacekb.moon",
+  "is_malware": false,
+  "total_api_calls": 3272,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 3272,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 3,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getRotationMatrix",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 3272,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 3272,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 1,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

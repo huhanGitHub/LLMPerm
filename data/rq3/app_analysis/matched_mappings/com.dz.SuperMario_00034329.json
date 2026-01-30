@@ -1,0 +1,105 @@
+{
+  "apk_name": "com.dz.SuperMario_00034329.apk",
+  "package_name": "com.dz.SuperMario",
+  "is_malware": true,
+  "total_api_calls": 3239,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 3239,
+      "sensitive_api_calls": 12,
+      "unique_sensitive_apis": 5,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 3239,
+      "sensitive_api_calls": 8,
+      "unique_sensitive_apis": 3,
+      "permissions_required": [
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 5,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.create",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 3239,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 3,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "apk_name": "com.auctionmobility.auctions.vinpresariowineauctions_00003c7d.apk",
+  "package_name": "com.auctionmobility.auctions.vinpresariowineauctions",
+  "is_malware": false,
+  "total_api_calls": 11124,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 11124,
+      "sensitive_api_calls": 13,
+      "unique_sensitive_apis": 10,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.renameDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.renderscript.Allocation.createFromBitmap",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.OrientationEventListener.enable",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.audiofx.AcousticEchoCanceler.create",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 11124,
+      "sensitive_api_calls": 17,
+      "unique_sensitive_apis": 8,
+      "permissions_required": [
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaRouter$RouteInfo.requestSetVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRouter$RouteInfo.requestUpdateVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.read",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setMode",
+          "count": 4,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.release",
+          "count": 3,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.startRecording",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.stop",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 11124,
+      "sensitive_api_calls": 10,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 10,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

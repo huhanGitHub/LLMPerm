@@ -1,0 +1,81 @@
+# Android 7 (API 24) - @RequiresPermission Annotations
+# Total methods: 77
+# Format: class_name | method_name | permissions
+
+android.app.KeyguardLock|disableKeyguard|android.permission.DISABLE_KEYGUARD
+android.app.KeyguardLock|reenableKeyguard|android.permission.DISABLE_KEYGUARD
+android.app.RunningAppProcessInfo|killUid|android.permission.KILL_UID
+android.app.admin.DevicePolicyManager|setOrganizationColorForUser|android.permission.INTERACT_ACROSS_USERS_FULL, android.permission.MANAGE_USERS
+android.app.is|exitKeyguardSecurely|android.permission.DISABLE_KEYGUARD
+android.app.trust.TrustManager|isTrustUsuallyManaged|android.permission.TRUST_LISTENER
+android.app.trust.TrustManager|setDeviceLockedForUser|android.permission.ACCESS_KEYGUARD_SECURE_STORAGE
+android.bluetooth.BluetoothA2dp|getPriority|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|cancelDiscovery|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.BluetoothAdapter|disable|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.BluetoothAdapter|enable|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.BluetoothAdapter|getAddress|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|getBondedDevices|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|getLeState|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|getProfileConnectionState|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|getScanMode|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|getState|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|isDiscovering|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|isEnabled|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|listenUsingInsecureRfcommWithServiceRecord|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|listenUsingRfcommWithServiceRecord|android.permission.BLUETOOTH
+android.bluetooth.BluetoothAdapter|setName|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.BluetoothAdapter|startDiscovery|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.BluetoothManager|getConnectedDevices|android.permission.BLUETOOTH
+android.bluetooth.BluetoothManager|getConnectionState|android.permission.BLUETOOTH
+android.bluetooth.BluetoothManager|getDevicesMatchingConnectionStates|android.permission.BLUETOOTH
+android.bluetooth.StateChangeCallbackWrapper|startLeScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.StateChangeCallbackWrapper|startLeScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.StateChangeCallbackWrapper|stopLeScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.Unknown|getConnectedDevices|android.permission.BLUETOOTH
+android.bluetooth.Unknown|getConnectionState|android.permission.BLUETOOTH
+android.bluetooth.Unknown|getDevicesMatchingConnectionStates|android.permission.BLUETOOTH
+android.bluetooth.le.BluetoothLeScanner|startScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.le.BluetoothLeScanner|startScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.le.BluetoothLeScanner|startScanFromSource|android.permission.UPDATE_DEVICE_STATS, android.permission.BLUETOOTH_ADMIN
+android.bluetooth.le.BluetoothLeScanner|startScanFromSource|android.permission.UPDATE_DEVICE_STATS, android.permission.BLUETOOTH_ADMIN
+android.bluetooth.le.BluetoothLeScanner|stopScan|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.name|createBond|android.permission.BLUETOOTH_ADMIN
+android.bluetooth.name|getBondState|android.permission.BLUETOOTH
+android.bluetooth.name|getName|android.permission.BLUETOOTH
+android.bluetooth.name|getType|android.permission.BLUETOOTH
+android.bluetooth.object|createInsecureRfcommSocketToServiceRecord|android.permission.BLUETOOTH
+android.bluetooth.object|createRfcommSocketToServiceRecord|android.permission.BLUETOOTH
+android.bluetooth.object|fetchUuidsWithSdp|android.permission.BLUETOOTH
+android.bluetooth.object|getBluetoothClass|android.permission.BLUETOOTH
+android.bluetooth.object|getUuids|android.permission.BLUETOOTH
+android.bluetooth.object|setPairingConfirmation|android.permission.BLUETOOTH_ADMIN
+android.content.pm.NameNotFoundException|getEphemeralApplications|android.permission.ACCESS_EPHEMERAL_APPS
+android.content.pm.NameNotFoundException|getPackageInfoAsUser|android.permission.INTERACT_ACROSS_USERS
+android.content.pm.SessionParams|setGrantedRuntimePermissions|android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS
+android.content.pm.name|addOnPermissionsChangeListener|android.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS
+android.content.pm.name|deletePackageAsUser|android.permission.INTERACT_ACROSS_USERS_FULL, android.permission.DELETE_PACKAGES
+android.content.pm.name|installExistingPackageAsUser|android.permission.INSTALL_PACKAGES, android.permission.INTERACT_ACROSS_USERS_FULL
+android.hardware.camera2.CameraManager|openCamera|android.permission.CAMERA
+android.media.tv.HardwareCallback|acquireTvInputHardware|android.permission.TV_INPUT_HARDWARE
+android.media.tv.HardwareCallback|acquireTvInputHardware|android.permission.TV_INPUT_HARDWARE
+android.media.tv.HardwareCallback|addBlockedRating|android.permission.MODIFY_PARENTAL_CONTROLS
+android.media.tv.HardwareCallback|getHardwareList|android.permission.TV_INPUT_HARDWARE
+android.media.tv.HardwareCallback|releaseTvInputHardware|android.permission.TV_INPUT_HARDWARE
+android.media.tv.HardwareCallback|removeBlockedRating|android.permission.MODIFY_PARENTAL_CONTROLS
+android.media.tv.HardwareCallback|setParentalControlsEnabled|android.permission.MODIFY_PARENTAL_CONTROLS
+android.media.tv.TvView|unblockContent|android.permission.MODIFY_PARENTAL_CONTROLS
+android.os.UserManager|setUserAccount|android.permission.INTERACT_ACROSS_USERS_FULL, android.permission.MANAGE_USERS
+android.telecom.TelecomManager|cancelMissedCallsNotification|android.permission.MODIFY_PHONE_STATE
+android.telecom.TelecomManager|dumpAnalytics|android.permission.DUMP
+android.telecom.TelecomManager|getAdnUriForPhoneAccount|android.permission.MODIFY_PHONE_STATE
+android.telecom.TelecomManager|getCallCapablePhoneAccounts|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|getDefaultOutgoingPhoneAccount|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|getLine1Number|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|getVoiceMailNumber|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|handleMmi|android.permission.MODIFY_PHONE_STATE
+android.telecom.TelecomManager|handleMmi|android.permission.MODIFY_PHONE_STATE
+android.telecom.TelecomManager|isInCall|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|isVoiceMailNumber|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|placeCall|android.permission.CALL_PHONE
+android.telecom.TelecomManager|showInCallScreen|android.permission.READ_PHONE_STATE
+android.telecom.TelecomManager|silenceRinger|android.permission.MODIFY_PHONE_STATE

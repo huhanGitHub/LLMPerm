@@ -1,0 +1,162 @@
+{
+  "apk_name": "callerid.callrecording.callmanager_04236b3c.apk",
+  "package_name": "callerid.callrecording.callmanager",
+  "is_malware": false,
+  "total_api_calls": 4300,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 4300,
+      "sensitive_api_calls": 16,
+      "unique_sensitive_apis": 8,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.renderscript.Allocation.createFromBitmap",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.audiofx.AcousticEchoCanceler.create",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.audiofx.NoiseSuppressor.create",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 4300,
+      "sensitive_api_calls": 26,
+      "unique_sensitive_apis": 7,
+      "permissions_required": [
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.AudioRecord.stop",
+          "count": 5,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.read",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.release",
+          "count": 8,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.startRecording",
+          "count": 4,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRecorder.setAudioSource",
+          "count": 2,
+          "permissions": [
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 3,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 4300,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.UPDATE_DEVICE_STATS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        }
+      ]
+    }
+  }
+}

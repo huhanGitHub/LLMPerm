@@ -1,0 +1,97 @@
+{
+  "apk_name": "com.agile.motoHigwayRider_00170c9f.apk",
+  "package_name": "com.agile.motoHigwayRider",
+  "is_malware": true,
+  "total_api_calls": 692,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 692,
+      "sensitive_api_calls": 6,
+      "unique_sensitive_apis": 5,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getRotationMatrix",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 692,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 2,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.create",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 692,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "apk_name": "io.kodular.ertweetj14.vimeovideo_04151a3b.apk",
+  "package_name": "io.kodular.ertweetj14.vimeovideo",
+  "is_malware": false,
+  "total_api_calls": 5122,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 5122,
+      "sensitive_api_calls": 58,
+      "unique_sensitive_apis": 26,
+      "permissions_required": [
+        "UNKNOWN",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WAKE_LOCK"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.content.IntentSender.sendIntent",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputConnection.commitContent",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.Ringtone.play",
+          "count": 2,
+          "permissions": [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WAKE_LOCK"
+          ]
+        },
+        {
+          "signature": "android.nfc.tech.NdefFormatable.format",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.nfc.tech.Ndef.isWritable",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.nfc.tech.Ndef.writeNdefMessage",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputContentInfo.requestPermission",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.renameDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.renderscript.Allocation.createFromBitmap",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.speech.tts.TextToSpeech.speak",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 12,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 12,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocationName",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getRotationMatrix",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.projection.MediaProjection.createVirtualDisplay",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.print.PrintDocumentAdapter.onWrite",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.print.PrintJob.cancel",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 5122,
+      "sensitive_api_calls": 12,
+      "unique_sensitive_apis": 4,
+      "permissions_required": [
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaRecorder.setAudioSource",
+          "count": 2,
+          "permissions": [
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.RingtoneManager.getRingtone",
+          "count": 2,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 7,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRecorder.setVideoSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 5122,
+      "sensitive_api_calls": 6,
+      "unique_sensitive_apis": 4,
+      "permissions_required": [
+        "android.permission.READ_BASIC_PHONE_STATE",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.READ_PRIVILEGED_PHONE_STATE",
+        "android.permission.SEND_RESPOND_VIA_MESSAGE",
+        "android.permission.UPDATE_DEVICE_STATS",
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 1,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        },
+        {
+          "signature": "android.telephony.TelephonyManager.getDeviceSoftwareVersion",
+          "count": 1,
+          "permissions": [
+            "android.permission.SEND_RESPOND_VIA_MESSAGE",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.READ_PRIVILEGED_PHONE_STATE",
+            "android.permission.READ_BASIC_PHONE_STATE"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

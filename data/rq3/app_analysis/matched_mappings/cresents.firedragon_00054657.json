@@ -1,0 +1,49 @@
+{
+  "apk_name": "cresents.firedragon_00054657.apk",
+  "package_name": "cresents.firedragon",
+  "is_malware": true,
+  "total_api_calls": 611,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 611,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.graphics.BitmapRegionDecoder.newInstance",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 611,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 611,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

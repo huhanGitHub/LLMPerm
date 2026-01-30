@@ -1,0 +1,111 @@
+{
+  "apk_name": "com.fengwd.android.mobile_ec8984d4.apk",
+  "package_name": "com.fengwd.android.mobile",
+  "is_malware": true,
+  "total_api_calls": 3761,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 3761,
+      "sensitive_api_calls": 30,
+      "unique_sensitive_apis": 7,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.telephony.CellIdentityCdma.getBasestationId",
+          "count": 5,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 9,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 8,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.GpsStatus.getSatellites",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.graphics.BitmapRegionDecoder.newInstance",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.ExifInterface.saveAttributes",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 3761,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.create",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 3761,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.cancel",
+          "count": 1,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

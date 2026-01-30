@@ -1,0 +1,133 @@
+{
+  "apk_name": "com.dunamu.exchange.global_00a78343.apk",
+  "package_name": "com.dunamu.exchange.global",
+  "is_malware": false,
+  "total_api_calls": 4397,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 4397,
+      "sensitive_api_calls": 14,
+      "unique_sensitive_apis": 10,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.GpsStatus.getSatellites",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.graphics.BitmapRegionDecoder.newInstance",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputContentInfo.requestPermission",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 4397,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 4397,
+      "sensitive_api_calls": 7,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.UPDATE_DEVICE_STATS",
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 5,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        }
+      ]
+    }
+  }
+}

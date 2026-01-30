@@ -1,0 +1,32 @@
+{
+  "apk_name": "hongrui.kaqu_001081c1.apk",
+  "package_name": "hongrui.kaqu",
+  "is_malware": true,
+  "total_api_calls": 233,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 233,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 233,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 233,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

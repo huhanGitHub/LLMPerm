@@ -1,0 +1,124 @@
+{
+  "apk_name": "com.colourlive.xiaomiefennuxiaoniao_001e52a6.apk",
+  "package_name": "com.colourlive.xiaomiefennuxiaoniao",
+  "is_malware": true,
+  "total_api_calls": 1552,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 1552,
+      "sensitive_api_calls": 24,
+      "unique_sensitive_apis": 9,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 5,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 6,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.Browser.getAllVisitedUrls",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.webkit.WebChromeClient.onGeolocationPermissionsShowPrompt",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.LocationListener.onLocationChanged",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.widget.ImageSwitcher.setImageURI",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 1552,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 4,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 1552,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.READ_BASIC_PHONE_STATE",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.READ_PRIVILEGED_PHONE_STATE",
+        "android.permission.SEND_RESPOND_VIA_MESSAGE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.telephony.TelephonyManager.getDeviceSoftwareVersion",
+          "count": 1,
+          "permissions": [
+            "android.permission.SEND_RESPOND_VIA_MESSAGE",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.READ_PRIVILEGED_PHONE_STATE",
+            "android.permission.READ_BASIC_PHONE_STATE"
+          ]
+        }
+      ]
+    }
+  }
+}

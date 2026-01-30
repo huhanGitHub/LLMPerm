@@ -1,0 +1,69 @@
+{
+  "apk_name": "com.wyuuyoshidafacebook_001a3481.apk",
+  "package_name": "com.wyuuyoshidafacebook",
+  "is_malware": true,
+  "total_api_calls": 235,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 235,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "UNKNOWN",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WAKE_LOCK"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.Ringtone.play",
+          "count": 1,
+          "permissions": [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WAKE_LOCK"
+          ]
+        },
+        {
+          "signature": "android.webkit.WebChromeClient.onGeolocationPermissionsShowPrompt",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 235,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.RingtoneManager.getRingtone",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.Ringtone.setStreamType",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 235,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "android_version": 6,
+  "total_methods": 45,
+  "methods": [
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\app\\ActivityManager.java",
+      "class": "android.app.RunningAppProcessInfo",
+      "method": "killUid",
+      "permissions": [
+        "android.permission.KILL_UID"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.KILL_UID)\n    public void killUid(int uid, String reason)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\app\\KeyguardManager.java",
+      "class": "android.app.KeyguardLock",
+      "method": "disableKeyguard",
+      "permissions": [
+        "android.permission.DISABLE_KEYGUARD"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.DISABLE_KEYGUARD)\n        public void disableKeyguard()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\app\\KeyguardManager.java",
+      "class": "android.app.KeyguardLock",
+      "method": "reenableKeyguard",
+      "permissions": [
+        "android.permission.DISABLE_KEYGUARD"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.DISABLE_KEYGUARD)\n        public void reenableKeyguard()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\app\\KeyguardManager.java",
+      "class": "android.app.is",
+      "method": "exitKeyguardSecurely",
+      "permissions": [
+        "android.permission.DISABLE_KEYGUARD"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.DISABLE_KEYGUARD)\n    public void exitKeyguardSecurely(final OnKeyguardExitResult callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothA2dp.java",
+      "class": "android.bluetooth.BluetoothA2dp",
+      "method": "getPriority",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getPriority(BluetoothDevice device)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "isEnabled",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public boolean isEnabled()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    @AdapterState\n    public int getState()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getLeState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    @AdapterState\n    public int getLeState()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "enable",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean enable()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "disable",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean disable()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getAddress",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public String getAddress()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "setName",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean setName(String name)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getScanMode",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    @ScanMode\n    public int getScanMode()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "startDiscovery",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean startDiscovery()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "cancelDiscovery",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean cancelDiscovery()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "isDiscovering",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public boolean isDiscovering()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getBondedDevices",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public Set<BluetoothDevice> getBondedDevices()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "getProfileConnectionState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getProfileConnectionState(int profile)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "listenUsingRfcommWithServiceRecord",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public BluetoothServerSocket listenUsingRfcommWithServiceRecord(String name, UUID uuid)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.BluetoothAdapter",
+      "method": "listenUsingInsecureRfcommWithServiceRecord",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public BluetoothServerSocket listenUsingInsecureRfcommWithServiceRecord(String name, UUID uuid)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.StateChangeCallbackWrapper",
+      "method": "startLeScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean startLeScan(LeScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.StateChangeCallbackWrapper",
+      "method": "startLeScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean startLeScan(final UUID[] serviceUuids, final LeScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothAdapter.java",
+      "class": "android.bluetooth.StateChangeCallbackWrapper",
+      "method": "stopLeScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public void stopLeScan(LeScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.name",
+      "method": "getName",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public String getName()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.name",
+      "method": "getType",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getType()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.name",
+      "method": "createBond",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean createBond()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.name",
+      "method": "getBondState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getBondState()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "getBluetoothClass",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public BluetoothClass getBluetoothClass()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "getUuids",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n     public ParcelUuid[] getUuids()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "fetchUuidsWithSdp",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n     public boolean fetchUuidsWithSdp()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "setPairingConfirmation",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public boolean setPairingConfirmation(boolean confirm)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "createRfcommSocketToServiceRecord",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public BluetoothSocket createRfcommSocketToServiceRecord(UUID uuid)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothDevice.java",
+      "class": "android.bluetooth.object",
+      "method": "createInsecureRfcommSocketToServiceRecord",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public BluetoothSocket createInsecureRfcommSocketToServiceRecord(UUID uuid)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothManager.java",
+      "class": "android.bluetooth.BluetoothManager",
+      "method": "getConnectionState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getConnectionState(BluetoothDevice device, int profile)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothManager.java",
+      "class": "android.bluetooth.BluetoothManager",
+      "method": "getConnectedDevices",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public List<BluetoothDevice> getConnectedDevices(int profile)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothManager.java",
+      "class": "android.bluetooth.BluetoothManager",
+      "method": "getDevicesMatchingConnectionStates",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public List<BluetoothDevice> getDevicesMatchingConnectionStates(int profile, int[] states)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothProfile.java",
+      "class": "android.bluetooth.Unknown",
+      "method": "getConnectedDevices",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public List<BluetoothDevice> getConnectedDevices()"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothProfile.java",
+      "class": "android.bluetooth.Unknown",
+      "method": "getDevicesMatchingConnectionStates",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\BluetoothProfile.java",
+      "class": "android.bluetooth.Unknown",
+      "method": "getConnectionState",
+      "permissions": [
+        "android.permission.BLUETOOTH"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH)\n    public int getConnectionState(BluetoothDevice device)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\le\\BluetoothLeScanner.java",
+      "class": "android.bluetooth.le.BluetoothLeScanner",
+      "method": "startScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public void startScan(final ScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\le\\BluetoothLeScanner.java",
+      "class": "android.bluetooth.le.BluetoothLeScanner",
+      "method": "startScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public void startScan(List<ScanFilter> filters, ScanSettings settings,\n            final ScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\bluetooth\\le\\BluetoothLeScanner.java",
+      "class": "android.bluetooth.le.BluetoothLeScanner",
+      "method": "stopScan",
+      "permissions": [
+        "android.permission.BLUETOOTH_ADMIN"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)\n    public void stopScan(ScanCallback callback)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\content\\pm\\PackageInstaller.java",
+      "class": "android.content.pm.SessionParams",
+      "method": "setGrantedRuntimePermissions",
+      "permissions": [
+        "android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS"
+      ],
+      "annotation": "@RequiresPermission(android.Manifest.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS)\n        public void setGrantedRuntimePermissions(String[] permissions)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\content\\pm\\PackageManager.java",
+      "class": "android.content.pm.name",
+      "method": "addOnPermissionsChangeListener",
+      "permissions": [
+        "android.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS"
+      ],
+      "annotation": "@RequiresPermission(Manifest.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS)\n    public abstract void addOnPermissionsChangeListener(OnPermissionsChangedListener listener)"
+    },
+    {
+      "file": "D:\\projects\\paper\\Android Dynamic Permission Mapping\\code\\android-sdk-sources-23\\src\\android\\hardware\\camera2\\CameraManager.java",
+      "class": "android.hardware.camera2.CameraManager",
+      "method": "openCamera",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "annotation": "@RequiresPermission(android.Manifest.permission.CAMERA)\n    public void openCamera(@NonNull String cameraId,\n            @NonNull final CameraDevice.StateCallback callback, @Nullable Handler handler)"
+    }
+  ]
+}

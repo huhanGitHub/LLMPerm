@@ -1,0 +1,30 @@
+{
+  "total_apks": 1183,
+  "successful": 1182,
+  "errors": 1,
+  "mappings_used": [
+    "bamboo",
+    "dynamo",
+    "sdk_annotations"
+  ],
+  "per_mapping_stats": {
+    "bamboo": {
+      "total_sensitive_calls": 16715,
+      "total_unique_apis": 8429,
+      "benign_count": 573,
+      "malware_count": 609
+    },
+    "dynamo": {
+      "total_sensitive_calls": 5191,
+      "total_unique_apis": 2319,
+      "benign_count": 573,
+      "malware_count": 609
+    },
+    "sdk_annotations": {
+      "total_sensitive_calls": 2120,
+      "total_unique_apis": 1116,
+      "benign_count": 573,
+      "malware_count": 609
+    }
+  }
+}

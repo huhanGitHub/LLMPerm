@@ -1,0 +1,287 @@
+{
+  "apk_name": "com.asurion.android.mediabackup.vault.att_070826ee.apk",
+  "package_name": "com.asurion.android.mediabackup.vault.att",
+  "is_malware": false,
+  "total_api_calls": 6042,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 6042,
+      "sensitive_api_calls": 37,
+      "unique_sensitive_apis": 22,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.graphics.BitmapRegionDecoder.newInstance",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.OrientationEventListener.enable",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.content.IntentSender.sendIntent",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.GpsStatus.getSatellites",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.LocationListener.onLocationChanged",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.renameDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.removeDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.util.AtomicFile.startWrite",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputConnection.commitContent",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputContentInfo.requestPermission",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.adservices.adid.AdId.getAdId",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.Fragment.requestPermissions",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 6042,
+      "sensitive_api_calls": 14,
+      "unique_sensitive_apis": 8,
+      "permissions_required": [
+        "android.permission.CAMERA",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.camera2.CameraManager.getCameraCharacteristics",
+          "count": 3,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        },
+        {
+          "signature": "android.hardware.camera2.CameraManager.openCamera",
+          "count": 3,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.release",
+          "count": 3,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.read",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.startRecording",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.stop",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord$Builder.build",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 6042,
+      "sensitive_api_calls": 5,
+      "unique_sensitive_apis": 3,
+      "permissions_required": [
+        "android.permission.CHANGE_CONFIGURATION",
+        "android.permission.READ_APP_SPECIFIC_LOCALES",
+        "android.permission.UPDATE_DEVICE_STATS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.LocaleManager.getApplicationLocales",
+          "count": 2,
+          "permissions": [
+            "android.permission.READ_APP_SPECIFIC_LOCALES"
+          ]
+        },
+        {
+          "signature": "android.app.LocaleManager.setApplicationLocales",
+          "count": 1,
+          "permissions": [
+            "android.permission.CHANGE_CONFIGURATION"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        }
+      ]
+    }
+  }
+}

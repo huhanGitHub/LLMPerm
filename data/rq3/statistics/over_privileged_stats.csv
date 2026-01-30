@@ -1,0 +1,4 @@
+mapping,total_apps,benign_count,malware_count,over_privileged_apps,over_privileged_rate,total_unused_permissions,avg_unused_permissions
+bamboo,1171,573,598,1158,98.88983774551664,24371,21.045768566493955
+dynamo,1171,573,598,1157,98.80444064901793,23833,20.59896283491789
+sdk_annotations,1171,573,598,1157,98.80444064901793,24212,20.926534140017285

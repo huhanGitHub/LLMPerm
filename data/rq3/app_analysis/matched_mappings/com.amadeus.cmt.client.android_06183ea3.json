@@ -1,0 +1,109 @@
+{
+  "apk_name": "com.amadeus.cmt.client.android_06183ea3.apk",
+  "package_name": "com.amadeus.cmt.client.android",
+  "is_malware": false,
+  "total_api_calls": 5404,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 5404,
+      "sensitive_api_calls": 12,
+      "unique_sensitive_apis": 8,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.view.inputmethod.InputContentInfo.requestPermission",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.slice.SliceManager.grantSlicePermission",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 5404,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 5404,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.CAPTURE_VIDEO_OUTPUT",
+        "android.permission.UPDATE_DEVICE_STATS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 2,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        },
+        {
+          "signature": "android.hardware.display.DisplayManager.createVirtualDisplay",
+          "count": 2,
+          "permissions": [
+            "android.permission.CAPTURE_VIDEO_OUTPUT"
+          ]
+        }
+      ]
+    }
+  }
+}

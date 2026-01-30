@@ -1,0 +1,8 @@
+# Web Documentation API-Permission Mappings Estimates
+# Source: developer.android.com
+# Method: Sampling and estimation
+
+Android 6: 18 APIs
+Android 7: 22 APIs
+Android 10: 65 APIs
+Android 15: 178 APIs

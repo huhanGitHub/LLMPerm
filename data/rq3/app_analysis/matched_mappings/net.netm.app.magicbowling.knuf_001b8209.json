@@ -1,0 +1,42 @@
+{
+  "apk_name": "net.netm.app.magicbowling.knuf_001b8209.apk",
+  "package_name": "net.netm.app.magicbowling.knuf",
+  "is_malware": true,
+  "total_api_calls": 3350,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 3350,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 3350,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.create",
+          "count": 2,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 3350,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

@@ -1,0 +1,4 @@
+mapping,total_sensitive_calls,avg_coverage_pct,avg_unique_apis,total_apps,apps_with_sensitive,benign_apps,malware_apps
+bamboo,16715,100.0,7.131133671742809,1182,863,573,609
+dynamo,5191,31.055937780436732,1.9619289340101522,1182,762,573,609
+sdk_annotations,2120,12.683218665868981,0.9441624365482234,1182,567,573,609

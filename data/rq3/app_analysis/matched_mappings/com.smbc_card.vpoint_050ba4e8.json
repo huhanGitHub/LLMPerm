@@ -1,0 +1,102 @@
+{
+  "apk_name": "com.smbc_card.vpoint_050ba4e8.apk",
+  "package_name": "com.smbc_card.vpoint",
+  "is_malware": false,
+  "total_api_calls": 4116,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 4116,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 4,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.content.res.AssetFileDescriptor.createOutputStream",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.graphics.BitmapRegionDecoder.newInstance",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 4116,
+      "sensitive_api_calls": 8,
+      "unique_sensitive_apis": 3,
+      "permissions_required": [
+        "android.permission.CAMERA",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.camera2.CameraManager.getCameraCharacteristics",
+          "count": 3,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        },
+        {
+          "signature": "android.hardware.camera2.CameraManager.openCamera",
+          "count": 3,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.release",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 4116,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.UPDATE_DEVICE_STATS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 1,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        }
+      ]
+    }
+  }
+}

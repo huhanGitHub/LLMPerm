@@ -1,0 +1,112 @@
+{
+  "apk_name": "com.duan.yinyuan_000a0b10.apk",
+  "package_name": "com.duan.yinyuan",
+  "is_malware": true,
+  "total_api_calls": 1268,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 1268,
+      "sensitive_api_calls": 41,
+      "unique_sensitive_apis": 6,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.hardware.SensorManager.registerListener",
+          "count": 14,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.hardware.SensorManager.getDefaultSensor",
+          "count": 17,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 3,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.LocationListener.onLocationChanged",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.widget.ImageSwitcher.setImageURI",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 1268,
+      "sensitive_api_calls": 5,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 4,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRecorder.setAudioSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.RECORD_AUDIO"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 1268,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.cancel",
+          "count": 1,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 3,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

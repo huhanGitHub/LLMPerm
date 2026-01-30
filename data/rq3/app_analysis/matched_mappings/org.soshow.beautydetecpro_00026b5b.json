@@ -1,0 +1,252 @@
+{
+  "apk_name": "org.soshow.beautydetecpro_00026b5b.apk",
+  "package_name": "org.soshow.beautydetecpro",
+  "is_malware": true,
+  "total_api_calls": 5128,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 5128,
+      "sensitive_api_calls": 30,
+      "unique_sensitive_apis": 12,
+      "permissions_required": [
+        "UNKNOWN",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WAKE_LOCK"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.renameDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.GpsStatus.getSatellites",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 7,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.Ringtone.stop",
+          "count": 8,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.Ringtone.play",
+          "count": 4,
+          "permissions": [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WAKE_LOCK"
+          ]
+        },
+        {
+          "signature": "android.location.LocationListener.onLocationChanged",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.nfc.tech.IsoDep.transceive",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.ExifInterface.saveAttributes",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 5128,
+      "sensitive_api_calls": 33,
+      "unique_sensitive_apis": 13,
+      "permissions_required": [
+        "android.permission.CAMERA",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaRouter$RouteInfo.requestSetVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRouter$RouteInfo.requestUpdateVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.RingtoneManager.getRingtone",
+          "count": 4,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.release",
+          "count": 2,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.CAPTURE_MEDIA_OUTPUT",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.read",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.startRecording",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_ROUTING",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioRecord.stop",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setMode",
+          "count": 12,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 1,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRecorder.setAudioSource",
+          "count": 2,
+          "permissions": [
+            "android.permission.RECORD_AUDIO"
+          ]
+        },
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        },
+        {
+          "signature": "android.media.AudioManager.setMicrophoneMute",
+          "count": 5,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        },
+        {
+          "signature": "android.media.MediaRecorder.setVideoSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.CAMERA"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 5128,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.READ_ACTIVE_EMERGENCY_SESSION",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.READ_PRECISE_PHONE_STATE",
+        "android.permission.READ_PRIVILEGED_PHONE_STATE",
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.telephony.PhoneStateListener.onServiceStateChanged",
+          "count": 1,
+          "permissions": [
+            "android.permission.READ_ACTIVE_EMERGENCY_SESSION",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.READ_PRIVILEGED_PHONE_STATE",
+            "android.permission.READ_PRECISE_PHONE_STATE",
+            "android.permission.ACCESS_FINE_LOCATION"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 3,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

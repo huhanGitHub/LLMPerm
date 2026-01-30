@@ -1,0 +1,139 @@
+{
+  "apk_name": "com.drakeet.purewriter_04200cde.apk",
+  "package_name": "com.drakeet.purewriter",
+  "is_malware": false,
+  "total_api_calls": 4239,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 4239,
+      "sensitive_api_calls": 21,
+      "unique_sensitive_apis": 10,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.provider.DocumentsContract.buildDocumentUriUsingTree",
+          "count": 5,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.buildChildDocumentsUriUsingTree",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.view.inputmethod.InputContentInfo.requestPermission",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.createDocument",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.provider.DocumentsContract.deleteDocument",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.speech.tts.TextToSpeech.speak",
+          "count": 5,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.database.sqlite.SQLiteStatement.executeInsert",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.net.NetworkInfo.isConnectedOrConnecting",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getNetwork",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobParameters.getTriggeredContentUris",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 4239,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 4239,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 4,
+      "permissions_required": [
+        "android.permission.CHANGE_CONFIGURATION",
+        "android.permission.READ_APP_SPECIFIC_LOCALES",
+        "android.permission.UPDATE_DEVICE_STATS",
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.app.LocaleManager.getApplicationLocales",
+          "count": 1,
+          "permissions": [
+            "android.permission.READ_APP_SPECIFIC_LOCALES"
+          ]
+        },
+        {
+          "signature": "android.app.LocaleManager.setApplicationLocales",
+          "count": 1,
+          "permissions": [
+            "android.permission.CHANGE_CONFIGURATION"
+          ]
+        },
+        {
+          "signature": "android.app.job.JobScheduler.cancel",
+          "count": 1,
+          "permissions": [
+            "android.permission.UPDATE_DEVICE_STATS"
+          ]
+        },
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 1,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

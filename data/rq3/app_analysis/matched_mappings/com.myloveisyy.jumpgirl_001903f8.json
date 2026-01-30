@@ -1,0 +1,42 @@
+{
+  "apk_name": "com.myloveisyy.jumpgirl_001903f8.apk",
+  "package_name": "com.myloveisyy.jumpgirl",
+  "is_malware": true,
+  "total_api_calls": 552,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 552,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 552,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.create",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 552,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}
