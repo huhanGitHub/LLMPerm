@@ -1,0 +1,69 @@
+{
+  "apk_name": "com.enbd.cbx_04ae54e5.apk",
+  "package_name": "com.enbd.cbx",
+  "is_malware": false,
+  "total_api_calls": 1030,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 1030,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 3,
+      "permissions_required": [
+        "UNKNOWN",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WAKE_LOCK"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.webkit.WebChromeClient.onGeolocationPermissionsShowPrompt",
+          "count": 2,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.content.res.AssetFileDescriptor.createOutputStream",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.media.Ringtone.play",
+          "count": 1,
+          "permissions": [
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WAKE_LOCK"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 1030,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.RingtoneManager.getRingtone",
+          "count": 1,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 1030,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

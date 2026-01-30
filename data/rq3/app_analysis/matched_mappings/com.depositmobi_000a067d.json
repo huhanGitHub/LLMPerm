@@ -1,0 +1,32 @@
+{
+  "apk_name": "com.depositmobi_000a067d.apk",
+  "package_name": "com.depositmobi",
+  "is_malware": true,
+  "total_api_calls": 35,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 35,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 35,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 35,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

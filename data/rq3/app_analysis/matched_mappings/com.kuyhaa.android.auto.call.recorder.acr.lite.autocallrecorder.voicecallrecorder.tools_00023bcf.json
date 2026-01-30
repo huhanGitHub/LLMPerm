@@ -1,0 +1,59 @@
+{
+  "apk_name": "com.kuyhaa.android.auto.call.recorder.acr.lite.autocallrecorder.voicecallrecorder.tools_00023bcf.apk",
+  "package_name": "com.kuyhaa.android.auto.call.recorder.acr.lite.autocallrecorder.voicecallrecorder.tools",
+  "is_malware": true,
+  "total_api_calls": 5734,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 5734,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 2,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.widget.VideoView.setVideoPath",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        },
+        {
+          "signature": "android.location.Geocoder.getFromLocation",
+          "count": 1,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 5734,
+      "sensitive_api_calls": 1,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaRecorder.setAudioSource",
+          "count": 1,
+          "permissions": [
+            "android.permission.RECORD_AUDIO"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 5734,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

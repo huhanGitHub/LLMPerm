@@ -1,0 +1,52 @@
+{
+  "apk_name": "say.zzm.calling_000ae7ce.apk",
+  "package_name": "say.zzm.calling",
+  "is_malware": true,
+  "total_api_calls": 902,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 902,
+      "sensitive_api_calls": 4,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "UNKNOWN"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.widget.ImageSwitcher.setImageURI",
+          "count": 4,
+          "permissions": [
+            "UNKNOWN"
+          ]
+        }
+      ]
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 902,
+      "sensitive_api_calls": 3,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.AudioManager.setStreamVolume",
+          "count": 3,
+          "permissions": [
+            "android.permission.MODIFY_AUDIO_SETTINGS"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 902,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

@@ -1,0 +1,30 @@
+
+\begin{table}[t]
+\centering
+\caption{Precision, Recall, and F1-Score Comparison with Baselines}
+\label{tab:metrics}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Method} & \textbf{Android} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Validated} \\
+\midrule
+\multirow{2}{*}{Arcade} & 6 & 100.0\% & 51.0\% & 67.6\% & 1,198 \\
+                        & 7 & - & - & - & 1,776 \\
+\midrule
+\multirow{2}{*}{Dynamo} & 6 & 100.0\% & 55.1\% & 71.0\% & 1,294 \\
+                        & 10 & - & - & - & 2,537 \\
+\midrule
+\textbf{\tool{}} & 6 & \textbf{81.6\%} & \textbf{77.6\%} & \textbf{79.5\%} & \textbf{2,234} \\
+                 & 7 & 91.8\% & - & - & 3,552 \\
+                 & 10 & 94.9\% & \textbf{88.9\%} & \textbf{91.8\%} & 4,576 \\
+                 & 15 & 90.7\% & - & - & 3,264 \\
+
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Precision is calculated based on overlap with baselines and manual validation of samples.
+\item Recall is computed using the union of all baselines as ground truth (Android 6: 2,349 APIs).
+\item For Android 10, recall is estimated based on Dynamo's coverage and manual sampling.
+\item "-" indicates metrics cannot be reliably computed due to incomplete ground truth.
+\end{tablenotes}
+\end{table}

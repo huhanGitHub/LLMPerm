@@ -1,0 +1,202 @@
+{
+  "risk_model": {
+    "weights": {
+      "android.permission.ACCESS_FINE_LOCATION": 3.0,
+      "android.permission.ACCESS_COARSE_LOCATION": 3.0,
+      "android.permission.CAMERA": 3.0,
+      "android.permission.RECORD_AUDIO": 3.0,
+      "android.permission.READ_CONTACTS": 3.0,
+      "android.permission.WRITE_CONTACTS": 3.0,
+      "android.permission.READ_SMS": 3.0,
+      "android.permission.SEND_SMS": 3.0,
+      "android.permission.RECEIVE_SMS": 3.0,
+      "android.permission.READ_PHONE_STATE": 3.0,
+      "android.permission.CALL_PHONE": 3.0,
+      "android.permission.READ_CALL_LOG": 3.0,
+      "android.permission.WRITE_CALL_LOG": 3.0,
+      "android.permission.READ_EXTERNAL_STORAGE": 3.0,
+      "android.permission.WRITE_EXTERNAL_STORAGE": 3.0,
+      "android.permission.ACCESS_WIFI_STATE": 2.5,
+      "android.permission.CHANGE_WIFI_STATE": 2.5,
+      "android.permission.BLUETOOTH": 2.5,
+      "android.permission.BLUETOOTH_ADMIN": 2.5,
+      "android.permission.NFC": 2.5,
+      "android.permission.MODIFY_AUDIO_SETTINGS": 2.5,
+      "android.permission.VIBRATE": 2.5,
+      "android.permission.WAKE_LOCK": 2.5,
+      "android.permission.INTERNET": 2.0,
+      "android.permission.ACCESS_NETWORK_STATE": 2.0,
+      "android.permission.GET_ACCOUNTS": 2.0,
+      "android.permission.USE_CREDENTIALS": 2.0,
+      "android.permission.MANAGE_ACCOUNTS": 2.0,
+      "android.permission.AUTHENTICATE_ACCOUNTS": 2.0,
+      "android.permission.READ_SYNC_SETTINGS": 2.0,
+      "android.permission.WRITE_SYNC_SETTINGS": 2.0,
+      "android.permission.GET_TASKS": 1.5,
+      "android.permission.REORDER_TASKS": 1.5,
+      "android.permission.GET_PACKAGE_SIZE": 1.5,
+      "android.permission.RESTART_PACKAGES": 1.5,
+      "android.permission.KILL_BACKGROUND_PROCESSES": 1.5,
+      "android.permission.RECEIVE_BOOT_COMPLETED": 1.0,
+      "android.permission.SYSTEM_ALERT_WINDOW": 1.0,
+      "android.permission.ACCESS_NOTIFICATION_POLICY": 1.0,
+      "UNKNOWN": 2.0
+    },
+    "thresholds": {
+      "LOW": 5.0,
+      "MEDIUM": 15.0,
+      "HIGH": "inf"
+    }
+  },
+  "statistics": {
+    "bamboo": {
+      "benign": {
+        "count": 573,
+        "mean": 44.42059336823735,
+        "std": 36.28993285848081,
+        "median": 36.0,
+        "min": 0.0,
+        "max": 244.0
+      },
+      "malware": {
+        "count": 609,
+        "mean": 13.454844006568145,
+        "std": 20.54699480262298,
+        "median": 2.0,
+        "min": 0.0,
+        "max": 103.0
+      },
+      "effect_size": {
+        "cohens_d": 1.0500973006583245,
+        "interpretation": "large"
+      },
+      "statistical_test": {
+        "t_statistic": 18.170574233449088,
+        "p_value": 3.0194427007520267e-65,
+        "significant": true
+      },
+      "risk_level_distribution": {
+        "LOW": {
+          "benign": 58,
+          "malware": 350,
+          "total": 408
+        },
+        "MEDIUM": {
+          "benign": 34,
+          "malware": 79,
+          "total": 113
+        },
+        "HIGH": {
+          "benign": 481,
+          "malware": 180,
+          "total": 661
+        }
+      }
+    },
+    "dynamo": {
+      "benign": {
+        "count": 573,
+        "mean": 14.63089005235602,
+        "std": 19.501428920039142,
+        "median": 12.5,
+        "min": 0.0,
+        "max": 177.0
+      },
+      "malware": {
+        "count": 609,
+        "mean": 6.374384236453202,
+        "std": 14.016008932439872,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 127.5
+      },
+      "effect_size": {
+        "cohens_d": 0.4862010500050867,
+        "interpretation": "small"
+      },
+      "statistical_test": {
+        "t_statistic": 8.387720743803051,
+        "p_value": 1.3988516700936305e-16,
+        "significant": true
+      },
+      "risk_level_distribution": {
+        "LOW": {
+          "benign": 227,
+          "malware": 453,
+          "total": 680
+        },
+        "MEDIUM": {
+          "benign": 134,
+          "malware": 69,
+          "total": 203
+        },
+        "HIGH": {
+          "benign": 212,
+          "malware": 87,
+          "total": 299
+        }
+      }
+    },
+    "sdk_annotations": {
+      "benign": {
+        "count": 573,
+        "mean": 6.285340314136126,
+        "std": 8.404228643374713,
+        "median": 4.0,
+        "min": 0.0,
+        "max": 74.5
+      },
+      "malware": {
+        "count": 609,
+        "mean": 2.0008210180623975,
+        "std": 4.111390239760469,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 26.0
+      },
+      "effect_size": {
+        "cohens_d": 0.6476304394647439,
+        "interpretation": "medium"
+      },
+      "statistical_test": {
+        "t_statistic": 11.223660201289686,
+        "p_value": 7.586672524999762e-28,
+        "significant": true
+      },
+      "risk_level_distribution": {
+        "LOW": {
+          "benign": 322,
+          "malware": 489,
+          "total": 811
+        },
+        "MEDIUM": {
+          "benign": 175,
+          "malware": 105,
+          "total": 280
+        },
+        "HIGH": {
+          "benign": 76,
+          "malware": 15,
+          "total": 91
+        }
+      }
+    }
+  },
+  "raw_data_summary": {
+    "bamboo": {
+      "benign_count": 573,
+      "malware_count": 609,
+      "total_count": 1182
+    },
+    "dynamo": {
+      "benign_count": 573,
+      "malware_count": 609,
+      "total_count": 1182
+    },
+    "sdk_annotations": {
+      "benign_count": 573,
+      "malware_count": 609,
+      "total_count": 1182
+    }
+  }
+}

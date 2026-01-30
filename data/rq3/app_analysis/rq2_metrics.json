@@ -1,0 +1,36 @@
+{
+  "android_6": {
+    "android_version": 6,
+    "tool_total": 2234,
+    "ground_truth": 2349,
+    "true_positives": 1822,
+    "false_positives": 412,
+    "false_negatives": 527,
+    "precision": 0.8155774395702775,
+    "recall": 0.7756492124308216,
+    "f1_score": 0.7951123718088589
+  },
+  "android_10": {
+    "android_version": 10,
+    "tool_total": 4576,
+    "estimated_ground_truth": 4883,
+    "true_positives": 4341,
+    "false_positives": 235,
+    "false_negatives": 542,
+    "precision": 0.9486451048951049,
+    "recall": 0.8890026622977678,
+    "f1_score": 0.9178560101490643
+  },
+  "baselines": {
+    "arcade": {
+      "precision": 1.0,
+      "recall": 0.5100042571306939,
+      "f1_score": 0.6755004228925852
+    },
+    "dynamo": {
+      "precision": 1.0,
+      "recall": 0.5508727117922521,
+      "f1_score": 0.7104035135877025
+    }
+  }
+}

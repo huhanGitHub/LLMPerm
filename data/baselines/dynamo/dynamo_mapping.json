@@ -1,0 +1,3019 @@
+{
+  "source": "dynamo",
+  "total_apis": 267,
+  "unique_classes": 46,
+  "unique_permissions": 10,
+  "mappings": [
+    {
+      "method_signature": "android.hardware.ICameraService$Stub$Proxy.connect(android.hardware.ICameraClient,int,java.lang.String,int,int)",
+      "class_name": "android.hardware.ICameraService$Stub$Proxy",
+      "method_name": "connect",
+      "params": "android.hardware.ICameraClient,int,java.lang.String,int,int",
+      "return_type": "android.hardware.ICamera",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.ICameraService$Stub$Proxy.connectDevice(android.hardware.camera2.ICameraDeviceCallbacks,java.lang.String,java.lang.String,int)",
+      "class_name": "android.hardware.ICameraService$Stub$Proxy",
+      "method_name": "connectDevice",
+      "params": "android.hardware.camera2.ICameraDeviceCallbacks,java.lang.String,java.lang.String,int",
+      "return_type": "android.hardware.camera2.ICameraDeviceUser",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.camera2.CameraManager.openCameraDeviceUserAsync(java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,java.util.concurrent.Executor,int)",
+      "class_name": "android.hardware.camera2.CameraManager",
+      "method_name": "openCameraDeviceUserAsync",
+      "params": "java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,java.util.concurrent.Executor,int",
+      "return_type": "android.hardware.camera2.CameraDevice",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.camera2.CameraManager.openCameraForUid(java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,java.util.concurrent.Executor,int)",
+      "class_name": "android.hardware.camera2.CameraManager",
+      "method_name": "openCameraForUid",
+      "params": "java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,java.util.concurrent.Executor,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.camera2.CameraManager.openCamera(java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,android.os.Handler)",
+      "class_name": "android.hardware.camera2.CameraManager",
+      "method_name": "openCamera",
+      "params": "java.lang.String,android.hardware.camera2.CameraDevice$StateCallback,android.os.Handler",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.camera2.CameraManager.openCamera(java.lang.String,java.util.concurrent.Executor,android.hardware.camera2.CameraDevice$StateCallback)",
+      "class_name": "android.hardware.camera2.CameraManager",
+      "method_name": "openCamera",
+      "params": "java.lang.String,java.util.concurrent.Executor,android.hardware.camera2.CameraDevice$StateCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.ICameraService$Stub$Proxy.connectLegacy(android.hardware.ICameraClient,int,int,java.lang.String,int)",
+      "class_name": "android.hardware.ICameraService$Stub$Proxy",
+      "method_name": "connectLegacy",
+      "params": "android.hardware.ICameraClient,int,int,java.lang.String,int",
+      "return_type": "android.hardware.ICamera",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.ICameraService$Stub$Proxy.getLegacyParameters(int)",
+      "class_name": "android.hardware.ICameraService$Stub$Proxy",
+      "method_name": "getLegacyParameters",
+      "params": "int",
+      "return_type": "java.lang.String",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.camera2.CameraManager.getCameraCharacteristics(java.lang.String)",
+      "class_name": "android.hardware.camera2.CameraManager",
+      "method_name": "getCameraCharacteristics",
+      "params": "java.lang.String",
+      "return_type": "android.hardware.camera2.CameraCharacteristics",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRecorder.setAudioSource(int)",
+      "class_name": "android.media.MediaRecorder",
+      "method_name": "setAudioSource",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterpacks.videosink.MediaEncoderFilter.updateMediaRecorderParams()",
+      "class_name": "android.filterpacks.videosink.MediaEncoderFilter",
+      "method_name": "updateMediaRecorderParams",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterpacks.videosink.MediaEncoderFilter.startRecording(android.filterfw.core.FilterContext)",
+      "class_name": "android.filterpacks.videosink.MediaEncoderFilter",
+      "method_name": "startRecording",
+      "params": "android.filterfw.core.FilterContext",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterpacks.videosink.MediaEncoderFilter.open(android.filterfw.core.FilterContext)",
+      "class_name": "android.filterpacks.videosink.MediaEncoderFilter",
+      "method_name": "open",
+      "params": "android.filterfw.core.FilterContext",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterfw.core.Filter.performOpen(android.filterfw.core.FilterContext)",
+      "class_name": "android.filterfw.core.Filter",
+      "method_name": "performOpen",
+      "params": "android.filterfw.core.FilterContext",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterpacks.videosink.MediaEncoderFilter.process(android.filterfw.core.FilterContext)",
+      "class_name": "android.filterpacks.videosink.MediaEncoderFilter",
+      "method_name": "process",
+      "params": "android.filterfw.core.FilterContext",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.filterfw.core.Filter.performProcess(android.filterfw.core.FilterContext)",
+      "class_name": "android.filterfw.core.Filter",
+      "method_name": "performProcess",
+      "params": "android.filterfw.core.FilterContext",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRecorder.setVideoSource(int)",
+      "class_name": "android.media.MediaRecorder",
+      "method_name": "setVideoSource",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.SystemSensorManager.nativeSetOperationParameter(long,int,int,float[],int[])",
+      "class_name": "android.hardware.SystemSensorManager",
+      "method_name": "nativeSetOperationParameter",
+      "params": "long,int,int,float[],int[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.LOCATION_HARDWARE"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.SystemSensorManager.setOperationParameterImpl(android.hardware.SensorAdditionalInfo)",
+      "class_name": "android.hardware.SystemSensorManager",
+      "method_name": "setOperationParameterImpl",
+      "params": "android.hardware.SensorAdditionalInfo",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.LOCATION_HARDWARE"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.SensorManager.setOperationParameter(android.hardware.SensorAdditionalInfo)",
+      "class_name": "android.hardware.SensorManager",
+      "method_name": "setOperationParameter",
+      "params": "android.hardware.SensorAdditionalInfo",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.LOCATION_HARDWARE"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.SensorNotificationService.onLocationChanged(android.location.Location)",
+      "class_name": "com.android.server.SensorNotificationService",
+      "method_name": "onLocationChanged",
+      "params": "android.location.Location",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.LOCATION_HARDWARE"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.nativeSetDataSource(android.os.IBinder,java.lang.String,java.lang.String[],java.lang.String[])",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "nativeSetDataSource",
+      "params": "android.os.IBinder,java.lang.String,java.lang.String[],java.lang.String[]",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(java.lang.String,java.lang.String[],java.lang.String[],java.util.List)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "java.lang.String,java.lang.String[],java.lang.String[],java.util.List",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(java.lang.String,java.util.Map,java.util.List)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "java.lang.String,java.util.Map,java.util.List",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(android.content.Context,android.net.Uri,java.util.Map,java.util.List)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "android.content.Context,android.net.Uri,java.util.Map,java.util.List",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(android.content.Context,android.net.Uri)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "android.content.Context,android.net.Uri",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.create(android.content.Context,android.net.Uri,android.view.SurfaceHolder,android.media.AudioAttributes,int)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "create",
+      "params": "android.content.Context,android.net.Uri,android.view.SurfaceHolder,android.media.AudioAttributes,int",
+      "return_type": "android.media.MediaPlayer",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.create(android.content.Context,android.net.Uri,android.view.SurfaceHolder)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "create",
+      "params": "android.content.Context,android.net.Uri,android.view.SurfaceHolder",
+      "return_type": "android.media.MediaPlayer",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.create(android.content.Context,android.net.Uri)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "create",
+      "params": "android.content.Context,android.net.Uri",
+      "return_type": "android.media.MediaPlayer",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.Ringtone.setUri(android.net.Uri,android.media.VolumeShaper$Configuration)",
+      "class_name": "android.media.Ringtone",
+      "method_name": "setUri",
+      "params": "android.net.Uri,android.media.VolumeShaper$Configuration",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.RingtoneManager.getRingtone(android.content.Context,android.net.Uri,int,android.media.VolumeShaper$Configuration)",
+      "class_name": "android.media.RingtoneManager",
+      "method_name": "getRingtone",
+      "params": "android.content.Context,android.net.Uri,int,android.media.VolumeShaper$Configuration",
+      "return_type": "android.media.Ringtone",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.RingtoneManager.getRingtone(android.content.Context,android.net.Uri,android.media.VolumeShaper$Configuration)",
+      "class_name": "android.media.RingtoneManager",
+      "method_name": "getRingtone",
+      "params": "android.content.Context,android.net.Uri,android.media.VolumeShaper$Configuration",
+      "return_type": "android.media.Ringtone",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.RingtoneManager.getRingtone(android.content.Context,android.net.Uri,int)",
+      "class_name": "android.media.RingtoneManager",
+      "method_name": "getRingtone",
+      "params": "android.content.Context,android.net.Uri,int",
+      "return_type": "android.media.Ringtone",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.RingtoneManager.getRingtone(int)",
+      "class_name": "android.media.RingtoneManager",
+      "method_name": "getRingtone",
+      "params": "int",
+      "return_type": "android.media.Ringtone",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.RingtoneManager.getRingtone(android.content.Context,android.net.Uri)",
+      "class_name": "android.media.RingtoneManager",
+      "method_name": "getRingtone",
+      "params": "android.content.Context,android.net.Uri",
+      "return_type": "android.media.Ringtone",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.Ringtone.setUri(android.net.Uri)",
+      "class_name": "android.media.Ringtone",
+      "method_name": "setUri",
+      "params": "android.net.Uri",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.Ringtone.setAudioAttributes(android.media.AudioAttributes)",
+      "class_name": "android.media.Ringtone",
+      "method_name": "setAudioAttributes",
+      "params": "android.media.AudioAttributes",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.Ringtone.setStreamType(int)",
+      "class_name": "android.media.Ringtone",
+      "method_name": "setStreamType",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(android.content.Context,android.net.Uri,java.util.Map)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "android.content.Context,android.net.Uri,java.util.Map",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(java.lang.String,java.util.Map)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "java.lang.String,java.util.Map",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaPlayer.setDataSource(java.lang.String)",
+      "class_name": "android.media.MediaPlayer",
+      "method_name": "setDataSource",
+      "params": "java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.nativeApplyTransaction(long,boolean)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "nativeApplyTransaction",
+      "params": "long,boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.ACCESS_SURFACE_FLINGER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.nativeScreenshot(android.os.IBinder,android.graphics.Rect,int,int,boolean,int,boolean)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "nativeScreenshot",
+      "params": "android.os.IBinder,android.graphics.Rect,int,int,boolean,int,boolean",
+      "return_type": "android.view.SurfaceControl$ScreenshotGraphicBuffer",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshotToBuffer(android.os.IBinder,android.graphics.Rect,int,int,boolean,int)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshotToBuffer",
+      "params": "android.os.IBinder,android.graphics.Rect,int,int,boolean,int",
+      "return_type": "android.view.SurfaceControl$ScreenshotGraphicBuffer",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshot(android.os.IBinder,android.view.Surface,android.graphics.Rect,int,int,boolean,int)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshot",
+      "params": "android.os.IBinder,android.view.Surface,android.graphics.Rect,int,int,boolean,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshot(android.os.IBinder,android.view.Surface)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshot",
+      "params": "android.os.IBinder,android.view.Surface",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshot(android.graphics.Rect,int,int,boolean,int)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshot",
+      "params": "android.graphics.Rect,int,int,boolean,int",
+      "return_type": "android.graphics.Bitmap",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshot(android.graphics.Rect,int,int,int)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshot",
+      "params": "android.graphics.Rect,int,int,int",
+      "return_type": "android.graphics.Bitmap",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.view.SurfaceControl.screenshotToBufferWithSecureLayersUnsafe(android.os.IBinder,android.graphics.Rect,int,int,boolean,int)",
+      "class_name": "android.view.SurfaceControl",
+      "method_name": "screenshotToBufferWithSecureLayersUnsafe",
+      "params": "android.os.IBinder,android.graphics.Rect,int,int,boolean,int",
+      "return_type": "android.view.SurfaceControl$ScreenshotGraphicBuffer",
+      "permissions": [
+        "android.permission.READ_FRAME_BUFFER"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.soundtrigger.SoundTrigger.listModules(java.util.ArrayList)",
+      "class_name": "android.hardware.soundtrigger.SoundTrigger",
+      "method_name": "listModules",
+      "params": "java.util.ArrayList",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerHelper.initializeTelephonyAndPowerStateListeners()",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerHelper",
+      "method_name": "initializeTelephonyAndPowerStateListeners",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerHelper.startRecognition(android.hardware.soundtrigger.SoundTrigger$SoundModel,com.android.server.soundtrigger.SoundTriggerHelper$ModelData,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig,int)",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerHelper",
+      "method_name": "startRecognition",
+      "params": "android.hardware.soundtrigger.SoundTrigger$SoundModel,com.android.server.soundtrigger.SoundTriggerHelper$ModelData,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerHelper.startGenericRecognition(java.util.UUID,android.hardware.soundtrigger.SoundTrigger$GenericSoundModel,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig)",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerHelper",
+      "method_name": "startGenericRecognition",
+      "params": "java.util.UUID,android.hardware.soundtrigger.SoundTrigger$GenericSoundModel,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerHelper.startKeyphraseRecognition(int,android.hardware.soundtrigger.SoundTrigger$KeyphraseSoundModel,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig)",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerHelper",
+      "method_name": "startKeyphraseRecognition",
+      "params": "int,android.hardware.soundtrigger.SoundTrigger$KeyphraseSoundModel,android.hardware.soundtrigger.IRecognitionStatusCallback,android.hardware.soundtrigger.SoundTrigger$RecognitionConfig",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.soundtrigger.SoundTrigger.listModules(java.lang.String,java.util.ArrayList)",
+      "class_name": "android.hardware.soundtrigger.SoundTrigger",
+      "method_name": "listModules",
+      "params": "java.lang.String,java.util.ArrayList",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.soundtrigger.SoundTriggerModule.native_setup(java.lang.String,java.lang.Object)",
+      "class_name": "android.hardware.soundtrigger.SoundTriggerModule",
+      "method_name": "native_setup",
+      "params": "java.lang.String,java.lang.Object",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.hardware.soundtrigger.SoundTrigger.attachModule(int,android.hardware.soundtrigger.SoundTrigger$StatusListener,android.os.Handler)",
+      "class_name": "android.hardware.soundtrigger.SoundTrigger",
+      "method_name": "attachModule",
+      "params": "int,android.hardware.soundtrigger.SoundTrigger$StatusListener,android.os.Handler",
+      "return_type": "android.hardware.soundtrigger.SoundTriggerModule",
+      "permissions": [
+        "android.permission.CAPTURE_AUDIO_HOTWORD"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.muteMicrophone(boolean)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "muteMicrophone",
+      "params": "boolean",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.readUserRestrictions()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "readUserRestrictions",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.createAudioSystemThread()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "createAudioSystemThread",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioHandler.onPlaySoundEffect(int,int)",
+      "class_name": "com.android.server.audio.AudioService$AudioHandler",
+      "method_name": "onPlaySoundEffect",
+      "params": "int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioSystemThread.run()",
+      "class_name": "com.android.server.audio.AudioService$AudioSystemThread",
+      "method_name": "run",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.onSetVolumeIndexOnDevice(com.android.server.audio.AudioService$DeviceVolumeUpdate)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "onSetVolumeIndexOnDevice",
+      "params": "com.android.server.audio.AudioService$DeviceVolumeUpdate",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioHandler.handleMessage(android.os.Message)",
+      "class_name": "com.android.server.audio.AudioService$AudioHandler",
+      "method_name": "handleMessage",
+      "params": "android.os.Message",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.checkAllAliasStreamVolumes()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "checkAllAliasStreamVolumes",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.createStreamStates()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "createStreamStates",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.readAudioSettings(boolean)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "readAudioSettings",
+      "params": "boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.reloadAudioSettings()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "reloadAudioSettings",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.reloadAudioSettings()",
+      "class_name": "android.media.AudioManager",
+      "method_name": "reloadAudioSettings",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.reloadAudioSettings()",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "reloadAudioSettings",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub.onTransact(int,android.os.Parcel,android.os.Parcel,int)",
+      "class_name": "android.media.IAudioService$Stub",
+      "method_name": "onTransact",
+      "params": "int,android.os.Parcel,android.os.Parcel,int",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.handleConfigurationChanged(android.content.Context)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "handleConfigurationChanged",
+      "params": "android.content.Context",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.updateStreamVolumeAlias(boolean,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "updateStreamVolumeAlias",
+      "params": "boolean,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.updateA11yVolumeAlias(boolean)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "updateA11yVolumeAlias",
+      "params": "boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.initA11yMonitoring()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "initA11yMonitoring",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.onSystemReady()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "onSystemReady",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.onAccessibilityServicesStateChanged(android.view.accessibility.AccessibilityManager)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "onAccessibilityServicesStateChanged",
+      "params": "android.view.accessibility.AccessibilityManager",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setModeInt(int,android.os.IBinder,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setModeInt",
+      "params": "int,android.os.IBinder,int,java.lang.String",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMode(int,android.os.IBinder,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMode",
+      "params": "int,android.os.IBinder,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setMode(int)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setMode",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setMode(int,android.os.IBinder,java.lang.String)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setMode",
+      "params": "int,android.os.IBinder,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$SoundPoolListenerThread.run()",
+      "class_name": "com.android.server.audio.AudioService$SoundPoolListenerThread",
+      "method_name": "run",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioHandler.onLoadSoundEffects()",
+      "class_name": "com.android.server.audio.AudioService$AudioHandler",
+      "method_name": "onLoadSoundEffects",
+      "params": "",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.forceVolumeControlStream(int,android.os.IBinder)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "forceVolumeControlStream",
+      "params": "int,android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.forceVolumeControlStream(int)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "forceVolumeControlStream",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.forceVolumeControlStream(int,android.os.IBinder)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "forceVolumeControlStream",
+      "params": "int,android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setStreamVolume(int,int,int,java.lang.String,java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setStreamVolume",
+      "params": "int,int,int,java.lang.String,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setVolumeIndexForAttributes(android.media.AudioAttributes,int,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setVolumeIndexForAttributes",
+      "params": "android.media.AudioAttributes,int,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setVolumeIndexForAttributes(android.media.AudioAttributes,int,int)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setVolumeIndexForAttributes",
+      "params": "android.media.AudioAttributes,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setVolumeIndexForAttributes(android.media.AudioAttributes,int,int,java.lang.String)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setVolumeIndexForAttributes",
+      "params": "android.media.AudioAttributes,int,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setStreamVolume(int,int,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setStreamVolume",
+      "params": "int,int,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setStreamVolume(int,int,int)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setStreamVolume",
+      "params": "int,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRouter$RouteInfo.requestUpdateVolume(int)",
+      "class_name": "android.media.MediaRouter$RouteInfo",
+      "method_name": "requestUpdateVolume",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRouter$RouteGroup.requestUpdateVolume(int)",
+      "class_name": "android.media.MediaRouter$RouteGroup",
+      "method_name": "requestUpdateVolume",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRouter$RouteInfo.requestSetVolume(int)",
+      "class_name": "android.media.MediaRouter$RouteInfo",
+      "method_name": "requestSetVolume",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.MediaRouter$RouteGroup.requestSetVolume(int)",
+      "class_name": "android.media.MediaRouter$RouteGroup",
+      "method_name": "requestSetVolume",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setStreamVolume(int,int,int,java.lang.String)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setStreamVolume",
+      "params": "int,int,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.getScoClient(android.os.IBinder,boolean)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "getScoClient",
+      "params": "android.os.IBinder,boolean",
+      "return_type": "com.android.server.audio.BtHelper$ScoClient",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.startBluetoothScoForClient(android.os.IBinder,int,java.lang.String)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "startBluetoothScoForClient",
+      "params": "android.os.IBinder,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.startBluetoothScoForClient_Sync(android.os.IBinder,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "startBluetoothScoForClient_Sync",
+      "params": "android.os.IBinder,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.startBluetoothScoInt(android.os.IBinder,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "startBluetoothScoInt",
+      "params": "android.os.IBinder,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.startBluetoothSco(android.os.IBinder,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "startBluetoothSco",
+      "params": "android.os.IBinder,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.startBluetoothSco()",
+      "class_name": "android.media.AudioManager",
+      "method_name": "startBluetoothSco",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.startBluetoothSco(android.os.IBinder,int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "startBluetoothSco",
+      "params": "android.os.IBinder,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.startBluetoothScoVirtualCall(android.os.IBinder)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "startBluetoothScoVirtualCall",
+      "params": "android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.startBluetoothScoVirtualCall()",
+      "class_name": "android.media.AudioManager",
+      "method_name": "startBluetoothScoVirtualCall",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.startBluetoothScoVirtualCall(android.os.IBinder)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "startBluetoothScoVirtualCall",
+      "params": "android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.stopBluetoothScoForClient(android.os.IBinder,java.lang.String)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "stopBluetoothScoForClient",
+      "params": "android.os.IBinder,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.stopBluetoothScoForClient_Sync(android.os.IBinder,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "stopBluetoothScoForClient_Sync",
+      "params": "android.os.IBinder,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.stopBluetoothSco(android.os.IBinder)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "stopBluetoothSco",
+      "params": "android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.stopBluetoothSco()",
+      "class_name": "android.media.AudioManager",
+      "method_name": "stopBluetoothSco",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.stopBluetoothSco(android.os.IBinder)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "stopBluetoothSco",
+      "params": "android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker$BrokerThread.run()",
+      "class_name": "com.android.server.audio.AudioDeviceBroker$BrokerThread",
+      "method_name": "run",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.setupMessaging(android.content.Context)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "setupMessaging",
+      "params": "android.content.Context",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.init()",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "init",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.setWiredDeviceConnectionState(int,int,java.lang.String,java.lang.String,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "setWiredDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String,java.lang.String",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.setWiredDeviceConnectionState(int,int,java.lang.String,java.lang.String,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "setWiredDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setWiredDeviceConnectionState(int,int,java.lang.String,java.lang.String,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setWiredDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setWiredDeviceConnectionState(int,int,java.lang.String,java.lang.String)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setWiredDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setWiredDeviceConnectionState(int,int,java.lang.String,java.lang.String,java.lang.String)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setWiredDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onToggleHdmi()",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onToggleHdmi",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onSetWiredDeviceConnectionState(com.android.server.audio.AudioDeviceInventory$WiredDeviceConnectionState)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onSetWiredDeviceConnectionState",
+      "params": "com.android.server.audio.AudioDeviceInventory$WiredDeviceConnectionState",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.registerAudioPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback,boolean,boolean,boolean,boolean,android.media.projection.IMediaProjection)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "registerAudioPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback,boolean,boolean,boolean,boolean,android.media.projection.IMediaProjection",
+      "return_type": "java.lang.String",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.registerAudioPolicyStatic(android.media.audiopolicy.AudioPolicy)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "registerAudioPolicyStatic",
+      "params": "android.media.audiopolicy.AudioPolicy",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.registerAudioPolicy(android.media.audiopolicy.AudioPolicy)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "registerAudioPolicy",
+      "params": "android.media.audiopolicy.AudioPolicy",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord$Builder.buildAudioPlaybackCaptureRecord()",
+      "class_name": "android.media.AudioRecord$Builder",
+      "method_name": "buildAudioPlaybackCaptureRecord",
+      "params": "",
+      "return_type": "android.media.AudioRecord",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord$Builder.build()",
+      "class_name": "android.media.AudioRecord$Builder",
+      "method_name": "build",
+      "params": "",
+      "return_type": "android.media.AudioRecord",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.registerAudioPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback,boolean,boolean,boolean,boolean,android.media.projection.IMediaProjection)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "registerAudioPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback,boolean,boolean,boolean,boolean,android.media.projection.IMediaProjection",
+      "return_type": "java.lang.String",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setVolumeController(android.media.IVolumeController)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setVolumeController",
+      "params": "android.media.IVolumeController",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setVolumeController(android.media.IVolumeController)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setVolumeController",
+      "params": "android.media.IVolumeController",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.os.BinderProxy.sendDeathNotice(android.os.IBinder$DeathRecipient)",
+      "class_name": "android.os.BinderProxy",
+      "method_name": "sendDeathNotice",
+      "params": "android.os.IBinder$DeathRecipient",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setVolumeController(android.media.IVolumeController)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setVolumeController",
+      "params": "android.media.IVolumeController",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.forceRemoteSubmixFullVolume(boolean,android.os.IBinder)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "forceRemoteSubmixFullVolume",
+      "params": "boolean,android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.forceRemoteSubmixFullVolume(boolean,android.os.IBinder)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "forceRemoteSubmixFullVolume",
+      "params": "boolean,android.os.IBinder",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.handleFullVolumeRec(boolean)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "handleFullVolumeRec",
+      "params": "boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.startRecording()",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "startRecording",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.stop()",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "stop",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.invalidateCaptorsAndInjectors()",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "invalidateCaptorsAndInjectors",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.unregisterAudioPolicy(android.media.audiopolicy.AudioPolicy)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "unregisterAudioPolicy",
+      "params": "android.media.audiopolicy.AudioPolicy",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.release()",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "release",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.finalize()",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "finalize",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.setRecordPositionUpdateListener(android.media.AudioRecord$OnRecordPositionUpdateListener,android.os.Handler)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "setRecordPositionUpdateListener",
+      "params": "android.media.AudioRecord$OnRecordPositionUpdateListener,android.os.Handler",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.setRecordPositionUpdateListener(android.media.AudioRecord$OnRecordPositionUpdateListener)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "setRecordPositionUpdateListener",
+      "params": "android.media.AudioRecord$OnRecordPositionUpdateListener",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.createAudioRecordSink(android.media.audiopolicy.AudioMix)",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "createAudioRecordSink",
+      "params": "android.media.audiopolicy.AudioMix",
+      "return_type": "android.media.AudioRecord",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.startRecording(android.media.MediaSyncEvent)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "startRecording",
+      "params": "android.media.MediaSyncEvent",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$RmtSbmxFullVolDeathHandler.binderDied()",
+      "class_name": "com.android.server.audio.AudioService$RmtSbmxFullVolDeathHandler",
+      "method_name": "binderDied",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.registerAudioServerStateDispatcher(android.media.IAudioServerStateDispatcher)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "registerAudioServerStateDispatcher",
+      "params": "android.media.IAudioServerStateDispatcher",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setAudioServerStateCallback(java.util.concurrent.Executor,android.media.AudioManager$AudioServerStateCallback)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setAudioServerStateCallback",
+      "params": "java.util.concurrent.Executor,android.media.AudioManager$AudioServerStateCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.registerAudioServerStateDispatcher(android.media.IAudioServerStateDispatcher)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "registerAudioServerStateDispatcher",
+      "params": "android.media.IAudioServerStateDispatcher",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.loadSoundEffects()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "loadSoundEffects",
+      "params": "",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.loadSoundEffects()",
+      "class_name": "android.media.AudioManager",
+      "method_name": "loadSoundEffects",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.loadSoundEffects()",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "loadSoundEffects",
+      "params": "",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMicrophoneMuteNoCallerCheck(boolean,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMicrophoneMuteNoCallerCheck",
+      "params": "boolean,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMicrophoneMute(boolean,java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMicrophoneMute",
+      "params": "boolean,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setMicrophoneMute(boolean)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setMicrophoneMute",
+      "params": "boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setMicrophoneMute(boolean,java.lang.String,int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setMicrophoneMute",
+      "params": "boolean,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setDeviceConnectionState(int,int,java.lang.String,java.lang.String,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setDeviceConnectionState",
+      "params": "int,int,java.lang.String,java.lang.String,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onRestoreDevices()",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onRestoreDevices",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeHearingAidDeviceUnavailable(java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeHearingAidDeviceUnavailable",
+      "params": "java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onSetHearingAidConnectionState(android.bluetooth.BluetoothDevice,int,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onSetHearingAidConnectionState",
+      "params": "android.bluetooth.BluetoothDevice,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory$lambda_disconnectHearingAid_5__796.accept(java.lang.Object)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory$lambda_disconnectHearingAid_5__796",
+      "method_name": "accept",
+      "params": "java.lang.Object",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeHearingAidDeviceAvailable(java.lang.String,java.lang.String,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeHearingAidDeviceAvailable",
+      "params": "java.lang.String,java.lang.String,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeA2dpSrcUnavailable(java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeA2dpSrcUnavailable",
+      "params": "java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onSetA2dpSourceConnectionState(com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onSetA2dpSourceConnectionState",
+      "params": "com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory$lambda_disconnectA2dpSink_3__794.accept(java.lang.Object)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory$lambda_disconnectA2dpSink_3__794",
+      "method_name": "accept",
+      "params": "java.lang.Object",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeA2dpSrcAvailable(java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeA2dpSrcAvailable",
+      "params": "java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeA2dpDeviceUnavailableNow(java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeA2dpDeviceUnavailableNow",
+      "params": "java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onSetA2dpSinkConnectionState(com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onSetA2dpSinkConnectionState",
+      "params": "com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onMakeA2dpDeviceUnavailableNow(java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onMakeA2dpDeviceUnavailableNow",
+      "params": "java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.makeA2dpDeviceAvailable(java.lang.String,java.lang.String,java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "makeA2dpDeviceAvailable",
+      "params": "java.lang.String,java.lang.String,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.handleDeviceConnection(boolean,int,java.lang.String,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "handleDeviceConnection",
+      "params": "boolean,int,java.lang.String,java.lang.String",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.handleDeviceConnection(boolean,int,java.lang.String,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "handleDeviceConnection",
+      "params": "boolean,int,java.lang.String,java.lang.String",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.handleBtScoActiveDeviceChange(android.bluetooth.BluetoothDevice,boolean)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "handleBtScoActiveDeviceChange",
+      "params": "android.bluetooth.BluetoothDevice,boolean",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.setBtScoActiveDevice(android.bluetooth.BluetoothDevice)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "setBtScoActiveDevice",
+      "params": "android.bluetooth.BluetoothDevice",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.receiveBtEvent(android.content.Intent)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "receiveBtEvent",
+      "params": "android.content.Intent",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.receiveBtEvent(android.content.Intent)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "receiveBtEvent",
+      "params": "android.content.Intent",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioServiceBroadcastReceiver.onReceive(android.content.Context,android.content.Intent)",
+      "class_name": "com.android.server.audio.AudioService$AudioServiceBroadcastReceiver",
+      "method_name": "onReceive",
+      "params": "android.content.Context,android.content.Intent",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.onHeadsetProfileConnected(android.bluetooth.BluetoothHeadset)",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "onHeadsetProfileConnected",
+      "params": "android.bluetooth.BluetoothHeadset",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.BtHelper.disconnectHeadset()",
+      "class_name": "com.android.server.audio.BtHelper",
+      "method_name": "disconnectHeadset",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker$BrokerHandler.handleMessage(android.os.Message)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker$BrokerHandler",
+      "method_name": "handleMessage",
+      "params": "android.os.Message",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.handleDeviceConfigChange(int,java.lang.String,java.lang.String,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "handleDeviceConfigChange",
+      "params": "int,java.lang.String,java.lang.String,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceInventory.onBluetoothA2dpActiveDeviceChange(com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int)",
+      "class_name": "com.android.server.audio.AudioDeviceInventory",
+      "method_name": "onBluetoothA2dpActiveDeviceChange",
+      "params": "com.android.server.audio.BtHelper$BluetoothA2dpDeviceInfo,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setPhoneState(int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setPhoneState",
+      "params": "int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.onAudioServerDied()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "onAudioServerDied",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.initStreamVolume(int,int,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "initStreamVolume",
+      "params": "int,int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setStreamVolumeIndex(int,int,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setStreamVolumeIndex",
+      "params": "int,int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setStreamVolumeIndexAS(int,int,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setStreamVolumeIndexAS",
+      "params": "int,int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$VolumeStreamState.setStreamVolumeIndex(int,int)",
+      "class_name": "com.android.server.audio.AudioService$VolumeStreamState",
+      "method_name": "setStreamVolumeIndex",
+      "params": "int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$VolumeStreamState.applyDeviceVolume_syncVSS(int,boolean)",
+      "class_name": "com.android.server.audio.AudioService$VolumeStreamState",
+      "method_name": "applyDeviceVolume_syncVSS",
+      "params": "int,boolean",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setDeviceVolume(com.android.server.audio.AudioService$VolumeStreamState,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setDeviceVolume",
+      "params": "com.android.server.audio.AudioService$VolumeStreamState,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$VolumeStreamState.checkFixedVolumeDevices()",
+      "class_name": "com.android.server.audio.AudioService$VolumeStreamState",
+      "method_name": "checkFixedVolumeDevices",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.checkAddAllFixedVolumeDevices(int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "checkAddAllFixedVolumeDevices",
+      "params": "int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.onCheckVolumeCecOnHdmiConnection(int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "onCheckVolumeCecOnHdmiConnection",
+      "params": "int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.checkAllFixedVolumeDevices(int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "checkAllFixedVolumeDevices",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.checkAllFixedVolumeDevices()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "checkAllFixedVolumeDevices",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$VolumeStreamState.applyAllVolumes()",
+      "class_name": "com.android.server.audio.AudioService$VolumeStreamState",
+      "method_name": "applyAllVolumes",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioHandler.setAllVolumes(com.android.server.audio.AudioService$VolumeStreamState)",
+      "class_name": "com.android.server.audio.AudioService$AudioHandler",
+      "method_name": "setAllVolumes",
+      "params": "com.android.server.audio.AudioService$VolumeStreamState",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.PlaybackActivityMonitor.checkVolumeForPrivilegedAlarm(android.media.AudioPlaybackConfiguration,int)",
+      "class_name": "com.android.server.audio.PlaybackActivityMonitor",
+      "method_name": "checkVolumeForPrivilegedAlarm",
+      "params": "android.media.AudioPlaybackConfiguration,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.PlaybackActivityMonitor.playerEvent(int,int,int)",
+      "class_name": "com.android.server.audio.PlaybackActivityMonitor",
+      "method_name": "playerEvent",
+      "params": "int,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.playerEvent(int,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "playerEvent",
+      "params": "int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.PlayerBase.updateState(int)",
+      "class_name": "android.media.PlayerBase",
+      "method_name": "updateState",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.playerEvent(int,int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "playerEvent",
+      "params": "int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.PlaybackActivityMonitor.releasePlayer(int,int)",
+      "class_name": "com.android.server.audio.PlaybackActivityMonitor",
+      "method_name": "releasePlayer",
+      "params": "int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.releasePlayer(int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "releasePlayer",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.PlayerBase.baseRelease()",
+      "class_name": "android.media.PlayerBase",
+      "method_name": "baseRelease",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.releasePlayer(int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "releasePlayer",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.PlaybackActivityMonitor.playerDeath(int)",
+      "class_name": "com.android.server.audio.PlaybackActivityMonitor",
+      "method_name": "playerDeath",
+      "params": "int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioPlaybackConfiguration.playerDied()",
+      "class_name": "android.media.AudioPlaybackConfiguration",
+      "method_name": "playerDied",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setVolumeIndexForAttributes(android.media.AudioAttributes,int,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setVolumeIndexForAttributes",
+      "params": "android.media.AudioAttributes,int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setMasterVolume(float)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setMasterVolume",
+      "params": "float",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setMasterMute(boolean)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setMasterMute",
+      "params": "boolean",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMasterMuteInternalNoCallerCheck(boolean,int,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMasterMuteInternalNoCallerCheck",
+      "params": "boolean,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMasterMuteInternal(boolean,int,java.lang.String,int,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMasterMuteInternal",
+      "params": "boolean,int,java.lang.String,int,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setMasterMute(boolean,int,java.lang.String,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setMasterMute",
+      "params": "boolean,int,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setMasterMute(boolean,int)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setMasterMute",
+      "params": "boolean,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setMasterMute(boolean,int,java.lang.String,int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setMasterMute",
+      "params": "boolean,int,java.lang.String,int",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setMasterMono(boolean)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setMasterMono",
+      "params": "boolean",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.updateMasterMono(android.content.ContentResolver)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "updateMasterMono",
+      "params": "android.content.ContentResolver",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.readPersistedSettings()",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "readPersistedSettings",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setMasterBalance(float)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setMasterBalance",
+      "params": "float",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.updateMasterBalance(android.content.ContentResolver)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "updateMasterBalance",
+      "params": "android.content.ContentResolver",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setForceUse(int,int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setForceUse",
+      "params": "int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioDeviceBroker.onSetForceUse(int,int,java.lang.String)",
+      "class_name": "com.android.server.audio.AudioDeviceBroker",
+      "method_name": "onSetForceUse",
+      "params": "int,int,java.lang.String",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.createAudioPatch(android.media.AudioPatch[],android.media.AudioPortConfig[],android.media.AudioPortConfig[])",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "createAudioPatch",
+      "params": "android.media.AudioPatch[],android.media.AudioPortConfig[],android.media.AudioPortConfig[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.createAudioPatch(android.media.AudioPatch[],android.media.AudioPortConfig[],android.media.AudioPortConfig[])",
+      "class_name": "android.media.AudioManager",
+      "method_name": "createAudioPatch",
+      "params": "android.media.AudioPatch[],android.media.AudioPortConfig[],android.media.AudioPortConfig[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.releaseAudioPatch(android.media.AudioPatch)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "releaseAudioPatch",
+      "params": "android.media.AudioPatch",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.releaseAudioPatch(android.media.AudioPatch)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "releaseAudioPatch",
+      "params": "android.media.AudioPatch",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setAudioPortConfig(android.media.AudioPortConfig)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setAudioPortConfig",
+      "params": "android.media.AudioPortConfig",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.setAudioPortGain(android.media.AudioPort,android.media.AudioGainConfig)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "setAudioPortGain",
+      "params": "android.media.AudioPort,android.media.AudioGainConfig",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.registerPolicyMixes(java.util.ArrayList,boolean)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "registerPolicyMixes",
+      "params": "java.util.ArrayList,boolean",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.release()",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "release",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.unregisterAudioPolicyInt(android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "unregisterAudioPolicyInt",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.unregisterAudioPolicy(android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "unregisterAudioPolicy",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.unregisterAudioPolicyAsync(android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "unregisterAudioPolicyAsync",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.unregisterAudioPolicyAsyncStatic(android.media.audiopolicy.AudioPolicy)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "unregisterAudioPolicyAsyncStatic",
+      "params": "android.media.audiopolicy.AudioPolicy",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioManager.unregisterAudioPolicyAsync(android.media.audiopolicy.AudioPolicy)",
+      "class_name": "android.media.AudioManager",
+      "method_name": "unregisterAudioPolicyAsync",
+      "params": "android.media.audiopolicy.AudioPolicy",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy$UnregisterOnStopCallback.onStop()",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy$UnregisterOnStopCallback",
+      "method_name": "onStop",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.unregisterAudioPolicyAsync(android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "unregisterAudioPolicyAsync",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.unregisterAudioPolicy(android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "unregisterAudioPolicy",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.binderDied()",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "binderDied",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.connectMixes()",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "connectMixes",
+      "params": "",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.removeMixes(java.util.ArrayList)",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "removeMixes",
+      "params": "java.util.ArrayList",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.removeMixForPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "removeMixForPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.detachMixes(java.util.List)",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "detachMixes",
+      "params": "java.util.List",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.removeMixForPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "removeMixForPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.addMixes(java.util.ArrayList)",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "addMixes",
+      "params": "java.util.ArrayList",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.addMixForPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "addMixForPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.attachMixes(java.util.List)",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "attachMixes",
+      "params": "java.util.List",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.addMixForPolicy(android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "addMixForPolicy",
+      "params": "android.media.audiopolicy.AudioPolicyConfig,android.media.audiopolicy.IAudioPolicyCallback",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.CAPTURE_MEDIA_OUTPUT"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.setUidDeviceAffinities(int,int[],java.lang.String[])",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "setUidDeviceAffinities",
+      "params": "int,int[],java.lang.String[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.setUidDeviceAffinities(int,int[],java.lang.String[])",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "setUidDeviceAffinities",
+      "params": "int,int[],java.lang.String[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.setUidDeviceAffinity(android.media.audiopolicy.IAudioPolicyCallback,int,int[],java.lang.String[])",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "setUidDeviceAffinity",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback,int,int[],java.lang.String[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.setUidDeviceAffinity(int,java.util.List)",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "setUidDeviceAffinity",
+      "params": "int,java.util.List",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.setUidDeviceAffinity(android.media.audiopolicy.IAudioPolicyCallback,int,int[],java.lang.String[])",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "setUidDeviceAffinity",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback,int,int[],java.lang.String[]",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioSystem.removeUidDeviceAffinities(int)",
+      "class_name": "android.media.AudioSystem",
+      "method_name": "removeUidDeviceAffinities",
+      "params": "int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService$AudioPolicyProxy.removeUidDeviceAffinities(int)",
+      "class_name": "com.android.server.audio.AudioService$AudioPolicyProxy",
+      "method_name": "removeUidDeviceAffinities",
+      "params": "int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.audio.AudioService.removeUidDeviceAffinity(android.media.audiopolicy.IAudioPolicyCallback,int)",
+      "class_name": "com.android.server.audio.AudioService",
+      "method_name": "removeUidDeviceAffinity",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.audiopolicy.AudioPolicy.removeUidDeviceAffinity(int)",
+      "class_name": "android.media.audiopolicy.AudioPolicy",
+      "method_name": "removeUidDeviceAffinity",
+      "params": "int",
+      "return_type": "boolean",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.IAudioService$Stub$Proxy.removeUidDeviceAffinity(android.media.audiopolicy.IAudioPolicyCallback,int)",
+      "class_name": "android.media.IAudioService$Stub$Proxy",
+      "method_name": "removeUidDeviceAffinity",
+      "params": "android.media.audiopolicy.IAudioPolicyCallback,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.native_start(int,int)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "native_start",
+      "params": "int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.native_setup(java.lang.Object,java.lang.Object,int[],int,int,int,int,int[],java.lang.String,long)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "native_setup",
+      "params": "java.lang.Object,java.lang.Object,int[],int,int,int,int,int[],java.lang.String,long",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerService$RemoteSoundTriggerDetectionService.createAudioRecordForEvent(android.hardware.soundtrigger.SoundTrigger$GenericRecognitionEvent)",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerService$RemoteSoundTriggerDetectionService",
+      "method_name": "createAudioRecordForEvent",
+      "params": "android.hardware.soundtrigger.SoundTrigger$GenericRecognitionEvent",
+      "return_type": "android.media.AudioRecord",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "com.android.server.soundtrigger.SoundTriggerService$RemoteSoundTriggerDetectionService$lambda_onGenericSoundTriggerDetected_2__786.run()",
+      "class_name": "com.android.server.soundtrigger.SoundTriggerService$RemoteSoundTriggerDetectionService$lambda_onGenericSoundTriggerDetected_2__786",
+      "method_name": "run",
+      "params": "",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.deferred_connect(long)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "deferred_connect",
+      "params": "long",
+      "return_type": "void",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.native_read_in_direct_buffer(java.lang.Object,int,boolean)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "native_read_in_direct_buffer",
+      "params": "java.lang.Object,int,boolean",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.read(java.nio.ByteBuffer,int,int)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "read",
+      "params": "java.nio.ByteBuffer,int,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    },
+    {
+      "method_signature": "android.media.AudioRecord.read(java.nio.ByteBuffer,int)",
+      "class_name": "android.media.AudioRecord",
+      "method_name": "read",
+      "params": "java.nio.ByteBuffer,int",
+      "return_type": "int",
+      "permissions": [
+        "android.permission.MODIFY_AUDIO_ROUTING",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "source": "dynamo"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "summary": [
+    {
+      "mapping": "bamboo",
+      "total_sensitive_calls": 16715,
+      "avg_coverage_pct": 100.0,
+      "avg_unique_apis": 7.131133671742809,
+      "total_apps": 1182,
+      "apps_with_sensitive": 863,
+      "benign_apps": 573,
+      "malware_apps": 609
+    },
+    {
+      "mapping": "dynamo",
+      "total_sensitive_calls": 5191,
+      "avg_coverage_pct": 31.055937780436732,
+      "avg_unique_apis": 1.9619289340101522,
+      "total_apps": 1182,
+      "apps_with_sensitive": 762,
+      "benign_apps": 573,
+      "malware_apps": 609
+    },
+    {
+      "mapping": "sdk_annotations",
+      "total_sensitive_calls": 2120,
+      "avg_coverage_pct": 12.683218665868981,
+      "avg_unique_apis": 0.9441624365482234,
+      "total_apps": 1182,
+      "apps_with_sensitive": 567,
+      "benign_apps": 573,
+      "malware_apps": 609
+    }
+  ],
+  "detailed_stats": {
+    "bamboo": {
+      "total_sensitive_calls": 16715,
+      "total_unique_apis": 8429,
+      "total_apps": 1182,
+      "benign_apps": 573,
+      "malware_apps": 609,
+      "apps_with_sensitive_apis": 863,
+      "per_app_coverage": []
+    },
+    "dynamo": {
+      "total_sensitive_calls": 5191,
+      "total_unique_apis": 2319,
+      "total_apps": 1182,
+      "benign_apps": 573,
+      "malware_apps": 609,
+      "apps_with_sensitive_apis": 762,
+      "per_app_coverage": []
+    },
+    "sdk_annotations": {
+      "total_sensitive_calls": 2120,
+      "total_unique_apis": 1116,
+      "total_apps": 1182,
+      "benign_apps": 573,
+      "malware_apps": 609,
+      "apps_with_sensitive_apis": 567,
+      "per_app_coverage": []
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "apk_name": "com.mobi.livewallpaper.lonelyboyandgirl6_001ac18f.apk",
+  "package_name": "com.mobi.livewallpaper.lonelyboyandgirl6",
+  "is_malware": true,
+  "total_api_calls": 426,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 426,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 426,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.INTERNET"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.media.MediaPlayer.setDataSource",
+          "count": 2,
+          "permissions": [
+            "android.permission.INTERNET"
+          ]
+        }
+      ]
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 426,
+      "sensitive_api_calls": 2,
+      "unique_sensitive_apis": 1,
+      "permissions_required": [
+        "android.permission.VIBRATE"
+      ],
+      "matched_apis": [
+        {
+          "signature": "android.os.Vibrator.vibrate",
+          "count": 2,
+          "permissions": [
+            "android.permission.VIBRATE"
+          ]
+        }
+      ]
+    }
+  }
+}

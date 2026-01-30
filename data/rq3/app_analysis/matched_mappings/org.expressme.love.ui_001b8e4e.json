@@ -1,0 +1,32 @@
+{
+  "apk_name": "org.expressme.love.ui_001b8e4e.apk",
+  "package_name": "org.expressme.love.ui",
+  "is_malware": true,
+  "total_api_calls": 104,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 104,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 104,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 104,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

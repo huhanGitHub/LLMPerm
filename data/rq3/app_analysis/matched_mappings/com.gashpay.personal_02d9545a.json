@@ -1,0 +1,32 @@
+{
+  "apk_name": "com.gashpay.personal_02d9545a.apk",
+  "package_name": "com.gashpay.personal",
+  "is_malware": false,
+  "total_api_calls": 54,
+  "mappings": {
+    "bamboo": {
+      "source": "bamboo",
+      "total_api_calls": 54,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "dynamo": {
+      "source": "dynamo",
+      "total_api_calls": 54,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    },
+    "sdk_annotations": {
+      "source": "Android SDK 34 @RequiresPermission Annotations",
+      "total_api_calls": 54,
+      "sensitive_api_calls": 0,
+      "unique_sensitive_apis": 0,
+      "permissions_required": [],
+      "matched_apis": []
+    }
+  }
+}

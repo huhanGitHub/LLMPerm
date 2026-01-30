@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# LLM API Keys
+*api_key*
+*config.py
+.env
+
+# Large files
+*.apk
+*.zip
+*.jar
+*.dex
+*.gz
+
+# Android SDK sources (too large for git)
+android-sdk-*-sources/
+sdk*-sources/
+sdk*-sources.zip
+
+# LLM responses (can be regenerated)
+llm_reply/
+llm_reply_java/
+
+# Experimental results (can be regenerated)
+# api_calls/ is too large (~911 MB), keep it ignored
+data/rq3/app_analysis/api_calls/
+# matched_mappings/ is small (~3.37 MB), will be included in repository
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
